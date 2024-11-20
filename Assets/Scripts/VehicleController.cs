@@ -56,6 +56,7 @@ public class VehicleController : MonoBehaviour
     public Transform backWing;
     public Transform steeringColumn;
 
+    Animator animator;
     WheelControl[] wheels;
     Rigidbody rigidBody;
 
@@ -64,6 +65,8 @@ public class VehicleController : MonoBehaviour
         wheels = GetComponentsInChildren<WheelControl>();
 
         rigidBody = GetComponent<Rigidbody>();
+
+        animator = GetComponent<Animator>();
 
         // Adjust center of mass vertically, to help prevent the car from rolling
         rigidBody.centerOfMass += Vector3.up * centreOfGravityOffset;
@@ -277,6 +280,14 @@ public class VehicleController : MonoBehaviour
     public void SetDRS(bool enabled)
     {
         drsEnabled = enabled;
+        if (enabled)
+        {
+            animator.Play("DRS_On");
+        }
+        else
+        {
+            animator.Play("DRS_Off");
+        }
     }
 
     public bool GetDRS()

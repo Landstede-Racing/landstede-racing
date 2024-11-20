@@ -65,6 +65,10 @@ public class LogitechSteeringWheel : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            vehicleController.ToggleDRS();
+        }
         //All the test functions are called on the first device plugged in(index = 0)
         if (LogitechGSDK.LogiUpdate() && LogitechGSDK.LogiIsConnected(0))
         {
