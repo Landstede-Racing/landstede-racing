@@ -15,8 +15,10 @@ public class LogitechSteeringWheel : MonoBehaviour
     private string buttonStatus;
     private string forcesLabel;
     private float steeringAngle;
+    private int changeLights;
     private float gas;
     private float brake;
+    private bool init = false;
     string[] activeForceAndEffect;
 
     // Use this for initialization
@@ -61,16 +63,19 @@ public class LogitechSteeringWheel : MonoBehaviour
     }
 
     // Update is called once per frame
-    async void Update()
+    void Update()
     {
         //All the test functions are called on the first device plugged in(index = 0)
         if (LogitechGSDK.LogiUpdate() && LogitechGSDK.LogiIsConnected(0))
         {
-            LogitechGSDK.LogiPlaySpringForce(0, 0, 50, 50);
-            activeForceAndEffect[0] = "Spring Force\n ";
-
-            LogitechGSDK.LogiPlayLeds(0, vehicleController.currentEngineRPM, vehicleController.firstLightOn, vehicleController.redLine);
-
+            if (!init)
+            {
+                LogitechGSDK.LogiPlaySpringForce(0, 0, 50, 50);
+                activeForceAndEffect[0] = "Spring Force\n ";
+                LogitechGSDK.LogiPlaySoftstopForce(0, 40);
+                activeForceAndEffect[8] = "Soft Stop Force\n";
+                init = true;
+            }
             LogitechGSDK.DIJOYSTATE2ENGINES rec;
             rec = LogitechGSDK.LogiGetStateUnity(0);
             // Get steer and pedal states
@@ -369,6 +374,16 @@ public class LogitechSteeringWheel : MonoBehaviour
             for (int i = 0; i < 9; i++)
             {
                 activeForces += activeForceAndEffect[i];
+            }
+
+            if (changeLights >= 5)
+            {
+                LogitechGSDK.LogiPlayLeds(0, vehicleController.currentEngineRPM, vehicleController.firstLightOn, vehicleController.redLine);
+                changeLights = 0;
+            }
+            else
+            {
+                changeLights++;
             }
 
             // Debug.Log("Speed: " + rigidBody.linearVelocity.magnitude * 3.6 + " KM/U");
