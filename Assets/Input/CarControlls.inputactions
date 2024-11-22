@@ -1,0 +1,54 @@
+{
+    "name": "CarControlls",
+    "maps": [
+        {
+            "name": "CarControlls",
+            "id": "fedb003e-2cde-489b-9106-591ca9220269",
+            "actions": [
+                {
+                    "name": "accelerate",
+                    "type": "Button",
+                    "id": "a1fa893a-d4d7-4431-9bde-a1685ee682a8",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "brake",
+                    "type": "Button",
+                    "id": "6cddac89-c5dc-4071-b8a0-ff5c0950677e",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "1b443d56-e3da-4c7b-b076-55fe5733b828",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "accelerate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "17e384fd-cb76-4a2e-8da7-7af13009f1b7",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "brake",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
