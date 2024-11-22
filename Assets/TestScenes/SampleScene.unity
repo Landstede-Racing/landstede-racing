@@ -510,6 +510,22 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 669c2449fdb0179489b66f9e10b99757, type: 3}
+--- !u!114 &424711555 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6864331406162114436, guid: ea2c363f236b97e448d0c8cf72911364, type: 3}
+  m_PrefabInstance: {fileID: 5818282226158843299}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78942c6e946a7324ca7f2609e5671f81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &470584442 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7515923188014082424, guid: ea2c363f236b97e448d0c8cf72911364, type: 3}
+  m_PrefabInstance: {fileID: 5818282226158843299}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &513482783
 GameObject:
   m_ObjectHideFlags: 0
@@ -1569,7 +1585,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8b43b5e71352794ab7b5b71a9e2d636, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vehicleController: {fileID: 0}
+  vehicleController: {fileID: 424711555}
   greenColor: {r: 0, g: 1, b: 0, a: 1}
   redColor: {r: 1, g: 0, b: 0, a: 1}
   blueColor: {r: 0, g: 0.74296427, b: 1, a: 1}
@@ -2777,6 +2793,10 @@ PrefabInstance:
       propertyPath: rpmText
       value: 
       objectReference: {fileID: 538283981}
+    - target: {fileID: 6864331406162114436, guid: ea2c363f236b97e448d0c8cf72911364, type: 3}
+      propertyPath: backWing
+      value: 
+      objectReference: {fileID: 470584442}
     - target: {fileID: 6864331406162114436, guid: ea2c363f236b97e448d0c8cf72911364, type: 3}
       propertyPath: gearText
       value: 
