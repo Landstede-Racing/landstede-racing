@@ -54,7 +54,6 @@ public class VehicleController : MonoBehaviour
     public TMP_Text rpmText;
 
     public Transform backWing;
-    public Transform steeringColumn;
 
     WheelControl[] wheels;
     Rigidbody rigidBody;
