@@ -66,6 +66,24 @@ public class GamepadMonoScript : MonoBehaviour
         float steer = steerVector.x;
         vehicleController.SetSteeringAngle(steer);
 
+        // Gear Up
+        if (controls.vehicleControls.GearUp.triggered)
+        {
+            StartCoroutine(vehicleController.ChangeGear(1));
+            Debug.Log("GearUp!");
+        }
 
+        // Gear Down
+        if (controls.vehicleControls.GearDown.triggered)
+        {
+            StartCoroutine(vehicleController.ChangeGear(-1));
+            Debug.Log("GearDown!");
+        }
+
+        if (controls.vehicleControls.DRS.triggered)
+        {
+            Debug.Log("DRS TOGGLE!");
+            vehicleController.ToggleDRS();
+        }
     }
 }
