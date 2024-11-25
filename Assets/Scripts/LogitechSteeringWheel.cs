@@ -395,7 +395,7 @@ public class LogitechSteeringWheel : MonoBehaviour
         }
         else
         {
-            Debug.Log("User chose not wheel!");
+            // Debug.Log("User chose not wheel!");
         }
     }
 
