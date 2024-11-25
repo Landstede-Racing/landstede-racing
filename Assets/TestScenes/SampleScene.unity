@@ -538,6 +538,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 905542a1b3081364cb526c367e6c152b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  vehicleController: {fileID: 424711555}
 --- !u!4 &470584442 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7515923188014082424, guid: ea2c363f236b97e448d0c8cf72911364, type: 3}
