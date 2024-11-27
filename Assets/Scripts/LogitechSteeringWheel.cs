@@ -18,7 +18,6 @@ public class LogitechSteeringWheel : MonoBehaviour
     private int changeLights;
     private float gas;
     private float brake;
-    private bool init = false;
     string[] activeForceAndEffect;
 
     // Use this for initialization
@@ -68,14 +67,11 @@ public class LogitechSteeringWheel : MonoBehaviour
         //All the test functions are called on the first device plugged in(index = 0)
         if (LogitechGSDK.LogiUpdate() && LogitechGSDK.LogiIsConnected(0))
         {
-            if (!init)
-            {
-                LogitechGSDK.LogiPlaySpringForce(0, 0, 50, 50);
-                activeForceAndEffect[0] = "Spring Force\n ";
-                LogitechGSDK.LogiPlaySoftstopForce(0, 40);
-                activeForceAndEffect[8] = "Soft Stop Force\n";
-                init = true;
-            }
+            LogitechGSDK.LogiPlaySpringForce(0, 0, 50, 50);
+            activeForceAndEffect[0] = "Spring Force\n ";
+            LogitechGSDK.LogiPlaySoftstopForce(0, 90);
+            activeForceAndEffect[8] = "Soft Stop Force\n";
+
             LogitechGSDK.DIJOYSTATE2ENGINES rec;
             rec = LogitechGSDK.LogiGetStateUnity(0);
             // Get steer and pedal states
@@ -85,7 +81,7 @@ public class LogitechSteeringWheel : MonoBehaviour
 
 
             // Calculate steering angle with a max of 180 degrees, mapped to a value from -1 to 1
-            steeringAngle = Mathf.InverseLerp(-32768f / 2.5f, 32767f / 2.5f, rec.lX) * 2 - 1;
+            steeringAngle = Mathf.InverseLerp(-32768f / 1.25f, 32767f / 1.25f, rec.lX) * 2 - 1;
             vehicleController.SetSteeringAngle(steeringAngle);
 
             // Calculate gas amount mapped to a value from 0 to 1
