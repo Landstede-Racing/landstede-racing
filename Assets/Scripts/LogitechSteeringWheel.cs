@@ -16,6 +16,7 @@ public class LogitechSteeringWheel : MonoBehaviour
     private string buttonStatus;
     private string forcesLabel;
     private float steeringAngle;
+    private int changeLights;
     private float gas;
     private float brake;
     string[] activeForceAndEffect;
@@ -66,7 +67,7 @@ public class LogitechSteeringWheel : MonoBehaviour
     }
 
     // Update is called once per frame
-    async void Update()
+    void Update()
     {
 
         if (SettingsController.DeviceController == "steeringWheel") //Check for what controller the user wants to use. For now hardcoded in SettingsController.cs
@@ -77,8 +78,8 @@ public class LogitechSteeringWheel : MonoBehaviour
             {
                 LogitechGSDK.LogiPlaySpringForce(0, 0, 50, 50);
                 activeForceAndEffect[0] = "Spring Force\n ";
-
-                LogitechGSDK.LogiPlayLeds(0, vehicleController.currentEngineRPM, vehicleController.firstLightOn, vehicleController.redLine);
+                LogitechGSDK.LogiPlaySoftstopForce(0, 90);
+                activeForceAndEffect[8] = "Soft Stop Force\n";
 
                 LogitechGSDK.DIJOYSTATE2ENGINES rec;
                 rec = LogitechGSDK.LogiGetStateUnity(0);
@@ -89,7 +90,7 @@ public class LogitechSteeringWheel : MonoBehaviour
 
 
                 // Calculate steering angle with a max of 180 degrees, mapped to a value from -1 to 1
-                steeringAngle = Mathf.InverseLerp(-32768f / 2.5f, 32767f / 2.5f, rec.lX) * 2 - 1;
+                steeringAngle = Mathf.InverseLerp(-32768f / 1.25f, 32767f / 1.25f, rec.lX) * 2 - 1;
                 vehicleController.SetSteeringAngle(steeringAngle);
 
                 // Calculate gas amount mapped to a value from 0 to 1
@@ -378,6 +379,16 @@ public class LogitechSteeringWheel : MonoBehaviour
                 for (int i = 0; i < 9; i++)
                 {
                     activeForces += activeForceAndEffect[i];
+                }
+
+                if (changeLights >= 5)
+                {
+                    LogitechGSDK.LogiPlayLeds(0, vehicleController.currentEngineRPM, vehicleController.firstLightOn, vehicleController.redLine);
+                    changeLights = 0;
+                }
+                else
+                {
+                    changeLights++;
                 }
 
                 // Debug.Log("Speed: " + rigidBody.linearVelocity.magnitude * 3.6 + " KM/U");
