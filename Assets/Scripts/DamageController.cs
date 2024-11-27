@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class DamageController : PartController
+public class DamageController
 {
-    public GameObject[] DamagableParts;
+    public DamagablePart[] DamagableParts;
     private Dictionary<DamagablePart, int> damages = new Dictionary<DamagablePart, int>();
-    
+
     void Start()
     {
         foreach (GameObject part in DamagableParts)
@@ -14,12 +14,12 @@ public class DamageController : PartController
         }
     }
 
-    public int GetDamage(DamagablePart part)
+    public int GetDamage(GameObject DamagablePart)
     {
         return damages[part];
     }
 
-    public void SetDamageablePart(DamagablePart part, int damage)
+    public void SetDamage(GameObject DamagablePart, int damage)
     {
         damages[part] = damage;
     }

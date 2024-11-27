@@ -1,0 +1,38 @@
+Temperature
+=============================
+
+Every wheel inside 
+Every wheel outside
+Brake for every wheel
+Engine
+
+=============================
+
+
+Settings (in Race) (MFD)
+=============================
+
+Fuel mix
+Front brake bias
+Differential
+ERS Deoploy
+Downforce
+Repair Wing Damage
+Next Tyres
+
+=============================
+
+
+Steering wheel info
+=============================
+
+Lap
+Laptime
+Speed
+Position
+Gear
+Wheel Temperature
+ERS 
+Fuel
+
+=============================
