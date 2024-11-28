@@ -19,7 +19,7 @@ public class RPMLightController : MonoBehaviour
     {
         // Calculate how many lights should be on
         float i = Mathf.InverseLerp(vehicleController.firstLightOn, vehicleController.redLine, vehicleController.currentEngineRPM) * 13;
-        Debug.Log("Lights: " + i);
+        // Debug.Log("Lights: " + i);
         int j = 0;
         foreach (Image light in lights)
         {
