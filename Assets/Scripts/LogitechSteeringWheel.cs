@@ -9,6 +9,7 @@ using LibUsbDotNet.Main;
 using System;
 using System.Linq;
 using UnityEngine.iOS;
+using System.Collections.Generic;
 
 public class LogitechSteeringWheel : MonoBehaviour
 {
@@ -24,7 +25,9 @@ public class LogitechSteeringWheel : MonoBehaviour
     private float gas;
     private float brake;
     string[] activeForceAndEffect;
-    UsbDevice MyUsbDevice;
+    UsbDevice linuxWheelDevice;
+    bool onLinux;
+    List<byte> knownEndpoints = new();
 
     // Use this for initialization
     void Start()
@@ -32,6 +35,11 @@ public class LogitechSteeringWheel : MonoBehaviour
         // Find all child GameObjects that have the WheelControl script attached
 
         Debug.Log($"[LogitechSteeringWheel] Device Name: {SettingsController.DeviceController}");
+    
+        if(RuntimeInformation.IsOSPlatform(OSPlatform.Linux)) {
+            onLinux = true;
+            GetSteeringDevice();
+        }
 
 
 
@@ -59,7 +67,15 @@ public class LogitechSteeringWheel : MonoBehaviour
 
     void OnApplicationQuit()
     {
-        Debug.Log("SteeringShutdown:" + LogitechGSDK.LogiSteeringShutdown());
+        if(onLinux) {
+            if(linuxWheelDevice != null && linuxWheelDevice.IsOpen) {
+                linuxWheelDevice.Close();
+                linuxWheelDevice = null;
+            }
+            UsbDevice.Exit();
+        } else {
+            Debug.Log("SteeringShutdown:" + LogitechGSDK.LogiSteeringShutdown());
+        }
     }
 
     void OnGUI()
@@ -70,6 +86,56 @@ public class LogitechSteeringWheel : MonoBehaviour
         buttonStatus = GUI.TextArea(new Rect(720, 10, 300, 200), buttonStatus, 1000);
         GUI.Label(new Rect(10, 400, 800, 400), forcesLabel);
     }
+    
+    void GetSteeringDevice() {
+        UsbRegDeviceList allDevices = UsbDevice.AllDevices;
+        foreach (UsbRegistry usbRegistry in allDevices)
+        {
+            if(usbRegistry.Pid == 0xC266 && usbRegistry.Vid == 0x046D) {
+                if (usbRegistry.Open(out linuxWheelDevice))
+                {
+                    Debug.Log(linuxWheelDevice.Info.ToString());
+                    // for (int iConfig = 0; iConfig < linuxWheelDevice.Configs.Count; iConfig++)
+                    // {
+                    //     UsbConfigInfo configInfo = linuxWheelDevice.Configs[iConfig];
+                    //     Debug.Log(configInfo.ToString());
+
+                    //     ReadOnlyCollection<UsbInterfaceInfo> interfaceList = configInfo.InterfaceInfoList;
+                    //     for (int iInterface = 0; iInterface < interfaceList.Count; iInterface++)
+                    //     {
+                    //         UsbInterfaceInfo interfaceInfo = interfaceList[iInterface];
+                    //         Debug.Log(interfaceInfo.ToString());
+
+                    //         ReadOnlyCollection<UsbEndpointInfo> endpointList = interfaceInfo.EndpointInfoList;
+                    //         for (int iEndpoint = 0; iEndpoint < endpointList.Count; iEndpoint++)
+                    //         {
+                    //             Debug.Log(endpointList[iEndpoint].ToString());
+                    //         }
+                    //     }
+                    // }
+                    Debug.Log("Endpoints found: " + linuxWheelDevice.ActiveEndpoints.Count);
+                    foreach(UsbEndpointBase endpoint in linuxWheelDevice.ActiveEndpoints) 
+                    {
+                        Debug.Log("------------------------");
+                        Debug.Log("Endpoint: " + endpoint.EndpointInfo.Descriptor);
+                        Debug.Log("Type: " + endpoint.Type);
+                        Debug.Log("------------------------");
+                    }
+                    Debug.Log("Configs found: " + linuxWheelDevice.Configs.Count);
+                    foreach(UsbConfigInfo config in linuxWheelDevice.Configs) {
+                        Debug.Log("---------------------");
+                        Debug.Log("Config ID: " + config.Descriptor.ConfigID);
+                        Debug.Log("Config String: " + config.ConfigString);
+                        Debug.Log("---------------------");
+                    }
+                    // linuxWheelDevice.
+                    UsbDevice.Exit();
+                } else {
+                    Debug.Log("Can't open device with Pid: " + usbRegistry.Pid);
+                }
+            }
+        }
+    }
 
     // Update is called once per frame
     void Update()
@@ -77,10 +143,11 @@ public class LogitechSteeringWheel : MonoBehaviour
 
         if (SettingsController.DeviceController == "steeringWheel") //Check for what controller the user wants to use. For now hardcoded in SettingsController.cs
         {
-            Debug.Log("User chose steeringWheel!");
+            // Debug.Log("User chose steeringWheel!");
             //All the test functions are called on the first device plugged in(index = 0)
             if(!RuntimeInformation.IsOSPlatform(OSPlatform.Linux)) 
             {
+                // Windows (and MacOS?) steering logic
                 if (LogitechGSDK.LogiUpdate() && LogitechGSDK.LogiIsConnected(0))
                 {
                     LogitechGSDK.LogiPlaySpringForce(0, 0, 50, 50);
@@ -411,42 +478,19 @@ public class LogitechSteeringWheel : MonoBehaviour
                     actualState = "THIS WINDOW NEEDS TO BE IN FOREGROUND IN ORDER FOR THE SDK TO WORK PROPERLY";
                 }
             } else {
-                // UsbDeviceFinder usbDeviceFinder = new UsbDeviceFinder();
-                // Debug.Log(usbDeviceFinder.Pid);
-                // Dump all devices and descriptor information to console output.
-            UsbRegDeviceList allDevices = UsbDevice.AllDevices;
-            foreach (UsbRegistry usbRegistry in allDevices)
-            {
-                if (usbRegistry.Open(out MyUsbDevice))
-                {
-                    Debug.Log(MyUsbDevice.Info.ToString());
-                    for (int iConfig = 0; iConfig < MyUsbDevice.Configs.Count; iConfig++)
-                    {
-                        UsbConfigInfo configInfo = MyUsbDevice.Configs[iConfig];
-                        Debug.Log(configInfo.ToString());
-
-                        ReadOnlyCollection<UsbInterfaceInfo> interfaceList = configInfo.InterfaceInfoList;
-                        for (int iInterface = 0; iInterface < interfaceList.Count; iInterface++)
-                        {
-                            UsbInterfaceInfo interfaceInfo = interfaceList[iInterface];
-                            Debug.Log(interfaceInfo.ToString());
-
-                            ReadOnlyCollection<UsbEndpointInfo> endpointList = interfaceInfo.EndpointInfoList;
-                            for (int iEndpoint = 0; iEndpoint < endpointList.Count; iEndpoint++)
-                            {
-                                Debug.Log(endpointList[iEndpoint].ToString());
-                            }
-                        }
+                // Linux Steering Logic
+                foreach(UsbEndpointBase endpoint in linuxWheelDevice.ActiveEndpoints) {
+                    if(!knownEndpoints.Contains(endpoint.EndpointInfo.Descriptor.EndpointID)) {
+                        knownEndpoints.Add(endpoint.EndpointInfo.Descriptor.EndpointID);
+                        Debug.Log("New endpoint found!");
+                        Debug.Log("------------------------");
+                        Debug.Log("ID: " + endpoint.EndpointInfo.Descriptor.EndpointID);
+                        Debug.Log("Attributes" + endpoint.EndpointInfo.Descriptor.Attributes);
+                        Debug.Log("Type: " + endpoint.Type);
+                        Debug.Log("------------------------");
                     }
-                } else {
-                    Debug.Log("Can't open device with Pid: " + usbRegistry.Pid);
                 }
-            }
-
-
-            // Free usb resources.
-            // This is necessary for libusb-1.0 and Linux compatibility.
-            UsbDevice.Exit();
+                // Debug.Log(linuxWheelDevice.Info);
             }
         }
         else
