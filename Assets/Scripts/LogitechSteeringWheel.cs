@@ -1,15 +1,6 @@
 using UnityEngine;
 using System.Text;
 using UnityEngine.SceneManagement;
-using System.Runtime.InteropServices;
-using LibUsbDotNet.Info;
-using LibUsbDotNet;
-using System.Collections.ObjectModel;
-using LibUsbDotNet.Main;
-using System;
-using System.Linq;
-using UnityEngine.iOS;
-using System.Collections.Generic;
 
 public class LogitechSteeringWheel : MonoBehaviour
 {
@@ -26,9 +17,6 @@ public class LogitechSteeringWheel : MonoBehaviour
     private float gas;
     private float brake;
     string[] activeForceAndEffect;
-    UsbDevice linuxWheelDevice;
-    bool onLinux;
-    List<byte> knownEndpoints = new();
 
     // Use this for initialization
     void Start()
@@ -37,13 +25,6 @@ public class LogitechSteeringWheel : MonoBehaviour
         cameraController = GetComponent<CameraController>();
 
         Debug.Log($"[LogitechSteeringWheel] Device Name: {SettingsController.DeviceController}");
-    
-        if(RuntimeInformation.IsOSPlatform(OSPlatform.Linux)) {
-            onLinux = true;
-            GetSteeringDevice();
-        }
-
-
 
         activeForces = "";
         propertiesEdit = "";
@@ -64,20 +45,12 @@ public class LogitechSteeringWheel : MonoBehaviour
         forcesLabel += "Set example controller properties : PageUp\n";
         forcesLabel += "Play Leds : P\n";
         activeForceAndEffect = new string[9];
-        // Debug.Log("SteeringInit:" + LogitechGSDK.LogiSteeringInitialize(false));
+        Debug.Log("SteeringInit:" + LogitechGSDK.LogiSteeringInitialize(false));
     }
 
     void OnApplicationQuit()
     {
-        if(onLinux) {
-            if(linuxWheelDevice != null && linuxWheelDevice.IsOpen) {
-                linuxWheelDevice.Close();
-                linuxWheelDevice = null;
-            }
-            UsbDevice.Exit();
-        } else {
-            Debug.Log("SteeringShutdown:" + LogitechGSDK.LogiSteeringShutdown());
-        }
+        Debug.Log("SteeringShutdown:" + LogitechGSDK.LogiSteeringShutdown());
     }
 
     void OnGUI()
@@ -87,56 +60,6 @@ public class LogitechSteeringWheel : MonoBehaviour
         actualState = GUI.TextArea(new Rect(410, 10, 300, 200), actualState, 1000);
         buttonStatus = GUI.TextArea(new Rect(720, 10, 300, 200), buttonStatus, 1000);
         GUI.Label(new Rect(10, 400, 800, 400), forcesLabel);
-    }
-    
-    void GetSteeringDevice() {
-        UsbRegDeviceList allDevices = UsbDevice.AllDevices;
-        foreach (UsbRegistry usbRegistry in allDevices)
-        {
-            if(usbRegistry.Pid == 0xC266 && usbRegistry.Vid == 0x046D) {
-                if (usbRegistry.Open(out linuxWheelDevice))
-                {
-                    Debug.Log(linuxWheelDevice.Info.ToString());
-                    // for (int iConfig = 0; iConfig < linuxWheelDevice.Configs.Count; iConfig++)
-                    // {
-                    //     UsbConfigInfo configInfo = linuxWheelDevice.Configs[iConfig];
-                    //     Debug.Log(configInfo.ToString());
-
-                    //     ReadOnlyCollection<UsbInterfaceInfo> interfaceList = configInfo.InterfaceInfoList;
-                    //     for (int iInterface = 0; iInterface < interfaceList.Count; iInterface++)
-                    //     {
-                    //         UsbInterfaceInfo interfaceInfo = interfaceList[iInterface];
-                    //         Debug.Log(interfaceInfo.ToString());
-
-                    //         ReadOnlyCollection<UsbEndpointInfo> endpointList = interfaceInfo.EndpointInfoList;
-                    //         for (int iEndpoint = 0; iEndpoint < endpointList.Count; iEndpoint++)
-                    //         {
-                    //             Debug.Log(endpointList[iEndpoint].ToString());
-                    //         }
-                    //     }
-                    // }
-                    Debug.Log("Endpoints found: " + linuxWheelDevice.ActiveEndpoints.Count);
-                    foreach(UsbEndpointBase endpoint in linuxWheelDevice.ActiveEndpoints) 
-                    {
-                        Debug.Log("------------------------");
-                        Debug.Log("Endpoint: " + endpoint.EndpointInfo.Descriptor);
-                        Debug.Log("Type: " + endpoint.Type);
-                        Debug.Log("------------------------");
-                    }
-                    Debug.Log("Configs found: " + linuxWheelDevice.Configs.Count);
-                    foreach(UsbConfigInfo config in linuxWheelDevice.Configs) {
-                        Debug.Log("---------------------");
-                        Debug.Log("Config ID: " + config.Descriptor.ConfigID);
-                        Debug.Log("Config String: " + config.ConfigString);
-                        Debug.Log("---------------------");
-                    }
-                    // linuxWheelDevice.
-                    UsbDevice.Exit();
-                } else {
-                    Debug.Log("Can't open device with Pid: " + usbRegistry.Pid);
-                }
-            }
-        }
     }
 
     // Update is called once per frame
@@ -148,12 +71,7 @@ public class LogitechSteeringWheel : MonoBehaviour
 
         if (SettingsController.DeviceController == "steeringWheel") //Check for what controller the user wants to use. For now hardcoded in SettingsController.cs
         {
-            // Debug.Log("User chose steeringWheel!");
-            //All the test functions are called on the first device plugged in(index = 0)
-            if(!RuntimeInformation.IsOSPlatform(OSPlatform.Linux)) 
-            {
-                // Windows (and MacOS?) steering logic
-                if (LogitechGSDK.LogiUpdate() && LogitechGSDK.LogiIsConnected(0))
+            if (LogitechGSDK.LogiUpdate() && LogitechGSDK.LogiIsConnected(0))
                 {
                     LogitechGSDK.LogiPlaySpringForce(0, 0, 50, 50);
                     activeForceAndEffect[0] = "Spring Force\n ";
@@ -486,21 +404,6 @@ public class LogitechSteeringWheel : MonoBehaviour
                 {
                     actualState = "THIS WINDOW NEEDS TO BE IN FOREGROUND IN ORDER FOR THE SDK TO WORK PROPERLY";
                 }
-            } else {
-                // Linux Steering Logic
-                // foreach(UsbEndpointBase endpoint in linuxWheelDevice.ActiveEndpoints) {
-                //     if(!knownEndpoints.Contains(endpoint.EndpointInfo.Descriptor.EndpointID)) {
-                //         knownEndpoints.Add(endpoint.EndpointInfo.Descriptor.EndpointID);
-                //         Debug.Log("New endpoint found!");
-                //         Debug.Log("------------------------");
-                //         Debug.Log("ID: " + endpoint.EndpointInfo.Descriptor.EndpointID);
-                //         Debug.Log("Attributes" + endpoint.EndpointInfo.Descriptor.Attributes);
-                //         Debug.Log("Type: " + endpoint.Type);
-                //         Debug.Log("------------------------");
-                //     }
-                // }
-                // Debug.Log(linuxWheelDevice.Info);
-            }
         }
         else
         {
