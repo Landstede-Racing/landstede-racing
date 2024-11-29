@@ -3,7 +3,27 @@ guid: 669c2449fdb0179489b66f9e10b99757
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Chainlink.001
+    second: {fileID: 2100000, guid: 297baef4251fa1e41b4263610245984b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Chainlink.002
+    second: {fileID: 2100000, guid: 297baef4251fa1e41b4263610245984b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Chainlink.003
+    second: {fileID: 2100000, guid: 297baef4251fa1e41b4263610245984b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Curbs
+    second: {fileID: 2100000, guid: 3732cce64cca678489867ce27a180e1c, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

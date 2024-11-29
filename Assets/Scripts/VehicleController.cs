@@ -69,6 +69,8 @@ public class VehicleController : MonoBehaviour
 
         // Adjust center of mass vertically, to help prevent the car from rolling
         rigidBody.centerOfMass += Vector3.up * centreOfGravityOffset;
+
+
     }
 
     public void Update()
@@ -246,16 +248,19 @@ public class VehicleController : MonoBehaviour
     public void SetSteeringAngle(float steeringAngle)
     {
         this.steeringAngle = steeringAngle;
+        // Debug.Log($"SetSteeringAngle called with value: {steeringAngle} yippy!!");
     }
 
     public void SetGas(float gas)
     {
         this.gas = gas;
+        // Debug.Log($"SetGas called with value: {gas} yippy");
     }
 
     public void SetBrake(float brake)
     {
         this.brake = brake;
+        // Debug.Log($"Setbrake called with value: {brake} yippy!!!!!!!!");
     }
 
     public void SetGear(int gear)
