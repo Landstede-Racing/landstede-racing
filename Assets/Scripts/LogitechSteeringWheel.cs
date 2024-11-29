@@ -14,6 +14,7 @@ using System.Collections.Generic;
 public class LogitechSteeringWheel : MonoBehaviour
 {
     public VehicleController vehicleController;
+    private CameraController cameraController;
     LogitechGSDK.LogiControllerPropertiesData properties;
     private string actualState;
     private string activeForces;
@@ -33,6 +34,7 @@ public class LogitechSteeringWheel : MonoBehaviour
     void Start()
     {
         // Find all child GameObjects that have the WheelControl script attached
+        cameraController = GetComponent<CameraController>();
 
         Debug.Log($"[LogitechSteeringWheel] Device Name: {SettingsController.DeviceController}");
     
@@ -140,6 +142,9 @@ public class LogitechSteeringWheel : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(Input.GetKeyUp(KeyCode.C)) {
+            cameraController.NextCamera();
+        }
 
         if (SettingsController.DeviceController == "steeringWheel") //Check for what controller the user wants to use. For now hardcoded in SettingsController.cs
         {
@@ -195,6 +200,10 @@ public class LogitechSteeringWheel : MonoBehaviour
                     if (LogitechGSDK.LogiButtonTriggered(0, 7))
                     {
                         vehicleController.ToggleDRS();
+                    }
+                    if(LogitechGSDK.LogiButtonTriggered(0, 10))
+                    {
+                        cameraController.NextCamera();
                     }
 
                     if (LogitechGSDK.LogiButtonTriggered(0, 23))
@@ -479,17 +488,17 @@ public class LogitechSteeringWheel : MonoBehaviour
                 }
             } else {
                 // Linux Steering Logic
-                foreach(UsbEndpointBase endpoint in linuxWheelDevice.ActiveEndpoints) {
-                    if(!knownEndpoints.Contains(endpoint.EndpointInfo.Descriptor.EndpointID)) {
-                        knownEndpoints.Add(endpoint.EndpointInfo.Descriptor.EndpointID);
-                        Debug.Log("New endpoint found!");
-                        Debug.Log("------------------------");
-                        Debug.Log("ID: " + endpoint.EndpointInfo.Descriptor.EndpointID);
-                        Debug.Log("Attributes" + endpoint.EndpointInfo.Descriptor.Attributes);
-                        Debug.Log("Type: " + endpoint.Type);
-                        Debug.Log("------------------------");
-                    }
-                }
+                // foreach(UsbEndpointBase endpoint in linuxWheelDevice.ActiveEndpoints) {
+                //     if(!knownEndpoints.Contains(endpoint.EndpointInfo.Descriptor.EndpointID)) {
+                //         knownEndpoints.Add(endpoint.EndpointInfo.Descriptor.EndpointID);
+                //         Debug.Log("New endpoint found!");
+                //         Debug.Log("------------------------");
+                //         Debug.Log("ID: " + endpoint.EndpointInfo.Descriptor.EndpointID);
+                //         Debug.Log("Attributes" + endpoint.EndpointInfo.Descriptor.Attributes);
+                //         Debug.Log("Type: " + endpoint.Type);
+                //         Debug.Log("------------------------");
+                //     }
+                // }
                 // Debug.Log(linuxWheelDevice.Info);
             }
         }
