@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class DamageController
 {
@@ -7,19 +8,18 @@ public class DamageController
 
     void Start()
     {
-        foreach (GameObject part in DamagableParts)
+        foreach (DamagablePart part in DamagableParts)
         {
-            DamagablePart damagablePart = part.GetComponent<DamagablePart>();
-            damages.Add(damagablePart, 0);
+            damages.Add(part, 0);
         }
     }
 
-    public int GetDamage(GameObject DamagablePart)
+    public int GetDamage(DamagablePart part)
     {
         return damages[part];
     }
 
-    public void SetDamage(GameObject DamagablePart, int damage)
+    public void SetDamage(DamagablePart part, int damage)
     {
         damages[part] = damage;
     }

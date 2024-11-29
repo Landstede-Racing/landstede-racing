@@ -1,8 +1,10 @@
 using UnityEngine;
+using System.Collections.Generic;
+using System.Linq;
 
 public class PartController
 {
-    // <Location, GameObject> Location is the location of the part, GameObject is the part itself
+    // <Location, GameObject> Location is the location of the part, GameObject is the part itself   
     public Dictionary<Location, Part> parts = new Dictionary<Location, Part>();
     public void SetPart(Location location, Part part)
     {
