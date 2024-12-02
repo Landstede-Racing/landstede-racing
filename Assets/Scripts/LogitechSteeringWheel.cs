@@ -91,7 +91,7 @@ public class LogitechSteeringWheel : MonoBehaviour
 
 
                     // Calculate steering angle with a max of 180 degrees, mapped to a value from -1 to 1
-                    steeringAngle = Mathf.InverseLerp(-32768f / 1.25f, 32767f / 1.25f, rec.lX) * 2 - 1;
+                    steeringAngle = Mathf.InverseLerp(-32768f / 2.5f, 32767f / 2.5f, rec.lX) * 2 - 1;
                     vehicleController.SetSteeringAngle(steeringAngle);
 
                     // Calculate gas amount mapped to a value from 0 to 1
