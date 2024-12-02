@@ -127,6 +127,7 @@ public class VehicleController : MonoBehaviour
     private void ApplyMotor()
     {
         List<int> rpms = new();
+        List<int> frontRpms = new();
 
         foreach (var wheel in wheels)
         {
@@ -143,11 +144,14 @@ public class VehicleController : MonoBehaviour
             else
             {
                 // Debug.Log("Front RPM: " + wheel.WheelCollider.rpm);
+                frontRpms.Add((int)wheel.WheelCollider.rpm);
             }
         }
 
         float averageWheelRPM = Math.Abs((rpms[0] + rpms[1]) / 2);
         wheelRPM = Math.Abs(averageWheelRPM * gearRatios[gear] * differentialRatio);
+        Debug.Log("Front RPM: " + (frontRpms[0] + frontRpms[1]) / 2);
+        Debug.Log("Back RPM: " + averageWheelRPM);
     }
 
     // Calculate wheel torque from engine RPM
@@ -168,7 +172,7 @@ public class VehicleController : MonoBehaviour
         // wheelRPM = Mathf.Abs((colliders.RRWheel.rpm + colliders.RLWheel.rpm) / 2f) * gearRatios[gear] * differentialRatio;
         currentEngineRPM = Mathf.Lerp(currentEngineRPM, Mathf.Max(idleRPM - 100, wheelRPM), Time.deltaTime * 3f);
         rpmText.text = currentEngineRPM + " RPM";
-        torque = hpToRPMCurve.Evaluate(currentEngineRPM / redLine) * engineHP / currentEngineRPM * gearRatios[gear] * differentialRatio * 5252f;
+        torque = hpToRPMCurve.Evaluate((currentEngineRPM - 4000) / (redLine - 4000)) * engineHP / currentEngineRPM * gearRatios[gear] * differentialRatio * 5252f;
         // if (isEngineRunning > 0)
         // {
         //     currentEngineRPM = Mathf.Lerp(currentEngineRPM, Mathf.Max(idleRPM, redLine * gas) + UnityEngine.Random.Range(-50, 50), Time.deltaTime);
