@@ -52,7 +52,6 @@ public class VehicleController : MonoBehaviour
     public TMP_Text gearText;
     public TMP_Text speedText;
     public TMP_Text rpmText;
-
     public Transform backWing;
 
     WheelControl[] wheels;
@@ -96,7 +95,10 @@ public class VehicleController : MonoBehaviour
         {
             gearText.text = (gear - 1).ToString();
         }
-        speedText.text = (int)(Vector3.Dot(transform.forward, rigidBody.linearVelocity) * 3.6) + " KM/U";
+        // speedText.text = (int)(Vector3.Dot(transform.forward, rigidBody.linearVelocity) * 3.6) + " KM/U";
+        speedText.text = $"<size=120%>{(int)(Vector3.Dot(transform.forward, rigidBody.linearVelocity) * 3.6)}</size>\n<size=50%>KM/U</size>";
+
+
 
 
         // Change linear drag (!!TEMPORARY, TO BE CHANGED!!)
@@ -120,6 +122,8 @@ public class VehicleController : MonoBehaviour
 
         // Apply the calculated downforce to the Constant Force component on the car.
         downForce.relativeForce = new(0, currentDownForce, 0);
+
+
     }
 
 
@@ -171,7 +175,7 @@ public class VehicleController : MonoBehaviour
         // }
         // wheelRPM = Mathf.Abs((colliders.RRWheel.rpm + colliders.RLWheel.rpm) / 2f) * gearRatios[gear] * differentialRatio;
         currentEngineRPM = Mathf.Lerp(currentEngineRPM, Mathf.Max(idleRPM - 100, wheelRPM), Time.deltaTime * 3f);
-        rpmText.text = currentEngineRPM + " RPM";
+        rpmText.text = $"<size=120%><align=right>{(int)currentEngineRPM}</align></size>\n<align=right><size=50%>RPM</size></align>";
         torque = hpToRPMCurve.Evaluate((currentEngineRPM - 4000) / (redLine - 4000)) * engineHP / currentEngineRPM * gearRatios[gear] * differentialRatio * 5252f;
         // if (isEngineRunning > 0)
         // {
@@ -255,7 +259,7 @@ public class VehicleController : MonoBehaviour
     public void SetGas(float gas)
     {
         this.gas = gas;
-        // Debug.Log($"SetGas called with value: {gas} yippy");
+        Debug.Log($"SetGas called with value: {gas} yippy");
     }
 
     public void SetBrake(float brake)
