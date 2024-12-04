@@ -96,7 +96,7 @@ public class VehicleController : MonoBehaviour
             gearText.text = (gear - 1).ToString();
         }
         // speedText.text = (int)(Vector3.Dot(transform.forward, rigidBody.linearVelocity) * 3.6) + " KM/U";
-        speedText.text = $"<size=150%>{(int)(Vector3.Dot(transform.forward, rigidBody.linearVelocity) * 3.6)}</size>\n<size=50%>KM/U</size>";
+        speedText.text = $"<size=120%>{(int)(Vector3.Dot(transform.forward, rigidBody.linearVelocity) * 3.6)}</size>\n<size=50%>KM/U</size>";
 
 
 
@@ -171,7 +171,7 @@ public class VehicleController : MonoBehaviour
         // }
         // wheelRPM = Mathf.Abs((colliders.RRWheel.rpm + colliders.RLWheel.rpm) / 2f) * gearRatios[gear] * differentialRatio;
         currentEngineRPM = Mathf.Lerp(currentEngineRPM, Mathf.Max(idleRPM - 100, wheelRPM), Time.deltaTime * 3f);
-        rpmText.text = $"<size=150%>{(int)currentEngineRPM}</size>\n<align=center><size=50%>RPM</size></align>";
+        rpmText.text = $"<size=120%><align=right>{(int)currentEngineRPM}</align></size>\n<align=right><size=50%>RPM</size></align>";
         torque = hpToRPMCurve.Evaluate(currentEngineRPM / redLine) * engineHP / currentEngineRPM * gearRatios[gear] * differentialRatio * 5252f;
         // if (isEngineRunning > 0)
         // {
@@ -255,7 +255,7 @@ public class VehicleController : MonoBehaviour
     public void SetGas(float gas)
     {
         this.gas = gas;
-        // Debug.Log($"SetGas called with value: {gas} yippy");
+        Debug.Log($"SetGas called with value: {gas} yippy");
     }
 
     public void SetBrake(float brake)
