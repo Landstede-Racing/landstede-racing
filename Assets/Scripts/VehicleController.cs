@@ -176,7 +176,7 @@ public class VehicleController : MonoBehaviour
         // wheelRPM = Mathf.Abs((colliders.RRWheel.rpm + colliders.RLWheel.rpm) / 2f) * gearRatios[gear] * differentialRatio;
         currentEngineRPM = Mathf.Lerp(currentEngineRPM, Mathf.Max(idleRPM - 100, wheelRPM), Time.deltaTime * 3f);
         rpmText.text = $"<size=120%><align=right>{(int)currentEngineRPM}</align></size>\n<align=right><size=50%>RPM</size></align>";
-        torque = hpToRPMCurve.Evaluate((currentEngineRPM - 4000) / (redLine - 4000)) * engineHP / currentEngineRPM * gearRatios[gear] * differentialRatio * 5252f;
+        torque = hpToRPMCurve.Evaluate((currentEngineRPM - 4500) / (redLine - 4500)) * engineHP / currentEngineRPM * gearRatios[gear] * differentialRatio * 5252f;
         // if (isEngineRunning > 0)
         // {
         //     currentEngineRPM = Mathf.Lerp(currentEngineRPM, Mathf.Max(idleRPM, redLine * gas) + UnityEngine.Random.Range(-50, 50), Time.deltaTime);

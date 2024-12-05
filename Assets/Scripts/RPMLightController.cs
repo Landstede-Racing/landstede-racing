@@ -14,7 +14,7 @@ public class RPMLightController : MonoBehaviour
     public TMP_Text drsText;
     private Color offColor;
 
-    public Image drsBar;
+    // public Image drsBar;
 
     void Start()
     {
@@ -54,13 +54,13 @@ public class RPMLightController : MonoBehaviour
         if (vehicleController.drsEnabled)
         {
             drsText.text = "DRS";
-            drsBar.color = greenColor;
+            // drsBar.color = greenColor;
             drsText.color = Color.white;
         }
         else if (vehicleController.drsAvailable)
         {
             drsText.text = "DRS Available";
-            drsBar.color = Color.yellow;
+            // drsBar.color = Color.yellow;
             drsText.color = Color.black;
 
         }
@@ -68,7 +68,7 @@ public class RPMLightController : MonoBehaviour
         {
             drsText.text = "DRS off";
             drsText.color = Color.red;
-            drsBar.color = offColor;
+            // drsBar.color = offColor;
 
         }
     }
