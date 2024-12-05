@@ -42,8 +42,13 @@ public class VehicleController : MonoBehaviour
 
     public AnimationCurve downForceCurve;
     public float currentDownForce;
-    public ConstantForce downForce;
-    public float maxDownForce;
+    // public ConstantForce downForce;
+    public float maxFrontDownForce;
+    public float maxRearDownForce;
+    public ConstantForce leftFrontWing;
+    public ConstantForce rightFrontWing;
+    public ConstantForce rearWing;
+
 
     public float engineHP;
     public float maxEngineRPM;
@@ -75,6 +80,7 @@ public class VehicleController : MonoBehaviour
         ApplyMotor();
         ApplySteering();
         ApplyBrake();
+        ApplyDownForce();
 
 
         // Log gas and brake inputs
@@ -116,14 +122,28 @@ public class VehicleController : MonoBehaviour
             backWingRotation.x = 20;
             backWing.eulerAngles = backWingRotation;
         }
+    }
 
-        // Calculate current downforce from current speed divided by maxSpeed, times maxDownForce, and clamp it.
-        currentDownForce = Math.Clamp(downForceCurve.Evaluate((float)(Vector3.Dot(transform.forward, rigidBody.linearVelocity) * 3.6 / maxSpeed)) * maxDownForce, 0f, maxDownForce);
+    private void ApplyDownForce()
+    {
+        // TODO: Change values to newton instead of kg
+        float leftFront = CalculateDownForce(maxFrontDownForce);
+        leftFrontWing.relativeForce = new(0, leftFront, 0);
+        Debug.Log("Left Front: " + leftFront);
 
-        // Apply the calculated downforce to the Constant Force component on the car.
-        downForce.relativeForce = new(0, currentDownForce, 0);
+        float rightFront = CalculateDownForce(maxFrontDownForce);
+        rightFrontWing.relativeForce = new(0, rightFront, 0);
+        Debug.Log("Right Front: " + rightFront);
 
+        float rear = CalculateDownForce(maxRearDownForce);
+        rearWing.relativeForce = new(0, rear, 0);
+        Debug.Log("Rear: " + rear);
+    }
 
+    private float CalculateDownForce(float max)
+    {
+        float force = Math.Clamp(downForceCurve.Evaluate((float)(Vector3.Dot(transform.forward, rigidBody.linearVelocity) * 3.6 / maxSpeed)) * max, 0f, max);
+        return force;
     }
 
 
