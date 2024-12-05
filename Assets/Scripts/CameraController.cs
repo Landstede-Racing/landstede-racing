@@ -3,7 +3,8 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     public Camera[] cameras;
-    public Camera reverseCam;
+    public Camera[] reverseCameras;
+    // public Camera reverseCam;
     public int currentCam;
 
     private void Start() {
@@ -34,7 +35,7 @@ public class CameraController : MonoBehaviour
     }
 
     public void SetReverseCam(bool active) {
-        reverseCam.gameObject.SetActive(active);
+        reverseCameras[currentCam].gameObject.SetActive(active);
         cameras[currentCam].gameObject.SetActive(!active);
     }
 }
