@@ -4,7 +4,6 @@ public class CameraController : MonoBehaviour
 {
     public Camera[] cameras;
     public Camera[] reverseCameras;
-    // public Camera reverseCam;
     public int currentCam;
 
     private void Start() {
