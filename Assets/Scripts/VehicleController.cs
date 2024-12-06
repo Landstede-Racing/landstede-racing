@@ -57,6 +57,9 @@ public class VehicleController : MonoBehaviour
     WheelControl[] wheels;
     Rigidbody rigidBody;
 
+    private int currentGear = 1; //Bc: R = 0 and N = 1
+    private int maxGear = 9;
+
     public void Start()
     {
         wheels = GetComponentsInChildren<WheelControl>();
@@ -226,16 +229,21 @@ public class VehicleController : MonoBehaviour
     // Coroutine for gear changing
     public IEnumerator ChangeGear(int gearChange)
     {
-        gearState = GearState.CheckingChange;
-        if (gear + gearChange >= 0)
+        int newGear = currentGear + gearChange;
+        if (newGear >= 0 && newGear <= maxGear) //Check if newGear isnt above 9 (Gear 8)
         {
-            gearState = GearState.Changing;
-            yield return new WaitForSeconds(changeGearTime);
-            gear += gearChange;
-        }
+            currentGear = newGear;
+            gearState = GearState.CheckingChange;
+            if (gear + gearChange >= 0)
+            {
+                gearState = GearState.Changing;
+                yield return new WaitForSeconds(changeGearTime);
+                gear += gearChange;
+            }
 
-        if (gearState != GearState.Neutral)
-            gearState = GearState.Running;
+            if (gearState != GearState.Neutral)
+                gearState = GearState.Running;
+        }
     }
 
     // Speed ratio for engine audio
