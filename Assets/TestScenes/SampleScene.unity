@@ -4017,11 +4017,11 @@ PrefabInstance:
       objectReference: {fileID: 10754956}
     - target: {fileID: 6864331406162114436, guid: ea2c363f236b97e448d0c8cf72911364, type: 3}
       propertyPath: maxRearDownForce
-      value: 630
+      value: 6178
       objectReference: {fileID: 0}
     - target: {fileID: 6864331406162114436, guid: ea2c363f236b97e448d0c8cf72911364, type: 3}
       propertyPath: maxFrontDownForce
-      value: 225
+      value: 2206
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
