@@ -45,9 +45,11 @@ public class VehicleController : MonoBehaviour
     // public ConstantForce downForce;
     public float maxFrontDownForce;
     public float maxRearDownForce;
+    public float maxDiffuserDownForce;
     public ConstantForce leftFrontWing;
     public ConstantForce rightFrontWing;
     public ConstantForce rearWing;
+    public ConstantForce diffuser;
 
 
     public float engineHP;
@@ -138,6 +140,10 @@ public class VehicleController : MonoBehaviour
         float rear = CalculateDownForce(maxRearDownForce);
         rearWing.relativeForce = new(0, rear, 0);
         Debug.Log("Rear: " + rear);
+
+        float diff = CalculateDownForce(maxDiffuserDownForce);
+        diffuser.relativeForce = new(0, diff, 0);
+        Debug.Log("Diffuser: " + diff);
     }
 
     private float CalculateDownForce(float max)
