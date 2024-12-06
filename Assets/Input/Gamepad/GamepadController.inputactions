@@ -58,6 +58,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "LookBack",
+                    "type": "Button",
+                    "id": "de059d23-7d75-4a3a-8754-4cd6d53db5a9",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "NextCam",
+                    "type": "Button",
+                    "id": "55e0b954-b99b-4fc7-863e-1771d4158043",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -97,7 +115,7 @@
                 {
                     "name": "",
                     "id": "77b95c53-ae84-49d0-bb01-62f54679bba4",
-                    "path": "<Gamepad>/rightShoulder",
+                    "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -108,7 +126,7 @@
                 {
                     "name": "",
                     "id": "b4a2331c-4f4f-4a47-be80-5bb186fcc98b",
-                    "path": "<Gamepad>/leftShoulder",
+                    "path": "<Gamepad>/buttonWest",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -119,11 +137,33 @@
                 {
                     "name": "",
                     "id": "04659590-e919-4da5-85aa-77e6e8e218d6",
-                    "path": "<Gamepad>/buttonWest",
+                    "path": "<Gamepad>/buttonNorth",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "DRS",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0e776270-2655-4870-8923-54240a569e36",
+                    "path": "<Gamepad>/rightStickPress",
+                    "interactions": "Hold",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LookBack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a670f51e-1e72-43ea-a578-b2862e1107d2",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "NextCam",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
