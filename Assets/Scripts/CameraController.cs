@@ -6,34 +6,46 @@ public class CameraController : MonoBehaviour
     public Camera[] reverseCameras;
     public int currentCam;
 
-    private void Start() {
-        
+    private void Start()
+    {
+
     }
 
-    private void Update() {
-        
+    private void Update()
+    {
+
     }
 
-    public void SetCamera(int camera) {
-        if(currentCam >= cameras.Length) camera = cameras.Length - 1;
+    public void SetCamera(int camera)
+    {
+        if (currentCam >= cameras.Length) camera = cameras.Length - 1;
         cameras[currentCam].gameObject.SetActive(false);
         cameras[camera].gameObject.SetActive(true);
         currentCam = camera;
     }
 
-    public void NextCamera() {
+    public void NextCamera()
+    {
         int newCam = currentCam + 1;
-        if(newCam >= cameras.Length) newCam = 0;
-        SetCamera(newCam); 
-    }
-
-    public void PreviousCamera() {
-        int newCam = currentCam - 1;
-        if(newCam <= 0) newCam = cameras.Length - 1;
+        if (newCam >= cameras.Length) newCam = 0;
         SetCamera(newCam);
     }
 
-    public void SetReverseCam(bool active) {
+    public void PreviousCamera()
+    {
+        int newCam = currentCam - 1;
+        if (newCam <= 0) newCam = cameras.Length - 1;
+        SetCamera(newCam);
+    }
+
+    public void SetReverseCam(bool active)
+    {
+        if (reverseCameras.Length == 0 || cameras.Length == 0)
+        {
+            Debug.LogWarning("Cameras or reverseCameras not set up properly.");
+            return;
+        }
+
         reverseCameras[currentCam].gameObject.SetActive(active);
         cameras[currentCam].gameObject.SetActive(!active);
     }
