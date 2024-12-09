@@ -73,7 +73,8 @@ public class VehicleController : MonoBehaviour
         // Adjust center of mass vertically, to help prevent the car from rolling
         rigidBody.centerOfMass += Vector3.up * centreOfGravityOffset;
 
-
+        // rigidBody.linearVelocity = new(0, 0, -83.3333f);
+        // drsEnabled = true;
     }
 
     public void Update()
@@ -130,19 +131,19 @@ public class VehicleController : MonoBehaviour
     {
         // TODO: Change values to newton instead of kg
         float leftFront = CalculateDownForce(maxFrontDownForce);
-        leftFrontWing.relativeForce = new(0, leftFront, 0);
+        leftFrontWing.relativeForce = new(0, -leftFront, 0);
         Debug.Log("Left Front: " + leftFront);
 
         float rightFront = CalculateDownForce(maxFrontDownForce);
-        rightFrontWing.relativeForce = new(0, rightFront, 0);
+        rightFrontWing.relativeForce = new(0, -rightFront, 0);
         Debug.Log("Right Front: " + rightFront);
 
         float rear = CalculateDownForce(maxRearDownForce);
-        rearWing.relativeForce = new(0, rear, 0);
+        rearWing.relativeForce = new(0, -rear, 0);
         Debug.Log("Rear: " + rear);
 
         float diff = CalculateDownForce(maxDiffuserDownForce);
-        diffuser.relativeForce = new(0, diff, 0);
+        diffuser.relativeForce = new(0, -diff, 0);
         Debug.Log("Diffuser: " + diff);
     }
 
