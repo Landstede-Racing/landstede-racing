@@ -7,6 +7,7 @@ public class InputController : MonoBehaviour
     public VehicleController vehicleController;
     private GamepadController gamepadControls;
     private KeyboardController keyboardControls;
+    public CameraController cameraController;
 
     void Awake()
     {
@@ -102,6 +103,25 @@ public class InputController : MonoBehaviour
             Debug.Log("DRS TOGGLE!");
             vehicleController.ToggleDRS();
         }
+
+        if (gamepadControls.vehicleControls.LookBack.triggered)
+        {
+            Debug.Log("Gamepad Lookback toggled!");
+            cameraController.SetReverseCam(true);
+        }
+        else if (gamepadControls.vehicleControls.LookBack.WasReleasedThisFrame())
+        {
+            Debug.Log("Gamepad Lookback Released");
+            cameraController.SetReverseCam(false);
+        }
+
+        if (gamepadControls.vehicleControls.NextCam.triggered)
+        {
+            Debug.Log("Next Cam pressed.");
+            cameraController.NextCamera();
+        }
+
+
     }
 
     private void ProcessKeyboardInputs()
