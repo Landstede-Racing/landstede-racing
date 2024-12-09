@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class RPMLightController : MonoBehaviour
 {
@@ -10,9 +11,17 @@ public class RPMLightController : MonoBehaviour
     public Color redColor;
     public Color blueColor;
 
+    public TMP_Text drsText;
+    private Color offColor;
+
+    // public Image drsBar;
+
     void Start()
     {
         lights = GetComponentsInChildren<Image>();
+
+        offColor = new Color(0.5f, 0.5f, 0.5f, 0.5f);
+        greenColor = new Color(0f, 1f, 0f, 0.5f);
     }
 
     void Update()
@@ -28,17 +37,39 @@ public class RPMLightController : MonoBehaviour
             else light.color = Color.gray;
 
             // Check light 14 for DRS enabled
-            if (j == 13)
+            if (j == 13 && vehicleController.drsEnabled)
             {
-                if (vehicleController.drsEnabled) light.color = blueColor;
+                light.color = blueColor;
             }
 
             // Check light 15 for DRS available
-            if (j == 14)
+            if (j == 14 && vehicleController.drsAvailable)
             {
-                if (vehicleController.drsAvailable) light.color = blueColor;
+                light.color = blueColor;
             }
             j++;
+        }
+
+        //TODO: DRS zone distence?! instead of the text.
+        if (vehicleController.drsEnabled)
+        {
+            drsText.text = "DRS";
+            // drsBar.color = greenColor;
+            drsText.color = Color.white;
+        }
+        else if (vehicleController.drsAvailable)
+        {
+            drsText.text = "DRS Available";
+            // drsBar.color = Color.yellow;
+            drsText.color = Color.black;
+
+        }
+        else
+        {
+            drsText.text = "DRS off";
+            drsText.color = Color.red;
+            // drsBar.color = offColor;
+
         }
     }
 }
