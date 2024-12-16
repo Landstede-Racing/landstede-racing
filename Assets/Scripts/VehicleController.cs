@@ -135,19 +135,19 @@ public class VehicleController : MonoBehaviour
         // TODO: Change values to newton instead of kg
         float leftFront = CalculateDownForce(maxFrontDownForce);
         leftFrontWing.relativeForce = new(0, -leftFront, 0);
-        Debug.Log("Left Front: " + leftFront);
+        // Debug.Log("Left Front: " + leftFront);
 
         float rightFront = CalculateDownForce(maxFrontDownForce);
         rightFrontWing.relativeForce = new(0, -rightFront, 0);
-        Debug.Log("Right Front: " + rightFront);
+        // Debug.Log("Right Front: " + rightFront);
 
         float rear = CalculateDownForce(maxRearDownForce);
         rearWing.relativeForce = new(0, -rear, 0);
-        Debug.Log("Rear: " + rear);
+        // Debug.Log("Rear: " + rear);
 
         float diff = CalculateDownForce(maxDiffuserDownForce);
         diffuser.relativeForce = new(0, -diff, 0);
-        Debug.Log("Diffuser: " + diff);
+        // Debug.Log("Diffuser: " + diff);
     }
 
     private float CalculateDownForce(float max)
@@ -184,8 +184,8 @@ public class VehicleController : MonoBehaviour
 
         float averageWheelRPM = Math.Abs((rpms[0] + rpms[1]) / 2);
         wheelRPM = Math.Abs(averageWheelRPM * gearRatios[gear] * differentialRatio);
-        Debug.Log("Front RPM: " + (frontRpms[0] + frontRpms[1]) / 2);
-        Debug.Log("Back RPM: " + averageWheelRPM);
+        // Debug.Log("Front RPM: " + (frontRpms[0] + frontRpms[1]) / 2);
+        // Debug.Log("Back RPM: " + averageWheelRPM);
     }
 
     // Calculate wheel torque from engine RPM
@@ -294,7 +294,7 @@ public class VehicleController : MonoBehaviour
     public void SetGas(float gas)
     {
         this.gas = gas;
-        Debug.Log($"SetGas called with value: {gas} yippy");
+        // Debug.Log($"SetGas called with value: {gas} yippy");
     }
 
     public void SetBrake(float brake)

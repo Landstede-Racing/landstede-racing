@@ -5,7 +5,7 @@ using System.Linq;
 public class PartController
 {
     // <Location, GameObject> Location is the location of the part, GameObject is the part itself   
-    public Dictionary<Location, Part> parts = new Dictionary<Location, Part>();
+    public Dictionary<Location, Part> parts = new();
     public void SetPart(Location location, Part part)
     {
         if (parts.ContainsKey(location))
