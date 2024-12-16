@@ -42,8 +42,15 @@ public class VehicleController : MonoBehaviour
 
     public AnimationCurve downForceCurve;
     public float currentDownForce;
-    public ConstantForce downForce;
-    public float maxDownForce;
+    // public ConstantForce downForce;
+    public float maxFrontDownForce;
+    public float maxRearDownForce;
+    public float maxDiffuserDownForce;
+    public ConstantForce leftFrontWing;
+    public ConstantForce rightFrontWing;
+    public ConstantForce rearWing;
+    public ConstantForce diffuser;
+
 
     public float engineHP;
     public float maxEngineRPM;
@@ -52,11 +59,13 @@ public class VehicleController : MonoBehaviour
     public TMP_Text gearText;
     public TMP_Text speedText;
     public TMP_Text rpmText;
-
     public Transform backWing;
 
     WheelControl[] wheels;
     Rigidbody rigidBody;
+
+    private int currentGear = 1; //Bc: R = 0 and N = 1
+    private int maxGear = 9;
 
     public void Start()
     {
@@ -67,7 +76,8 @@ public class VehicleController : MonoBehaviour
         // Adjust center of mass vertically, to help prevent the car from rolling
         rigidBody.centerOfMass += Vector3.up * centreOfGravityOffset;
 
-
+        // rigidBody.linearVelocity = new(0, 0, -83.3333f);
+        // drsEnabled = true;
     }
 
     public void Update()
@@ -76,6 +86,7 @@ public class VehicleController : MonoBehaviour
         ApplyMotor();
         ApplySteering();
         ApplyBrake();
+        ApplyDownForce();
 
 
         // Log gas and brake inputs
@@ -96,7 +107,10 @@ public class VehicleController : MonoBehaviour
         {
             gearText.text = (gear - 1).ToString();
         }
-        speedText.text = (int)(Vector3.Dot(transform.forward, rigidBody.linearVelocity) * 3.6) + " KM/U";
+        // speedText.text = (int)(Vector3.Dot(transform.forward, rigidBody.linearVelocity) * 3.6) + " KM/U";
+        speedText.text = $"<size=120%>{(int)(Vector3.Dot(transform.forward, rigidBody.linearVelocity) * 3.6)}</size>\n<size=50%>KM/U</size>";
+
+
 
 
         // Change linear drag (!!TEMPORARY, TO BE CHANGED!!)
@@ -114,12 +128,32 @@ public class VehicleController : MonoBehaviour
             backWingRotation.x = 20;
             backWing.eulerAngles = backWingRotation;
         }
+    }
 
-        // Calculate current downforce from current speed divided by maxSpeed, times maxDownForce, and clamp it.
-        currentDownForce = Math.Clamp(downForceCurve.Evaluate((float)(Vector3.Dot(transform.forward, rigidBody.linearVelocity) * 3.6 / maxSpeed)) * maxDownForce, 0f, maxDownForce);
+    private void ApplyDownForce()
+    {
+        // TODO: Change values to newton instead of kg
+        float leftFront = CalculateDownForce(maxFrontDownForce);
+        leftFrontWing.relativeForce = new(0, -leftFront, 0);
+        Debug.Log("Left Front: " + leftFront);
 
-        // Apply the calculated downforce to the Constant Force component on the car.
-        downForce.relativeForce = new(0, currentDownForce, 0);
+        float rightFront = CalculateDownForce(maxFrontDownForce);
+        rightFrontWing.relativeForce = new(0, -rightFront, 0);
+        Debug.Log("Right Front: " + rightFront);
+
+        float rear = CalculateDownForce(maxRearDownForce);
+        rearWing.relativeForce = new(0, -rear, 0);
+        Debug.Log("Rear: " + rear);
+
+        float diff = CalculateDownForce(maxDiffuserDownForce);
+        diffuser.relativeForce = new(0, -diff, 0);
+        Debug.Log("Diffuser: " + diff);
+    }
+
+    private float CalculateDownForce(float max)
+    {
+        float force = Math.Clamp(downForceCurve.Evaluate((float)(Vector3.Dot(transform.forward, rigidBody.linearVelocity) * 3.6 / maxSpeed)) * max, 0f, max);
+        return force;
     }
 
 
@@ -127,6 +161,7 @@ public class VehicleController : MonoBehaviour
     private void ApplyMotor()
     {
         List<int> rpms = new();
+        List<int> frontRpms = new();
 
         foreach (var wheel in wheels)
         {
@@ -143,11 +178,14 @@ public class VehicleController : MonoBehaviour
             else
             {
                 // Debug.Log("Front RPM: " + wheel.WheelCollider.rpm);
+                frontRpms.Add((int)wheel.WheelCollider.rpm);
             }
         }
 
         float averageWheelRPM = Math.Abs((rpms[0] + rpms[1]) / 2);
         wheelRPM = Math.Abs(averageWheelRPM * gearRatios[gear] * differentialRatio);
+        Debug.Log("Front RPM: " + (frontRpms[0] + frontRpms[1]) / 2);
+        Debug.Log("Back RPM: " + averageWheelRPM);
     }
 
     // Calculate wheel torque from engine RPM
@@ -167,8 +205,8 @@ public class VehicleController : MonoBehaviour
         // }
         // wheelRPM = Mathf.Abs((colliders.RRWheel.rpm + colliders.RLWheel.rpm) / 2f) * gearRatios[gear] * differentialRatio;
         currentEngineRPM = Mathf.Lerp(currentEngineRPM, Mathf.Max(idleRPM - 100, wheelRPM), Time.deltaTime * 3f);
-        rpmText.text = currentEngineRPM + " RPM";
-        torque = hpToRPMCurve.Evaluate(currentEngineRPM / redLine) * engineHP / currentEngineRPM * gearRatios[gear] * differentialRatio * 5252f;
+        rpmText.text = $"<size=120%><align=right>{(int)currentEngineRPM}</align></size>\n<align=right><size=50%>RPM</size></align>";
+        torque = hpToRPMCurve.Evaluate((currentEngineRPM - 4500) / (redLine - 4500)) * engineHP / currentEngineRPM * gearRatios[gear] * differentialRatio * 5252f;
         // if (isEngineRunning > 0)
         // {
         //     currentEngineRPM = Mathf.Lerp(currentEngineRPM, Mathf.Max(idleRPM, redLine * gas) + UnityEngine.Random.Range(-50, 50), Time.deltaTime);
@@ -222,16 +260,21 @@ public class VehicleController : MonoBehaviour
     // Coroutine for gear changing
     public IEnumerator ChangeGear(int gearChange)
     {
-        gearState = GearState.CheckingChange;
-        if (gear + gearChange >= 0)
+        int newGear = currentGear + gearChange;
+        if (newGear >= 0 && newGear <= maxGear) //Check if newGear isnt above 9 (Gear 8)
         {
-            gearState = GearState.Changing;
-            yield return new WaitForSeconds(changeGearTime);
-            gear += gearChange;
-        }
+            currentGear = newGear;
+            gearState = GearState.CheckingChange;
+            if (gear + gearChange >= 0)
+            {
+                gearState = GearState.Changing;
+                yield return new WaitForSeconds(changeGearTime);
+                gear += gearChange;
+            }
 
-        if (gearState != GearState.Neutral)
-            gearState = GearState.Running;
+            if (gearState != GearState.Neutral)
+                gearState = GearState.Running;
+        }
     }
 
     // Speed ratio for engine audio
@@ -251,7 +294,7 @@ public class VehicleController : MonoBehaviour
     public void SetGas(float gas)
     {
         this.gas = gas;
-        // Debug.Log($"SetGas called with value: {gas} yippy");
+        Debug.Log($"SetGas called with value: {gas} yippy");
     }
 
     public void SetBrake(float brake)
