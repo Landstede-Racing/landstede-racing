@@ -1,17 +1,34 @@
 using UnityEngine;
 using System.Collections.Generic;
+using TMPro;
+using UnityEngine.UI;
+using UnityEditor.SearchService;
+using UnityEngine.SceneManagement;
+using UnityEditor;
 
-public class DamageController
+public class DamageController : MonoBehaviour
 {
-    public DamagablePart[] DamagableParts;
-    private Dictionary<DamagablePart, int> damages = new Dictionary<DamagablePart, int>();
+    public GameObject textObject;
+    public TextMeshProUGUI text;
+    public DamagablePart[] damagableParts;
+    private Dictionary<DamagablePart, int> damages = new();
 
     void Start()
     {
-        foreach (DamagablePart part in DamagableParts)
+        damagableParts = GetComponentsInChildren<DamagablePart>();
+        text = textObject.GetComponent<TextMeshProUGUI>();
+
+        foreach (DamagablePart part in damagableParts)
         {
             damages.Add(part, 0);
         }
+    }
+
+    void Update()
+    {
+        text.SetText("Yipeeee");
+        Debug.Log("DamageController: ");
+        
     }
 
     public int GetDamage(DamagablePart part)

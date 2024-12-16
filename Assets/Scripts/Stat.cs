@@ -1,6 +1,5 @@
 using UnityEngine;
 
-public class Stat : ScriptableObject
-{
+public class Stat : ScriptableObject {
     
 }
