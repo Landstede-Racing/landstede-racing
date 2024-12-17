@@ -41,7 +41,6 @@ public class VehicleController : MonoBehaviour
     public float changeGearTime = 0.1f;
 
     public AnimationCurve downForceCurve;
-    public float currentDownForce;
     // public ConstantForce downForce;
     public float maxFrontDownForce;
     public float maxRearDownForce;
@@ -120,16 +119,16 @@ public class VehicleController : MonoBehaviour
         if (drsEnabled)
         {
             rigidBody.linearDamping = 0.07f;
-            Vector3 backWingRotation = backWing.eulerAngles;
-            backWingRotation.x = -11;
-            backWing.eulerAngles = backWingRotation;
+            // Vector3 backWingRotation = backWing.eulerAngles;
+            // backWingRotation.x = -11;
+            // backWing.eulerAngles = backWingRotation;
         }
         else
         {
             rigidBody.linearDamping = 0.1f;
-            Vector3 backWingRotation = backWing.eulerAngles;
-            backWingRotation.x = 20;
-            backWing.eulerAngles = backWingRotation;
+            // Vector3 backWingRotation = backWing.eulerAngles;
+            // backWingRotation.x = 20;
+            // backWing.eulerAngles = backWingRotation;
         }
     }
 
@@ -138,15 +137,15 @@ public class VehicleController : MonoBehaviour
         // TODO: Change values to newton instead of kg
         float leftFront = CalculateDownForce(maxFrontDownForce);
         leftFrontWing.relativeForce = new(0, -leftFront, 0);
-        Debug.Log("Left Front: " + leftFront);
+        // Debug.Log("Left Front: " + leftFront);
 
         float rightFront = CalculateDownForce(maxFrontDownForce);
         rightFrontWing.relativeForce = new(0, -rightFront, 0);
-        Debug.Log("Right Front: " + rightFront);
+        // Debug.Log("Right Front: " + rightFront);
 
         float rear = CalculateDownForce(maxRearDownForce);
         rearWing.relativeForce = new(0, -rear, 0);
-        Debug.Log("Rear: " + rear);
+        // Debug.Log("Rear: " + rear);
 
         float diff = CalculateDownForce(maxDiffuserDownForce);
         diffuser.relativeForce = new(0, -diff, 0);
