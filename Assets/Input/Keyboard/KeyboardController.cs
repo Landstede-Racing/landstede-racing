@@ -37,6 +37,15 @@ public partial class @KeyboardController: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
+                    ""name"": ""NextCam"",
+                    ""type"": ""Button"",
+                    ""id"": ""90c1d2e6-1808-467e-ac90-a6eaf822bc59"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Brake"",
                     ""type"": ""Value"",
                     ""id"": ""e72c2522-5527-43d6-bec6-017c4a150c57"",
@@ -91,6 +100,17 @@ public partial class @KeyboardController: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Accelerate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4937dc5e-c3a9-4187-87ef-9d8ce1c64cde"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""NextCam"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -179,6 +199,7 @@ public partial class @KeyboardController: IInputActionCollection2, IDisposable
         // vehicleControls
         m_vehicleControls = asset.FindActionMap("vehicleControls", throwIfNotFound: true);
         m_vehicleControls_Accelerate = m_vehicleControls.FindAction("Accelerate", throwIfNotFound: true);
+        m_vehicleControls_NextCam = m_vehicleControls.FindAction("NextCam", throwIfNotFound: true);
         m_vehicleControls_Brake = m_vehicleControls.FindAction("Brake", throwIfNotFound: true);
         m_vehicleControls_Steer = m_vehicleControls.FindAction("Steer", throwIfNotFound: true);
         m_vehicleControls_GearUp = m_vehicleControls.FindAction("GearUp", throwIfNotFound: true);
@@ -251,6 +272,7 @@ public partial class @KeyboardController: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_vehicleControls;
     private List<IVehicleControlsActions> m_VehicleControlsActionsCallbackInterfaces = new List<IVehicleControlsActions>();
     private readonly InputAction m_vehicleControls_Accelerate;
+    private readonly InputAction m_vehicleControls_NextCam;
     private readonly InputAction m_vehicleControls_Brake;
     private readonly InputAction m_vehicleControls_Steer;
     private readonly InputAction m_vehicleControls_GearUp;
@@ -261,6 +283,7 @@ public partial class @KeyboardController: IInputActionCollection2, IDisposable
         private @KeyboardController m_Wrapper;
         public VehicleControlsActions(@KeyboardController wrapper) { m_Wrapper = wrapper; }
         public InputAction @Accelerate => m_Wrapper.m_vehicleControls_Accelerate;
+        public InputAction @NextCam => m_Wrapper.m_vehicleControls_NextCam;
         public InputAction @Brake => m_Wrapper.m_vehicleControls_Brake;
         public InputAction @Steer => m_Wrapper.m_vehicleControls_Steer;
         public InputAction @GearUp => m_Wrapper.m_vehicleControls_GearUp;
@@ -278,6 +301,9 @@ public partial class @KeyboardController: IInputActionCollection2, IDisposable
             @Accelerate.started += instance.OnAccelerate;
             @Accelerate.performed += instance.OnAccelerate;
             @Accelerate.canceled += instance.OnAccelerate;
+            @NextCam.started += instance.OnNextCam;
+            @NextCam.performed += instance.OnNextCam;
+            @NextCam.canceled += instance.OnNextCam;
             @Brake.started += instance.OnBrake;
             @Brake.performed += instance.OnBrake;
             @Brake.canceled += instance.OnBrake;
@@ -300,6 +326,9 @@ public partial class @KeyboardController: IInputActionCollection2, IDisposable
             @Accelerate.started -= instance.OnAccelerate;
             @Accelerate.performed -= instance.OnAccelerate;
             @Accelerate.canceled -= instance.OnAccelerate;
+            @NextCam.started -= instance.OnNextCam;
+            @NextCam.performed -= instance.OnNextCam;
+            @NextCam.canceled -= instance.OnNextCam;
             @Brake.started -= instance.OnBrake;
             @Brake.performed -= instance.OnBrake;
             @Brake.canceled -= instance.OnBrake;
@@ -335,6 +364,7 @@ public partial class @KeyboardController: IInputActionCollection2, IDisposable
     public interface IVehicleControlsActions
     {
         void OnAccelerate(InputAction.CallbackContext context);
+        void OnNextCam(InputAction.CallbackContext context);
         void OnBrake(InputAction.CallbackContext context);
         void OnSteer(InputAction.CallbackContext context);
         void OnGearUp(InputAction.CallbackContext context);

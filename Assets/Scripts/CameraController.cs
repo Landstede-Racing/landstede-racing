@@ -5,6 +5,7 @@ public class CameraController : MonoBehaviour
     public Camera[] cameras;
     public Camera[] reverseCameras;
     public int currentCam;
+    bool reverse = false;
 
     private void Start() {
         
@@ -34,7 +35,12 @@ public class CameraController : MonoBehaviour
     }
 
     public void SetReverseCam(bool active) {
+        reverse = active;
         reverseCameras[currentCam].gameObject.SetActive(active);
         cameras[currentCam].gameObject.SetActive(!active);
+    }
+
+    public Camera GetCurrentCam() {
+        return reverse ? reverseCameras[currentCam] : cameras[currentCam];
     }
 }

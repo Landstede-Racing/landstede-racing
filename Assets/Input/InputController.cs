@@ -158,5 +158,11 @@ public class InputController : MonoBehaviour
             Debug.Log("DRS TOGGLE!");
             vehicleController.ToggleDRS();
         }
+
+        if (keyboardControls.vehicleControls.NextCam.triggered)
+        {
+            Debug.Log("Next Cam pressed.");
+            cameraController.NextCamera();
+        }
     }
 }
