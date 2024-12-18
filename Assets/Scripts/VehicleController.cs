@@ -109,7 +109,7 @@ public class VehicleController : MonoBehaviour
         {
             gearText.text = (gear - 1).ToString();
         }
-        // speedText.text = (int)(Vector3.Dot(transform.forward, rigidBody.linearVelocity) * 3.6) + " KM/U";
+        
         speedText.text = $"<size=120%>{(int)(Vector3.Dot(transform.forward, rigidBody.linearVelocity) * 3.6)}</size>\n<size=50%>KM/U</size>";
 
 
@@ -119,16 +119,10 @@ public class VehicleController : MonoBehaviour
         if (drsEnabled)
         {
             rigidBody.linearDamping = 0.07f;
-            // Vector3 backWingRotation = backWing.eulerAngles;
-            // backWingRotation.x = -11;
-            // backWing.eulerAngles = backWingRotation;
         }
         else
         {
             rigidBody.linearDamping = 0.1f;
-            // Vector3 backWingRotation = backWing.eulerAngles;
-            // backWingRotation.x = 20;
-            // backWing.eulerAngles = backWingRotation;
         }
     }
 
