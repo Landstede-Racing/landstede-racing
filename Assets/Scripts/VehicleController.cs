@@ -40,6 +40,7 @@ public class VehicleController : MonoBehaviour
     public int isEngineRunning;
     public float changeGearTime = 0.1f;
 
+    public AnimationCurve brakingCurve;
     public AnimationCurve downForceCurve;
     // public ConstantForce downForce;
     public float maxFrontDownForce;
@@ -165,7 +166,7 @@ public class VehicleController : MonoBehaviour
             {
                 if (gearState == GearState.Running)
                 {
-                    currentTorque = CalculateTorque();
+                    currentTorque = CalculateMotorTorque();
                     wheel.WheelCollider.motorTorque = currentTorque * gas;
                 }
                 // Debug.Log("Back RPM: " + wheel.WheelCollider.rpm);
@@ -185,7 +186,7 @@ public class VehicleController : MonoBehaviour
     }
 
     // Calculate wheel torque from engine RPM
-    float CalculateTorque()
+    float CalculateMotorTorque()
     {
         float torque = 0;
         // if (gearState == GearState.Running && clutch > 0)
@@ -207,6 +208,15 @@ public class VehicleController : MonoBehaviour
         // {
         //     currentEngineRPM = Mathf.Lerp(currentEngineRPM, Mathf.Max(idleRPM, redLine * gas) + UnityEngine.Random.Range(-50, 50), Time.deltaTime);
         // }
+        return torque;
+    }
+
+    float CalculateBrakingTorque()
+    {
+        float torque = brakingCurve.Evaluate(GetSpeed() / maxSpeed) * brakeTorque;
+
+        Debug.Log("Brake Torque: " + torque);
+
         return torque;
     }
 
@@ -249,7 +259,7 @@ public class VehicleController : MonoBehaviour
         foreach (var wheel in wheels)
         {
             // TODO: Front Brake Bias
-            wheel.WheelCollider.brakeTorque = brake * brakeTorque;
+            wheel.WheelCollider.brakeTorque = brake * CalculateBrakingTorque();
         }
     }
 
@@ -279,6 +289,11 @@ public class VehicleController : MonoBehaviour
         var gasA = Mathf.Clamp(Mathf.Abs(gas), 0.5f, 1f);
         // return currentEngineRPM * gasA / redLine;
         return currentEngineRPM / redLine;
+    }
+
+    public float GetSpeed()
+    {
+        return Math.Abs(Vector3.Dot(transform.forward, rigidBody.linearVelocity) * 3.6f);
     }
 
     public void SetSteeringAngle(float steeringAngle)
