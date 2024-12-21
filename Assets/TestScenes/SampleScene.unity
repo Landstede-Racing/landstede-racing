@@ -199,6 +199,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78942c6e946a7324ca7f2609e5671f81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &244374874 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5148817236446094103, guid: 669c2449fdb0179489b66f9e10b99757, type: 3}
+  m_PrefabInstance: {fileID: 404192194}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &244374879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 244374874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9879cb02b07e7148be02a0860bba21e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vibration: 0
+  vibrationFrequency: 0
+--- !u!1 &296453524 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2010132982777857399, guid: 669c2449fdb0179489b66f9e10b99757, type: 3}
+  m_PrefabInstance: {fileID: 404192194}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &296453529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 296453524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9879cb02b07e7148be02a0860bba21e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vibration: 1
+  vibrationFrequency: 3
 --- !u!1001 &404192194
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -262,8 +300,42 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: -2500669797705832236, guid: 669c2449fdb0179489b66f9e10b99757, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 433713403}
+    - targetCorrespondingSourceObject: {fileID: 2010132982777857399, guid: 669c2449fdb0179489b66f9e10b99757, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 296453529}
+    - targetCorrespondingSourceObject: {fileID: 2840663466726442200, guid: 669c2449fdb0179489b66f9e10b99757, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 702750652}
+    - targetCorrespondingSourceObject: {fileID: 8872755178239919389, guid: 669c2449fdb0179489b66f9e10b99757, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 638835076}
+    - targetCorrespondingSourceObject: {fileID: 5148817236446094103, guid: 669c2449fdb0179489b66f9e10b99757, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 244374879}
   m_SourcePrefab: {fileID: 100100000, guid: 669c2449fdb0179489b66f9e10b99757, type: 3}
+--- !u!1 &433713398 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -2500669797705832236, guid: 669c2449fdb0179489b66f9e10b99757, type: 3}
+  m_PrefabInstance: {fileID: 404192194}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &433713403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 433713398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9879cb02b07e7148be02a0860bba21e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vibration: 1
+  vibrationFrequency: 3
 --- !u!1 &513482783
 GameObject:
   m_ObjectHideFlags: 0
@@ -373,6 +445,25 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &638835071 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8872755178239919389, guid: 669c2449fdb0179489b66f9e10b99757, type: 3}
+  m_PrefabInstance: {fileID: 404192194}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &638835076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 638835071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9879cb02b07e7148be02a0860bba21e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vibration: 1
+  vibrationFrequency: 3
 --- !u!1 &672771500
 GameObject:
   m_ObjectHideFlags: 0
@@ -441,6 +532,25 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &702750647 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2840663466726442200, guid: 669c2449fdb0179489b66f9e10b99757, type: 3}
+  m_PrefabInstance: {fileID: 404192194}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &702750652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 702750647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9879cb02b07e7148be02a0860bba21e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vibration: 1
+  vibrationFrequency: 3
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
