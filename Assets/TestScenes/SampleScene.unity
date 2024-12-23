@@ -295,6 +295,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 882129737928793925, guid: 669c2449fdb0179489b66f9e10b99757, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: b29a7a9f6c5cec941baaa0209abb9e33, type: 2}
+    - target: {fileID: 882129737928793925, guid: 669c2449fdb0179489b66f9e10b99757, type: 3}
+      propertyPath: 'm_Materials.Array.data[2]'
+      value: 
+      objectReference: {fileID: 2100000, guid: f3a31491fc7cec442ac680853aff33f7, type: 2}
+    - target: {fileID: 882129737928793925, guid: 669c2449fdb0179489b66f9e10b99757, type: 3}
+      propertyPath: 'm_Materials.Array.data[3]'
+      value: 
+      objectReference: {fileID: 2100000, guid: be1841174b99eab4591a291b09aa69b3, type: 2}
     - target: {fileID: 919132149155446097, guid: 669c2449fdb0179489b66f9e10b99757, type: 3}
       propertyPath: m_Name
       value: Stadion
