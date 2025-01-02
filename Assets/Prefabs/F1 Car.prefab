@@ -58,13 +58,13 @@ WheelCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 33967636114657174}
   serializedVersion: 2
-  m_Center: {x: 0, y: 0, z: -0.03}
+  m_Center: {x: 0, y: 0, z: -0.01}
   m_Radius: 0.26
   m_SuspensionSpring:
     spring: 10000
-    damper: 3000
+    damper: 4000
     targetPosition: 0.5
-  m_SuspensionDistance: 0.09
+  m_SuspensionDistance: 0.03
   m_ForceAppPointDistance: 0
   m_Mass: 11.5
   m_WheelDampingRate: 0.7
@@ -283,13 +283,13 @@ WheelCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 886670315796224157}
   serializedVersion: 2
-  m_Center: {x: 0, y: 0, z: -0.03}
+  m_Center: {x: 0, y: 0, z: -0.01}
   m_Radius: 0.26
   m_SuspensionSpring:
     spring: 10000
-    damper: 3000
+    damper: 4000
     targetPosition: 0.5
-  m_SuspensionDistance: 0.09
+  m_SuspensionDistance: 0.03
   m_ForceAppPointDistance: 0
   m_Mass: 9.5
   m_WheelDampingRate: 0.7
@@ -1406,7 +1406,7 @@ Rigidbody:
   serializedVersion: 4
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -1420,7 +1420,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!75 &4755640555208835058
@@ -1509,13 +1509,13 @@ WheelCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6038797319774168777}
   serializedVersion: 2
-  m_Center: {x: 0, y: 0, z: -0.03}
+  m_Center: {x: 0, y: 0, z: -0.01}
   m_Radius: 0.26
   m_SuspensionSpring:
     spring: 10000
-    damper: 3000
+    damper: 4000
     targetPosition: 0.5
-  m_SuspensionDistance: 0.09
+  m_SuspensionDistance: 0.03
   m_ForceAppPointDistance: 0
   m_Mass: 11.5
   m_WheelDampingRate: 0.7
@@ -1860,13 +1860,13 @@ WheelCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7061712379422779236}
   serializedVersion: 2
-  m_Center: {x: 0, y: 0, z: -0.03}
+  m_Center: {x: 0, y: 0, z: -0.01}
   m_Radius: 0.26
   m_SuspensionSpring:
     spring: 10000
-    damper: 3000
+    damper: 4000
     targetPosition: 0.5
-  m_SuspensionDistance: 0.09
+  m_SuspensionDistance: 0.03
   m_ForceAppPointDistance: 0
   m_Mass: 9.5
   m_WheelDampingRate: 0.7
@@ -2290,6 +2290,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[1]'
       value: 
       objectReference: {fileID: 2100000, guid: e54ed2464fa0f154faa756d73cf48bf1, type: 2}
+    - target: {fileID: 276075909499575610, guid: 31073083d533471429332d6cc461014a, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: e54ed2464fa0f154faa756d73cf48bf1, type: 2}
     - target: {fileID: 327064008815436722, guid: 31073083d533471429332d6cc461014a, type: 3}
       propertyPath: 'm_Materials.Array.data[1]'
       value: 
@@ -2310,6 +2314,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: F1 Car
       objectReference: {fileID: 0}
+    - target: {fileID: 1851517503891954382, guid: 31073083d533471429332d6cc461014a, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 7dde9a8a5275f64479f43a0d132dd365, type: 2}
     - target: {fileID: 2355982399387309400, guid: 31073083d533471429332d6cc461014a, type: 3}
       propertyPath: 'm_Materials.Array.data[1]'
       value: 
