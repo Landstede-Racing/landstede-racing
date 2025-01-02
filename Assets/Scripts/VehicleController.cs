@@ -144,19 +144,6 @@ public class VehicleController : MonoBehaviour
 
     private void ApplyForceFeedback()
     {
-        List<float> forces = new();
-
-        foreach (WheelControl item in wheels)
-        {
-            WheelHit hit;
-            WheelCollider wheelCollider = item.WheelCollider;
-            wheelCollider.GetGroundHit(out hit);
-            if (item.steerable)
-            {
-                forces.Add(hit.force);
-            }
-        }
-
         WheelHit hit1;
         WheelHit hit2;
         frontLeftWheel.WheelCollider.GetGroundHit(out hit1);
@@ -189,8 +176,6 @@ public class VehicleController : MonoBehaviour
             }
         }
 
-        Debug.Log("Forces average: " + forces.Average());
-
         if (vibration)
         {
             int intensity = Mathf.Clamp((int)(GetSpeed() * 3f), 0, 20); // Scale intensity with speed
@@ -206,7 +191,7 @@ public class VehicleController : MonoBehaviour
 
         // Apply centering force
         float centeringForce = -steeringAngle * centeringForceMultiplier;
-        LogitechGSDK.LogiPlaySpringForce(0, 0, Mathf.Clamp(Mathf.Abs((int)centeringForce), 0, 100), 70);
+        LogitechGSDK.LogiPlaySpringForce(0, 0, Mathf.Clamp(Mathf.Abs((int)centeringForce), 20, 100), 70);
 
         // Apply slip feedback based on WheelColliders
         float slipForce = CalculateSlipForce();
@@ -276,7 +261,7 @@ public class VehicleController : MonoBehaviour
 
         float diff = CalculateDownForce(maxDiffuserDownForce);
         diffuser.relativeForce = new(0, -diff, 0);
-        Debug.Log("Diffuser: " + diff);
+        // Debug.Log("Diffuser: " + diff);
     }
 
     private float CalculateDownForce(float max)
@@ -313,8 +298,8 @@ public class VehicleController : MonoBehaviour
 
         float averageWheelRPM = Math.Abs((rpms[0] + rpms[1]) / 2);
         wheelRPM = Math.Abs(averageWheelRPM * gearRatios[gear] * differentialRatio);
-        Debug.Log("Front RPM: " + (frontRpms[0] + frontRpms[1]) / 2);
-        Debug.Log("Back RPM: " + averageWheelRPM);
+        // Debug.Log("Front RPM: " + (frontRpms[0] + frontRpms[1]) / 2);
+        // Debug.Log("Back RPM: " + averageWheelRPM);
     }
 
     // Calculate wheel torque from engine RPM
@@ -347,7 +332,7 @@ public class VehicleController : MonoBehaviour
     {
         float torque = brakingCurve.Evaluate(GetSpeed() / maxSpeed) * brakeTorque;
 
-        Debug.Log("Brake Torque: " + torque);
+        // Debug.Log("Brake Torque: " + torque);
 
         return torque;
     }
@@ -437,7 +422,7 @@ public class VehicleController : MonoBehaviour
     public void SetGas(float gas)
     {
         this.gas = gas;
-        Debug.Log($"SetGas called with value: {gas} yippy");
+        // Debug.Log($"SetGas called with value: {gas} yippy");
     }
 
     public void SetBrake(float brake)
@@ -480,5 +465,13 @@ public class VehicleController : MonoBehaviour
     public bool GetDRS()
     {
         return drsEnabled;
+    }
+
+    void OnCollisionEnter(Collision other)
+    {
+        if(other.impulse.magnitude > 750) {
+            LogitechGSDK.LogiPlayFrontalCollisionForce(0, (int)other.impulse.magnitude / 750);
+            Debug.Log("JUST HIT " + other.gameObject.name + ". BLOODY HELL, THAT WAS AN IMPULSE OF " + other.impulse.magnitude);
+        }
     }
 }
