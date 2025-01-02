@@ -163,6 +163,14 @@ PrefabInstance:
       propertyPath: m_SuspensionSpring.damper
       value: 4000
       objectReference: {fileID: 0}
+    - target: {fileID: 2578124889973717728, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
+      propertyPath: m_AngularDrag
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2578124889973717728, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
+      propertyPath: m_Interpolate
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3988025162936336609, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
       propertyPath: m_Center.z
       value: -0.01
