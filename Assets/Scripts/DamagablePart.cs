@@ -4,12 +4,22 @@ using UnityEngine;
 [RequireComponent(typeof(Collider))]
 public class DamagablePart : MonoBehaviour
 {
-    public int maxDamage;
+    public int maxDamage = 250;
     public int currentDamage;
     public Part part;
 
-    private void OnCollisionEnter()
-    {
-        Debug.Log("A bonk happened");
+    void OnCollisionEnter(Collision collision)
+    { 
+        currentDamage += (int)collision.relativeVelocity.magnitude;
+        Debug.Log("-----------------------------");
+        Debug.Log("Part: " + part.name);
+        Debug.Log("currentDamage: " + currentDamage);
+        Debug.Log("velocity: " + collision.relativeVelocity.magnitude);
+        Debug.Log("-----------------------------");
+        
+        if (currentDamage >= maxDamage)
+        {
+            Destroy(gameObject);
+        }
     }
 }
