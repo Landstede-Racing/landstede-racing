@@ -7,7 +7,6 @@ public class MiniMapController : MonoBehaviour
     public GameObject MiniMapSmallCamera;
     public GameObject MiniMapBigCamera;
     public MiniMap miniMap;
-    // public MiniMap2 miniMap2l;
     public RectTransform carDotRectTransform;
 
     void Start()
@@ -15,11 +14,6 @@ public class MiniMapController : MonoBehaviour
 
         SetMiniMapSmallCameraActive(true); //TODO change this in to GUI settings
         SetMiniMapBigCameraActive(false);
-
-        // if (carDotRectTransform != null && carDotRectTransform.sizeDelta == new Vector2(6.9335f, 6.9335f))
-        // {
-
-        // }
     }
 
     public void SetMiniMapSmallCameraActive(bool isActive)
