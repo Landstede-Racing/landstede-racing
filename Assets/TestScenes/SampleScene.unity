@@ -119,6 +119,101 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &21567503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214930155}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c07dd2d0fe5127649bd172d77a71e526, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxDamage: 250
+  currentDamage: 0
+  part: {fileID: 21567504}
+--- !u!114 &21567504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214930155}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c865870ea273ab48b4b726e3dc17990, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Rear Left Wheel
+  location: 13
+  description: Roundy boi
+--- !u!138 &21567505
+FixedJoint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214930155}
+  serializedVersion: 1
+  m_ConnectedBody: {fileID: 214930150}
+  m_ConnectedArticulationBody: {fileID: 0}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_EnableCollision: 0
+  m_EnablePreprocessing: 1
+  m_MassScale: 1
+  m_ConnectedMassScale: 1
+--- !u!64 &21567506
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214930155}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 1002192311677157719, guid: 31073083d533471429332d6cc461014a, type: 3}
+--- !u!54 &21567507
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214930155}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1001 &214930149
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -171,6 +266,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: F1 Car 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5551360141245956375, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6864331406162114436, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
       propertyPath: rpmText
       value: 
@@ -186,8 +285,118 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6819538312623076331, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 21567507}
+    - targetCorrespondingSourceObject: {fileID: 6819538312623076331, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 21567506}
+    - targetCorrespondingSourceObject: {fileID: 6819538312623076331, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 21567505}
+    - targetCorrespondingSourceObject: {fileID: 6819538312623076331, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 21567504}
+    - targetCorrespondingSourceObject: {fileID: 6819538312623076331, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 21567503}
+    - targetCorrespondingSourceObject: {fileID: 246796468079323523, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1131480694}
+    - targetCorrespondingSourceObject: {fileID: 246796468079323523, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1131480693}
+    - targetCorrespondingSourceObject: {fileID: 246796468079323523, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1131480692}
+    - targetCorrespondingSourceObject: {fileID: 246796468079323523, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1131480691}
+    - targetCorrespondingSourceObject: {fileID: 246796468079323523, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1131480690}
+    - targetCorrespondingSourceObject: {fileID: 3403258725218134584, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 214930163}
+    - targetCorrespondingSourceObject: {fileID: 3403258725218134584, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 214930162}
+    - targetCorrespondingSourceObject: {fileID: 3403258725218134584, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 214930161}
+    - targetCorrespondingSourceObject: {fileID: 3403258725218134584, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 214930160}
+    - targetCorrespondingSourceObject: {fileID: 3403258725218134584, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 214930159}
+    - targetCorrespondingSourceObject: {fileID: 392279416773305134, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 966343234}
+    - targetCorrespondingSourceObject: {fileID: 392279416773305134, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 966343233}
+    - targetCorrespondingSourceObject: {fileID: 392279416773305134, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 966343232}
+    - targetCorrespondingSourceObject: {fileID: 392279416773305134, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 966343231}
+    - targetCorrespondingSourceObject: {fileID: 392279416773305134, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 966343230}
+    - targetCorrespondingSourceObject: {fileID: 8837629088861826258, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 674410840}
+    - targetCorrespondingSourceObject: {fileID: 8837629088861826258, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 674410839}
+    - targetCorrespondingSourceObject: {fileID: 8837629088861826258, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 674410838}
+    - targetCorrespondingSourceObject: {fileID: 8837629088861826258, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 674410837}
+    - targetCorrespondingSourceObject: {fileID: 8837629088861826258, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 674410836}
+    - targetCorrespondingSourceObject: {fileID: 1973557409317048666, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1664842203}
+    - targetCorrespondingSourceObject: {fileID: 1973557409317048666, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1664842202}
+    - targetCorrespondingSourceObject: {fileID: 1973557409317048666, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1664842201}
+    - targetCorrespondingSourceObject: {fileID: 1973557409317048666, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1664842200}
+    - targetCorrespondingSourceObject: {fileID: 1973557409317048666, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1664842199}
+    - targetCorrespondingSourceObject: {fileID: 8994284216969342790, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 327416151}
+    - targetCorrespondingSourceObject: {fileID: 8994284216969342790, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 327416150}
+    - targetCorrespondingSourceObject: {fileID: 8994284216969342790, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 327416149}
+    - targetCorrespondingSourceObject: {fileID: 8994284216969342790, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 327416148}
+    - targetCorrespondingSourceObject: {fileID: 8994284216969342790, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 327416147}
   m_SourcePrefab: {fileID: 100100000, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
+--- !u!54 &214930150 stripped
+Rigidbody:
+  m_CorrespondingSourceObject: {fileID: 7639446272140765817, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
+  m_PrefabInstance: {fileID: 214930149}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &214930151 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6864331406162114436, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
@@ -199,6 +408,231 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78942c6e946a7324ca7f2609e5671f81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &214930152 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 392279416773305134, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
+  m_PrefabInstance: {fileID: 214930149}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &214930153 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 246796468079323523, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
+  m_PrefabInstance: {fileID: 214930149}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &214930154 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3403258725218134584, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
+  m_PrefabInstance: {fileID: 214930149}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &214930155 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6819538312623076331, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
+  m_PrefabInstance: {fileID: 214930149}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &214930156 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8994284216969342790, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
+  m_PrefabInstance: {fileID: 214930149}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &214930157 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1973557409317048666, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
+  m_PrefabInstance: {fileID: 214930149}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &214930158 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8837629088861826258, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
+  m_PrefabInstance: {fileID: 214930149}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &214930159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214930154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c07dd2d0fe5127649bd172d77a71e526, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxDamage: 250
+  currentDamage: 0
+  part: {fileID: 214930163}
+--- !u!138 &214930160
+FixedJoint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214930154}
+  serializedVersion: 1
+  m_ConnectedBody: {fileID: 0}
+  m_ConnectedArticulationBody: {fileID: 0}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_EnableCollision: 0
+  m_EnablePreprocessing: 1
+  m_MassScale: 1
+  m_ConnectedMassScale: 1
+--- !u!54 &214930161
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214930154}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!64 &214930162
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214930154}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 789309772227829571, guid: 31073083d533471429332d6cc461014a, type: 3}
+--- !u!114 &214930163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214930154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c865870ea273ab48b4b726e3dc17990, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Front Left Wheel
+  location: 11
+  description: Roundy boy go vroom
+--- !u!114 &327416147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214930156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c07dd2d0fe5127649bd172d77a71e526, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxDamage: 250
+  currentDamage: 0
+  part: {fileID: 327416148}
+--- !u!114 &327416148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214930156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c865870ea273ab48b4b726e3dc17990, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Front Right Wing
+  location: 8
+  description: OnScreenAnimation?
+--- !u!138 &327416149
+FixedJoint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214930156}
+  serializedVersion: 1
+  m_ConnectedBody: {fileID: 214930150}
+  m_ConnectedArticulationBody: {fileID: 0}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_EnableCollision: 0
+  m_EnablePreprocessing: 1
+  m_MassScale: 1
+  m_ConnectedMassScale: 1
+--- !u!54 &327416150
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214930156}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!64 &327416151
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214930156}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -3886819923080763867, guid: 31073083d533471429332d6cc461014a, type: 3}
 --- !u!1001 &404192194
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -441,6 +875,101 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &674410836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214930158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c07dd2d0fe5127649bd172d77a71e526, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxDamage: 250
+  currentDamage: 0
+  part: {fileID: 674410837}
+--- !u!114 &674410837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214930158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c865870ea273ab48b4b726e3dc17990, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Front Left Wing
+  location: 7
+  description: Pls Colin On Screen Animation
+--- !u!64 &674410838
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214930158}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4131380906487780148, guid: 31073083d533471429332d6cc461014a, type: 3}
+--- !u!138 &674410839
+FixedJoint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214930158}
+  serializedVersion: 1
+  m_ConnectedBody: {fileID: 214930150}
+  m_ConnectedArticulationBody: {fileID: 0}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_EnableCollision: 0
+  m_EnablePreprocessing: 1
+  m_MassScale: 1
+  m_ConnectedMassScale: 1
+--- !u!54 &674410840
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214930158}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -538,6 +1067,196 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!114 &966343230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214930152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c07dd2d0fe5127649bd172d77a71e526, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxDamage: 250
+  currentDamage: 0
+  part: {fileID: 966343231}
+--- !u!114 &966343231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214930152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c865870ea273ab48b4b726e3dc17990, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Front Right Wheel
+  location: 8
+  description: Round boy go round and round
+--- !u!138 &966343232
+FixedJoint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214930152}
+  serializedVersion: 1
+  m_ConnectedBody: {fileID: 214930150}
+  m_ConnectedArticulationBody: {fileID: 0}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_EnableCollision: 0
+  m_EnablePreprocessing: 1
+  m_MassScale: 1
+  m_ConnectedMassScale: 1
+--- !u!54 &966343233
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214930152}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!64 &966343234
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214930152}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 6298086067019587156, guid: 31073083d533471429332d6cc461014a, type: 3}
+--- !u!114 &1131480690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214930153}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c07dd2d0fe5127649bd172d77a71e526, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxDamage: 250
+  currentDamage: 0
+  part: {fileID: 0}
+--- !u!114 &1131480691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214930153}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c865870ea273ab48b4b726e3dc17990, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Rear Right Wheel
+  location: 14
+  description: Boi go vroom
+--- !u!138 &1131480692
+FixedJoint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214930153}
+  serializedVersion: 1
+  m_ConnectedBody: {fileID: 214930150}
+  m_ConnectedArticulationBody: {fileID: 0}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_EnableCollision: 0
+  m_EnablePreprocessing: 1
+  m_MassScale: 1
+  m_ConnectedMassScale: 1
+--- !u!54 &1131480693
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214930153}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!64 &1131480694
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214930153}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 461149764281578845, guid: 31073083d533471429332d6cc461014a, type: 3}
 --- !u!1 &1160962191 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 377281d521a547e439b9736874c1b621, type: 3}
@@ -677,6 +1396,101 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1664842199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214930157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c07dd2d0fe5127649bd172d77a71e526, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxDamage: 250
+  currentDamage: 0
+  part: {fileID: 1664842200}
+--- !u!114 &1664842200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214930157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c865870ea273ab48b4b726e3dc17990, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Rear Wing
+  location: 9
+  description: Why does it fly?
+--- !u!138 &1664842201
+FixedJoint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214930157}
+  serializedVersion: 1
+  m_ConnectedBody: {fileID: 214930150}
+  m_ConnectedArticulationBody: {fileID: 0}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_EnableCollision: 0
+  m_EnablePreprocessing: 1
+  m_MassScale: 1
+  m_ConnectedMassScale: 1
+--- !u!64 &1664842202
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214930157}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4567198328203474801, guid: 31073083d533471429332d6cc461014a, type: 3}
+--- !u!54 &1664842203
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214930157}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!114 &16585345024539147
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4163,7 +4977,6 @@ WheelCollider:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 2140569341111891125}
   - {fileID: 705507995}
   - {fileID: 915680604327428534}
   - {fileID: 5970028785829312087}
