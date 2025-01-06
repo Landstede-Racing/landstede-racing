@@ -2,13 +2,13 @@ using UnityEngine;
 
 public class MiniMap : MonoBehaviour
 {
-    private LineRenderer lineRenderer;
+    public LineRenderer lineRenderer;
     private GameObject TrackPath;
 
     void Start()
     {
         Debug.Log("MiniMap :O");
-        lineRenderer = GetComponent<LineRenderer>();
+        // lineRenderer = GetComponent<LineRenderer>();
         TrackPath = this.gameObject;
 
         int path_num = TrackPath.transform.childCount;
