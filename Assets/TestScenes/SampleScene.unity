@@ -127,22 +127,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1283878836710860857, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
-      propertyPath: m_CullingMask.m_Bits
-      value: 55
-      objectReference: {fileID: 0}
-    - target: {fileID: 3912379372956717237, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
-      propertyPath: m_CullingMask.m_Bits
-      value: 55
-      objectReference: {fileID: 0}
-    - target: {fileID: 4379335182023354954, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
-      propertyPath: field of view
-      value: 60
-      objectReference: {fileID: 0}
-    - target: {fileID: 4379335182023354954, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
-      propertyPath: m_CullingMask.m_Bits
-      value: 55
-      objectReference: {fileID: 0}
     - target: {fileID: 5062525429664586669, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
       propertyPath: m_LocalPosition.x
       value: 260.05
@@ -187,6 +171,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: F1 Car 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6160202423919749189, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
+      propertyPath: miniMap
+      value: 
+      objectReference: {fileID: 3082621030198657293}
+    - target: {fileID: 6160202423919749189, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
+      propertyPath: MiniMapBigCamera
+      value: 
+      objectReference: {fileID: 2964102992361035678}
+    - target: {fileID: 6160202423919749189, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
+      propertyPath: MiniMapSmallCamera
+      value: 
+      objectReference: {fileID: 603513036864279150}
+    - target: {fileID: 6160202423919749189, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
+      propertyPath: carDotRectTransform
+      value: 
+      objectReference: {fileID: 822136692}
     - target: {fileID: 6864331406162114436, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
       propertyPath: rpmText
       value: 
@@ -199,32 +199,17 @@ PrefabInstance:
       propertyPath: speedText
       value: 
       objectReference: {fileID: 2998847813084057241}
-    - target: {fileID: 8116407649515978878, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
-      propertyPath: m_CullingMask.m_Bits
-      value: 55
-      objectReference: {fileID: 0}
-    - target: {fileID: 8354935290078813411, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
-      propertyPath: m_CullingMask.m_Bits
-      value: 55
-      objectReference: {fileID: 0}
-    - target: {fileID: 8714526969077239862, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
-      propertyPath: m_CullingMask.m_Bits
-      value: 55
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5551360141245956375, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1181191700}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
 --- !u!114 &214930151 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6864331406162114436, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
   m_PrefabInstance: {fileID: 214930149}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1181191699}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 78942c6e946a7324ca7f2609e5671f81, type: 3}
@@ -584,27 +569,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 377281d521a547e439b9736874c1b621, type: 3}
   m_PrefabInstance: {fileID: 915680604327428534}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1181191699 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5551360141245956375, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
-  m_PrefabInstance: {fileID: 214930149}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1181191700
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1181191699}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba48ad088dc85dd40a103502b9ac7184, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MiniMapSmallCamera: {fileID: 603513036864279150}
-  MiniMapBigCamera: {fileID: 2964102992361035678}
-  miniMap: {fileID: 3082621030198657293}
-  carDotRectTransform: {fileID: 822136692}
 --- !u!4 &1181191709 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5062525429664586669, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}

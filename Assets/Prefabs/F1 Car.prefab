@@ -110,7 +110,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
-  m_Mesh: {fileID: 2534964839176971238, guid: 457d258697d34c248ab03a21d479bfc3, type: 3}
+  m_Mesh: {fileID: 2534964839176971238, guid: 191a1dc4402f6114bba347f397260e58, type: 3}
 --- !u!1 &429672768817908189
 GameObject:
   m_ObjectHideFlags: 0
@@ -183,7 +183,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 55
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -258,7 +258,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
-  m_Mesh: {fileID: 2534964839176971238, guid: 457d258697d34c248ab03a21d479bfc3, type: 3}
+  m_Mesh: {fileID: 2534964839176971238, guid: 191a1dc4402f6114bba347f397260e58, type: 3}
 --- !u!114 &1859285831938794574
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -380,13 +380,13 @@ Camera:
     height: 1
   near clip plane: 0.01
   far clip plane: 1000
-  field of view: 70
+  field of view: 60
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 55
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -1143,7 +1143,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 55
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -1561,7 +1561,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
-  m_Mesh: {fileID: 2534964839176971238, guid: 457d258697d34c248ab03a21d479bfc3, type: 3}
+  m_Mesh: {fileID: 2534964839176971238, guid: 191a1dc4402f6114bba347f397260e58, type: 3}
 --- !u!1 &6223705083737999813
 GameObject:
   m_ObjectHideFlags: 0
@@ -1835,7 +1835,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
-  m_Mesh: {fileID: 2534964839176971238, guid: 457d258697d34c248ab03a21d479bfc3, type: 3}
+  m_Mesh: {fileID: 2534964839176971238, guid: 191a1dc4402f6114bba347f397260e58, type: 3}
 --- !u!114 &3862986668078284498
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1963,7 +1963,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 55
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -2090,7 +2090,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 55
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -2182,7 +2182,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 55
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -2406,6 +2406,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 31073083d533471429332d6cc461014a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8745581474219053939}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 31073083d533471429332d6cc461014a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6160202423919749189}
     - targetCorrespondingSourceObject: {fileID: -1576497113921633660, guid: 31073083d533471429332d6cc461014a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1238973185541244663}
@@ -2744,6 +2747,22 @@ ConstantForce:
   m_RelativeForce: {x: 0, y: 0, z: 0}
   m_Torque: {x: 0, y: 0, z: 0}
   m_RelativeTorque: {x: 0, y: 0, z: 0}
+--- !u!114 &6160202423919749189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5551360141245956375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba48ad088dc85dd40a103502b9ac7184, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MiniMapSmallCamera: {fileID: 0}
+  MiniMapBigCamera: {fileID: 0}
+  miniMap: {fileID: 0}
+  carDotRectTransform: {fileID: 0}
 --- !u!1 &6078918956386471416 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1555894605268562366, guid: 31073083d533471429332d6cc461014a, type: 3}
