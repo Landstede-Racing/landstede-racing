@@ -19,6 +19,7 @@ public class DamagablePart : MonoBehaviour
         
         if (currentDamage >= maxDamage)
         {
+            Debug.Log("Part: " + part.name + " is destroyed");
             Destroy(gameObject);
         }
     }
