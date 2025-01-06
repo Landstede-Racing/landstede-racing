@@ -15,6 +15,15 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "NextCam",
+                    "type": "Button",
+                    "id": "90c1d2e6-1808-467e-ac90-a6eaf822bc59",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Brake",
                     "type": "Value",
                     "id": "e72c2522-5527-43d6-bec6-017c4a150c57",
@@ -69,6 +78,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Accelerate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4937dc5e-c3a9-4187-87ef-9d8ce1c64cde",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "NextCam",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
