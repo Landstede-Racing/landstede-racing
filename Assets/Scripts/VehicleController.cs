@@ -41,7 +41,6 @@ public class VehicleController : MonoBehaviour
     public float changeGearTime = 0.1f;
 
     public AnimationCurve downForceCurve;
-    public float currentDownForce;
     // public ConstantForce downForce;
     public float maxFrontDownForce;
     public float maxRearDownForce;
@@ -61,6 +60,7 @@ public class VehicleController : MonoBehaviour
     public TMP_Text rpmText;
     public Transform backWing;
 
+    Animator animator;
     WheelControl[] wheels;
     Rigidbody rigidBody;
 
@@ -72,6 +72,8 @@ public class VehicleController : MonoBehaviour
         wheels = GetComponentsInChildren<WheelControl>();
 
         rigidBody = GetComponent<Rigidbody>();
+
+        animator = GetComponent<Animator>();
 
         // Adjust center of mass vertically, to help prevent the car from rolling
         rigidBody.centerOfMass += Vector3.up * centreOfGravityOffset;
@@ -107,7 +109,7 @@ public class VehicleController : MonoBehaviour
         {
             gearText.text = (gear - 1).ToString();
         }
-        // speedText.text = (int)(Vector3.Dot(transform.forward, rigidBody.linearVelocity) * 3.6) + " KM/U";
+        
         speedText.text = $"<size=120%>{(int)(Vector3.Dot(transform.forward, rigidBody.linearVelocity) * 3.6)}</size>\n<size=50%>KM/U</size>";
 
 
@@ -117,16 +119,10 @@ public class VehicleController : MonoBehaviour
         if (drsEnabled)
         {
             rigidBody.linearDamping = 0.07f;
-            Vector3 backWingRotation = backWing.eulerAngles;
-            backWingRotation.x = -11;
-            backWing.eulerAngles = backWingRotation;
         }
         else
         {
             rigidBody.linearDamping = 0.1f;
-            Vector3 backWingRotation = backWing.eulerAngles;
-            backWingRotation.x = 20;
-            backWing.eulerAngles = backWingRotation;
         }
     }
 
@@ -324,6 +320,14 @@ public class VehicleController : MonoBehaviour
     public void SetDRS(bool enabled)
     {
         drsEnabled = enabled;
+        if (enabled)
+        {
+            animator.Play("DRS_On");
+        }
+        else
+        {
+            animator.Play("DRS_Off");
+        }
     }
 
     public bool GetDRS()

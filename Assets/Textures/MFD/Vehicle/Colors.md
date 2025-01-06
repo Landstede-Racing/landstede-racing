@@ -1,0 +1,9 @@
+- Damage
+  - 0%: #54E341
+  - 50% (ish): #FF9D35
+  - 100% (Gown): #E34141
+- Temperature:
+  - Cowld: #41DEE3
+  - Eh: #54E341
+  - Warm: #FF9D35
+  - BURN BABY BURN: #E34141
