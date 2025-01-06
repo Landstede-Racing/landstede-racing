@@ -49,11 +49,4 @@ public class MiniMapController : MonoBehaviour
             }
         }
     }
-
-    public void SwitchCameras()
-    {
-        bool isSmallCameraActive = MiniMapSmallCamera.activeSelf;
-        SetMiniMapSmallCameraActive(!isSmallCameraActive);
-        SetMiniMapBigCameraActive(isSmallCameraActive);
-    }
 }
