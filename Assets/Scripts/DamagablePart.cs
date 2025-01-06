@@ -10,11 +10,11 @@ public class DamagablePart : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     { 
-        currentDamage += (int)collision.relativeVelocity.magnitude;
+        currentDamage += (int)collision.impulse.magnitude;
         Debug.Log("-----------------------------");
         Debug.Log("Part: " + part.name);
         Debug.Log("currentDamage: " + currentDamage);
-        Debug.Log("velocity: " + collision.relativeVelocity.magnitude);
+        Debug.Log("velocity: " + collision.impulse.magnitude);
         Debug.Log("-----------------------------");
         
         if (currentDamage >= maxDamage)
