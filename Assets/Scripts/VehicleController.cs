@@ -109,7 +109,7 @@ public class VehicleController : MonoBehaviour
         {
             gearText.text = (gear - 1).ToString();
         }
-        
+
         speedText.text = $"<size=120%>{(int)(Vector3.Dot(transform.forward, rigidBody.linearVelocity) * 3.6)}</size>\n<size=50%>KM/U</size>";
 
 

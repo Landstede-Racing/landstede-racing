@@ -97,18 +97,12 @@ public class LogitechSteeringWheel : MonoBehaviour
 
                 if (LogitechGSDK.LogiButtonTriggered(0, 4))
                 {
-                    if (vehicleController.GetGear() < vehicleController.gearRatios.Length - 1)
-                    {
-                        StartCoroutine(vehicleController.ChangeGear(1));
-                    }
+                    StartCoroutine(vehicleController.ChangeGear(1));
                     Debug.Log(vehicleController.GetGear());
                 }
                 if (LogitechGSDK.LogiButtonTriggered(0, 5))
                 {
-                    if (vehicleController.GetGear() > 0)
-                    {
-                        StartCoroutine(vehicleController.ChangeGear(-1));
-                    }
+                    StartCoroutine(vehicleController.ChangeGear(-1));
                     Debug.Log(vehicleController.GetGear());
                 }
                 if (LogitechGSDK.LogiButtonTriggered(0, 7))
