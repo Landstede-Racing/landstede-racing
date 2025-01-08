@@ -161,11 +161,13 @@ public class VehicleController : MonoBehaviour
 
         bool vibration = false;
         float vibrationFrequency = 0f;
+        float vibrationIntensity = 0f;
 
         if (terrainInfo1 != null)
         {
             vibration = terrainInfo1.vibration;
             vibrationFrequency = terrainInfo1.vibrationFrequency;
+            vibrationIntensity = terrainInfo1.vibrationIntensity;
         }
         if (terrainInfo2 != null)
         {
@@ -173,12 +175,13 @@ public class VehicleController : MonoBehaviour
             {
                 vibration = terrainInfo2.vibration;
                 if (terrainInfo2.vibrationFrequency > vibrationFrequency) vibrationFrequency = terrainInfo2.vibrationFrequency;
+                if(terrainInfo2.vibrationIntensity > vibrationIntensity) vibrationIntensity = terrainInfo2.vibrationIntensity;
             }
         }
 
         if (vibration)
         {
-            int intensity = Mathf.Clamp((int)(GetSpeed() * 3f), 0, 20); // Scale intensity with speed
+            int intensity = Mathf.Clamp((int)(GetSpeed() * vibrationIntensity), 0, 40); // Scale intensity with speed
             float frequency = Mathf.Clamp(GetSpeed() / 5f * vibrationFrequency, 1f, 50f);  // Scale frequency with speed
 
             SimulateVibration(intensity, frequency);
@@ -190,11 +193,13 @@ public class VehicleController : MonoBehaviour
 
 
         // Apply centering force
-        float centeringForce = -steeringAngle * centeringForceMultiplier;
-        LogitechGSDK.LogiPlaySpringForce(0, 0, Mathf.Clamp(Mathf.Abs((int)centeringForce), 20, 100), 70);
+        float slipForce = CalculateSlipForce();
+        float centeringForce = centeringForceMultiplier * (GetSpeed() / maxSpeed) * 2.5f / Math.Max(slipForce / 3, 1);
+        Debug.Log("Centering force: " + centeringForce);
+        LogitechGSDK.LogiPlaySpringForce(0, 0, Mathf.Clamp(Mathf.Abs((int)centeringForce), 20, 100), 100);
 
         // Apply slip feedback based on WheelColliders
-        float slipForce = CalculateSlipForce();
+        Debug.Log(slipForce);
         LogitechGSDK.LogiPlayDamperForce(0, (int)slipForce);
     }
 
@@ -237,7 +242,7 @@ public class VehicleController : MonoBehaviour
     private float GetWheelSlip(WheelCollider wheel)
     {
         WheelHit hit;
-        if (wheel.GetGroundHit(out hit))
+        if (wheel.isGrounded && wheel.GetGroundHit(out hit))
         {
             return Mathf.Abs(hit.sidewaysSlip);
         }

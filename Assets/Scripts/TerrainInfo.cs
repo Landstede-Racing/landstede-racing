@@ -4,4 +4,5 @@ public class TerrainInfo : MonoBehaviour
 {
     public bool vibration;
     public float vibrationFrequency;
+    public float vibrationIntensity;
 }
