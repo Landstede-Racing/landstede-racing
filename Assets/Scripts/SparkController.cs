@@ -9,7 +9,7 @@ public class SparkController : MonoBehaviour
 
     void OnCollisionEnter(Collision other)
     {
-        LogitechGSDK.LogiPlaySideCollisionForce(0, 1);
+        LogitechGSDK.LogiPlayFrontalCollisionForce(0, 1);
         GameObject go = GameObject.Instantiate(sparkPrefab, gameObject.transform);
         go.transform.position = other.contacts[0].point;
     }
