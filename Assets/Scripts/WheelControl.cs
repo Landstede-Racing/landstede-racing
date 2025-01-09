@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -38,6 +39,7 @@ public class WheelControl : MonoBehaviour
         if (WheelCollider.isGrounded)
         {
             WheelCollider.GetGroundHit(out WheelHit hit);
+            // Debug.Log(hit.force);
 
             if (damagablePart.currentDamage < damagablePart.maxDamage && hit.force > 1400)
             {
@@ -52,7 +54,7 @@ public class WheelControl : MonoBehaviour
                 }
                 else if (hit.collider.CompareTag("Curb"))
                 {
-                    damagablePart.currentDamage += (hit.force - 1400) * damagablePart.damageMultiplier * 300;
+                    damagablePart.currentDamage += (hit.force - 1400) * damagablePart.damageMultiplier * 3;
 
                     if (damagablePart.currentDamage >= damagablePart.maxDamage)
                     {
@@ -70,5 +72,6 @@ public class WheelControl : MonoBehaviour
                 }
             }
         }
+        Debug.Log(Math.Floor((damagablePart.currentDamage / damagablePart.maxDamage) * 100));
     }
 }
