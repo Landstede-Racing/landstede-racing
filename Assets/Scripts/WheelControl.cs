@@ -6,9 +6,7 @@ public class WheelControl : MonoBehaviour
     public Transform wheelModel;
 
     public Part part;
-    public int maxDamage = 250;
-    public int currentDamage;
-
+    public DamagablePart damagablePart;
 
     [HideInInspector] public WheelCollider WheelCollider;
 
@@ -41,20 +39,35 @@ public class WheelControl : MonoBehaviour
         {
             WheelCollider.GetGroundHit(out WheelHit hit);
 
-            int force = (int)hit.force;
-            if (force > 0)
+            if (damagablePart.currentDamage < damagablePart.maxDamage && hit.force > 1400)
             {
-                Debug.Log("-----------------------------");
-                Debug.Log("Part: " + part.name);
-                Debug.Log("currentDamage: " + currentDamage);
-                Debug.Log("force: " + force);
-                Debug.Log("-----------------------------");
-            }
+                if (hit.collider.CompareTag("Ground"))
+                {
+                    damagablePart.currentDamage += (hit.force - 1400) * damagablePart.damageMultiplier;
 
-            if (currentDamage >= maxDamage)
-            {
-                Debug.Log("Part: " + part.name + " is destroyed");
-                Destroy(gameObject);
+                    if (damagablePart.currentDamage >= damagablePart.maxDamage)
+                    {
+                        Debug.Log("Here it will break in a less horrible way than the others");
+                    }
+                }
+                else if (hit.collider.CompareTag("Curb"))
+                {
+                    damagablePart.currentDamage += (hit.force - 1400) * damagablePart.damageMultiplier * 300;
+
+                    if (damagablePart.currentDamage >= damagablePart.maxDamage)
+                    {
+                        Debug.Log("Here it will fly to china");
+                    }
+                }
+                else if (hit.collider.CompareTag("Wall"))
+                {
+                    damagablePart.currentDamage += (hit.force - 1400) * damagablePart.damageMultiplier * 10;
+
+                    if (damagablePart.currentDamage >= damagablePart.maxDamage)
+                    {
+                        Debug.Log("Here it will fly to the moon");
+                    }
+                }
             }
         }
     }

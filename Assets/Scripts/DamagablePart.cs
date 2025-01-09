@@ -4,20 +4,18 @@ using UnityEngine;
 [RequireComponent(typeof(MeshCollider))]
 public class DamagablePart : MonoBehaviour
 {
-    public int maxDamage = 250;
-    public int currentDamage;
+    public float maxDamage = 250;
+    public float currentDamage;
+    public float damageMultiplier = 0.001f;
     public Part part;
 
     void OnCollisionEnter(Collision collision)
-    { 
-        currentDamage += (int)collision.impulse.magnitude;
-        Debug.Log("-----------------------------");
-        Debug.Log("Part: " + part.name);
-        Debug.Log("currentDamage: " + currentDamage);
-        Debug.Log("velocity: " + collision.impulse.magnitude);
-        Debug.Log("-----------------------------");
-        
-        if (currentDamage >= maxDamage)
+    {
+        if (currentDamage < maxDamage)
+        {
+            currentDamage += (float)collision.impulse.magnitude * damageMultiplier;
+        }
+        else
         {
             Debug.Log("Part: " + part.name + " is destroyed");
             Destroy(gameObject);
