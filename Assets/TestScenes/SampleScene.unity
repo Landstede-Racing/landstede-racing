@@ -166,7 +166,7 @@ PrefabInstance:
     - target: {fileID: 1859285831938794574, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
       propertyPath: damagablePart
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1812642885}
     - target: {fileID: 3573411061275865654, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
       propertyPath: part
       value: 
@@ -178,7 +178,7 @@ PrefabInstance:
     - target: {fileID: 3573411061275865654, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
       propertyPath: damagablePart
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 278841949}
     - target: {fileID: 3862986668078284498, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
       propertyPath: part
       value: 
@@ -186,7 +186,7 @@ PrefabInstance:
     - target: {fileID: 3862986668078284498, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
       propertyPath: damagablePart
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1045855066}
     - target: {fileID: 3988025162936336609, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
       propertyPath: m_SuspensionDistance
       value: 0.05
@@ -210,10 +210,6 @@ PrefabInstance:
     - target: {fileID: 4609875926955886825, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
       propertyPath: m_Enabled
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5062525429664586669, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 21.4
       objectReference: {fileID: 0}
     - target: {fileID: 5062525429664586669, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
       propertyPath: m_LocalPosition.x
@@ -262,7 +258,7 @@ PrefabInstance:
     - target: {fileID: 5208651134937231730, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
       propertyPath: damagablePart
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1900051164}
     - target: {fileID: 5382107164871997494, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
       propertyPath: m_Convex
       value: 1
@@ -376,15 +372,27 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 33967636114657174, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
       insertIndex: -1
       addedObject: {fileID: 278841944}
+    - targetCorrespondingSourceObject: {fileID: 33967636114657174, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 278841949}
     - targetCorrespondingSourceObject: {fileID: 6038797319774168777, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1900051159}
+    - targetCorrespondingSourceObject: {fileID: 6038797319774168777, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1900051164}
     - targetCorrespondingSourceObject: {fileID: 886670315796224157, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1812642881}
+    - targetCorrespondingSourceObject: {fileID: 886670315796224157, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1812642885}
     - targetCorrespondingSourceObject: {fileID: 7061712379422779236, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1045855062}
+    - targetCorrespondingSourceObject: {fileID: 7061712379422779236, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1045855066}
   m_SourcePrefab: {fileID: 100100000, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
 --- !u!54 &214930150 stripped
 Rigidbody:
@@ -417,6 +425,48 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8837629088861826258, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
   m_PrefabInstance: {fileID: 214930149}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &244374874 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5148817236446094103, guid: 669c2449fdb0179489b66f9e10b99757, type: 3}
+  m_PrefabInstance: {fileID: 404192194}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &244374879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 244374874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9879cb02b07e7148be02a0860bba21e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vibration: 0
+  vibrationFrequency: 0
+  vibrationIntensity: 0
+--- !u!64 &244374883
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 244374874}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4579454407841743219, guid: 669c2449fdb0179489b66f9e10b99757, type: 3}
 --- !u!1 &278841942 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 33967636114657174, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
@@ -437,6 +487,23 @@ MonoBehaviour:
   name: Rear Left Wheel
   location: 13
   description: Spinny boi go brrr
+--- !u!114 &278841949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 278841942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c07dd2d0fe5127649bd172d77a71e526, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxDamage: 250
+  currentDamage: 0
+  damageMultiplier: 1e-10
+  shouldDestroy: 0
+  part: {fileID: 278841944}
 --- !u!114 &327416147
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -451,6 +518,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxDamage: 250
   currentDamage: 0
+  damageMultiplier: 100000000
+  shouldDestroy: 1
   part: {fileID: 327416148}
 --- !u!114 &327416148
 MonoBehaviour:
@@ -532,48 +601,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -3886819923080763867, guid: 31073083d533471429332d6cc461014a, type: 3}
---- !u!1 &244374874 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5148817236446094103, guid: 669c2449fdb0179489b66f9e10b99757, type: 3}
-  m_PrefabInstance: {fileID: 404192194}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &244374879
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 244374874}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9879cb02b07e7148be02a0860bba21e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  vibration: 0
-  vibrationFrequency: 0
-  vibrationIntensity: 0
---- !u!64 &244374883
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 244374874}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4579454407841743219, guid: 669c2449fdb0179489b66f9e10b99757, type: 3}
 --- !u!1001 &404192194
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -799,6 +826,10 @@ PrefabInstance:
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: -3093530380200154008, guid: 669c2449fdb0179489b66f9e10b99757, type: 3}
+      propertyPath: m_TagString
+      value: Curb
+      objectReference: {fileID: 0}
+    - target: {fileID: -3093530380200154008, guid: 669c2449fdb0179489b66f9e10b99757, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -817,6 +848,10 @@ PrefabInstance:
     - target: {fileID: -2519092360280523269, guid: 669c2449fdb0179489b66f9e10b99757, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: -2500669797705832236, guid: 669c2449fdb0179489b66f9e10b99757, type: 3}
+      propertyPath: m_TagString
+      value: Curb
       objectReference: {fileID: 0}
     - target: {fileID: -2500669797705832236, guid: 669c2449fdb0179489b66f9e10b99757, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -849,6 +884,10 @@ PrefabInstance:
     - target: {fileID: -1891630423312683343, guid: 669c2449fdb0179489b66f9e10b99757, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: -1807970279642858887, guid: 669c2449fdb0179489b66f9e10b99757, type: 3}
+      propertyPath: m_TagString
+      value: Wall
       objectReference: {fileID: 0}
     - target: {fileID: -1807970279642858887, guid: 669c2449fdb0179489b66f9e10b99757, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -927,6 +966,10 @@ PrefabInstance:
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 97711592029150824, guid: 669c2449fdb0179489b66f9e10b99757, type: 3}
+      propertyPath: m_TagString
+      value: Wall
+      objectReference: {fileID: 0}
+    - target: {fileID: 97711592029150824, guid: 669c2449fdb0179489b66f9e10b99757, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -981,6 +1024,10 @@ PrefabInstance:
     - target: {fileID: 1264623400748231974, guid: 669c2449fdb0179489b66f9e10b99757, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 1299332166879549586, guid: 669c2449fdb0179489b66f9e10b99757, type: 3}
+      propertyPath: m_TagString
+      value: Curb
       objectReference: {fileID: 0}
     - target: {fileID: 1299332166879549586, guid: 669c2449fdb0179489b66f9e10b99757, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -1099,6 +1146,10 @@ PrefabInstance:
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 5148817236446094103, guid: 669c2449fdb0179489b66f9e10b99757, type: 3}
+      propertyPath: m_TagString
+      value: Ground
+      objectReference: {fileID: 0}
+    - target: {fileID: 5148817236446094103, guid: 669c2449fdb0179489b66f9e10b99757, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -1109,6 +1160,10 @@ PrefabInstance:
     - target: {fileID: 5252682845850649624, guid: 669c2449fdb0179489b66f9e10b99757, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 5335601853256353763, guid: 669c2449fdb0179489b66f9e10b99757, type: 3}
+      propertyPath: m_TagString
+      value: Wall
       objectReference: {fileID: 0}
     - target: {fileID: 5335601853256353763, guid: 669c2449fdb0179489b66f9e10b99757, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -1173,6 +1228,10 @@ PrefabInstance:
     - target: {fileID: 7928921381863291208, guid: 669c2449fdb0179489b66f9e10b99757, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 7959570131821050649, guid: 669c2449fdb0179489b66f9e10b99757, type: 3}
+      propertyPath: m_TagString
+      value: Curb
       objectReference: {fileID: 0}
     - target: {fileID: 7959570131821050649, guid: 669c2449fdb0179489b66f9e10b99757, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -1693,6 +1752,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxDamage: 250
   currentDamage: 0
+  damageMultiplier: 100000000
+  shouldDestroy: 1
   part: {fileID: 674410837}
 --- !u!114 &674410837
 MonoBehaviour:
@@ -1918,6 +1979,23 @@ MonoBehaviour:
   name: Front Right Wheel
   location: 12
   description: Rond en Rond, Rond en Rond
+--- !u!114 &1045855066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1045855057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c07dd2d0fe5127649bd172d77a71e526, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxDamage: 250
+  currentDamage: 0
+  damageMultiplier: 1e-10
+  shouldDestroy: 0
+  part: {fileID: 1045855062}
 --- !u!1 &1160962191 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 377281d521a547e439b9736874c1b621, type: 3}
@@ -2078,168 +2156,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &1664842199
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 214930157}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c07dd2d0fe5127649bd172d77a71e526, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxDamage: 250
-  currentDamage: 0
-  part: {fileID: 1664842200}
---- !u!114 &1664842200
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 214930157}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c865870ea273ab48b4b726e3dc17990, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  name: Rear Wing
-  location: 9
-  description: Why does it fly?
---- !u!138 &1664842201
-FixedJoint:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 214930157}
-  serializedVersion: 1
-  m_ConnectedBody: {fileID: 214930150}
-  m_ConnectedArticulationBody: {fileID: 0}
-  m_BreakForce: Infinity
-  m_BreakTorque: Infinity
-  m_EnableCollision: 0
-  m_EnablePreprocessing: 1
-  m_MassScale: 1
-  m_ConnectedMassScale: 1
---- !u!64 &1664842202
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 214930157}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4567198328203474801, guid: 31073083d533471429332d6cc461014a, type: 3}
---- !u!54 &1664842203
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 214930157}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!1 &1812642875 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 886670315796224157, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
-  m_PrefabInstance: {fileID: 214930149}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1812642881
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1812642875}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c865870ea273ab48b4b726e3dc17990, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  name: Front Left Wheel
-  location: 11
-  description: Die wielen van de bus gaan rond en rond
---- !u!1 &1900051151 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6038797319774168777, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
-  m_PrefabInstance: {fileID: 214930149}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1900051159
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1900051151}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c865870ea273ab48b4b726e3dc17990, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  name: Rear Right Wheel
-  location: 14
-  description: Spinny boi
---- !u!1 &2089662311 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5267775917890738222, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
-  m_PrefabInstance: {fileID: 214930149}
-  m_PrefabAsset: {fileID: 0}
---- !u!64 &2089662314
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2089662311}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 2959467708922500008, guid: 31073083d533471429332d6cc461014a, type: 3}
 --- !u!1 &1661715078
 GameObject:
   m_ObjectHideFlags: 0
@@ -2352,6 +2268,204 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.4843908, y: 0.051904198, z: 1.788656}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1664842199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214930157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c07dd2d0fe5127649bd172d77a71e526, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxDamage: 250
+  currentDamage: 0
+  damageMultiplier: 100000000
+  shouldDestroy: 1
+  part: {fileID: 1664842200}
+--- !u!114 &1664842200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214930157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c865870ea273ab48b4b726e3dc17990, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Rear Wing
+  location: 9
+  description: Why does it fly?
+--- !u!138 &1664842201
+FixedJoint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214930157}
+  serializedVersion: 1
+  m_ConnectedBody: {fileID: 214930150}
+  m_ConnectedArticulationBody: {fileID: 0}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_EnableCollision: 0
+  m_EnablePreprocessing: 1
+  m_MassScale: 1
+  m_ConnectedMassScale: 1
+--- !u!64 &1664842202
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214930157}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4567198328203474801, guid: 31073083d533471429332d6cc461014a, type: 3}
+--- !u!54 &1664842203
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214930157}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!1 &1812642875 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 886670315796224157, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
+  m_PrefabInstance: {fileID: 214930149}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1812642881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1812642875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c865870ea273ab48b4b726e3dc17990, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Front Left Wheel
+  location: 11
+  description: Die wielen van de bus gaan rond en rond
+--- !u!114 &1812642885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1812642875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c07dd2d0fe5127649bd172d77a71e526, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxDamage: 250
+  currentDamage: 0
+  damageMultiplier: 1e-10
+  shouldDestroy: 0
+  part: {fileID: 1812642881}
+--- !u!1 &1900051151 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6038797319774168777, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
+  m_PrefabInstance: {fileID: 214930149}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1900051159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1900051151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c865870ea273ab48b4b726e3dc17990, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Rear Right Wheel
+  location: 14
+  description: Spinny boi
+--- !u!114 &1900051164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1900051151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c07dd2d0fe5127649bd172d77a71e526, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxDamage: 250
+  currentDamage: 0
+  damageMultiplier: 1e-10
+  shouldDestroy: 0
+  part: {fileID: 1900051159}
+--- !u!1 &2089662311 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5267775917890738222, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
+  m_PrefabInstance: {fileID: 214930149}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &2089662314
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2089662311}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 2959467708922500008, guid: 31073083d533471429332d6cc461014a, type: 3}
 --- !u!64 &2106753127
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -5138,8 +5252,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wheelModel: {fileID: 0}
   part: {fileID: 0}
-  maxDamage: 250
-  currentDamage: 0
+  damagablePart: {fileID: 0}
   WheelCollider: {fileID: 0}
   steerable: 0
   motorized: 1
@@ -6590,8 +6703,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wheelModel: {fileID: 0}
   part: {fileID: 0}
-  maxDamage: 250
-  currentDamage: 0
+  damagablePart: {fileID: 0}
   WheelCollider: {fileID: 0}
   steerable: 1
   motorized: 0
@@ -8292,8 +8404,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wheelModel: {fileID: 0}
   part: {fileID: 0}
-  maxDamage: 250
-  currentDamage: 0
+  damagablePart: {fileID: 0}
   WheelCollider: {fileID: 0}
   steerable: 1
   motorized: 0
@@ -9390,8 +9501,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wheelModel: {fileID: 0}
   part: {fileID: 0}
-  maxDamage: 250
-  currentDamage: 0
+  damagablePart: {fileID: 0}
   WheelCollider: {fileID: 0}
   steerable: 0
   motorized: 1
