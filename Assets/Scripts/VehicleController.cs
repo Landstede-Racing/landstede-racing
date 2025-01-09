@@ -476,13 +476,15 @@ public class VehicleController : MonoBehaviour
     {
         float x = transform.InverseTransformPoint(other.gameObject.transform.position).x;
         
+        float force = other.impulse.magnitude / 50;
+
         Debug.Log(x);
         if(x < 0) {
-            LogitechGSDK.LogiPlaySideCollisionForce(0, (int)-other.impulse.magnitude);
+            LogitechGSDK.LogiPlaySideCollisionForce(0, (int)-force);
         } else if(x > 0) {
-            LogitechGSDK.LogiPlaySideCollisionForce(0, (int)other.impulse.magnitude);
+            LogitechGSDK.LogiPlaySideCollisionForce(0, (int)force);
         } else {
-            LogitechGSDK.LogiPlayFrontalCollisionForce(0, (int)other.impulse.magnitude);
+            LogitechGSDK.LogiPlayFrontalCollisionForce(0, (int)force);
         }
     }
 }
