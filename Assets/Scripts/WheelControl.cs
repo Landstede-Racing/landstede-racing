@@ -1,8 +1,13 @@
+using System;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class WheelControl : MonoBehaviour
 {
     public Transform wheelModel;
+
+    public Part part;
+    public DamagablePart damagablePart;
 
     [HideInInspector] public WheelCollider WheelCollider;
 
@@ -29,5 +34,44 @@ public class WheelControl : MonoBehaviour
         WheelCollider.GetWorldPose(out position, out rotation);
         wheelModel.transform.position = position;
         wheelModel.transform.rotation = rotation;
+
+        // Damage from driving (get force from ground hit, and calculate damage using that)
+        if (WheelCollider.isGrounded)
+        {
+            WheelCollider.GetGroundHit(out WheelHit hit);
+            // Debug.Log(hit.force);
+
+            if (damagablePart.currentDamage < damagablePart.maxDamage && hit.force > 1400)
+            {
+                if (hit.collider.CompareTag("Ground"))
+                {
+                    damagablePart.currentDamage += (hit.force - 1400) * damagablePart.damageMultiplier;
+
+                    if (damagablePart.currentDamage >= damagablePart.maxDamage)
+                    {
+                        Debug.Log("Here it will break in a less horrible way than the others");
+                    }
+                }
+                else if (hit.collider.CompareTag("Curb"))
+                {
+                    damagablePart.currentDamage += (hit.force - 1400) * damagablePart.damageMultiplier * 3;
+
+                    if (damagablePart.currentDamage >= damagablePart.maxDamage)
+                    {
+                        Debug.Log("Here it will fly to china");
+                    }
+                }
+                else if (hit.collider.CompareTag("Wall"))
+                {
+                    damagablePart.currentDamage += (hit.force - 1400) * damagablePart.damageMultiplier * 10;
+
+                    if (damagablePart.currentDamage >= damagablePart.maxDamage)
+                    {
+                        Debug.Log("Here it will fly to the moon");
+                    }
+                }
+            }
+        }
+        Debug.Log(Math.Floor(damagablePart.currentDamage / damagablePart.maxDamage * 100));
     }
 }

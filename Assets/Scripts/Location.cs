@@ -1,0 +1,21 @@
+public enum Location 
+{
+    MGU_K,
+    MGU_H,
+    ICE,
+    EnergyStore,
+    Gearbox,
+    TurboCharger,
+    ControlElectronics,
+    FrontLeftWing,
+    FrontRightWing,
+    RearWing,
+    Underbody,
+    FrontLeftWheel,
+    FrontRightWheel,
+    RearLeftWheel,
+    RearRightWheel,
+    LeftSidepod,
+    RightSidepod,
+    
+}
