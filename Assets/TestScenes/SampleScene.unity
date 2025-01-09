@@ -391,11 +391,6 @@ Rigidbody:
   m_CorrespondingSourceObject: {fileID: 7639446272140765817, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
   m_PrefabInstance: {fileID: 214930149}
   m_PrefabAsset: {fileID: 0}
---- !u!54 &214930150 stripped
-Rigidbody:
-  m_CorrespondingSourceObject: {fileID: 7639446272140765817, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
-  m_PrefabInstance: {fileID: 214930149}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &214930151 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6864331406162114436, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
