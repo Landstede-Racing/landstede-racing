@@ -69,11 +69,6 @@ public class LogitechSteeringWheel : MonoBehaviour
         {
             if (LogitechGSDK.LogiUpdate() && LogitechGSDK.LogiIsConnected(0))
             {
-                LogitechGSDK.LogiPlaySpringForce(0, 0, 50, 50);
-                activeForceAndEffect[0] = "Spring Force\n ";
-                LogitechGSDK.LogiPlaySoftstopForce(0, 90);
-                activeForceAndEffect[8] = "Soft Stop Force\n";
-
                 LogitechGSDK.DIJOYSTATE2ENGINES rec;
                 rec = LogitechGSDK.LogiGetStateUnity(0);
                 // Get steer and pedal states
