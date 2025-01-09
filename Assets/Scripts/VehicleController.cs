@@ -195,11 +195,11 @@ public class VehicleController : MonoBehaviour
         // Apply centering force
         float slipForce = CalculateSlipForce();
         float centeringForce = centeringForceMultiplier * (GetSpeed() / maxSpeed) * 2.5f / Math.Max(slipForce / 3, 1);
-        Debug.Log("Centering force: " + centeringForce);
+        // Debug.Log("Centering force: " + centeringForce);
         LogitechGSDK.LogiPlaySpringForce(0, 0, Mathf.Clamp(Mathf.Abs((int)centeringForce), 20, 100), 100);
 
         // Apply slip feedback based on WheelColliders
-        Debug.Log(slipForce);
+        // Debug.Log(slipForce);
         LogitechGSDK.LogiPlayDamperForce(0, (int)slipForce);
     }
 
@@ -474,9 +474,15 @@ public class VehicleController : MonoBehaviour
 
     void OnCollisionEnter(Collision other)
     {
-        if(other.impulse.magnitude > 750) {
-            LogitechGSDK.LogiPlayFrontalCollisionForce(0, (int)other.impulse.magnitude / 750);
-            Debug.Log("JUST HIT " + other.gameObject.name + ". BLOODY HELL, THAT WAS AN IMPULSE OF " + other.impulse.magnitude);
+        float x = transform.InverseTransformPoint(other.gameObject.transform.position).x;
+        
+        Debug.Log(x);
+        if(x < 0) {
+            LogitechGSDK.LogiPlaySideCollisionForce(0, (int)-other.impulse.magnitude);
+        } else if(x > 0) {
+            LogitechGSDK.LogiPlaySideCollisionForce(0, (int)other.impulse.magnitude);
+        } else {
+            LogitechGSDK.LogiPlayFrontalCollisionForce(0, (int)other.impulse.magnitude);
         }
     }
 }

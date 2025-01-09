@@ -1522,6 +1522,10 @@ PrefabInstance:
       propertyPath: m_Interpolate
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7639446272140765817, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8371609375030710985, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
       propertyPath: m_Size.x
       value: 0.71221155
