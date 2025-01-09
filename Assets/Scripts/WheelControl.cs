@@ -72,6 +72,6 @@ public class WheelControl : MonoBehaviour
                 }
             }
         }
-        Debug.Log(Math.Floor((damagablePart.currentDamage / damagablePart.maxDamage) * 100));
+        Debug.Log(Math.Floor(damagablePart.currentDamage / damagablePart.maxDamage * 100));
     }
 }

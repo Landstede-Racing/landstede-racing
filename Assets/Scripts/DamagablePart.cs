@@ -7,6 +7,7 @@ public class DamagablePart : MonoBehaviour
     public float maxDamage = 100;
     public float currentDamage;
     public float damageMultiplier = 0.001f;
+    public bool shouldDestroy = false;
     public Part part;
 
     void OnCollisionEnter(Collision collision)
@@ -15,10 +16,12 @@ public class DamagablePart : MonoBehaviour
         {
             currentDamage += (float)collision.impulse.magnitude * damageMultiplier;
         }
-        else
-        {
-            Debug.Log("Part: " + part.name + " is destroyed");
-            Destroy(gameObject);
-        }
+        else if (shouldDestroy) DestroyPart();
+
+    }
+    void DestroyPart()
+    {
+        Debug.Log("Part: " + part.name + " is destroyed");
+        Destroy(gameObject);
     }
 }
