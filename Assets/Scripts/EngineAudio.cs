@@ -66,19 +66,16 @@ public class EngineAudio : MonoBehaviour
             idleSound.volume = 0;
             runningSound.volume = 0;
         }
-
-        // Debug.Log("Idle: " + idleSound.volume);
-        // Debug.Log("Running: " + runningSound.volume);
-        // Debug.Log("Reverse: " + reverseSound.volume);
     }
     public IEnumerator StartEngine()
     {
         startingSound.Play();
         carController.isEngineRunning = 1;
         yield return new WaitForSeconds(0.6f);
+
         isEngineRunning = true;
-        Debug.Log("Engine is running :O");
         yield return new WaitForSeconds(0.4f);
+        
         carController.isEngineRunning = 2;
     }
 }

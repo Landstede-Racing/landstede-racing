@@ -49,22 +49,12 @@ public class InputController : MonoBehaviour
     {
         if (SettingsController.DeviceController == "gamepadController")
         {
-            if (vehicleController != null && gamepadControls != null)
-            {
-                ProcessGamepadInputs();
-
-                // Vector2 steerVector = gamepadControls.vehicleControls.Steer.ReadValue<Vector2>();
-                // float steer = steerVector.x;
-                // Debug.Log($"SteerDebug: {steer}");
-            }
+            if (vehicleController != null && gamepadControls != null) ProcessGamepadInputs();
         }
 
         if (SettingsController.DeviceController == "keyboardController")
         {
-            if (vehicleController != null && keyboardControls != null)
-            {
-                ProcessKeyboardInputs();
-            }
+            if (vehicleController != null && keyboardControls != null) ProcessKeyboardInputs();
         }
     }
 
@@ -88,40 +78,32 @@ public class InputController : MonoBehaviour
         if (gamepadControls.vehicleControls.GearUp.triggered)
         {
             StartCoroutine(vehicleController.ChangeGear(1));
-            Debug.Log("GearUp!");
         }
 
         // Gear Down
         if (gamepadControls.vehicleControls.GearDown.triggered)
         {
             StartCoroutine(vehicleController.ChangeGear(-1));
-            Debug.Log("GearDown!");
         }
 
         if (gamepadControls.vehicleControls.DRS.triggered)
         {
-            Debug.Log("DRS TOGGLE!");
             vehicleController.ToggleDRS();
         }
 
         if (gamepadControls.vehicleControls.LookBack.triggered)
         {
-            Debug.Log("Gamepad Lookback toggled!");
             cameraController.SetReverseCam(true);
         }
         else if (gamepadControls.vehicleControls.LookBack.WasReleasedThisFrame())
         {
-            Debug.Log("Gamepad Lookback Released");
             cameraController.SetReverseCam(false);
         }
 
         if (gamepadControls.vehicleControls.NextCam.triggered)
         {
-            Debug.Log("Next Cam pressed.");
             cameraController.NextCamera();
         }
-
-
     }
 
     private void ProcessKeyboardInputs()
@@ -143,25 +125,21 @@ public class InputController : MonoBehaviour
         if (keyboardControls.vehicleControls.GearUp.triggered)
         {
             StartCoroutine(vehicleController.ChangeGear(1));
-            Debug.Log("GearUp!");
         }
 
         // Gear Down
         if (keyboardControls.vehicleControls.GearDown.triggered)
         {
             StartCoroutine(vehicleController.ChangeGear(-1));
-            Debug.Log("GearDown!");
         }
 
         if (keyboardControls.vehicleControls.DRS.triggered)
         {
-            Debug.Log("DRS TOGGLE!");
             vehicleController.ToggleDRS();
         }
 
         if (keyboardControls.vehicleControls.NextCam.triggered)
         {
-            Debug.Log("Next Cam pressed.");
             cameraController.NextCamera();
         }
     }
