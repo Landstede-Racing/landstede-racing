@@ -4,7 +4,6 @@ using UnityEngine;
 [RequireComponent(typeof(Collider))]
 public class SparkController : MonoBehaviour
 {
-    private VehicleController vehicleController;
     public GameObject sparkPrefab;
 
     void OnCollisionEnter(Collision other)

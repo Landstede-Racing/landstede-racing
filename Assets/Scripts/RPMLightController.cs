@@ -12,15 +12,11 @@ public class RPMLightController : MonoBehaviour
     public Color blueColor;
 
     public TMP_Text drsText;
-    private Color offColor;
-
-    // public Image drsBar;
 
     void Start()
     {
         lights = GetComponentsInChildren<Image>();
 
-        offColor = new Color(0.5f, 0.5f, 0.5f, 0.5f);
         greenColor = new Color(0f, 1f, 0f, 0.5f);
     }
 
@@ -28,7 +24,6 @@ public class RPMLightController : MonoBehaviour
     {
         // Calculate how many lights should be on
         float i = Mathf.InverseLerp(vehicleController.firstLightOn, vehicleController.redLine, vehicleController.currentEngineRPM) * 13;
-        // Debug.Log("Lights: " + i);
         int j = 0;
         foreach (Image light in lights)
         {
@@ -54,13 +49,11 @@ public class RPMLightController : MonoBehaviour
         if (vehicleController.drsEnabled)
         {
             drsText.text = "DRS";
-            // drsBar.color = greenColor;
             drsText.color = Color.white;
         }
         else if (vehicleController.drsAvailable)
         {
             drsText.text = "DRS Available";
-            // drsBar.color = Color.yellow;
             drsText.color = Color.black;
 
         }
@@ -68,7 +61,6 @@ public class RPMLightController : MonoBehaviour
         {
             drsText.text = "DRS off";
             drsText.color = Color.red;
-            // drsBar.color = offColor;
 
         }
     }
