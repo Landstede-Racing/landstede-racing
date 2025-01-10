@@ -86,7 +86,7 @@ public class VehicleController : MonoBehaviour
         rigidBody.centerOfMass += Vector3.up * centreOfGravityOffset;
     }
 
-    public void Update()
+    public void FixedUpdate()
     {
         if (isEngineRunning == 0) StartCoroutine(GetComponent<EngineAudio>().StartEngine());
         ApplyMotor();

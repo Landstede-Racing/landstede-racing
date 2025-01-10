@@ -35,6 +35,13 @@ public class WheelControl : MonoBehaviour
         wheelModel.transform.position = position;
         wheelModel.transform.rotation = rotation;
 
+        // 
+        // Calculations for the damage percentage :)
+        // 
+        // Debug.Log(Math.Floor(damagablePart.currentDamage / damagablePart.maxDamage * 100));
+    }
+
+    void FixedUpdate() {
         // Damage from driving (get force from ground hit, and calculate damage using that)
         if (WheelCollider.isGrounded)
         {
@@ -71,9 +78,5 @@ public class WheelControl : MonoBehaviour
                 }
             }
         }
-        // 
-        // Calculations for the damage percentage :)
-        // 
-        // Debug.Log(Math.Floor(damagablePart.currentDamage / damagablePart.maxDamage * 100));
     }
 }
