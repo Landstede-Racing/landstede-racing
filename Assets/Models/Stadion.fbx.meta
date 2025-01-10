@@ -7,6 +7,16 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: BikeLane
+    second: {fileID: 2100000, guid: f3a31491fc7cec442ac680853aff33f7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Chainlink
+    second: {fileID: 2100000, guid: 297baef4251fa1e41b4263610245984b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: Chainlink.001
     second: {fileID: 2100000, guid: 297baef4251fa1e41b4263610245984b, type: 2}
   - first:
@@ -24,6 +34,16 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: Curbs
     second: {fileID: 2100000, guid: 3732cce64cca678489867ce27a180e1c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Parking
+    second: {fileID: 2100000, guid: be1841174b99eab4591a291b09aa69b3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Road
+    second: {fileID: 2100000, guid: b29a7a9f6c5cec941baaa0209abb9e33, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
