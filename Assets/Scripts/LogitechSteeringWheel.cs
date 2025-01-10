@@ -102,12 +102,10 @@ public class LogitechSteeringWheel : MonoBehaviour
                 if (LogitechGSDK.LogiButtonTriggered(0, 4))
                 {
                     StartCoroutine(vehicleController.ChangeGear(1));
-                    Debug.Log(vehicleController.GetGear());
                 }
                 if (LogitechGSDK.LogiButtonTriggered(0, 5))
                 {
                     StartCoroutine(vehicleController.ChangeGear(-1));
-                    Debug.Log(vehicleController.GetGear());
                 }
                 if (LogitechGSDK.LogiButtonTriggered(0, 7))
                 {
@@ -394,9 +392,6 @@ public class LogitechSteeringWheel : MonoBehaviour
                     changeLights++;
                 }
 
-                // Debug.Log("Speed: " + rigidBody.linearVelocity.magnitude * 3.6 + " KM/U");
-                // Debug.Log("Position: " + rigidBody.position.x + ", " + rigidBody.position.y + ", " + rigidBody.position.z);
-
             }
             else if (!LogitechGSDK.LogiIsConnected(0))
             {
@@ -406,10 +401,6 @@ public class LogitechSteeringWheel : MonoBehaviour
             {
                 actualState = "THIS WINDOW NEEDS TO BE IN FOREGROUND IN ORDER FOR THE SDK TO WORK PROPERLY";
             }
-        }
-        else
-        {
-            // Debug.Log("User chose not wheel!");
         }
     }
 
@@ -466,11 +457,8 @@ public class LogitechSteeringWheel : MonoBehaviour
         // Apply centering force
         float slipForce = CalculateSlipForce();
         float centeringForce = centeringForceMultiplier * (vehicleController.GetSpeed() / vehicleController.maxSpeed) * 2.5f / Math.Max(slipForce / 3, 1);
-        // Debug.Log("Centering force: " + centeringForce);
         LogitechGSDK.LogiPlaySpringForce(0, 0, Mathf.Clamp(Mathf.Abs((int)centeringForce), 20, 100), 100);
 
-        // Apply slip feedback based on WheelColliders
-        // Debug.Log(slipForce);
         LogitechGSDK.LogiPlayDamperForce(0, (int)slipForce);
     }
 

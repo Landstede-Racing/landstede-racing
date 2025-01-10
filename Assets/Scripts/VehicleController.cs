@@ -326,7 +326,6 @@ public class VehicleController : MonoBehaviour
         
         float force = other.impulse.magnitude / 50;
 
-        Debug.Log(x);
         if(x < 0) {
             LogitechGSDK.LogiPlaySideCollisionForce(0, (int)-force);
         } else if(x > 0) {
