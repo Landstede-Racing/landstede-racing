@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Text;
 using UnityEngine.SceneManagement;
+using System;
 
 public class LogitechSteeringWheel : MonoBehaviour
 {
@@ -17,6 +18,12 @@ public class LogitechSteeringWheel : MonoBehaviour
     private float gas;
     private float brake;
     string[] activeForceAndEffect;
+
+    [Header("Force Feedback")]
+    private float vibrationTimer = 0f;
+    private bool vibrationState = false;
+    public float centeringForceMultiplier = 50f; // Strength of centering force
+    public float slipForceMultiplier = 100f;    // Strength of slip feedback
 
     // Use this for initialization
     void Start()
@@ -69,6 +76,8 @@ public class LogitechSteeringWheel : MonoBehaviour
         {
             if (LogitechGSDK.LogiUpdate() && LogitechGSDK.LogiIsConnected(0))
             {
+                ApplyForceFeedback();
+
                 LogitechGSDK.DIJOYSTATE2ENGINES rec;
                 rec = LogitechGSDK.LogiGetStateUnity(0);
                 // Get steer and pedal states
@@ -402,6 +411,113 @@ public class LogitechSteeringWheel : MonoBehaviour
         {
             // Debug.Log("User chose not wheel!");
         }
+    }
+
+    private void ApplyForceFeedback()
+    {
+        WheelHit hit1;
+        WheelHit hit2;
+        vehicleController.frontLeftWheel.WheelCollider.GetGroundHit(out hit1);
+        vehicleController.frontRightWheel.WheelCollider.GetGroundHit(out hit2);
+        TerrainInfo terrainInfo1 = null;
+        TerrainInfo terrainInfo2 = null;
+        if (vehicleController.frontLeftWheel.WheelCollider.isGrounded)
+        {
+            terrainInfo1 = hit1.collider.GetComponent<TerrainInfo>();
+        }
+        if (vehicleController.frontRightWheel.WheelCollider.isGrounded)
+        {
+            terrainInfo2 = hit2.collider.GetComponent<TerrainInfo>();
+        }
+
+        bool vibration = false;
+        float vibrationFrequency = 0f;
+        float vibrationIntensity = 0f;
+
+        if (terrainInfo1 != null)
+        {
+            vibration = terrainInfo1.vibration;
+            vibrationFrequency = terrainInfo1.vibrationFrequency;
+            vibrationIntensity = terrainInfo1.vibrationIntensity;
+        }
+        if (terrainInfo2 != null)
+        {
+            if (terrainInfo2.vibration)
+            {
+                vibration = terrainInfo2.vibration;
+                if (terrainInfo2.vibrationFrequency > vibrationFrequency) vibrationFrequency = terrainInfo2.vibrationFrequency;
+                if(terrainInfo2.vibrationIntensity > vibrationIntensity) vibrationIntensity = terrainInfo2.vibrationIntensity;
+            }
+        }
+
+        if (vibration)
+        {
+            int intensity = Mathf.Clamp((int)(vehicleController.GetSpeed() * vibrationIntensity), 0, 40); // Scale intensity with speed
+            float frequency = Mathf.Clamp(vehicleController.GetSpeed() / 5f * vibrationFrequency, 1f, 50f);  // Scale frequency with speed
+
+            SimulateVibration(intensity, frequency);
+        }
+        else
+        {
+            StopVibration();
+        }
+
+
+        // Apply centering force
+        float slipForce = CalculateSlipForce();
+        float centeringForce = centeringForceMultiplier * (vehicleController.GetSpeed() / vehicleController.maxSpeed) * 2.5f / Math.Max(slipForce / 3, 1);
+        // Debug.Log("Centering force: " + centeringForce);
+        LogitechGSDK.LogiPlaySpringForce(0, 0, Mathf.Clamp(Mathf.Abs((int)centeringForce), 20, 100), 100);
+
+        // Apply slip feedback based on WheelColliders
+        // Debug.Log(slipForce);
+        LogitechGSDK.LogiPlayDamperForce(0, (int)slipForce);
+    }
+
+    private void SimulateVibration(int intensity, float frequency)
+    {
+        // Calculate the interval between force toggles
+        float interval = 1f / (frequency * 2f); // Half-period for toggling force
+
+        // Update the timer
+        vibrationTimer += Time.deltaTime;
+
+        if (vibrationTimer >= interval)
+        {
+            vibrationTimer = 0f; // Reset timer
+            vibrationState = !vibrationState; // Toggle vibration state
+
+            // Apply force in alternating directions
+            int forceMagnitude = vibrationState ? intensity : -intensity;
+            LogitechGSDK.LogiPlayConstantForce(0, forceMagnitude);
+        }
+    }
+
+    private void StopVibration()
+    {
+        LogitechGSDK.LogiStopConstantForce(0);
+    }
+
+    private float CalculateSlipForce()
+    {
+        float totalSlip = 0f;
+
+        // Calculate slip from each wheel
+        totalSlip += GetWheelSlip(vehicleController.frontLeftWheel.WheelCollider);
+        totalSlip += GetWheelSlip(vehicleController.frontRightWheel.WheelCollider);
+
+        // Average slip and apply multiplier
+        return (totalSlip / 2f) * slipForceMultiplier;
+    }
+
+    private float GetWheelSlip(WheelCollider wheel)
+    {
+        WheelHit hit;
+        if (wheel.isGrounded && wheel.GetGroundHit(out hit))
+        {
+            return Mathf.Abs(hit.sidewaysSlip);
+        }
+        return 0f;
     }
 
     public bool IsConnected()

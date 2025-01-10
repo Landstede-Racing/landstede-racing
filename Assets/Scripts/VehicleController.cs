@@ -58,11 +58,6 @@ public class VehicleController : MonoBehaviour
     public WheelControl backLeftWheel;
     public WheelControl backRightWheel;
 
-    [Header("Force Feedback Settings")]
-    public float centeringForceMultiplier = 50f; // Strength of centering force
-    public float slipForceMultiplier = 100f;    // Strength of slip feedback
-
-
     public float engineHP;
     public float maxEngineRPM;
     public float[] gearRatios;
@@ -79,9 +74,6 @@ public class VehicleController : MonoBehaviour
     private int currentGear = 1; //Bc: R = 0 and N = 1
     private int maxGear = 9;
 
-    private float vibrationTimer = 0f;
-    private bool vibrationState = false;
-
     public void Start()
     {
         wheels = GetComponentsInChildren<WheelControl>();
@@ -92,9 +84,6 @@ public class VehicleController : MonoBehaviour
 
         // Adjust center of mass vertically, to help prevent the car from rolling
         rigidBody.centerOfMass += Vector3.up * centreOfGravityOffset;
-
-        // rigidBody.linearVelocity = new(0, 0, -83.3333f);
-        // drsEnabled = true;
     }
 
     public void Update()
@@ -104,13 +93,6 @@ public class VehicleController : MonoBehaviour
         ApplySteering();
         ApplyBrake();
         ApplyDownForce();
-        ApplyForceFeedback();
-
-
-        // Log gas and brake inputs
-        // Debug.Log("Gas: " + gas);
-        // Debug.Log("Brake: " + brake);
-
 
         // Change gear and speed texts
         if (gear == 0)
@@ -142,131 +124,20 @@ public class VehicleController : MonoBehaviour
         }
     }
 
-    private void ApplyForceFeedback()
-    {
-        WheelHit hit1;
-        WheelHit hit2;
-        frontLeftWheel.WheelCollider.GetGroundHit(out hit1);
-        frontRightWheel.WheelCollider.GetGroundHit(out hit2);
-        TerrainInfo terrainInfo1 = null;
-        TerrainInfo terrainInfo2 = null;
-        if (frontLeftWheel.WheelCollider.isGrounded)
-        {
-            terrainInfo1 = hit1.collider.GetComponent<TerrainInfo>();
-        }
-        if (frontRightWheel.WheelCollider.isGrounded)
-        {
-            terrainInfo2 = hit2.collider.GetComponent<TerrainInfo>();
-        }
-
-        bool vibration = false;
-        float vibrationFrequency = 0f;
-        float vibrationIntensity = 0f;
-
-        if (terrainInfo1 != null)
-        {
-            vibration = terrainInfo1.vibration;
-            vibrationFrequency = terrainInfo1.vibrationFrequency;
-            vibrationIntensity = terrainInfo1.vibrationIntensity;
-        }
-        if (terrainInfo2 != null)
-        {
-            if (terrainInfo2.vibration)
-            {
-                vibration = terrainInfo2.vibration;
-                if (terrainInfo2.vibrationFrequency > vibrationFrequency) vibrationFrequency = terrainInfo2.vibrationFrequency;
-                if(terrainInfo2.vibrationIntensity > vibrationIntensity) vibrationIntensity = terrainInfo2.vibrationIntensity;
-            }
-        }
-
-        if (vibration)
-        {
-            int intensity = Mathf.Clamp((int)(GetSpeed() * vibrationIntensity), 0, 40); // Scale intensity with speed
-            float frequency = Mathf.Clamp(GetSpeed() / 5f * vibrationFrequency, 1f, 50f);  // Scale frequency with speed
-
-            SimulateVibration(intensity, frequency);
-        }
-        else
-        {
-            StopVibration();
-        }
-
-
-        // Apply centering force
-        float slipForce = CalculateSlipForce();
-        float centeringForce = centeringForceMultiplier * (GetSpeed() / maxSpeed) * 2.5f / Math.Max(slipForce / 3, 1);
-        // Debug.Log("Centering force: " + centeringForce);
-        LogitechGSDK.LogiPlaySpringForce(0, 0, Mathf.Clamp(Mathf.Abs((int)centeringForce), 20, 100), 100);
-
-        // Apply slip feedback based on WheelColliders
-        // Debug.Log(slipForce);
-        LogitechGSDK.LogiPlayDamperForce(0, (int)slipForce);
-    }
-
-    private void SimulateVibration(int intensity, float frequency)
-    {
-        // Calculate the interval between force toggles
-        float interval = 1f / (frequency * 2f); // Half-period for toggling force
-
-        // Update the timer
-        vibrationTimer += Time.deltaTime;
-
-        if (vibrationTimer >= interval)
-        {
-            vibrationTimer = 0f; // Reset timer
-            vibrationState = !vibrationState; // Toggle vibration state
-
-            // Apply force in alternating directions
-            int forceMagnitude = vibrationState ? intensity : -intensity;
-            LogitechGSDK.LogiPlayConstantForce(0, forceMagnitude);
-        }
-    }
-
-    private void StopVibration()
-    {
-        LogitechGSDK.LogiStopConstantForce(0);
-    }
-
-    private float CalculateSlipForce()
-    {
-        float totalSlip = 0f;
-
-        // Calculate slip from each wheel
-        totalSlip += GetWheelSlip(frontLeftWheel.WheelCollider);
-        totalSlip += GetWheelSlip(frontRightWheel.WheelCollider);
-
-        // Average slip and apply multiplier
-        return (totalSlip / 2f) * slipForceMultiplier;
-    }
-
-    private float GetWheelSlip(WheelCollider wheel)
-    {
-        WheelHit hit;
-        if (wheel.isGrounded && wheel.GetGroundHit(out hit))
-        {
-            return Mathf.Abs(hit.sidewaysSlip);
-        }
-        return 0f;
-    }
-
     private void ApplyDownForce()
     {
         // TODO: Change values to newton instead of kg
         float leftFront = CalculateDownForce(maxFrontDownForce);
         leftFrontWing.relativeForce = new(0, -leftFront, 0);
-        // Debug.Log("Left Front: " + leftFront);
 
         float rightFront = CalculateDownForce(maxFrontDownForce);
         rightFrontWing.relativeForce = new(0, -rightFront, 0);
-        // Debug.Log("Right Front: " + rightFront);
 
         float rear = CalculateDownForce(maxRearDownForce);
         rearWing.relativeForce = new(0, -rear, 0);
-        // Debug.Log("Rear: " + rear);
 
         float diff = CalculateDownForce(maxDiffuserDownForce);
         diffuser.relativeForce = new(0, -diff, 0);
-        // Debug.Log("Diffuser: " + diff);
     }
 
     private float CalculateDownForce(float max)
@@ -291,53 +162,33 @@ public class VehicleController : MonoBehaviour
                     currentTorque = CalculateMotorTorque();
                     wheel.WheelCollider.motorTorque = currentTorque * gas;
                 }
-                // Debug.Log("Back RPM: " + wheel.WheelCollider.rpm);
                 rpms.Add((int)wheel.WheelCollider.rpm);
             }
             else
             {
-                // Debug.Log("Front RPM: " + wheel.WheelCollider.rpm);
                 frontRpms.Add((int)wheel.WheelCollider.rpm);
             }
         }
 
         float averageWheelRPM = Math.Abs((rpms[0] + rpms[1]) / 2);
         wheelRPM = Math.Abs(averageWheelRPM * gearRatios[gear] * differentialRatio);
-        // Debug.Log("Front RPM: " + (frontRpms[0] + frontRpms[1]) / 2);
-        // Debug.Log("Back RPM: " + averageWheelRPM);
     }
 
     // Calculate wheel torque from engine RPM
     float CalculateMotorTorque()
     {
         float torque = 0;
-        // if (gearState == GearState.Running && clutch > 0)
-        // {
-        //     if (RPM > increaseGearRPM)
-        //     {
-        //         StartCoroutine(ChangeGear(1));
-        //     }
-        //     else if (RPM < decreaseGearRPM)
-        //     {
-        //         StartCoroutine(ChangeGear(-1));
-        //     }
-        // }
-        // wheelRPM = Mathf.Abs((colliders.RRWheel.rpm + colliders.RLWheel.rpm) / 2f) * gearRatios[gear] * differentialRatio;
+        
         currentEngineRPM = Mathf.Lerp(currentEngineRPM, Mathf.Max(idleRPM - 100, wheelRPM), Time.deltaTime * 3f);
         rpmText.text = $"<size=120%><align=right>{(int)currentEngineRPM}</align></size>\n<align=right><size=50%>RPM</size></align>";
         torque = hpToRPMCurve.Evaluate((currentEngineRPM - 4500) / (redLine - 4500)) * engineHP / currentEngineRPM * gearRatios[gear] * differentialRatio * 5252f;
-        // if (isEngineRunning > 0)
-        // {
-        //     currentEngineRPM = Mathf.Lerp(currentEngineRPM, Mathf.Max(idleRPM, redLine * gas) + UnityEngine.Random.Range(-50, 50), Time.deltaTime);
-        // }
+        
         return torque;
     }
 
     float CalculateBrakingTorque()
     {
         float torque = brakingCurve.Evaluate(GetSpeed() / maxSpeed) * brakeTorque;
-
-        // Debug.Log("Brake Torque: " + torque);
 
         return torque;
     }
@@ -346,12 +197,9 @@ public class VehicleController : MonoBehaviour
     // Apply steering angles
     private void ApplySteering()
     {
-        // Check whether the user input is in the same direction 
-        // as the car's velocity
         // Calculate current speed in relation to the forward direction of the car
         // (this returns a negative number when traveling backwards)
         float forwardSpeed = Vector3.Dot(transform.forward, rigidBody.linearVelocity);
-
 
         // Calculate how close the car is to top speed
         // as a number from zero to one
@@ -369,7 +217,10 @@ public class VehicleController : MonoBehaviour
                 wheel.WheelCollider.steerAngle = steeringAngle * currentSteerRange;
             }
         }
+
+
         // TODO: Fix steering column rotation :')
+
         // Vector3 steeringColumnRotation = steeringColumn.eulerAngles;
         // steeringColumnRotation.z = Mathf.Lerp(0, 360, (steeringAngle + 1) / 2) - 180;
         // steeringColumn.eulerAngles = steeringColumnRotation;
@@ -409,7 +260,7 @@ public class VehicleController : MonoBehaviour
     public float GetSpeedRatio()
     {
         var gasA = Mathf.Clamp(Mathf.Abs(gas), 0.5f, 1f);
-        // return currentEngineRPM * gasA / redLine;
+
         return currentEngineRPM / redLine;
     }
 
@@ -421,19 +272,16 @@ public class VehicleController : MonoBehaviour
     public void SetSteeringAngle(float steeringAngle)
     {
         this.steeringAngle = steeringAngle;
-        // Debug.Log($"SetSteeringAngle called with value: {steeringAngle} yippy!!");
     }
 
     public void SetGas(float gas)
     {
         this.gas = gas;
-        // Debug.Log($"SetGas called with value: {gas} yippy");
     }
 
     public void SetBrake(float brake)
     {
         this.brake = brake;
-        // Debug.Log($"Setbrake called with value: {brake} yippy!!!!!!!!");
     }
 
     public void SetGear(int gear)
