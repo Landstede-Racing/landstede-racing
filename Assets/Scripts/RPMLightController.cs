@@ -46,22 +46,23 @@ public class RPMLightController : MonoBehaviour
         }
 
         //TODO: DRS zone distence?! instead of the text.
-        if (vehicleController.drsEnabled)
+        if(drsText != null) 
         {
-            drsText.text = "DRS";
-            drsText.color = Color.white;
-        }
-        else if (vehicleController.drsAvailable)
-        {
-            drsText.text = "DRS Available";
-            drsText.color = Color.black;
-
-        }
-        else
-        {
-            drsText.text = "DRS off";
-            drsText.color = Color.red;
-
+            if (vehicleController.drsEnabled)
+            {
+                drsText.text = "DRS";
+                drsText.color = Color.white;
+            }
+            else if (vehicleController.drsAvailable)
+            {
+                drsText.text = "DRS Available";
+                drsText.color = Color.black;
+            }
+            else
+            {
+                drsText.text = "DRS off";
+                drsText.color = Color.red;
+            }
         }
     }
 }
