@@ -37,6 +37,16 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: Finish Line
+    second: {fileID: 2100000, guid: c7f60e1c5873cf142ae081d612ed8fc2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.012
+    second: {fileID: 2100000, guid: 86547cb185e9b9e448bc8d7781a29bf8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: Parking
     second: {fileID: 2100000, guid: be1841174b99eab4591a291b09aa69b3, type: 2}
   - first:
@@ -44,6 +54,26 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: Road
     second: {fileID: 2100000, guid: b29a7a9f6c5cec941baaa0209abb9e33, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Road Marking
+    second: {fileID: 2100000, guid: 1e6a34aa9a9413a4889b1179839c10dd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Start Light
+    second: {fileID: 2100000, guid: adf433f0d457ad14f88079131b9936bd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Start Marker
+    second: {fileID: 2100000, guid: 91cb79cc56d46f1409ec63d70ed4edef, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Yellow Line
+    second: {fileID: 2100000, guid: 34d1de0145ff91744be3a3bdb0ca4904, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
