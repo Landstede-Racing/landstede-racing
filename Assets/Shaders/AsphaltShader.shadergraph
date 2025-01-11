@@ -186,7 +186,7 @@
         "preventRotation": false
     },
     "m_Path": "Shader Graphs",
-    "m_GraphPrecision": 2,
+    "m_GraphPrecision": 0,
     "m_PreviewMode": 2,
     "m_OutputNode": {
         "m_Id": ""
@@ -317,7 +317,7 @@
     "m_Hidden": false,
     "m_ShaderOutputName": "Scale",
     "m_StageCapability": 3,
-    "m_Value": 10000.0,
+    "m_Value": 5000.0,
     "m_DefaultValue": 500.0,
     "m_Labels": []
 }
@@ -423,10 +423,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -937.0000610351563,
-            "y": 238.00003051757813,
+            "x": -931.0001220703125,
+            "y": 231.00001525878907,
             "width": 208.00006103515626,
-            "height": 315.0000305175781
+            "height": 315.0
         }
     },
     "m_Slots": [
