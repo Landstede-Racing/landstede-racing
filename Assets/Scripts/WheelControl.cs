@@ -40,6 +40,12 @@ public class WheelControl : MonoBehaviour
         wheelModel.transform.position = position;
         wheelModel.transform.rotation = rotation;
 
+        wheelModel.GetComponent<MeshRenderer>().materials[1].SetFloat("_Wear", damagablePart.currentDamage / damagablePart.maxDamage);
+
+        // var matsCopy = wheelModel.GetComponent<MeshRenderer>().materials;
+        // matsCopy[1].SetFloat("_Wear", damagablePart.currentDamage / damagablePart.maxDamage);
+        // wheelModel.GetComponent<MeshRenderer>().materials = matsCopy;
+
         // 
         // Calculations for the damage percentage :)
         // 
