@@ -9,6 +9,9 @@ public class WheelControl : MonoBehaviour
     public Part part;
     public DamagablePart damagablePart;
 
+    public WheelFrictionCurve defaultForwardFriction;
+    public WheelFrictionCurve defaultSidewaysFriction;
+
     [HideInInspector] public WheelCollider WheelCollider;
 
     // Create properties for the CarControl script
@@ -24,6 +27,8 @@ public class WheelControl : MonoBehaviour
     private void Start()
     {
         WheelCollider = GetComponent<WheelCollider>();
+        defaultForwardFriction = WheelCollider.forwardFriction;
+        defaultSidewaysFriction = WheelCollider.sidewaysFriction;
     }
 
     // Update is called once per frame
@@ -46,28 +51,11 @@ public class WheelControl : MonoBehaviour
         if (WheelCollider.isGrounded)
         {
             WheelCollider.GetGroundHit(out WheelHit hit);
+            TerrainInfo hitTerrain = hit.collider.GetComponent<TerrainInfo>();
 
             if (damagablePart.currentDamage < damagablePart.maxDamage && hit.force > 1400)
             {
-                if (hit.collider.CompareTag("Ground"))
-                {
-                    damagablePart.currentDamage += (hit.force - 1400) * damagablePart.damageMultiplier;
-
-                    if (damagablePart.currentDamage >= damagablePart.maxDamage)
-                    {
-                        Debug.Log("Here it will break in a less horrible way than the others");
-                    }
-                }
-                else if (hit.collider.CompareTag("Curb"))
-                {
-                    damagablePart.currentDamage += (hit.force - 1400) * damagablePart.damageMultiplier * 3;
-
-                    if (damagablePart.currentDamage >= damagablePart.maxDamage)
-                    {
-                        Debug.Log("Here it will fly to china");
-                    }
-                }
-                else if (hit.collider.CompareTag("Wall"))
+                if (hit.collider.CompareTag("Wall"))
                 {
                     damagablePart.currentDamage += (hit.force - 1400) * damagablePart.damageMultiplier * 10;
 
@@ -75,7 +63,25 @@ public class WheelControl : MonoBehaviour
                     {
                         Debug.Log("Here it will fly to the moon");
                     }
+                } else if(hitTerrain != null) {
+                    damagablePart.currentDamage += (hit.force - 1400) * damagablePart.damageMultiplier * hitTerrain.damageMultiplier;
+
+                    if (damagablePart.currentDamage >= damagablePart.maxDamage)
+                    {
+                        Debug.Log("Here it will break in a less horrible way than the others");
+                    }
                 }
+            }
+
+            if(hitTerrain != null)
+            {
+                WheelFrictionCurve newForwardFriction = defaultForwardFriction;
+                newForwardFriction.stiffness *= hitTerrain.gripMultiplier;
+                WheelFrictionCurve newSidewaysFriction = defaultSidewaysFriction;
+                newSidewaysFriction.stiffness *= hitTerrain.gripMultiplier;
+
+                WheelCollider.forwardFriction = newForwardFriction;
+                WheelCollider.sidewaysFriction = newSidewaysFriction;
             }
         }
     }
