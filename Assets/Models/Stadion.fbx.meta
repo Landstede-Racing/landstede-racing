@@ -67,6 +67,11 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: Soccer Field
+    second: {fileID: 2100000, guid: d71f8ee3005d2c643b43116398762e72, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: Start Light
     second: {fileID: 2100000, guid: adf433f0d457ad14f88079131b9936bd, type: 2}
   - first:
