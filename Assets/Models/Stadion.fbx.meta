@@ -42,6 +42,11 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: Gravel Trap
+    second: {fileID: 2100000, guid: e7fee0d02327ecb409fde467cc7ba53a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: Material.012
     second: {fileID: 2100000, guid: 86547cb185e9b9e448bc8d7781a29bf8, type: 2}
   - first:
