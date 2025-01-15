@@ -51,6 +51,8 @@ public class VehicleController : MonoBehaviour
     public ConstantForce rightFrontWing;
     public ConstantForce rearWing;
     public ConstantForce diffuser;
+    public Transform steeringColumn;
+    private Vector3 steeringColumnRotation;
 
     [Header("Wheels")]
     public WheelControl frontLeftWheel;
@@ -86,6 +88,8 @@ public class VehicleController : MonoBehaviour
 
         // Adjust center of mass vertically, to help prevent the car from rolling
         rigidBody.centerOfMass += Vector3.up * centreOfGravityOffset;
+
+        steeringColumnRotation = steeringColumn.localEulerAngles;
     }
 
     public void FixedUpdate()
@@ -230,9 +234,9 @@ public class VehicleController : MonoBehaviour
 
         // TODO: Fix steering column rotation :')
 
-        // Vector3 steeringColumnRotation = steeringColumn.eulerAngles;
-        // steeringColumnRotation.z = Mathf.Lerp(0, 360, (steeringAngle + 1) / 2) - 180;
-        // steeringColumn.eulerAngles = steeringColumnRotation;
+        Vector3 newRotation = steeringColumnRotation;
+        newRotation.y += steeringAngle * 90;
+        steeringColumn.localEulerAngles = newRotation;
     }
 
     // Apply brake
