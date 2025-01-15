@@ -235,7 +235,7 @@ public class VehicleController : MonoBehaviour
         // TODO: Fix steering column rotation :')
 
         Vector3 newRotation = steeringColumnRotation;
-        newRotation.y += steeringAngle * 90;
+        newRotation.z += -steeringAngle * 180;
         steeringColumn.localEulerAngles = newRotation;
     }
 
