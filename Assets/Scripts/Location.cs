@@ -12,9 +12,13 @@ public enum Location
     RearWing,
     Underbody,
     FrontLeftWheel,
+    FrontLeftBrake,
     FrontRightWheel,
+    FrontRightBrake,
     RearLeftWheel,
+    RearLeftBrake,
     RearRightWheel,
+    RearRightBrake,
     LeftSidepod,
     RightSidepod,
     
