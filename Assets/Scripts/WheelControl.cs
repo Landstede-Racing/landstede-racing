@@ -8,6 +8,7 @@ public class WheelControl : MonoBehaviour
 
     public Part part;
     public DamagablePart damagablePart;
+    public TireCompound tireCompound;
 
     public WheelFrictionCurve defaultForwardFriction;
     public WheelFrictionCurve defaultSidewaysFriction;
@@ -70,7 +71,7 @@ public class WheelControl : MonoBehaviour
                         Debug.Log("Here it will fly to the moon");
                     }
                 } else if(hitTerrain != null) {
-                    damagablePart.currentDamage += (hit.force - 1400) * damagablePart.damageMultiplier * hitTerrain.damageMultiplier;
+                    damagablePart.currentDamage += (hit.force - 1400) * damagablePart.damageMultiplier * hitTerrain.damageMultiplier * tireCompound.wearRate;
 
                     if (damagablePart.currentDamage >= damagablePart.maxDamage)
                     {
@@ -83,12 +84,19 @@ public class WheelControl : MonoBehaviour
             {
                 WheelFrictionCurve newForwardFriction = defaultForwardFriction;
                 newForwardFriction.stiffness *= hitTerrain.gripMultiplier;
+                newForwardFriction.stiffness *= tireCompound.grip;
                 WheelFrictionCurve newSidewaysFriction = defaultSidewaysFriction;
                 newSidewaysFriction.stiffness *= hitTerrain.gripMultiplier;
+                newSidewaysFriction.stiffness *= tireCompound.grip;
 
                 WheelCollider.forwardFriction = newForwardFriction;
                 WheelCollider.sidewaysFriction = newSidewaysFriction;
             }
         }
+    }
+
+    public void SetTireCompound(TireCompound tireCompound)
+    {
+        this.tireCompound = tireCompound;
     }
 }
