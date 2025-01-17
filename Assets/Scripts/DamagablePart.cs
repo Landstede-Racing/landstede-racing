@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-[RequireComponent(typeof(Collider))]
+[RequireComponent(typeof(MeshCollider))]
 public class DamagablePart : MonoBehaviour
 {
     public float maxDamage = 100;
