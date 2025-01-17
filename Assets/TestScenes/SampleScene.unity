@@ -2606,6 +2606,8 @@ MonoBehaviour:
   - {fileID: 1900051164}
   - {fileID: 1812642885}
   - {fileID: 1045855066}
+  - {fileID: 1661715084}
+  - {fileID: 1664842199}
 --- !u!1001 &598467433
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5713,6 +5715,8 @@ GameObject:
   - component: {fileID: 1661715082}
   - component: {fileID: 1661715081}
   - component: {fileID: 1661715080}
+  - component: {fileID: 1661715085}
+  - component: {fileID: 1661715084}
   m_Layer: 0
   m_Name: SparkCollider
   m_TagString: Untagged
@@ -5730,7 +5734,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.071, z: -0.211}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1181191709}
@@ -5812,6 +5816,38 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.4843908, y: 0.051904198, z: 1.788656}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1661715084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1661715078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c07dd2d0fe5127649bd172d77a71e526, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxDamage: 100
+  currentDamage: 0
+  damageMultiplier: 1
+  shouldDestroy: 0
+  part: {fileID: 1661715085}
+--- !u!114 &1661715085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1661715078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c865870ea273ab48b4b726e3dc17990, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Underbody
+  location: 10
+  description: 
 --- !u!114 &1664842199
 MonoBehaviour:
   m_ObjectHideFlags: 0
