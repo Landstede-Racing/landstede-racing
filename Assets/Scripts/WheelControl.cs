@@ -98,5 +98,6 @@ public class WheelControl : MonoBehaviour
     public void SetTireCompound(TireCompound tireCompound)
     {
         this.tireCompound = tireCompound;
+        wheelModel.GetComponent<MeshRenderer>().materials[0].SetColor("_Tire_Color", tireCompound.color);
     }
 }

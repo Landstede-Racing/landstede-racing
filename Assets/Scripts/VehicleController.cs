@@ -274,7 +274,7 @@ public class VehicleController : MonoBehaviour
     {
         foreach (var wheel in wheels)
         {
-            wheel.tireCompound = compound;
+            wheel.SetTireCompound(compound);
         }
     }
 
