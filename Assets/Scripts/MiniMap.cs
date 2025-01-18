@@ -7,9 +7,7 @@ public class MiniMap : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("MiniMap :O");
-        // lineRenderer = GetComponent<LineRenderer>();
-        TrackPath = this.gameObject;
+        TrackPath = gameObject;
 
         int path_num = TrackPath.transform.childCount;
         if (path_num > 0)
@@ -28,9 +26,6 @@ public class MiniMap : MonoBehaviour
         {
             Debug.LogWarning("TrackPath has no children.");
         }
-
-        // lineRenderer.startWidth = 10f;
-        // lineRenderer.endWidth = 10f;
     }
 
     public void SetSize(float startWidth, float endWidth)

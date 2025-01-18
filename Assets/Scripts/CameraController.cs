@@ -7,14 +7,6 @@ public class CameraController : MonoBehaviour
     public int currentCam;
     bool reverse = false;
 
-    private void Start() {
-        
-    }
-
-    private void Update() {
-        
-    }
-
     public void SetCamera(int camera) {
         if(currentCam >= cameras.Length) camera = cameras.Length - 1;
         cameras[currentCam].gameObject.SetActive(false);
