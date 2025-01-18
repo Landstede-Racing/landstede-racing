@@ -53,6 +53,7 @@ public class AuthController : MonoBehaviour
         }
     }
 
+    // Temporary function for the check button (Unity only allows buttons to call void functions)
     public static void CheckAuth() {
         Check();
     }
