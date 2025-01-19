@@ -47,6 +47,15 @@ public class LobbyMenuController : MonoBehaviour
         trackSelectionController.UpdateText();
     }
 
+    public void Back() {
+        if(camController.currentTrackCam != -1 || camController.garageCamera.gameObject.activeSelf) {
+            camController.DisableCameras();
+            camController.SetScreenCamera();
+        } else {
+            SetMainMenu();
+        }
+    }
+
     public void QuitGame()
     {
         Application.Quit();

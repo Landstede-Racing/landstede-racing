@@ -56,7 +56,7 @@ public class LobbyCamController : MonoBehaviour
         currentTrackCam = -1;
     }
 
-    private void DisableCameras() {
+    public void DisableCameras() {
         screenCamera.gameObject.SetActive(false);
         garageCamera.gameObject.SetActive(false);
         DisableTrackCameras();

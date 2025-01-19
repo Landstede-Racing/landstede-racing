@@ -1,5 +1,7 @@
 using TMPro;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Track {
@@ -20,6 +22,7 @@ public class TrackSelectionController : MonoBehaviour
     public TMP_Text trackRecord;
     public TMP_Text trackPRecord;
 
+    public SceneAsset[] trackScenes;
     private readonly Track[] tracks = new Track[1];
 
     void Start()
@@ -31,6 +34,11 @@ public class TrackSelectionController : MonoBehaviour
             record = "0:00.000",
             pRecord = "0:00.000"
         };
+    }
+
+    public void StartRace() {
+        SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
+        SceneManager.LoadScene(trackScenes[camController.currentTrackCam].name);
     }
 
     public void UpdateButtons() {
