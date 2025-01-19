@@ -17,7 +17,7 @@ public class MiniMap : MonoBehaviour
             for (int i = 0; i < path_num; i++)
             {
                 Vector3 childPosition = TrackPath.transform.GetChild(i).transform.position;
-                lineRenderer.SetPosition(i, new Vector3(childPosition.x, 50, childPosition.z));
+                lineRenderer.SetPosition(i, new Vector3(childPosition.x, gameObject.transform.position.y, childPosition.z));
             }
 
             lineRenderer.SetPosition(path_num - 1, lineRenderer.GetPosition(0));
