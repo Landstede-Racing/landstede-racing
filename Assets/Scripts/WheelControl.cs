@@ -24,6 +24,8 @@ public class WheelControl : MonoBehaviour
     Vector3 position;
     Quaternion rotation;
 
+    private WeatherController weatherController; // Add this field
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -33,8 +35,11 @@ public class WheelControl : MonoBehaviour
     }
 
     // Update is called once per frame
+
     void Update()
+
     {
+        weatherController = FindObjectOfType<WeatherController>();
         // Get the Wheel collider's world pose values and
         // use them to set the wheel model's position and rotation
         WheelCollider.GetWorldPose(out position, out rotation);
@@ -53,7 +58,8 @@ public class WheelControl : MonoBehaviour
         // Debug.Log(Math.Floor(damagablePart.currentDamage / damagablePart.maxDamage * 100));
     }
 
-    void FixedUpdate() {
+    void FixedUpdate()
+    {
         // Damage from driving (get force from ground hit, and calculate damage using that)
         if (WheelCollider.isGrounded)
         {
@@ -70,7 +76,9 @@ public class WheelControl : MonoBehaviour
                     {
                         Debug.Log("Here it will fly to the moon");
                     }
-                } else if(hitTerrain != null) {
+                }
+                else if (hitTerrain != null)
+                {
                     damagablePart.currentDamage += (hit.force - 1400) * damagablePart.damageMultiplier * hitTerrain.damageMultiplier * tireCompound.wearRate;
 
                     if (damagablePart.currentDamage >= damagablePart.maxDamage)
@@ -80,14 +88,27 @@ public class WheelControl : MonoBehaviour
                 }
             }
 
-            if(hitTerrain != null)
+
+
+
+            if (hitTerrain != null)
             {
                 WheelFrictionCurve newForwardFriction = defaultForwardFriction;
-                newForwardFriction.stiffness *= hitTerrain.gripMultiplier;
-                newForwardFriction.stiffness *= tireCompound.grip;
                 WheelFrictionCurve newSidewaysFriction = defaultSidewaysFriction;
-                newSidewaysFriction.stiffness *= hitTerrain.gripMultiplier;
-                newSidewaysFriction.stiffness *= tireCompound.grip;
+
+                if (weatherController != null && weatherController.isRaining)
+                {
+                    Debug.Log("It's raining from wheathercontoll and is now changed in the wheelcontrol!!! YIPPPYYYYY");
+                    newForwardFriction.stiffness *= 0.75f;
+                    newSidewaysFriction.stiffness *= 0.55f;
+                }
+                else
+                {
+                    newForwardFriction.stiffness *= hitTerrain.gripMultiplier;
+                    newForwardFriction.stiffness *= tireCompound.grip;
+                    newSidewaysFriction.stiffness *= hitTerrain.gripMultiplier;
+                    newSidewaysFriction.stiffness *= tireCompound.grip;
+                }
 
                 WheelCollider.forwardFriction = newForwardFriction;
                 WheelCollider.sidewaysFriction = newSidewaysFriction;
