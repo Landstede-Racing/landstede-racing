@@ -18,8 +18,6 @@ public class AnimatorParamRandomizer : MonoBehaviour
         bool randomBool = randomFloat == 0;
         animator.SetBool("Run", randomBool);
         animator.SetFloat("Speed", randomSpeed);
-        Debug.Log(randomBool + ", because randomFloat is " + randomFloat);
-        Debug.Log("Speed is " + randomSpeed);
         StartCoroutine(ResetParams());
     }
 
