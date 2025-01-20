@@ -51,6 +51,8 @@ public class VehicleController : MonoBehaviour
     public ConstantForce rightFrontWing;
     public ConstantForce rearWing;
     public ConstantForce diffuser;
+    public Transform steeringColumn;
+    private Vector3 steeringColumnRotation;
 
     [Header("Wheels")]
     public WheelControl frontLeftWheel;
@@ -63,8 +65,10 @@ public class VehicleController : MonoBehaviour
     public float[] gearRatios;
 
     public TMP_Text gearText;
+    public TMP_Text gearTextWheel;
     public TMP_Text speedText;
     public TMP_Text rpmText;
+    public TMP_Text rpmTextWheel;
     public Transform backWing;
 
     Animator animator;
@@ -84,9 +88,11 @@ public class VehicleController : MonoBehaviour
 
         // Adjust center of mass vertically, to help prevent the car from rolling
         rigidBody.centerOfMass += Vector3.up * centreOfGravityOffset;
+
+        steeringColumnRotation = steeringColumn.localEulerAngles;
     }
 
-    public void Update()
+    public void FixedUpdate()
     {
         if (isEngineRunning == 0) StartCoroutine(GetComponent<EngineAudio>().StartEngine());
         ApplyMotor();
@@ -98,14 +104,17 @@ public class VehicleController : MonoBehaviour
         if (gear == 0)
         {
             gearText.text = "R";
+            gearTextWheel.text = "R";
         }
         else if (gear == 1)
         {
             gearText.text = "N";
+            gearTextWheel.text = "N";
         }
         else
         {
             gearText.text = (gear - 1).ToString();
+            gearTextWheel.text = (gear - 1).ToString();
         }
 
         speedText.text = $"<size=120%>{(int)(Vector3.Dot(transform.forward, rigidBody.linearVelocity) * 3.6)}</size>\n<size=50%>KM/U</size>";
@@ -180,7 +189,11 @@ public class VehicleController : MonoBehaviour
         float torque = 0;
         
         currentEngineRPM = Mathf.Lerp(currentEngineRPM, Mathf.Max(idleRPM - 100, wheelRPM), Time.deltaTime * 3f);
-        rpmText.text = $"<size=120%><align=right>{(int)currentEngineRPM}</align></size>\n<align=right><size=50%>RPM</size></align>";
+        string rpmTextValue = $"<size=120%><align=right>{(int)currentEngineRPM}</align></size>\n<align=right><size=50%>RPM</size></align>";
+        rpmText.text = rpmTextValue;
+        rpmTextWheel.text = rpmTextValue;
+
+
         torque = hpToRPMCurve.Evaluate((currentEngineRPM - 4500) / (redLine - 4500)) * engineHP / currentEngineRPM * gearRatios[gear] * differentialRatio * 5252f;
         
         return torque;
@@ -221,9 +234,9 @@ public class VehicleController : MonoBehaviour
 
         // TODO: Fix steering column rotation :')
 
-        // Vector3 steeringColumnRotation = steeringColumn.eulerAngles;
-        // steeringColumnRotation.z = Mathf.Lerp(0, 360, (steeringAngle + 1) / 2) - 180;
-        // steeringColumn.eulerAngles = steeringColumnRotation;
+        Vector3 newRotation = steeringColumnRotation;
+        newRotation.z += -steeringAngle * 180;
+        steeringColumn.localEulerAngles = newRotation;
     }
 
     // Apply brake
@@ -323,7 +336,7 @@ public class VehicleController : MonoBehaviour
     void OnCollisionEnter(Collision other)
     {
         float x = transform.InverseTransformPoint(other.gameObject.transform.position).x;
-        
+
         float force = other.impulse.magnitude / 50;
 
         if(x < 0) {
