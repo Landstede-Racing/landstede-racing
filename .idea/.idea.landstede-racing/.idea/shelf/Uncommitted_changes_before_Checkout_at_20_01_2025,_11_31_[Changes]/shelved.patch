@@ -1,0 +1,101 @@
+Index: .idea/.idea.landstede-racing/.idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"AutoImportSettings\">\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\n  </component>\n  <component name=\"ChangeListManager\">\n    <list default=\"true\" id=\"69ff1a3b-0f88-456d-ab55-d0385dda7776\" name=\"Changes\" comment=\"\">\n      <change beforePath=\"$PROJECT_DIR$/Assets/Scripts/PlayerStats.cs\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/Assets/Scripts/PlayerStats.cs\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/Assets/Scripts/SectorController.cs\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/Assets/Scripts/SectorController.cs\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/Assets/TestScenes/SampleScene.unity\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/Assets/TestScenes/SampleScene.unity\" afterDir=\"false\" />\n    </list>\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\n  </component>\n  <component name=\"DpaMonitoringSettings\">\n    <option name=\"firstShow\" value=\"false\" />\n  </component>\n  <component name=\"Git.Settings\">\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\n      <map>\n        <entry key=\"$PROJECT_DIR$\" value=\"main\" />\n      </map>\n    </option>\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\n  </component>\n  <component name=\"HighlightingSettingsPerFile\">\n    <setting file=\"file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/50cef547136cdc141995d1711546dca37446f6f270f77467af10dfd676dbd3d0/System.Diagnostics.cs\" root0=\"FORCE_HIGHLIGHTING\" />\n  </component>\n  <component name=\"MetaFilesCheckinStateConfiguration\" checkMetaFiles=\"true\" />\n  <component name=\"ProjectColorInfo\">{\n  &quot;customColor&quot;: &quot;&quot;,\n  &quot;associatedIndex&quot;: 0\n}</component>\n  <component name=\"ProjectId\" id=\"2rklQCXaGqgLxJMgtmErEFFCxvI\" />\n  <component name=\"ProjectViewState\">\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\n    <option name=\"showLibraryContents\" value=\"true\" />\n  </component>\n  <component name=\"PropertiesComponent\">{\n  &quot;keyToString&quot;: {\n    &quot;Attach to Unity Editor.Attach to Unity Editor.executor&quot;: &quot;Debug&quot;,\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\n    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,\n    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,\n    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,\n    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,\n    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,\n    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,\n    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,\n    &quot;settings.editor.selected.configurable&quot;: &quot;org.jetbrains.plugins.github.ui.GithubSettingsConfigurable&quot;,\n    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;\n  }\n}</component>\n  <component name=\"RunManager\" selected=\"Attach to Unity Editor.Attach to Unity Editor\">\n    <configuration name=\"Start Unity\" type=\"RunUnityExe\" factoryName=\"Unity Executable\">\n      <option name=\"EXE_PATH\" value=\"$PROJECT_DIR$/../../../Unity/Hub/Editor/6000.0.25f1/Unity.app/Contents/MacOS/Unity\" />\n      <option name=\"PROGRAM_PARAMETERS\" value=\"-projectPath &quot;$PROJECT_DIR$&quot; -debugCodeOptimization\" />\n      <option name=\"WORKING_DIRECTORY\" value=\"$PROJECT_DIR$\" />\n      <option name=\"PASS_PARENT_ENVS\" value=\"1\" />\n      <option name=\"USE_EXTERNAL_CONSOLE\" value=\"0\" />\n      <method v=\"2\" />\n    </configuration>\n    <configuration name=\"Unit Tests (batch mode)\" type=\"RunUnityExe\" factoryName=\"Unity Executable\">\n      <option name=\"EXE_PATH\" value=\"$PROJECT_DIR$/../../../Unity/Hub/Editor/6000.0.25f1/Unity.app/Contents/MacOS/Unity\" />\n      <option name=\"PROGRAM_PARAMETERS\" value=\"-runTests -batchmode -projectPath &quot;$PROJECT_DIR$&quot; -testResults Logs/results.xml -logFile Logs/Editor.log -testPlatform EditMode -debugCodeOptimization\" />\n      <option name=\"WORKING_DIRECTORY\" value=\"$PROJECT_DIR$\" />\n      <option name=\"PASS_PARENT_ENVS\" value=\"1\" />\n      <option name=\"USE_EXTERNAL_CONSOLE\" value=\"0\" />\n      <method v=\"2\" />\n    </configuration>\n    <configuration name=\"Attach to Unity Editor &amp; Play\" type=\"UNITY_DEBUG_RUN_CONFIGURATION\" factoryName=\"UNITY_ATTACH_AND_PLAY\" show_console_on_std_err=\"false\" show_console_on_std_out=\"false\" port=\"50000\" address=\"localhost\">\n      <option name=\"allowRunningInParallel\" value=\"false\" />\n      <option name=\"listenPortForConnections\" value=\"false\" />\n      <option name=\"pid\" />\n      <option name=\"projectPathOnTarget\" />\n      <option name=\"runtimes\">\n        <list />\n      </option>\n      <option name=\"selectedOptions\">\n        <list />\n      </option>\n      <method v=\"2\" />\n    </configuration>\n    <configuration name=\"Attach to Unity Editor\" type=\"UNITY_DEBUG_RUN_CONFIGURATION\" factoryName=\"Unity Debug\" show_console_on_std_err=\"false\" show_console_on_std_out=\"false\" port=\"50000\" address=\"localhost\">\n      <option name=\"allowRunningInParallel\" value=\"false\" />\n      <option name=\"listenPortForConnections\" value=\"false\" />\n      <option name=\"pid\" />\n      <option name=\"projectPathOnTarget\" />\n      <option name=\"runtimes\">\n        <list />\n      </option>\n      <option name=\"selectedOptions\">\n        <list />\n      </option>\n      <method v=\"2\" />\n    </configuration>\n  </component>\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\n  <component name=\"TaskManager\">\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\n      <changelist id=\"69ff1a3b-0f88-456d-ab55-d0385dda7776\" name=\"Changes\" comment=\"\" />\n      <created>1732188913402</created>\n      <option name=\"number\" value=\"Default\" />\n      <option name=\"presentableId\" value=\"Default\" />\n      <updated>1732188913402</updated>\n      <workItem from=\"1737110938606\" duration=\"3080000\" />\n      <workItem from=\"1737116399920\" duration=\"584000\" />\n      <workItem from=\"1737117014453\" duration=\"4611000\" />\n      <workItem from=\"1737141070848\" duration=\"113000\" />\n      <workItem from=\"1737363835157\" duration=\"1428000\" />\n    </task>\n    <servers />\n  </component>\n  <component name=\"TypeScriptGeneratedFilesManager\">\n    <option name=\"version\" value=\"3\" />\n  </component>\n  <component name=\"UnityCheckinConfiguration\" checkUnsavedScenes=\"true\" />\n  <component name=\"UnityProjectConfiguration\" hasMinimizedUI=\"true\" />\n  <component name=\"UnityProjectDiscoverer\">\n    <option name=\"hasUnityReference\" value=\"true\" />\n    <option name=\"unityProject\" value=\"true\" />\n    <option name=\"unityProjectFolder\" value=\"true\" />\n  </component>\n  <component name=\"UnityUnitTestConfiguration\" currentTestLauncher=\"Both\" />\n  <component name=\"Vcs.Log.Tabs.Properties\">\n    <option name=\"TAB_STATES\">\n      <map>\n        <entry key=\"MAIN\">\n          <value>\n            <State />\n          </value>\n        </entry>\n      </map>\n    </option>\n  </component>\n  <component name=\"VcsManagerConfiguration\">\n    <option name=\"CLEAR_INITIAL_COMMIT_MESSAGE\" value=\"true\" />\n  </component>\n</project>
+===================================================================
+diff --git a/.idea/.idea.landstede-racing/.idea/workspace.xml b/.idea/.idea.landstede-racing/.idea/workspace.xml
+--- a/.idea/.idea.landstede-racing/.idea/workspace.xml	(revision 949b3da38bcae2a0fdb8346f31f565545a0e5dee)
++++ b/.idea/.idea.landstede-racing/.idea/workspace.xml	(date 1737369073767)
+@@ -4,9 +4,9 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="69ff1a3b-0f88-456d-ab55-d0385dda7776" name="Changes" comment="">
+-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlayerStats.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PlayerStats.cs" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SectorController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SectorController.cs" afterDir="false" />
++    <list default="true" id="69ff1a3b-0f88-456d-ab55-d0385dda7776" name="Changes" comment="Merge ig">
++      <change beforePath="$PROJECT_DIR$/.idea/.idea.landstede-racing/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.landstede-racing/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SettingsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SettingsController.cs" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/Assets/TestScenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TestScenes/SampleScene.unity" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+@@ -26,6 +26,16 @@
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+   </component>
+   <component name="HighlightingSettingsPerFile">
++    <setting file="mock:///Applications/documentsv2/C# solutions/landstede-racing/Assets/DefaultNetworkPrefabs.asset" root0="SKIP_HIGHLIGHTING" />
++    <setting file="mock:///Applications/documentsv2/C# solutions/landstede-racing/Assets/DefaultNetworkPrefabs.asset" root0="SKIP_HIGHLIGHTING" />
++    <setting file="mock:///Applications/documentsv2/C# solutions/landstede-racing/Assets/DefaultNetworkPrefabs.asset" root0="SKIP_HIGHLIGHTING" />
++    <setting file="mock:///Applications/documentsv2/C# solutions/landstede-racing/Assets/DefaultNetworkPrefabs.asset" root0="SKIP_HIGHLIGHTING" />
++    <setting file="file://$PROJECT_DIR$/Assets/Scripts/FinishLineController.cs" root0="SKIP_HIGHLIGHTING" />
++    <setting file="file://$PROJECT_DIR$/Assets/Scripts/LeaderBoardPosition.cs" root0="FORCE_HIGHLIGHTING" />
++    <setting file="mock:///Applications/documentsv2/C# solutions/landstede-racing/Assets/Scripts/SettingsController.cs" root0="SKIP_HIGHLIGHTING" />
++    <setting file="mock:///Applications/documentsv2/C# solutions/landstede-racing/Assets/TestScenes/SampleScene.unity" root0="SKIP_HIGHLIGHTING" />
++    <setting file="mock:///Applications/documentsv2/C# solutions/landstede-racing/Assets/TestScenes/SampleScene.unity" root0="SKIP_HIGHLIGHTING" />
++    <setting file="mock:///Applications/documentsv2/C# solutions/landstede-racing/Assets/TestScenes/SampleScene.unity" root0="SKIP_HIGHLIGHTING" />
+     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/50cef547136cdc141995d1711546dca37446f6f270f77467af10dfd676dbd3d0/System.Diagnostics.cs" root0="FORCE_HIGHLIGHTING" />
+   </component>
+   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
+@@ -38,21 +48,22 @@
+     <option name="hideEmptyMiddlePackages" value="true" />
+     <option name="showLibraryContents" value="true" />
+   </component>
+-  <component name="PropertiesComponent">{
+-  &quot;keyToString&quot;: {
+-    &quot;Attach to Unity Editor.Attach to Unity Editor.executor&quot;: &quot;Debug&quot;,
+-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+-    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+-    &quot;settings.editor.selected.configurable&quot;: &quot;org.jetbrains.plugins.github.ui.GithubSettingsConfigurable&quot;,
+-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
++  <component name="PropertiesComponent"><![CDATA[{
++  "keyToString": {
++    "Attach to Unity Editor.Attach to Unity Editor.executor": "Debug",
++    "RunOnceActivity.ShowReadmeOnStart": "true",
++    "RunOnceActivity.git.unshallow": "true",
++    "dart.analysis.tool.window.visible": "false",
++    "git-widget-placeholder": "LARC-23-leaderboard",
++    "node.js.detected.package.eslint": "true",
++    "node.js.detected.package.tslint": "true",
++    "node.js.selected.package.eslint": "(autodetect)",
++    "node.js.selected.package.tslint": "(autodetect)",
++    "nodejs_package_manager_path": "npm",
++    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
++    "vue.rearranger.settings.migration": "true"
+   }
+-}</component>
++}]]></component>
+   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
+     <configuration name="Start Unity" type="RunUnityExe" factoryName="Unity Executable">
+       <option name="EXE_PATH" value="$PROJECT_DIR$/../../../Unity/Hub/Editor/6000.0.25f1/Unity.app/Contents/MacOS/Unity" />
+@@ -111,6 +122,15 @@
+       <workItem from="1737141070848" duration="113000" />
+       <workItem from="1737363835157" duration="1428000" />
+     </task>
++    <task id="LOCAL-00001" summary="Merge ig">
++      <option name="closed" value="true" />
++      <created>1737366058186</created>
++      <option name="number" value="00001" />
++      <option name="presentableId" value="LOCAL-00001" />
++      <option name="project" value="LOCAL" />
++      <updated>1737366058186</updated>
++    </task>
++    <option name="localTasksCounter" value="2" />
+     <servers />
+   </component>
+   <component name="TypeScriptGeneratedFilesManager">
+@@ -137,5 +157,8 @@
+   </component>
+   <component name="VcsManagerConfiguration">
+     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
++    <MESSAGE value="Wap" />
++    <MESSAGE value="Merge ig" />
++    <option name="LAST_COMMIT_MESSAGE" value="Merge ig" />
+   </component>
+ </project>
+\ No newline at end of file
