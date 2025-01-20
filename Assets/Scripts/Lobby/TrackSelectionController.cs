@@ -37,8 +37,7 @@ public class TrackSelectionController : MonoBehaviour
     }
 
     public void StartRace() {
-        SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
-        SceneManager.LoadScene(trackScenes[camController.currentTrackCam].name);
+        StartCoroutine(CustomSceneManager.LoadScene(trackScenes[camController.currentTrackCam].name));
     }
 
     public void UpdateButtons() {
