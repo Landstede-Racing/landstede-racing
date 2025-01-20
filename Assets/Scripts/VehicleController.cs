@@ -90,6 +90,7 @@ public class VehicleController : MonoBehaviour
         rigidBody.centerOfMass += Vector3.up * centreOfGravityOffset;
 
         steeringColumnRotation = steeringColumn.localEulerAngles;
+        SetTires(TireCompounds.Soft);
     }
 
     public void FixedUpdate()
@@ -266,6 +267,14 @@ public class VehicleController : MonoBehaviour
 
             if (gearState != GearState.Neutral)
                 gearState = GearState.Running;
+        }
+    }
+
+    public void SetTires(TireCompound compound)
+    {
+        foreach (var wheel in wheels)
+        {
+            wheel.SetTireCompound(compound);
         }
     }
 
