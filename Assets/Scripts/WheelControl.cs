@@ -98,14 +98,12 @@ public class WheelControl : MonoBehaviour
 
                 if (weatherController != null && weatherController.isRaining)
                 {
-                    Debug.Log("It's raining from wheathercontoll and is now changed in the wheelcontrol!!! YIPPPYYYYY");
+                    Debug.Log("It's raining from weatherController and is now changed in the wheelControl!!! YIPPPYYYYY");
                     float rainTime = weatherController.GetRainTimer();
 
-                    //TODO: NOT WORKING REEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-                    newForwardFriction.stiffness *= (0.75f / (rainTime));
-                    Debug.Log("newForwardFriction.stiffness: " + newForwardFriction.stiffness);
-                    newSidewaysFriction.stiffness *= (0.55f / (rainTime));
-                    Debug.Log("newSidewaysFriction.stiffness: " + newSidewaysFriction.stiffness);
+                    // Adjust the friction based on the rainTime
+                    newForwardFriction.stiffness *= Mathf.Lerp(1.0f, 0.75f, rainTime); //reduced by 25% after 1 min
+                    newSidewaysFriction.stiffness *= Mathf.Lerp(1.0f, 0.55f, rainTime); //reduced by 45% after 1 min
                 }
                 else
                 {
