@@ -1,3 +1,4 @@
+using System;
 using NUnit.Framework;
 using UnityEngine;
 
@@ -10,11 +11,15 @@ public class WeatherController : MonoBehaviour
 
     public GameObject rainFallSystem;
     public bool isRaining = false;
+    public float timeRaining = 0;
+
+    public float maxRainTime = 60;
 
     void Start()
     {
         rainFallSystem.SetActive(true); //Sets the rain system to inactive
                                         // rainFallSystem.SetActive(true);
+                            
 
     }
 
@@ -22,11 +27,24 @@ public class WeatherController : MonoBehaviour
     void Update()
     {
 
-        if (rainFallSystem == true)
+        if (rainFallSystem.activeSelf == true)
         {
             isRaining = true;
             Debug.Log("It's raining");
         }
 
+    }
+
+    void FixedUpdate()
+    {
+        if (isRaining)
+        {
+            timeRaining += 0.02f;
+            // Debug.Log("Time raining: " + timeRaining);
+        }
+    }
+
+    public float GetRainTimer() {
+        return Math.Min(timeRaining / maxRainTime, 1);
     }
 }
