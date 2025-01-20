@@ -12,7 +12,8 @@ public class PlayerStats : NetworkBehaviour
 
     [SerializeField] private Rigidbody rb;
 
-    private Stopwatch _stopwatch = new();
+    [DoNotSerialize] public Stopwatch stopwatch = new();
+    
     [DoNotSerialize] public List<PlayerTiming> playerTimings = new();
     
     [DoNotSerialize] public int position = 0;
@@ -54,10 +55,19 @@ public class PlayerStats : NetworkBehaviour
 
     public void NewTiming(int sectorId)
     {
-        PlayerTiming playerTiming = new(NetworkObjectId, _stopwatch.ElapsedMilliseconds, sectorId, 1);
+        PlayerTiming playerTiming = new(NetworkObjectId, stopwatch.ElapsedMilliseconds, sectorId, 1);
         playerTimings.Add(playerTiming);
-        _stopwatch.Restart();
-        totalDriveTime = totalDriveTime + _stopwatch.ElapsedMilliseconds;
+        stopwatch.Restart();
+        totalDriveTime = totalDriveTime + stopwatch.ElapsedMilliseconds;
+        Debug.Log(playerTimings[playerTimings.Count - 1].NetworkId + ", " + playerTimings[playerTimings.Count - 1].Timing);
+    }
+    
+    public void NewTiming(int sectorId, bool lapUp)
+    {
+        PlayerTiming playerTiming = new(NetworkObjectId, stopwatch.ElapsedMilliseconds, sectorId, playerTimings[^1].Lap + 1);
+        playerTimings.Add(playerTiming);
+        stopwatch.Restart();
+        totalDriveTime = totalDriveTime + stopwatch.ElapsedMilliseconds;
         Debug.Log(playerTimings[playerTimings.Count - 1].NetworkId + ", " + playerTimings[playerTimings.Count - 1].Timing);
     }
 
