@@ -28,12 +28,15 @@ public class VehicleController : MonoBehaviour
     public bool drsEnabled;
 
     [Header("ERS")]
-    public int ersMode;
-    public float ersCharge;
-    public float ersUsage;
-    public float ersGenerated;
-    public float[] ersDrain;
-    public float[] ersHP;
+    public int ERSMode;
+    public float ERSCharge;
+    public float maxERSCharge;
+    public float ERSUsage;
+    public float maxERSUsage;
+    public float ERSGenerated;
+    public float maxERSGenerated;
+    public float[] ERSDrain;
+    public float[] ERSHP;
 
     [Header("Engine Stats")]
     public float currentTorque;
@@ -115,6 +118,8 @@ public class VehicleController : MonoBehaviour
         ApplySteering();
         ApplyBrake();
         ApplyDownForce();
+
+        UpdateBattery();
 
         // Change gear and speed texts
         if (gear == 0)
@@ -210,7 +215,7 @@ public class VehicleController : MonoBehaviour
         rpmTextWheel.text = rpmTextValue;
 
 
-        torque = hpToRPMCurve.Evaluate((currentEngineRPM - 4500) / (redLine - 4500)) * (engineHP + ersHP[ersMode]) / currentEngineRPM * gearRatios[gear] * differentialRatio * 5252f;
+        torque = hpToRPMCurve.Evaluate((currentEngineRPM - 4500) / (redLine - 4500)) * (engineHP + (CanUseERS() ? ERSHP[ERSMode] : 0)) / currentEngineRPM * gearRatios[gear] * differentialRatio * 5252f;
         
         return torque;
     }
@@ -263,6 +268,39 @@ public class VehicleController : MonoBehaviour
             // TODO: Front Brake Bias
             wheel.WheelCollider.brakeTorque = brake * CalculateBrakingTorque();
         }
+    }
+
+    private void UpdateBattery() {
+        if(ERSMode > 0 && gas > 0) {
+            float drainage = ERSDrain[ERSMode] / 60 * Time.deltaTime;
+            ERSCharge -= drainage;
+            ERSUsage += drainage;
+        }
+
+        if(ERSCharge < 0) {
+            ERSCharge = 0;
+        }
+    }
+
+    private bool CanUseERS() {
+        return 
+            ERSCharge > 0 &&
+            ERSUsage < maxERSUsage;
+    }
+
+    public float GetERSPercentage() {
+        if(ERSCharge <= 0) return 0;
+        return ERSCharge / maxERSCharge;
+    }
+
+    public float GetERSUsagePercentage() {
+        if(ERSUsage <= 0) return 0;
+        return ERSUsage / maxERSUsage;
+    }
+
+    public float GetERSGeneratedPercentage() {
+        if(ERSGenerated <= 0) return 0;
+        return ERSGenerated / maxERSGenerated;
     }
 
     // Coroutine for gear changing
@@ -333,23 +371,23 @@ public class VehicleController : MonoBehaviour
 
     public void NextERSMode()
     {
-        if(ersMode < ersDrain.Length - 1)
+        if(ERSMode < ERSDrain.Length - 1)
         {
-            ersMode++;
+            ERSMode++;
         }
     }
 
     public void PreviousERSMode()
     {
-        if(ersMode > 0)
+        if(ERSMode > 0)
         {
-            ersMode--;
+            ERSMode--;
         }
     }
 
     public void SetERSMode(int mode)
     {
-        ersMode = mode;
+        ERSMode = mode;
     }
 
     public void ToggleDRS()
