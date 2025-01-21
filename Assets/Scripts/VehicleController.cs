@@ -27,6 +27,14 @@ public class VehicleController : MonoBehaviour
     public bool drsAvailable;
     public bool drsEnabled;
 
+    [Header("ERS")]
+    public int ersMode;
+    public float ersCharge;
+    public float ersUsage;
+    public float ersGenerated;
+    public float[] ersDrain;
+    public float[] ersHP;
+
     [Header("Engine Stats")]
     public float currentTorque;
     public float currentEngineRPM;
@@ -202,7 +210,7 @@ public class VehicleController : MonoBehaviour
         rpmTextWheel.text = rpmTextValue;
 
 
-        torque = hpToRPMCurve.Evaluate((currentEngineRPM - 4500) / (redLine - 4500)) * engineHP / currentEngineRPM * gearRatios[gear] * differentialRatio * 5252f;
+        torque = hpToRPMCurve.Evaluate((currentEngineRPM - 4500) / (redLine - 4500)) * (engineHP + ersHP[ersMode]) / currentEngineRPM * gearRatios[gear] * differentialRatio * 5252f;
         
         return torque;
     }
@@ -321,6 +329,27 @@ public class VehicleController : MonoBehaviour
     public int GetGear()
     {
         return gear;
+    }
+
+    public void NextERSMode()
+    {
+        if(ersMode < ersDrain.Length - 1)
+        {
+            ersMode++;
+        }
+    }
+
+    public void PreviousERSMode()
+    {
+        if(ersMode > 0)
+        {
+            ersMode--;
+        }
+    }
+
+    public void SetERSMode(int mode)
+    {
+        ersMode = mode;
     }
 
     public void ToggleDRS()
