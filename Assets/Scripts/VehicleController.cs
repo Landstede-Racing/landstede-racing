@@ -16,34 +16,28 @@ public enum GearState
 public class VehicleController : MonoBehaviour
 {
     public LogitechSteeringWheel logitechSteering;
+
+    [Header("Input")]
     public float steeringAngle = 0;
     public float gas = 0;
     public float brake = 0;
-    public int gear = 0;
-    public float firstLightOn;
-    public float redLine;
-    public float idleRPM;
-    public float wheelRPM;
+    public AnimationCurve brakingCurve;
 
+    [Header("DRS")]
     public bool drsAvailable;
     public bool drsEnabled;
 
+    [Header("Engine Stats")]
     public float currentTorque;
-    public float brakeTorque = 2000;
-    public float maxSpeed = 20;
-    public float steeringRange = 30;
-    public float steeringRangeAtMaxSpeed = 10;
-    public float centreOfGravityOffset = -1f;
     public float currentEngineRPM;
-    public float differentialRatio;
     public AnimationCurve hpToRPMCurve;
     private GearState gearState;
     public int isEngineRunning;
-    public float changeGearTime = 0.1f;
+    public int gear = 0;
+    public float wheelRPM;
 
-    public AnimationCurve brakingCurve;
+    [Header("Downforce")]
     public AnimationCurve downForceCurve;
-    // public ConstantForce downForce;
     public float maxFrontDownForce;
     public float maxRearDownForce;
     public float maxDiffuserDownForce;
@@ -51,6 +45,8 @@ public class VehicleController : MonoBehaviour
     public ConstantForce rightFrontWing;
     public ConstantForce rearWing;
     public ConstantForce diffuser;
+
+    [Header("Steering Wheel")]
     public Transform steeringColumn;
     private Vector3 steeringColumnRotation;
 
@@ -59,20 +55,31 @@ public class VehicleController : MonoBehaviour
     public WheelControl frontRightWheel;
     public WheelControl backLeftWheel;
     public WheelControl backRightWheel;
+    WheelControl[] wheels;
 
+    [Header("Car Specs")]
     public float engineHP;
     public float maxEngineRPM;
     public float[] gearRatios;
+    public float changeGearTime = 0.1f;
+    public float brakeTorque = 2000;
+    public float maxSpeed = 20;
+    public float steeringRange = 30;
+    public float steeringRangeAtMaxSpeed = 10;
+    public float centreOfGravityOffset = -1f;
+    public float differentialRatio;
+    public float firstLightOn;
+    public float redLine;
+    public float idleRPM;
 
+    [Header("Texts")]
     public TMP_Text gearText;
     public TMP_Text gearTextWheel;
     public TMP_Text speedText;
     public TMP_Text rpmText;
     public TMP_Text rpmTextWheel;
-    public Transform backWing;
 
     Animator animator;
-    WheelControl[] wheels;
     Rigidbody rigidBody;
 
     private int currentGear = 1; //Bc: R = 0 and N = 1
