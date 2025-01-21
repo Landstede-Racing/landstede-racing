@@ -35,6 +35,10 @@ public class VehicleController : MonoBehaviour
     public float maxERSUsage;
     public float ERSGenerated;
     public float maxERSGenerated;
+    public float ERSGenerationRate;
+    public AnimationCurve rpmToGenerationCurve; // For MGU-K
+    public bool ERSGenBraking;
+    public float ERSGenBrakingTorque;
     public float[] ERSDrain;
     public float[] ERSHP;
 
@@ -215,14 +219,14 @@ public class VehicleController : MonoBehaviour
         rpmTextWheel.text = rpmTextValue;
 
 
-        torque = hpToRPMCurve.Evaluate((currentEngineRPM - 4500) / (redLine - 4500)) * (engineHP + (CanUseERS() ? ERSHP[ERSMode] : 0)) / currentEngineRPM * gearRatios[gear] * differentialRatio * 5252f;
+        if(gearState != GearState.Changing) torque = hpToRPMCurve.Evaluate((currentEngineRPM - 4500) / (redLine - 4500)) * (engineHP + (CanUseERS() ? ERSHP[ERSMode] : 0)) / currentEngineRPM * gearRatios[gear] * differentialRatio * 5252f;
         
         return torque;
     }
 
     float CalculateBrakingTorque()
     {
-        float torque = brakingCurve.Evaluate(GetSpeed() / maxSpeed) * brakeTorque;
+        float torque = brakingCurve.Evaluate(GetSpeed() / maxSpeed) * brakeTorque + (ERSGenBraking ? ERSGenBrakingTorque : 0);
 
         return torque;
     }
@@ -276,6 +280,14 @@ public class VehicleController : MonoBehaviour
             ERSCharge -= drainage;
             ERSUsage += drainage;
         }
+
+        if(GetSpeed() > 0 && gas < 0.5f) {
+            float generation = (rpmToGenerationCurve.Evaluate(currentEngineRPM / redLine) / 60 * ERSGenerationRate) * Time.deltaTime;
+            ERSCharge += generation;
+            ERSGenerated += generation;
+        }
+
+        // TODO: Add ERS recovery from engine heat
 
         if(ERSCharge < 0) {
             ERSCharge = 0;
