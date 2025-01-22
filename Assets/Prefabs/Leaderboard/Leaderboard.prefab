@@ -295,8 +295,8 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: b9b94b692fba44c28b487e0ad03384dd, type: 2}
-  m_sharedMaterial: {fileID: -2250403551954225935, guid: b9b94b692fba44c28b487e0ad03384dd, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: a05779603ef56490c8d1b482169a9cf8, type: 2}
+  m_sharedMaterial: {fileID: 9195407925939487561, guid: a05779603ef56490c8d1b482169a9cf8, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -399,7 +399,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.10557, y: -41}
+  m_AnchoredPosition: {x: 0.1055603, y: -41}
   m_SizeDelta: {x: 190.21, y: 513.09}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3940403781835311361
@@ -474,7 +474,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.10600281, y: 272.7409}
+  m_AnchoredPosition: {x: 0.10601807, y: 272.7409}
   m_SizeDelta: {x: 0.21181, y: -545.4882}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9082007440651038989
@@ -505,7 +505,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 3286163911610860551, guid: 85d29bafe1b8149779e65a6beba6f8f4, type: 3}
+  m_Sprite: {fileID: 3286163911610860551, guid: fa7b3c78be384391a0c48205c34cd3a4, type: 3}
   m_PreserveAspect: 0
 --- !u!1 &7889727522533722138
 GameObject:
@@ -653,8 +653,8 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: b9b94b692fba44c28b487e0ad03384dd, type: 2}
-  m_sharedMaterial: {fileID: -2250403551954225935, guid: b9b94b692fba44c28b487e0ad03384dd, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 9738777d3dfde44ba950d926ea92c46a, type: 2}
+  m_sharedMaterial: {fileID: -53205610576959363, guid: 9738777d3dfde44ba950d926ea92c46a, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
