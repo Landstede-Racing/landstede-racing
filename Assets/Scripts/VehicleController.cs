@@ -285,6 +285,9 @@ public class VehicleController : MonoBehaviour
             float generation = (rpmToGenerationCurve.Evaluate(currentEngineRPM / redLine) / 60 * ERSGenerationRate) * Time.deltaTime;
             ERSCharge += generation;
             ERSGenerated += generation;
+            ERSGenBraking = true;
+        } else {
+            ERSGenBraking = false;
         }
 
         // TODO: Add ERS recovery from engine heat
@@ -383,23 +386,17 @@ public class VehicleController : MonoBehaviour
 
     public void NextERSMode()
     {
-        if(ERSMode < ERSDrain.Length - 1)
-        {
-            ERSMode++;
-        }
+        SetERSMode(ERSMode + 1);
     }
 
     public void PreviousERSMode()
     {
-        if(ERSMode > 0)
-        {
-            ERSMode--;
-        }
+        SetERSMode(ERSMode - 1);
     }
 
     public void SetERSMode(int mode)
     {
-        ERSMode = mode;
+        ERSMode = Math.Clamp(mode, 0, 3);
     }
 
     public void ToggleDRS()
