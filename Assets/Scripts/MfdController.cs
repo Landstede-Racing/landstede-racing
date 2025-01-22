@@ -36,6 +36,11 @@ public class MfdController : MonoBehaviour
 
             if (damagablePart != null)
             {
+                if(mfdpart.transform.Find("Wheel-Temperature-Outside") == null)
+                {
+                    Debug.Log("No Wheel-Temperature-Outside found for " + mfdpart.name);
+                    continue;
+                }
                 mfdPartMapHeat.Add(mfdpart.transform.Find("Wheel-Temperature-Outside").gameObject, damagablePart);
             }
             else
