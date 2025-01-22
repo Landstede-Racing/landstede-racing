@@ -123,6 +123,12 @@ public class LogitechSteeringWheel : MonoBehaviour
                 {
                     cameraController.SetReverseCam(false);
                 }
+                if(LogitechGSDK.LogiButtonReleased(0, 19)) {
+                    vehicleController.NextERSMode();
+                }
+                if(LogitechGSDK.LogiButtonReleased(0, 20)) {
+                    vehicleController.PreviousERSMode();
+                }
 
                 if (LogitechGSDK.LogiButtonTriggered(0, 23))
                 {
