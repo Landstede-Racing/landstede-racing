@@ -113,6 +113,8 @@ public class VehicleController : MonoBehaviour
 
         steeringColumnRotation = steeringColumn.localEulerAngles;
         SetTires(TireCompounds.Soft);
+
+        UpgradeController.ApplyUpgrades(this);
     }
 
     public void FixedUpdate()
