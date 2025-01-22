@@ -15,11 +15,13 @@ public class WeatherController : MonoBehaviour
 
     public float maxRainTime = 60;
 
+    public GameObject track;
+
     void Start()
     {
         rainFallSystem.SetActive(true); //Sets the rain system to inactive
                                         // rainFallSystem.SetActive(true);
-                            
+
 
     }
 
@@ -30,7 +32,22 @@ public class WeatherController : MonoBehaviour
         if (rainFallSystem.activeSelf == true)
         {
             isRaining = true;
-            Debug.Log("It's raining");
+        }
+
+        if (track != null)
+        {
+            Renderer trackRenderer = track.GetComponent<Renderer>();
+            if (trackRenderer != null)
+            {
+                Debug.Log("Track renderer found");
+                Material trackMaterial = trackRenderer.material;
+
+                // //TODO: Needs to be an new transparent material that slowly fades in due to rain time, now just overwrites the material or smt
+                // Material glossyOverlayMaterial = new Material(Shader.Find("Standard"));
+                // glossyOverlayMaterial.SetFloat("_Glossiness", 1.0f);
+                // glossyOverlayMaterial.SetFloat("_Metallic", 1.0f);
+                // trackRenderer.materials = new Material[] { trackMaterial, glossyOverlayMaterial };
+            }
         }
 
     }
@@ -44,7 +61,8 @@ public class WeatherController : MonoBehaviour
         }
     }
 
-    public float GetRainTimer() {
+    public float GetRainTimer()
+    {
         return Math.Min(timeRaining / maxRainTime, 1);
     }
 }

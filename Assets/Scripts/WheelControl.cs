@@ -13,6 +13,8 @@ public class WheelControl : MonoBehaviour
     public WheelFrictionCurve defaultForwardFriction;
     public WheelFrictionCurve defaultSidewaysFriction;
 
+    public GameObject track;
+
     [HideInInspector] public WheelCollider WheelCollider;
 
     // Create properties for the CarControl script
@@ -98,7 +100,7 @@ public class WheelControl : MonoBehaviour
 
                 if (weatherController != null && weatherController.isRaining)
                 {
-                    Debug.Log("It's raining from weatherController and is now changed in the wheelControl!!! YIPPPYYYYY");
+                    // Debug.Log("It's raining from weatherController and is now changed in the wheelControl!!! YIPPPYYYYY");
                     float rainTime = weatherController.GetRainTimer();
 
                     // Adjust the friction based on the rainTime
