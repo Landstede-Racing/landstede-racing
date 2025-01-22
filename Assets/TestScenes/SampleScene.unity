@@ -469,6 +469,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5551360141245956375, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
+      propertyPath: m_TagString
+      value: Car
+      objectReference: {fileID: 0}
     - target: {fileID: 6864331406162114436, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
       propertyPath: rpmText
       value: 
@@ -629,7 +633,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8988950090481509109, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
+    - {fileID: 2961729771102953374, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
+    - {fileID: 8084501954310197572, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
+    - {fileID: 5685201402986769838, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 5062525429664586669, guid: 47b41a8f5cd80894aa9bd0933d2b52fe, type: 3}
@@ -822,6 +830,10 @@ MonoBehaviour:
   maxDamage: 250
   currentDamage: 0
   damageMultiplier: 1e-10
+  temperature: 20
+  optimalTemperature: 0
+  temperatureMultiplier: 0.001
+  coollingRate: 0.001
   shouldDestroy: 0
   part: {fileID: 278841944}
 --- !u!114 &327416147
@@ -839,6 +851,10 @@ MonoBehaviour:
   maxDamage: 250
   currentDamage: 0
   damageMultiplier: 100000000
+  temperature: 20
+  optimalTemperature: 0
+  temperatureMultiplier: 0.001
+  coollingRate: 0.001
   shouldDestroy: 1
   part: {fileID: 327416148}
 --- !u!114 &327416148
@@ -10582,6 +10598,10 @@ MonoBehaviour:
   maxDamage: 250
   currentDamage: 0
   damageMultiplier: 100000000
+  temperature: 20
+  optimalTemperature: 0
+  temperatureMultiplier: 0.001
+  coollingRate: 0.001
   shouldDestroy: 1
   part: {fileID: 674410837}
 --- !u!114 &674410837
@@ -10974,6 +10994,10 @@ MonoBehaviour:
   maxDamage: 250
   currentDamage: 0
   damageMultiplier: 1e-10
+  temperature: 20
+  optimalTemperature: 0
+  temperatureMultiplier: 0.001
+  coollingRate: 0.001
   shouldDestroy: 0
   part: {fileID: 1045855062}
 --- !u!1 &1160962191 stripped
@@ -11273,6 +11297,10 @@ MonoBehaviour:
   maxDamage: 250
   currentDamage: 0
   damageMultiplier: 100000000
+  temperature: 20
+  optimalTemperature: 0
+  temperatureMultiplier: 0.001
+  coollingRate: 0.001
   shouldDestroy: 1
   part: {fileID: 1664842200}
 --- !u!114 &1664842200
@@ -11400,6 +11428,10 @@ MonoBehaviour:
   maxDamage: 250
   currentDamage: 0
   damageMultiplier: 1e-10
+  temperature: 20
+  optimalTemperature: 0
+  temperatureMultiplier: 0.001
+  coollingRate: 0.001
   shouldDestroy: 0
   part: {fileID: 1812642881}
 --- !u!1 &1831864245
@@ -11708,6 +11740,10 @@ MonoBehaviour:
   maxDamage: 250
   currentDamage: 0
   damageMultiplier: 1e-10
+  temperature: 20
+  optimalTemperature: 0
+  temperatureMultiplier: 0.001
+  coollingRate: 0.001
   shouldDestroy: 0
   part: {fileID: 1900051159}
 --- !u!1 &2089662311 stripped

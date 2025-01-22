@@ -57,7 +57,7 @@ public class WheelControl : MonoBehaviour
             TerrainInfo hitTerrain = hit.collider.GetComponent<TerrainInfo>();
 
             HandleWheelDamage(hit, hitTerrain);
-            HandleWheelTemperature(hit);
+            // HandleWheelTemperature(hit);
 
             if (hitTerrain != null)
             {
@@ -66,20 +66,20 @@ public class WheelControl : MonoBehaviour
         }
     }
 
-    public void HandleWheelTemperature(WheelHit hit)
-    {
-        damagablePart.temperature += (hit.force - 1400) * damagablePart.temperatureMultiplier;
+    // public void HandleWheelTemperature(WheelHit hit)
+    // {
+    //     damagablePart.temperature += (hit.force - 1400) * damagablePart.temperatureMultiplier;
 
-        if (damagablePart.temperature > damagablePart.optimalTemperature)
-        {
-            damagablePart.currentDamage += (damagablePart.temperature - damagablePart.optimalTemperature) * damagablePart.damageMultiplier;
-        }
+    //     if (damagablePart.temperature > damagablePart.optimalTemperature + 10)
+    //     {
+    //         damagablePart.currentDamage += (damagablePart.temperature - damagablePart.optimalTemperature) * damagablePart.damageMultiplier * 10000000;
+    //     }
 
-        if (damagablePart.temperature > 0f)
-        {
-            damagablePart.temperature -= damagablePart.temperature * damagablePart.coollingRate * damagablePart.temperatureMultiplier;
-        }
-    }
+    //     if (damagablePart.temperature > 0f)
+    //     {
+    //         damagablePart.temperature -= damagablePart.temperature * damagablePart.coollingRate * damagablePart.temperatureMultiplier;
+    //     }
+    // }
 
     public void HandleWheelDamage(WheelHit hit, TerrainInfo hitTerrain)
     {

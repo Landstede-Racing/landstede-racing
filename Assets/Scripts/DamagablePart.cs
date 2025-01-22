@@ -18,11 +18,11 @@ public class DamagablePart : MonoBehaviour
 
     void Start()
     {
-        if (part.name == "Rear Left Wheel" || part.name == "Rear Right Wheel" || part.name == "Front Left Wheel" || part.name == "Front Right Wheel")
-        {
-            TireCompound tireCompound = gameObject.GetComponent<WheelControl>().tireCompound;
-            optimalTemperature = tireCompound.optimalTemperature;
-        }
+        // if (part.name == "Rear Left Wheel" || part.name == "Rear Right Wheel" || part.name == "Front Left Wheel" || part.name == "Front Right Wheel")
+        // {
+        //     TireCompound tireCompound = gameObject.GetComponent<WheelControl>().tireCompound;
+        //     optimalTemperature = tireCompound.optimalTemperature;
+        // }
     }
 
     void OnCollisionEnter(Collision collision)
