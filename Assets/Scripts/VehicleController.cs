@@ -219,7 +219,10 @@ public class VehicleController : MonoBehaviour
         rpmTextWheel.text = rpmTextValue;
 
 
-        if(gearState != GearState.Changing) torque = hpToRPMCurve.Evaluate((currentEngineRPM - 4500) / (redLine - 4500)) * (engineHP + (CanUseERS() ? ERSHP[ERSMode] : 0)) / currentEngineRPM * gearRatios[gear] * differentialRatio * 5252f;
+        if(gearState != GearState.Changing) torque = 
+            hpToRPMCurve.Evaluate((currentEngineRPM - 4500) / (redLine - 4500)) 
+            * (engineHP + (CanUseERS() ? ERSHP[ERSMode] : 0)) / currentEngineRPM 
+            * gearRatios[gear] * differentialRatio * 5252f;
         
         return torque;
     }
