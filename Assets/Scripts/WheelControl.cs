@@ -117,6 +117,11 @@ public class WheelControl : MonoBehaviour
         WheelFrictionCurve newForwardFriction = defaultForwardFriction;
         WheelFrictionCurve newSidewaysFriction = defaultSidewaysFriction;
 
+        newForwardFriction.stiffness *= hitTerrain.gripMultiplier;
+        newForwardFriction.stiffness *= tireCompound.grip;
+        newSidewaysFriction.stiffness *= hitTerrain.gripMultiplier;
+        newSidewaysFriction.stiffness *= tireCompound.grip;
+
         if (weatherController != null && weatherController.isRaining)
         {
             // Debug.Log("It's raining from weatherController and is now changed in the wheelControl!!! YIPPPYYYYY");
@@ -125,13 +130,6 @@ public class WheelControl : MonoBehaviour
             // Adjust the friction based on the rainTime
             newForwardFriction.stiffness *= Mathf.Lerp(1.0f, 0.75f, rainTime); //reduced by 25% after 1 min
             newSidewaysFriction.stiffness *= Mathf.Lerp(1.0f, 0.55f, rainTime); //reduced by 45% after 1 min
-        }
-        else
-        {
-            newForwardFriction.stiffness *= hitTerrain.gripMultiplier;
-            newForwardFriction.stiffness *= tireCompound.grip;
-            newSidewaysFriction.stiffness *= hitTerrain.gripMultiplier;
-            newSidewaysFriction.stiffness *= tireCompound.grip;
         }
 
         WheelCollider.forwardFriction = newForwardFriction;
