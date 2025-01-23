@@ -160,7 +160,6 @@ public class VehicleController : MonoBehaviour
 
     private void ApplyDownForce()
     {
-        // TODO: Change values to newton instead of kg
         float leftFront = CalculateDownForce(maxFrontDownForce);
         leftFrontWing.relativeForce = new(0, -leftFront, 0);
 
@@ -258,9 +257,6 @@ public class VehicleController : MonoBehaviour
                 wheel.WheelCollider.steerAngle = steeringAngle * currentSteerRange;
             }
         }
-
-
-        // TODO: Fix steering column rotation :')
 
         Vector3 newRotation = steeringColumnRotation;
         newRotation.z += -steeringAngle * 180;

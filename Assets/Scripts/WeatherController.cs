@@ -8,8 +8,6 @@ public class WeatherController : MonoBehaviour
 
     //TODO: Implement in settings or somthing or a randomiser for weather
 
-    //TODO2: Make the car handle differently in different weather conditions
-
     public GameObject rainFallSystem;
     public bool isRaining = false;
     public float timeRaining = 0;
