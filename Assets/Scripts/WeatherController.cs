@@ -23,7 +23,8 @@ public class WeatherController : MonoBehaviour
     {
         rainFallSystem.SetActive(true); //Sets the rain system to inactive
                                         // rainFallSystem.SetActive(true);
-        if(trackGrounds[0] != null && trackGrounds[0].TryGetComponent<MeshRenderer>(out MeshRenderer trackRenderer)) {
+        if (trackGrounds[0] != null && trackGrounds[0].TryGetComponent<MeshRenderer>(out MeshRenderer trackRenderer))
+        {
             matDefaultSmoothess = trackRenderer.materials[0].GetFloat("_Smoothness");
         }
     }
@@ -39,14 +40,16 @@ public class WeatherController : MonoBehaviour
 
         if (trackGrounds.Length > 0)
         {
-            foreach (GameObject track in trackGrounds) {
+            foreach (GameObject track in trackGrounds)
+            {
                 Renderer trackRenderer = track.GetComponent<MeshRenderer>();
                 if (trackRenderer != null)
                 {
-                    Debug.Log("Track renderer found");
+                    // Debug.Log("Track renderer found");
                     foreach (Material mat in trackRenderer.materials)
                     {
-                        if(mat.shader == Shader.Find("Shader Graphs/AsphaltShader")) {
+                        if (mat.shader == Shader.Find("Shader Graphs/AsphaltShader"))
+                        {
                             mat.SetFloat("_Smoothness", matDefaultSmoothess + GetRainTimer());
                         }
                     }
