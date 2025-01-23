@@ -22,7 +22,7 @@ public class TrackSelectionController : MonoBehaviour
     public TMP_Text trackRecord;
     public TMP_Text trackPRecord;
 
-    public SceneAsset[] trackScenes;
+    public string[] trackScenes;
     private readonly Track[] tracks = new Track[1];
 
     void Start()
@@ -37,7 +37,7 @@ public class TrackSelectionController : MonoBehaviour
     }
 
     public void StartRace() {
-        StartCoroutine(CustomSceneManager.LoadScene(trackScenes[camController.currentTrackCam].name));
+        StartCoroutine(CustomSceneManager.LoadScene(trackScenes[camController.currentTrackCam]));
     }
 
     public void UpdateButtons() {
