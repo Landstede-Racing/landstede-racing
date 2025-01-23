@@ -1,14 +1,21 @@
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UpgradeMenuController : MonoBehaviour
 {
+    public GameObject upgradeScreen;
     private static ToggleGroup toggleGroup;
     private UpgradeCategory currentCategory;
     private List<Upgrade> upgrades;
     public static ScrollRect scrollRect;
+    private Upgrade selectedUpgrade;
+    public TMP_Text upgradeName;
+    public TMP_Text upgradeDescription;
+    public TMP_Text upgradeCost;
+    public Button buyButton;
     public GameObject upgradeButtonPrefab;
     void Start()
     {
@@ -31,6 +38,7 @@ public class UpgradeMenuController : MonoBehaviour
                 UpdateUpgrades();
             }
         }
+        
     }
 
     public void UpdateUpgrades() {
@@ -55,7 +63,21 @@ public class UpgradeMenuController : MonoBehaviour
 
         upgrades.ForEach(upgrade => {
             GameObject upgradeButton = Instantiate(upgradeButtonPrefab, scrollRect.content);
-            upgradeButton.GetComponent<UpgradeButton>().upgrade = upgrade;
+            UpgradeButton button = upgradeButton.GetComponent<UpgradeButton>();
+            button.upgrade = upgrade;
+            button.upgradeMenuController = this;
         });
+
+        upgradeScreen.SetActive(selectedUpgrade != null);
+        if(selectedUpgrade != null) {
+            upgradeName.text = selectedUpgrade.name;
+            upgradeDescription.text = selectedUpgrade.description;
+            upgradeCost.text = selectedUpgrade.cost.ToString();
+        }
+    }
+
+    public void SelectUpgrade(Upgrade upgrade) {
+        selectedUpgrade = upgrade;
+        UpdateUI();
     }
 }

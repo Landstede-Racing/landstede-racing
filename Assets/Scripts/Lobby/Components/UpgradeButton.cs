@@ -7,6 +7,7 @@ public class UpgradeButton : MonoBehaviour
 {
     public Upgrade upgrade;
     private Button button;
+    public UpgradeMenuController upgradeMenuController;
     private TMP_Text buttonText;
     private bool init = false;
     private void Start()
@@ -34,5 +35,6 @@ public class UpgradeButton : MonoBehaviour
     {
         Debug.Log("Button clicked: " + upgrade.name);
         // TODO: Upgrade buy logic
+        upgradeMenuController.SelectUpgrade(upgrade);
     }
 }
