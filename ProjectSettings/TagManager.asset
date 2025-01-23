@@ -7,6 +7,8 @@ TagManager:
   - Ground
   - Wall
   - Curb
+  - Car
+  - Line
   layers:
   - Default
   - TransparentFX
