@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using NUnit.Framework;
 using UnityEngine;
 
@@ -15,14 +16,16 @@ public class WeatherController : MonoBehaviour
 
     public float maxRainTime = 60;
 
-    public GameObject track;
+    public GameObject[] trackGrounds;
+    private float matDefaultSmoothess;
 
     void Start()
     {
         rainFallSystem.SetActive(true); //Sets the rain system to inactive
                                         // rainFallSystem.SetActive(true);
-
-
+        if(trackGrounds[0] != null && trackGrounds[0].TryGetComponent<MeshRenderer>(out MeshRenderer trackRenderer)) {
+            matDefaultSmoothess = trackRenderer.materials[0].GetFloat("_Smoothness");
+        }
     }
 
     // Update is called once per frame
@@ -34,19 +37,20 @@ public class WeatherController : MonoBehaviour
             isRaining = true;
         }
 
-        if (track != null)
+        if (trackGrounds.Length > 0)
         {
-            Renderer trackRenderer = track.GetComponent<Renderer>();
-            if (trackRenderer != null)
-            {
-                Debug.Log("Track renderer found");
-                Material trackMaterial = trackRenderer.material;
-
-                // //TODO: Needs to be an new transparent material that slowly fades in due to rain time, now just overwrites the material or smt
-                // Material glossyOverlayMaterial = new Material(Shader.Find("Standard"));
-                // glossyOverlayMaterial.SetFloat("_Glossiness", 1.0f);
-                // glossyOverlayMaterial.SetFloat("_Metallic", 1.0f);
-                // trackRenderer.materials = new Material[] { trackMaterial, glossyOverlayMaterial };
+            foreach (GameObject track in trackGrounds) {
+                Renderer trackRenderer = track.GetComponent<MeshRenderer>();
+                if (trackRenderer != null)
+                {
+                    Debug.Log("Track renderer found");
+                    foreach (Material mat in trackRenderer.materials)
+                    {
+                        if(mat.shader == Shader.Find("Shader Graphs/AsphaltShader")) {
+                            mat.SetFloat("_Smoothness", matDefaultSmoothess + GetRainTimer());
+                        }
+                    }
+                }
             }
         }
 
