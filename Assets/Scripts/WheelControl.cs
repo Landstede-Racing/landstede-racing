@@ -53,11 +53,6 @@ public class WheelControl : MonoBehaviour
         // var matsCopy = wheelModel.GetComponent<MeshRenderer>().materials;
         // matsCopy[1].SetFloat("_Wear", damagablePart.currentDamage / damagablePart.maxDamage);
         // wheelModel.GetComponent<MeshRenderer>().materials = matsCopy;
-
-        // 
-        // Calculations for the damage percentage :)
-        // 
-        // Debug.Log(Math.Floor(damagablePart.currentDamage / damagablePart.maxDamage * 100));
     }
 
     void FixedUpdate()
@@ -68,57 +63,67 @@ public class WheelControl : MonoBehaviour
             WheelCollider.GetGroundHit(out WheelHit hit);
             TerrainInfo hitTerrain = hit.collider.GetComponent<TerrainInfo>();
 
-            if (damagablePart.currentDamage < damagablePart.maxDamage && hit.force > 1400)
-            {
-                if (hit.collider.CompareTag("Wall"))
-                {
-                    damagablePart.currentDamage += (hit.force - 1400) * damagablePart.damageMultiplier * 10;
-
-                    if (damagablePart.currentDamage >= damagablePart.maxDamage)
-                    {
-                        Debug.Log("Here it will fly to the moon");
-                    }
-                }
-                else if (hitTerrain != null)
-                {
-                    damagablePart.currentDamage += (hit.force - 1400) * damagablePart.damageMultiplier * hitTerrain.damageMultiplier * tireCompound.wearRate;
-
-                    if (damagablePart.currentDamage >= damagablePart.maxDamage)
-                    {
-                        Debug.Log("Here it will break in a less horrible way than the others");
-                    }
-                }
-            }
-
-
-
+            HandleWheelDamage(hit, hitTerrain);
+            // HandleWheelTemperature(hit);
 
             if (hitTerrain != null)
             {
-                WheelFrictionCurve newForwardFriction = defaultForwardFriction;
-                WheelFrictionCurve newSidewaysFriction = defaultSidewaysFriction;
-
-                if (weatherController != null && weatherController.isRaining)
-                {
-                    // Debug.Log("It's raining from weatherController and is now changed in the wheelControl!!! YIPPPYYYYY");
-                    float rainTime = weatherController.GetRainTimer();
-
-                    // Adjust the friction based on the rainTime
-                    newForwardFriction.stiffness *= Mathf.Lerp(1.0f, 0.75f, rainTime); //reduced by 25% after 1 min
-                    newSidewaysFriction.stiffness *= Mathf.Lerp(1.0f, 0.55f, rainTime); //reduced by 45% after 1 min
-                }
-                else
-                {
-                    newForwardFriction.stiffness *= hitTerrain.gripMultiplier;
-                    newForwardFriction.stiffness *= tireCompound.grip;
-                    newSidewaysFriction.stiffness *= hitTerrain.gripMultiplier;
-                    newSidewaysFriction.stiffness *= tireCompound.grip;
-                }
-
-                WheelCollider.forwardFriction = newForwardFriction;
-                WheelCollider.sidewaysFriction = newSidewaysFriction;
+                HandleWheelFriction(hitTerrain);
             }
         }
+    }
+
+    // public void HandleWheelTemperature(WheelHit hit)
+    // {
+    //     damagablePart.temperature += (hit.force - 1400) * damagablePart.temperatureMultiplier;
+
+    //     if (damagablePart.temperature > damagablePart.optimalTemperature + 10)
+    //     {
+    //         damagablePart.currentDamage += (damagablePart.temperature - damagablePart.optimalTemperature) * damagablePart.damageMultiplier * 10000000;
+    //     }
+
+    //     if (damagablePart.temperature > 0f)
+    //     {
+    //         damagablePart.temperature -= damagablePart.temperature * damagablePart.coollingRate * damagablePart.temperatureMultiplier;
+    //     }
+    // }
+
+    public void HandleWheelDamage(WheelHit hit, TerrainInfo hitTerrain)
+    {
+        if (damagablePart.currentDamage < damagablePart.maxDamage && hit.force > 1400)
+        {
+            if (hit.collider.CompareTag("Wall"))
+            {
+                damagablePart.currentDamage += (hit.force - 1400) * damagablePart.damageMultiplier * 10;
+
+                if (damagablePart.currentDamage >= damagablePart.maxDamage)
+                {
+                    Debug.Log("Here it will fly to the moon");
+                }
+            }
+            else if (hitTerrain != null)
+            {
+                damagablePart.currentDamage += (hit.force - 1400) * damagablePart.damageMultiplier * hitTerrain.damageMultiplier * tireCompound.wearRate;
+
+                if (damagablePart.currentDamage >= damagablePart.maxDamage)
+                {
+                    Debug.Log("Here it will break in a less horrible way than the others");
+                }
+            }
+        }
+    }
+
+    public void HandleWheelFriction(TerrainInfo hitTerrain)
+    {
+        WheelFrictionCurve newForwardFriction = defaultForwardFriction;
+        newForwardFriction.stiffness *= hitTerrain.gripMultiplier;
+        newForwardFriction.stiffness *= tireCompound.grip;
+        WheelFrictionCurve newSidewaysFriction = defaultSidewaysFriction;
+        newSidewaysFriction.stiffness *= hitTerrain.gripMultiplier;
+        newSidewaysFriction.stiffness *= tireCompound.grip;
+
+        WheelCollider.forwardFriction = newForwardFriction;
+        WheelCollider.sidewaysFriction = newSidewaysFriction;
     }
 
     public void SetTireCompound(TireCompound tireCompound)

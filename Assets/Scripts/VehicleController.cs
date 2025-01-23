@@ -16,34 +16,43 @@ public enum GearState
 public class VehicleController : MonoBehaviour
 {
     public LogitechSteeringWheel logitechSteering;
+
+    [Header("Input")]
     public float steeringAngle = 0;
     public float gas = 0;
     public float brake = 0;
-    public int gear = 0;
-    public float firstLightOn;
-    public float redLine;
-    public float idleRPM;
-    public float wheelRPM;
+    public AnimationCurve brakingCurve;
 
+    [Header("DRS")]
     public bool drsAvailable;
     public bool drsEnabled;
 
+    [Header("ERS")]
+    public int ERSMode;
+    public float ERSCharge;
+    public float maxERSCharge;
+    public float ERSUsage;
+    public float maxERSUsage;
+    public float ERSGenerated;
+    public float maxERSGenerated;
+    public float ERSGenerationRate;
+    public AnimationCurve rpmToGenerationCurve; // For MGU-K
+    public bool ERSGenBraking;
+    public float ERSGenBrakingTorque;
+    public float[] ERSDrain;
+    public float[] ERSHP;
+
+    [Header("Engine Stats")]
     public float currentTorque;
-    public float brakeTorque = 2000;
-    public float maxSpeed = 20;
-    public float steeringRange = 30;
-    public float steeringRangeAtMaxSpeed = 10;
-    public float centreOfGravityOffset = -1f;
     public float currentEngineRPM;
-    public float differentialRatio;
     public AnimationCurve hpToRPMCurve;
     private GearState gearState;
     public int isEngineRunning;
-    public float changeGearTime = 0.1f;
+    public int gear = 0;
+    public float wheelRPM;
 
-    public AnimationCurve brakingCurve;
+    [Header("Downforce")]
     public AnimationCurve downForceCurve;
-    // public ConstantForce downForce;
     public float maxFrontDownForce;
     public float maxRearDownForce;
     public float maxDiffuserDownForce;
@@ -51,6 +60,8 @@ public class VehicleController : MonoBehaviour
     public ConstantForce rightFrontWing;
     public ConstantForce rearWing;
     public ConstantForce diffuser;
+
+    [Header("Steering Wheel")]
     public Transform steeringColumn;
     private Vector3 steeringColumnRotation;
 
@@ -59,20 +70,31 @@ public class VehicleController : MonoBehaviour
     public WheelControl frontRightWheel;
     public WheelControl backLeftWheel;
     public WheelControl backRightWheel;
+    WheelControl[] wheels;
 
+    [Header("Car Specs")]
     public float engineHP;
     public float maxEngineRPM;
     public float[] gearRatios;
+    public float changeGearTime = 0.1f;
+    public float brakeTorque = 2000;
+    public float maxSpeed = 20;
+    public float steeringRange = 30;
+    public float steeringRangeAtMaxSpeed = 10;
+    public float centreOfGravityOffset = -1f;
+    public float differentialRatio;
+    public float firstLightOn;
+    public float redLine;
+    public float idleRPM;
 
+    [Header("Texts")]
     public TMP_Text gearText;
     public TMP_Text gearTextWheel;
     public TMP_Text speedText;
     public TMP_Text rpmText;
     public TMP_Text rpmTextWheel;
-    public Transform backWing;
 
     Animator animator;
-    WheelControl[] wheels;
     Rigidbody rigidBody;
 
     private int currentGear = 1; //Bc: R = 0 and N = 1
@@ -100,6 +122,8 @@ public class VehicleController : MonoBehaviour
         ApplySteering();
         ApplyBrake();
         ApplyDownForce();
+
+        UpdateBattery();
 
         // Change gear and speed texts
         if (gear == 0)
@@ -195,14 +219,17 @@ public class VehicleController : MonoBehaviour
         rpmTextWheel.text = rpmTextValue;
 
 
-        torque = hpToRPMCurve.Evaluate((currentEngineRPM - 4500) / (redLine - 4500)) * engineHP / currentEngineRPM * gearRatios[gear] * differentialRatio * 5252f;
+        if(gearState != GearState.Changing) torque = 
+            hpToRPMCurve.Evaluate((currentEngineRPM - 4500) / (redLine - 4500)) 
+            * (engineHP + (CanUseERS() ? ERSHP[ERSMode] : 0)) / currentEngineRPM 
+            * gearRatios[gear] * differentialRatio * 5252f;
         
         return torque;
     }
 
     float CalculateBrakingTorque()
     {
-        float torque = brakingCurve.Evaluate(GetSpeed() / maxSpeed) * brakeTorque;
+        float torque = brakingCurve.Evaluate(GetSpeed() / maxSpeed) * brakeTorque + (ERSGenBraking ? ERSGenBrakingTorque : 0);
 
         return torque;
     }
@@ -248,6 +275,50 @@ public class VehicleController : MonoBehaviour
             // TODO: Front Brake Bias
             wheel.WheelCollider.brakeTorque = brake * CalculateBrakingTorque();
         }
+    }
+
+    private void UpdateBattery() {
+        if(ERSMode > 0 && gas > 0) {
+            float drainage = ERSDrain[ERSMode] / 60 * Time.deltaTime;
+            ERSCharge -= drainage;
+            ERSUsage += drainage;
+        }
+
+        if(GetSpeed() > 0 && gas < 0.5f) {
+            float generation = (rpmToGenerationCurve.Evaluate(currentEngineRPM / redLine) / 60 * ERSGenerationRate) * Time.deltaTime;
+            ERSCharge += generation;
+            ERSGenerated += generation;
+            ERSGenBraking = true;
+        } else {
+            ERSGenBraking = false;
+        }
+
+        // TODO: Add ERS recovery from engine heat
+
+        if(ERSCharge < 0) {
+            ERSCharge = 0;
+        }
+    }
+
+    private bool CanUseERS() {
+        return 
+            ERSCharge > 0 &&
+            ERSUsage < maxERSUsage;
+    }
+
+    public float GetERSPercentage() {
+        if(ERSCharge <= 0) return 0;
+        return ERSCharge / maxERSCharge;
+    }
+
+    public float GetERSUsagePercentage() {
+        if(ERSUsage <= 0) return 0;
+        return ERSUsage / maxERSUsage;
+    }
+
+    public float GetERSGeneratedPercentage() {
+        if(ERSGenerated <= 0) return 0;
+        return ERSGenerated / maxERSGenerated;
     }
 
     // Coroutine for gear changing
@@ -314,6 +385,21 @@ public class VehicleController : MonoBehaviour
     public int GetGear()
     {
         return gear;
+    }
+
+    public void NextERSMode()
+    {
+        SetERSMode(ERSMode + 1);
+    }
+
+    public void PreviousERSMode()
+    {
+        SetERSMode(ERSMode - 1);
+    }
+
+    public void SetERSMode(int mode)
+    {
+        ERSMode = Math.Clamp(mode, 0, 3);
     }
 
     public void ToggleDRS()

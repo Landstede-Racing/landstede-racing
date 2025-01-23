@@ -6,6 +6,7 @@ using System;
 public class LogitechSteeringWheel : MonoBehaviour
 {
     public VehicleController vehicleController;
+    public MfdController mfdController;
     private CameraController cameraController;
     LogitechGSDK.LogiControllerPropertiesData properties;
     private string actualState;
@@ -98,7 +99,9 @@ public class LogitechSteeringWheel : MonoBehaviour
                 brake = Mathf.InverseLerp(32767, -32766, rec.lRz);
                 vehicleController.SetBrake(brake);
 
-
+                if(LogitechGSDK.LogiButtonTriggered(0, 2)) {
+                    mfdController.NextPage();
+                }
                 if (LogitechGSDK.LogiButtonTriggered(0, 4))
                 {
                     StartCoroutine(vehicleController.ChangeGear(1));
@@ -122,6 +125,12 @@ public class LogitechSteeringWheel : MonoBehaviour
                 if (LogitechGSDK.LogiButtonReleased(0, 6))
                 {
                     cameraController.SetReverseCam(false);
+                }
+                if(LogitechGSDK.LogiButtonReleased(0, 19)) {
+                    vehicleController.NextERSMode();
+                }
+                if(LogitechGSDK.LogiButtonReleased(0, 20)) {
+                    vehicleController.PreviousERSMode();
                 }
 
                 if (LogitechGSDK.LogiButtonTriggered(0, 23))
