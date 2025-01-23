@@ -21,5 +21,5 @@ public enum Location
     RearRightBrake,
     LeftSidepod,
     RightSidepod,
-    
+    Body,
 }

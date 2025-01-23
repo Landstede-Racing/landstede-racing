@@ -8,6 +8,17 @@ public class UpgradeController : MonoBehaviour
         return Upgrade.Values.ToList();
     }  
 
+    public static bool BuyUpgrade(Upgrade upgrade) {
+        int points = PlayerPrefs.GetInt("Points", 0);
+        
+        if(upgrade.cost <= points) {
+            UnlockUpgrade(upgrade);
+            PlayerPrefs.SetInt("Points", points - upgrade.cost);
+            return true;
+        }
+        return false;
+    }
+
     public static void UnlockUpgrade(Upgrade upgrade) {
         int unlockedUpgrades = PlayerPrefs.GetInt("UnlockedUpgrades", 0);
         PlayerPrefs.SetString("UnlockedUpgrade_" + unlockedUpgrades, upgrade.name);
@@ -23,11 +34,6 @@ public class UpgradeController : MonoBehaviour
         for (int i = 0; i < unlockedUpgrades; i++)
         {
             upgrades.Add(Upgrade.GetUpgrade(PlayerPrefs.GetString("UnlockedUpgrade_" + i)));
-        }
-
-        foreach (Upgrade item in upgrades)
-        {
-            Debug.Log(item.name);
         }
 
         return upgrades;
@@ -77,6 +83,9 @@ public class UpgradeController : MonoBehaviour
                     //     break;
                     case Stats.ERSGenRate:
                         vehicleController.ERSGenerationRate += value;
+                        break;
+                    case Stats.weight:
+                        vehicleController.weight += value;
                         break;
                     default:
                         break;

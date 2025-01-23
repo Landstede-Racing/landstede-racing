@@ -16,12 +16,20 @@ public class UpgradeMenuController : MonoBehaviour
     public TMP_Text upgradeDescription;
     public TMP_Text upgradeCost;
     public Button buyButton;
+    public Button closeButton;
+    private int points;
+    public TMP_Text pointsText;
     public GameObject upgradeButtonPrefab;
     void Start()
     {
+        // Set points to 15000 for testing
+        // PlayerPrefs.SetInt("Points", 15000);
+
         scrollRect = GetComponentInChildren<ScrollRect>();
         toggleGroup = GetComponentInChildren<ToggleGroup>();
         Debug.Log(toggleGroup.ActiveToggles().FirstOrDefault().name);
+        closeButton.onClick.AddListener(CloseUpgradeScreen);
+        buyButton.onClick.AddListener(BuyUpgrade);
         UpdateUpgrades();
     }
 
@@ -34,7 +42,6 @@ public class UpgradeMenuController : MonoBehaviour
             if (category != currentCategory)
             {
                 currentCategory = category;
-                Debug.Log("Category changed to: " + category);
                 UpdateUpgrades();
             }
         }
@@ -53,7 +60,18 @@ public class UpgradeMenuController : MonoBehaviour
         UpdateUI();
     }
 
+    public void BuyUpgrade() {
+        if(selectedUpgrade != null) {
+            if(UpgradeController.BuyUpgrade(selectedUpgrade)) {
+                UpdateUpgrades();
+                CloseUpgradeScreen();
+            }
+        }
+    }
+
     public void UpdateUI() {
+        points = PlayerPrefs.GetInt("Points", 0);
+        pointsText.text = points.ToString();
         if(scrollRect.content.childCount > 0) {
             for (int i = 0; i < scrollRect.content.childCount; i++)
             {
@@ -61,11 +79,17 @@ public class UpgradeMenuController : MonoBehaviour
             }
         }
 
+        int j = 0;
         upgrades.ForEach(upgrade => {
             GameObject upgradeButton = Instantiate(upgradeButtonPrefab, scrollRect.content);
             UpgradeButton button = upgradeButton.GetComponent<UpgradeButton>();
             button.upgrade = upgrade;
             button.upgradeMenuController = this;
+            RectTransform rt = upgradeButton.GetComponent<RectTransform>();
+            Vector3 pos = rt.localPosition;
+            pos.x += rt.rect.width * j;
+            rt.localPosition = pos;
+            j++;
         });
 
         upgradeScreen.SetActive(selectedUpgrade != null);
@@ -79,5 +103,9 @@ public class UpgradeMenuController : MonoBehaviour
     public void SelectUpgrade(Upgrade upgrade) {
         selectedUpgrade = upgrade;
         UpdateUI();
+    }
+
+    public void CloseUpgradeScreen() {
+        SelectUpgrade(null);
     }
 }

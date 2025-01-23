@@ -9,4 +9,5 @@ public enum Stats
     ERSDrain,
     ERSHP,
     ERSGenRate,    
+    weight,
 }

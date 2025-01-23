@@ -8,33 +8,42 @@ public class UpgradeButton : MonoBehaviour
     public Upgrade upgrade;
     private Button button;
     public UpgradeMenuController upgradeMenuController;
-    private TMP_Text buttonText;
+    public TMP_Text nameText;
+    public TMP_Text costText;
+    public Color affordableColor;
+    public Color unaffordableColor;
     private bool init = false;
     private void Start()
     {
         if(upgrade != null) {
-            button = GetComponent<Button>();
-            buttonText = GetComponentInChildren<TMP_Text>();
-            buttonText.text = upgrade.name;
-            button.onClick.AddListener(OnButtonClicked);
+            Init();
         }
     }
 
     void Update()
     {
-        if(!init && upgrade != null) {
-            init = true;
-            button = GetComponent<Button>();
-            buttonText = GetComponentInChildren<TMP_Text>();
-            buttonText.text = upgrade.name;
-            button.onClick.AddListener(OnButtonClicked);
+        if(upgrade != null) {
+            if(!init) Init();
+            button.interactable = !upgrade.unlocked;
         }
+    }
+
+    void Init() {
+        init = true;
+        button = GetComponent<Button>();
+        nameText.text = upgrade.name;
+        if(upgrade.unlocked) {
+            costText.text = "Unlocked";
+            costText.color = Color.white;
+        } else {
+            costText.text = upgrade.cost.ToString();
+            costText.color = upgrade.cost <= PlayerPrefs.GetInt("Points", 0) ? affordableColor : unaffordableColor;
+        }
+        button.onClick.AddListener(OnButtonClicked);
     }
 
     private void OnButtonClicked()
     {
-        Debug.Log("Button clicked: " + upgrade.name);
-        // TODO: Upgrade buy logic
         upgradeMenuController.SelectUpgrade(upgrade);
     }
 }
