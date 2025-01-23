@@ -112,7 +112,7 @@ public class VehicleController : MonoBehaviour
         rigidBody.centerOfMass += Vector3.up * centreOfGravityOffset;
 
         steeringColumnRotation = steeringColumn.localEulerAngles;
-        SetTires(TireCompounds.Soft);
+        SetTires(TireCompounds.FullWet);
     }
 
     public void FixedUpdate()
@@ -212,18 +212,18 @@ public class VehicleController : MonoBehaviour
     float CalculateMotorTorque()
     {
         float torque = 0;
-        
+
         currentEngineRPM = Mathf.Lerp(currentEngineRPM, Mathf.Max(idleRPM - 100, wheelRPM), Time.deltaTime * 3f);
         string rpmTextValue = $"<size=120%><align=right>{(int)currentEngineRPM}</align></size>\n<align=right><size=50%>RPM</size></align>";
         rpmText.text = rpmTextValue;
         rpmTextWheel.text = rpmTextValue;
 
 
-        if(gearState != GearState.Changing) torque = 
-            hpToRPMCurve.Evaluate((currentEngineRPM - 4500) / (redLine - 4500)) 
-            * (engineHP + (CanUseERS() ? ERSHP[ERSMode] : 0)) / currentEngineRPM 
+        if (gearState != GearState.Changing) torque =
+            hpToRPMCurve.Evaluate((currentEngineRPM - 4500) / (redLine - 4500))
+            * (engineHP + (CanUseERS() ? ERSHP[ERSMode] : 0)) / currentEngineRPM
             * gearRatios[gear] * differentialRatio * 5252f;
-        
+
         return torque;
     }
 
@@ -277,47 +277,57 @@ public class VehicleController : MonoBehaviour
         }
     }
 
-    private void UpdateBattery() {
-        if(ERSMode > 0 && gas > 0) {
+    private void UpdateBattery()
+    {
+        if (ERSMode > 0 && gas > 0)
+        {
             float drainage = ERSDrain[ERSMode] / 60 * Time.deltaTime;
             ERSCharge -= drainage;
             ERSUsage += drainage;
         }
 
-        if(GetSpeed() > 0 && gas < 0.5f) {
+        if (GetSpeed() > 0 && gas < 0.5f)
+        {
             float generation = (rpmToGenerationCurve.Evaluate(currentEngineRPM / redLine) / 60 * ERSGenerationRate) * Time.deltaTime;
             ERSCharge += generation;
             ERSGenerated += generation;
             ERSGenBraking = true;
-        } else {
+        }
+        else
+        {
             ERSGenBraking = false;
         }
 
         // TODO: Add ERS recovery from engine heat
 
-        if(ERSCharge < 0) {
+        if (ERSCharge < 0)
+        {
             ERSCharge = 0;
         }
     }
 
-    private bool CanUseERS() {
-        return 
+    private bool CanUseERS()
+    {
+        return
             ERSCharge > 0 &&
             ERSUsage < maxERSUsage;
     }
 
-    public float GetERSPercentage() {
-        if(ERSCharge <= 0) return 0;
+    public float GetERSPercentage()
+    {
+        if (ERSCharge <= 0) return 0;
         return ERSCharge / maxERSCharge;
     }
 
-    public float GetERSUsagePercentage() {
-        if(ERSUsage <= 0) return 0;
+    public float GetERSUsagePercentage()
+    {
+        if (ERSUsage <= 0) return 0;
         return ERSUsage / maxERSUsage;
     }
 
-    public float GetERSGeneratedPercentage() {
-        if(ERSGenerated <= 0) return 0;
+    public float GetERSGeneratedPercentage()
+    {
+        if (ERSGenerated <= 0) return 0;
         return ERSGenerated / maxERSGenerated;
     }
 
@@ -434,11 +444,16 @@ public class VehicleController : MonoBehaviour
 
         float force = other.impulse.magnitude / 50;
 
-        if(x < 0) {
+        if (x < 0)
+        {
             LogitechGSDK.LogiPlaySideCollisionForce(0, (int)-force);
-        } else if(x > 0) {
+        }
+        else if (x > 0)
+        {
             LogitechGSDK.LogiPlaySideCollisionForce(0, (int)force);
-        } else {
+        }
+        else
+        {
             LogitechGSDK.LogiPlayFrontalCollisionForce(0, (int)force);
         }
     }

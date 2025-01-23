@@ -13,6 +13,8 @@ public class WheelControl : MonoBehaviour
     public WheelFrictionCurve defaultForwardFriction;
     public WheelFrictionCurve defaultSidewaysFriction;
 
+    public GameObject track;
+
     [HideInInspector] public WheelCollider WheelCollider;
 
     // Create properties for the CarControl script
@@ -24,15 +26,19 @@ public class WheelControl : MonoBehaviour
     Vector3 position;
     Quaternion rotation;
 
+    private WeatherController weatherController; // Add this field
+
     // Start is called before the first frame update
     private void Start()
     {
         WheelCollider = GetComponent<WheelCollider>();
         defaultForwardFriction = WheelCollider.forwardFriction;
         defaultSidewaysFriction = WheelCollider.sidewaysFriction;
+        weatherController = FindFirstObjectByType<WeatherController>();
     }
 
     // Update is called once per frame
+
     void Update()
     {
         // Get the Wheel collider's world pose values and
@@ -109,11 +115,22 @@ public class WheelControl : MonoBehaviour
     public void HandleWheelFriction(TerrainInfo hitTerrain)
     {
         WheelFrictionCurve newForwardFriction = defaultForwardFriction;
+        WheelFrictionCurve newSidewaysFriction = defaultSidewaysFriction;
+
         newForwardFriction.stiffness *= hitTerrain.gripMultiplier;
         newForwardFriction.stiffness *= tireCompound.grip;
-        WheelFrictionCurve newSidewaysFriction = defaultSidewaysFriction;
         newSidewaysFriction.stiffness *= hitTerrain.gripMultiplier;
         newSidewaysFriction.stiffness *= tireCompound.grip;
+
+        if (weatherController != null && weatherController.isRaining)
+        {
+            // Debug.Log("It's raining from weatherController and is now changed in the wheelControl!!! YIPPPYYYYY");
+            float rainTime = weatherController.GetRainTimer();
+
+            // Adjust the friction based on the rainTime
+            newForwardFriction.stiffness *= Mathf.Lerp(1.0f, 0.75f, rainTime); //reduced by 25% after 1 min
+            newSidewaysFriction.stiffness *= Mathf.Lerp(1.0f, 0.55f, rainTime); //reduced by 45% after 1 min
+        }
 
         WheelCollider.forwardFriction = newForwardFriction;
         WheelCollider.sidewaysFriction = newSidewaysFriction;
