@@ -8,6 +8,7 @@ public class InputController : MonoBehaviour
     private GamepadController gamepadControls;
     private KeyboardController keyboardControls;
     public CameraController cameraController;
+    public MfdController mfdController;
 
     void Awake()
     {
@@ -89,6 +90,11 @@ public class InputController : MonoBehaviour
         if (gamepadControls.vehicleControls.DRS.triggered)
         {
             vehicleController.ToggleDRS();
+        }
+
+        if (gamepadControls.vehicleControls.MFD.triggered)
+        {
+            mfdController.NextPage();
         }
 
         if (gamepadControls.vehicleControls.LookBack.triggered)
