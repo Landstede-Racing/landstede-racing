@@ -19,8 +19,8 @@ public class WeatherController : MonoBehaviour
 
     void Start()
     {
-        rainFallSystem.SetActive(true); //Sets the rain system to inactive
-                                        // rainFallSystem.SetActive(true);
+        rainFallSystem.SetActive(false); //Sets the rain system to inactive
+                                         // rainFallSystem.SetActive(true);
         if (trackGrounds[0] != null && trackGrounds[0].TryGetComponent<MeshRenderer>(out MeshRenderer trackRenderer))
         {
             matDefaultSmoothess = trackRenderer.materials[0].GetFloat("_Smoothness");
