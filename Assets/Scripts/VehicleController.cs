@@ -112,7 +112,7 @@ public class VehicleController : MonoBehaviour
         rigidBody.centerOfMass += Vector3.up * centreOfGravityOffset;
 
         steeringColumnRotation = steeringColumn.localEulerAngles;
-        SetTires(TireCompounds.FullWet);
+        SetTires(TireCompounds.Medium);
     }
 
     public void FixedUpdate()
