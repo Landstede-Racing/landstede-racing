@@ -33,7 +33,9 @@ public class UpgradeController : MonoBehaviour
 
         for (int i = 0; i < unlockedUpgrades; i++)
         {
-            upgrades.Add(Upgrade.GetUpgrade(PlayerPrefs.GetString("UnlockedUpgrade_" + i)));
+            Upgrade upgrade = Upgrade.GetUpgrade(PlayerPrefs.GetString("UnlockedUpgrade_" + i));
+
+            if(upgrade != null) upgrades.Add(upgrade);
         }
 
         return upgrades;
