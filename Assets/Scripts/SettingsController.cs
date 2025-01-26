@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
@@ -15,10 +16,11 @@ public class SettingsController : MonoBehaviour
     float currentVolume;
     Resolution[] resolutions;
 
-    public static string DeviceController { get; set; } = "steeringWheel"; //for using ulta mooie stuurtje oehleh
+    // public static string DeviceController { get; set; } = "steeringWheel"; //for using ulta mooie stuurtje oehleh
     // public static string DeviceController { get; set; } = "gamepadController"; // Controller (ps4)
-    // public static string DeviceController { get; set; } = "keyboardController";  // Keyboard
+    public static string DeviceController { get; set; } = "keyboardController";  // Keyboard
 
+    // Start is called before the first frame update
     void Start()
     {
         resolutionDropdown.ClearOptions();
@@ -28,11 +30,10 @@ public class SettingsController : MonoBehaviour
 
         for (int i = 0; i < resolutions.Length; i++)
         {
-	        string option = resolutions[i].width + " x " + 
-                resolutions[i].height;
+            string option = resolutions[i].width + " x " + resolutions[i].height;
             options.Add(option);
-            if (resolutions[i].width == Screen.currentResolution.width 
-                && resolutions[i].height == Screen.currentResolution.height)
+
+            if (resolutions[i].width == Screen.width && resolutions[i].height == Screen.height)
                 currentResolutionIndex = i;
         }
 
@@ -43,19 +44,19 @@ public class SettingsController : MonoBehaviour
 
     public void SetVolume(float volume)
     {
-        audioMixer.SetFloat("Volume", volume);
+        audioMixer.SetFloat("MasterVolume", volume);
         currentVolume = volume;
     }
+
     public void SetFullscreen(bool isFullscreen)
     {
         Screen.fullScreen = isFullscreen;
     }
-    
+
     public void SetResolution(int resolutionIndex)
     {
         Resolution resolution = resolutions[resolutionIndex];
-        Screen.SetResolution(resolution.width, 
-                resolution.height, Screen.fullScreen);
+        Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
     }
 
     public void SetTextureQuality(int textureIndex)
@@ -72,9 +73,9 @@ public class SettingsController : MonoBehaviour
 
     public void SetQuality(int qualityIndex)
     {
-        if (qualityIndex != 6) // if the user is not using 
-                                //any of the presets
+        if (qualityIndex != 6) // if the user is not using any of the presets
             QualitySettings.SetQualityLevel(qualityIndex);
+
         switch (qualityIndex)
         {
             case 0: // quality level - very low
@@ -102,58 +103,56 @@ public class SettingsController : MonoBehaviour
                 aaDropdown.value = 2;
                 break;
         }
-            
+        
         qualityDropdown.value = qualityIndex;
+    }
+
+    public void ExitGame()
+    {
+        Application.Quit();
     }
 
     public void SaveSettings()
     {
-        PlayerPrefs.SetInt("QualitySettingPreference", 
-                qualityDropdown.value);
-        PlayerPrefs.SetInt("ResolutionPreference", 
-                resolutionDropdown.value);
-        PlayerPrefs.SetInt("TextureQualityPreference", 
-                textureDropdown.value);
-        PlayerPrefs.SetInt("AntiAliasingPreference", 
-                aaDropdown.value);
-        PlayerPrefs.SetInt("FullscreenPreference", 
-                Convert.ToInt32(Screen.fullScreen));
-        PlayerPrefs.SetFloat("VolumePreference", 
-                currentVolume); 
+        PlayerPrefs.SetInt("QualitySettingPreference", qualityDropdown.value);
+        PlayerPrefs.SetInt("ResolutionPreference", resolutionDropdown.value);
+        PlayerPrefs.SetInt("TextureQualityPreference", textureDropdown.value);
+        PlayerPrefs.SetInt("AntiAliasingPreference", aaDropdown.value);
+        PlayerPrefs.SetInt("FullscreenPreference", Convert.ToInt32(Screen.fullScreen));
+        PlayerPrefs.SetFloat("VolumePreference", currentVolume);
+        PlayerPrefs.Save();
     }
 
     public void LoadSettings(int currentResolutionIndex)
     {
         if (PlayerPrefs.HasKey("QualitySettingPreference"))
-            qualityDropdown.value = 
-                        PlayerPrefs.GetInt("QualitySettingPreference");
+            qualityDropdown.value = PlayerPrefs.GetInt("QualitySettingPreference");
         else
             qualityDropdown.value = 3;
+
         if (PlayerPrefs.HasKey("ResolutionPreference"))
-            resolutionDropdown.value = 
-                        PlayerPrefs.GetInt("ResolutionPreference");
+            resolutionDropdown.value = PlayerPrefs.GetInt("ResolutionPreference");
         else
             resolutionDropdown.value = currentResolutionIndex;
+
         if (PlayerPrefs.HasKey("TextureQualityPreference"))
-            textureDropdown.value = 
-                        PlayerPrefs.GetInt("TextureQualityPreference");
+            textureDropdown.value = PlayerPrefs.GetInt("TextureQualityPreference");
         else
             textureDropdown.value = 0;
+
         if (PlayerPrefs.HasKey("AntiAliasingPreference"))
-            aaDropdown.value = 
-                        PlayerPrefs.GetInt("AntiAliasingPreference");
+            aaDropdown.value = PlayerPrefs.GetInt("AntiAliasingPreference");
         else
-            aaDropdown.value = 1;
+            aaDropdown.value = 0;
+
         if (PlayerPrefs.HasKey("FullscreenPreference"))
-            Screen.fullScreen = 
-            Convert.ToBoolean(PlayerPrefs.GetInt("FullscreenPreference"));
+            Screen.fullScreen = Convert.ToBoolean(PlayerPrefs.GetInt("FullscreenPreference"));
         else
             Screen.fullScreen = true;
+
         if (PlayerPrefs.HasKey("VolumePreference"))
-            volumeSlider.value = 
-                        PlayerPrefs.GetFloat("VolumePreference");
+            volumeSlider.value = PlayerPrefs.GetFloat("VolumePreference");
         else
-            volumeSlider.value = 
-                        PlayerPrefs.GetFloat("VolumePreference");
+            volumeSlider.value = PlayerPrefs.GetFloat("VolumePreference");
     }
 }
