@@ -1,9 +1,56 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
+
+public class Control
+{
+    public int controlNumber = 0;
+    public int button = 0;
+}
+
+public class Controls 
+{
+    public static Control MfdButton = new() { controlNumber = 0, button = 2 };
+    public static Control NextGearButton = new() { controlNumber = 1, button = 4 };
+    public static Control PreviousGearButton = new() { controlNumber = 2, button = 5 };
+    public static Control DrsButton = new() { controlNumber = 3, button = 7 };
+    public static Control NextCamButton = new() { controlNumber = 4, button = 10 };
+    public static Control ReverseCamButton = new() { controlNumber = 5, button = 6 };
+    public static Control NextErsModeButton = new() { controlNumber = 6, button = 19 };
+    public static Control PreviousErsModeButton = new() { controlNumber = 7, button = 20 };
+    public static Control PauseButton = new() { controlNumber = 8, button = 10 };
+
+    public static IEnumerable<Control> Values
+    {
+        get
+        {
+            yield return MfdButton;
+            yield return NextGearButton;
+            yield return PreviousGearButton;
+            yield return DrsButton;
+            yield return NextCamButton;
+            yield return ReverseCamButton;
+            yield return NextErsModeButton;
+            yield return PreviousErsModeButton;
+            yield return PauseButton;
+        }
+    }
+
+    public static void SetControl(int controlNumber, int button)
+    {
+        foreach (Control control in Values)
+        {
+            if (control.controlNumber == controlNumber)
+            {
+                control.button = button;
+            }
+        }
+    }
+}
 
 public class SettingsController : MonoBehaviour
 {
@@ -14,11 +61,13 @@ public class SettingsController : MonoBehaviour
     public Dropdown aaDropdown;
     public Slider volumeSlider;
     float currentVolume;
-    Resolution[] resolutions;
+    public Resolution[] resolutions;
 
-    // public static string DeviceController { get; set; } = "steeringWheel"; //for using ulta mooie stuurtje oehleh
-    // public static string DeviceController { get; set; } = "gamepadController"; // Controller (ps4)
-    public static string DeviceController { get; set; } = "keyboardController";  // Keyboard
+    public Dropdown controllerDropdown;
+    public static int DeviceController { get; set; } = 2;
+    private bool listening = false;
+    private int listeningForControl = -1;
+
 
     // Start is called before the first frame update
     void Start()
@@ -42,12 +91,37 @@ public class SettingsController : MonoBehaviour
         LoadSettings(currentResolutionIndex);
     }
 
+    private IEnumerator WaitForInput() {
+        for (int i = 0; i < 26; i++)
+        {
+            if(LogitechGSDK.LogiButtonTriggered(0, i)) {
+                Debug.Log("Button " + i + " triggered");
+                listening = false;
+                Controls.SetControl(listeningForControl, i);
+                CancelInvoke("WaitForInput");
+            }
+        }
+
+        if(listening) {
+            yield return null;
+        }
+    }
+
+    // Controls
+    public void SetDevice(int deviceIndex)
+    {
+        DeviceController = deviceIndex;
+    }
+
+
+    // Audio
     public void SetVolume(float volume)
     {
         audioMixer.SetFloat("MasterVolume", volume);
         currentVolume = volume;
     }
 
+    // Graphics
     public void SetFullscreen(bool isFullscreen)
     {
         Screen.fullScreen = isFullscreen;
@@ -120,6 +194,11 @@ public class SettingsController : MonoBehaviour
         PlayerPrefs.SetInt("AntiAliasingPreference", aaDropdown.value);
         PlayerPrefs.SetInt("FullscreenPreference", Convert.ToInt32(Screen.fullScreen));
         PlayerPrefs.SetFloat("VolumePreference", currentVolume);
+        PlayerPrefs.SetInt("DeviceController", DeviceController);
+        foreach (Control control in Controls.Values)
+        {
+            PlayerPrefs.SetInt("Control" + control.controlNumber, control.button);
+        }
         PlayerPrefs.Save();
     }
 
@@ -154,5 +233,18 @@ public class SettingsController : MonoBehaviour
             volumeSlider.value = PlayerPrefs.GetFloat("VolumePreference");
         else
             volumeSlider.value = PlayerPrefs.GetFloat("VolumePreference");
+
+        if (PlayerPrefs.HasKey("DeviceController"))
+            DeviceController = PlayerPrefs.GetInt("DeviceController");
+        else
+            DeviceController = 2;
+
+        foreach (Control control in Controls.Values)
+        {
+            if (PlayerPrefs.HasKey("Control" + control.controlNumber))
+            {
+                control.button = PlayerPrefs.GetInt("Control" + control.controlNumber);
+            }
+        }
     }
 }

@@ -73,7 +73,7 @@ public class LogitechSteeringWheel : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (SettingsController.DeviceController == "steeringWheel") //Check for what controller the user wants to use. For now hardcoded in SettingsController.cs
+        if (SettingsController.DeviceController == 2) //Check for what controller the user wants to use. For now hardcoded in SettingsController.cs
         {
             if (LogitechGSDK.LogiUpdate() && LogitechGSDK.LogiIsConnected(0))
             {
@@ -99,37 +99,37 @@ public class LogitechSteeringWheel : MonoBehaviour
                 brake = Mathf.InverseLerp(32767, -32766, rec.lRz);
                 vehicleController.SetBrake(brake);
 
-                if(LogitechGSDK.LogiButtonTriggered(0, 2)) {
+                if(LogitechGSDK.LogiButtonTriggered(0, Controls.MfdButton.button)) {
                     mfdController.NextPage();
                 }
-                if (LogitechGSDK.LogiButtonTriggered(0, 4))
+                if (LogitechGSDK.LogiButtonTriggered(0, Controls.NextGearButton.button))
                 {
                     StartCoroutine(vehicleController.ChangeGear(1));
                 }
-                if (LogitechGSDK.LogiButtonTriggered(0, 5))
+                if (LogitechGSDK.LogiButtonTriggered(0, Controls.PreviousGearButton.button))
                 {
                     StartCoroutine(vehicleController.ChangeGear(-1));
                 }
-                if (LogitechGSDK.LogiButtonTriggered(0, 7))
+                if (LogitechGSDK.LogiButtonTriggered(0, Controls.DrsButton.button))
                 {
                     vehicleController.ToggleDRS();
                 }
-                if (LogitechGSDK.LogiButtonTriggered(0, 10))
+                if (LogitechGSDK.LogiButtonTriggered(0, Controls.NextCamButton.button))
                 {
                     cameraController.NextCamera();
                 }
-                if (LogitechGSDK.LogiButtonTriggered(0, 6))
+                if (LogitechGSDK.LogiButtonTriggered(0, Controls.ReverseCamButton.button))
                 {
                     cameraController.SetReverseCam(true);
                 }
-                if (LogitechGSDK.LogiButtonReleased(0, 6))
+                if (LogitechGSDK.LogiButtonReleased(0, Controls.ReverseCamButton.button))
                 {
                     cameraController.SetReverseCam(false);
                 }
-                if(LogitechGSDK.LogiButtonReleased(0, 19)) {
+                if(LogitechGSDK.LogiButtonReleased(0, Controls.NextErsModeButton.button)) {
                     vehicleController.NextERSMode();
                 }
-                if(LogitechGSDK.LogiButtonReleased(0, 20)) {
+                if(LogitechGSDK.LogiButtonReleased(0, Controls.PreviousErsModeButton.button)) {
                     vehicleController.PreviousERSMode();
                 }
 
