@@ -181,11 +181,6 @@ public class SettingsController : MonoBehaviour
         qualityDropdown.value = qualityIndex;
     }
 
-    public void ExitGame()
-    {
-        Application.Quit();
-    }
-
     public void SaveSettings()
     {
         PlayerPrefs.SetInt("QualitySettingPreference", qualityDropdown.value);

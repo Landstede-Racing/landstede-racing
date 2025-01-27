@@ -14,5 +14,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/LoadingScene.unity
     guid: 86d4075dfe8d59d4c8927296988182cc
+  - enabled: 1
+    path: Assets/Scenes/PauseScene.unity
+    guid: df141c082942b104dbba4fea9cb37463
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

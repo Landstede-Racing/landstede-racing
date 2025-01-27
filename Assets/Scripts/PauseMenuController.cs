@@ -1,8 +1,12 @@
+using System;
+using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PauseMenuController : MonoBehaviour
 {
-    public GameObject pauseMenu;
+    public string pauseScene;
+    public bool isPaused = false;
 
     void Update()
     {
@@ -11,20 +15,28 @@ public class PauseMenuController : MonoBehaviour
             case 0:
                 
                 break;
-            case 1:
-                if(Input.GetKeyDown(KeyCode.Escape)) {
-                    TogglePauseMenu();
-                }
-                break;
             case 2:
                 if(LogitechGSDK.LogiButtonReleased(0, Controls.PauseButton.button)) {
                     TogglePauseMenu();
                 }
                 break;
         }
+
+        if(Input.GetKeyDown(KeyCode.Escape)) {
+            TogglePauseMenu();
+        }
     }
 
     public void TogglePauseMenu() {
-        pauseMenu.SetActive(!pauseMenu.activeSelf);
+        bool wasPaused = isPaused;
+        isPaused = !isPaused;
+        // Check for singleplayer
+        Time.timeScale = wasPaused ? 1 : 0;
+        if(wasPaused) {
+            SceneManager.UnloadSceneAsync(pauseScene);
+        } else {
+            SceneManager.LoadScene(pauseScene, LoadSceneMode.Additive);
+            SceneManager.SetActiveScene(SceneManager.GetSceneByName(pauseScene));
+        }
     }
 }
