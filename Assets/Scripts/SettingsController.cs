@@ -232,9 +232,9 @@ public class SettingsController : MonoBehaviour
             volumeSlider.value = PlayerPrefs.GetFloat("VolumePreference");
 
         if (PlayerPrefs.HasKey("DeviceController"))
-            DeviceController = PlayerPrefs.GetInt("DeviceController");
+            controllerDropdown.value = PlayerPrefs.GetInt("DeviceController");
         else
-            DeviceController = 2;
+            controllerDropdown.value = 2;
 
         foreach (Control control in Controls.Values)
         {
