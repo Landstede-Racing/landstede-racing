@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -65,6 +66,7 @@ public class SettingsController : MonoBehaviour
 
     public Dropdown controllerDropdown;
     public static int DeviceController { get; set; } = 2;
+    public Text connectedDeviceText;
     private bool listening = false;
     private int listeningForControl = -1;
 
@@ -91,6 +93,20 @@ public class SettingsController : MonoBehaviour
             resolutionDropdown.RefreshShownValue();
         }
         LoadSettings(currentResolutionIndex);
+    }
+
+    void FixedUpdate()
+    {
+        connectedDeviceText.gameObject.SetActive(DeviceController == 2);
+        if(DeviceController == 2) {
+            if(LogitechGSDK.LogiIsConnected(0)) {
+                StringBuilder deviceName = new StringBuilder(256);
+                LogitechGSDK.LogiGetFriendlyProductName(0, deviceName, 256);
+                connectedDeviceText.text = "Connected: " + deviceName;
+            } else {
+                connectedDeviceText.text = "No device connected";
+            }
+        }
     }
 
     private IEnumerator WaitForInput() {
