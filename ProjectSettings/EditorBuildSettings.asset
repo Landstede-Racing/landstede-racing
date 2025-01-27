@@ -6,13 +6,16 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/TestScenes/SampleScene.unity
+    path: Assets/Scenes/StadionScene.unity
     guid: b18cb0412e1e8034297f50b4617b3d02
   - enabled: 1
-    path: Assets/TestScenes/LobbyScene.unity
+    path: Assets/Scenes/LobbyScene.unity
     guid: 53a6530c4969b7b449fbd642cab9d62f
   - enabled: 1
     path: Assets/Scenes/LoadingScene.unity
     guid: 86d4075dfe8d59d4c8927296988182cc
+  - enabled: 1
+    path: Assets/Scenes/PauseScene.unity
+    guid: df141c082942b104dbba4fea9cb37463
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

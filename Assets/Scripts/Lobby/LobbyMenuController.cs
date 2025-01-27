@@ -8,13 +8,15 @@ public class LobbyMenuController : MonoBehaviour
     public GameObject settingsMenu;
     public LobbyCamController camController;
     public TrackSelectionController trackSelectionController;
+    public SettingsController settingsController;
+    public SettingsMenuController settingsMenuController;
 
     public void SetMainMenu()
     {
         mainMenu.SetActive(true);
         singlePlayerMenu.SetActive(false);
         // multiplayerMenu.SetActive(false);
-        // settingsMenu.SetActive(false);
+        settingsMenu.SetActive(false);
     }
 
     public void SetSinglePlayerMenu()
@@ -22,7 +24,7 @@ public class LobbyMenuController : MonoBehaviour
         mainMenu.SetActive(false);
         singlePlayerMenu.SetActive(true);
         // multiplayerMenu.SetActive(false);
-        // settingsMenu.SetActive(false);
+        settingsMenu.SetActive(false);
     }
 
     public void SetMultiplayerMenu()
@@ -30,7 +32,7 @@ public class LobbyMenuController : MonoBehaviour
         mainMenu.SetActive(false);
         singlePlayerMenu.SetActive(false);
         // multiplayerMenu.SetActive(true);
-        // settingsMenu.SetActive(false);
+        settingsMenu.SetActive(false);
     }
 
     public void SetSettingsMenu()
@@ -38,7 +40,14 @@ public class LobbyMenuController : MonoBehaviour
         mainMenu.SetActive(false);
         singlePlayerMenu.SetActive(false);
         // multiplayerMenu.SetActive(false);
-        // settingsMenu.SetActive(true);
+        settingsMenu.SetActive(true);
+    }
+
+    public void ExitSettingsMenu(bool save) {
+        if(save) settingsController.SaveSettings();
+        else settingsController.LoadSettings(settingsController.resolutions.Length - 1);
+        settingsMenuController.ShowSettings();
+        SetMainMenu();
     }
 
     public void StartTrackSelection() {

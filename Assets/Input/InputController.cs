@@ -48,12 +48,12 @@ public class InputController : MonoBehaviour
 
     void Update()
     {
-        if (SettingsController.DeviceController == "gamepadController")
+        if (SettingsController.DeviceController == 0)
         {
             if (vehicleController != null && gamepadControls != null) ProcessGamepadInputs();
         }
 
-        if (SettingsController.DeviceController == "keyboardController")
+        if (SettingsController.DeviceController == 1)
         {
             if (vehicleController != null && keyboardControls != null) ProcessKeyboardInputs();
         }
