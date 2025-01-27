@@ -86,6 +86,7 @@ public class VehicleController : MonoBehaviour
     public float firstLightOn;
     public float redLine;
     public float idleRPM;
+    public float weight;
 
     [Header("Texts")]
     public TMP_Text gearText;
@@ -112,7 +113,9 @@ public class VehicleController : MonoBehaviour
         rigidBody.centerOfMass += Vector3.up * centreOfGravityOffset;
 
         steeringColumnRotation = steeringColumn.localEulerAngles;
-        SetTires(TireCompounds.Medium);
+        SetTires(TireCompounds.Soft);
+
+        UpgradeController.ApplyUpgrades(this);
     }
 
     public void FixedUpdate()
@@ -124,6 +127,8 @@ public class VehicleController : MonoBehaviour
         ApplyDownForce();
 
         UpdateBattery();
+
+        rigidBody.mass = weight;
 
         // Change gear and speed texts
         if (gear == 0)
