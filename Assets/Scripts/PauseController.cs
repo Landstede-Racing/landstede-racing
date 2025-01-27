@@ -36,7 +36,6 @@ public class PauseController : MonoBehaviour
             SceneManager.UnloadSceneAsync(pauseScene);
         } else {
             SceneManager.LoadScene(pauseScene, LoadSceneMode.Additive);
-            SceneManager.SetActiveScene(SceneManager.GetSceneByName(pauseScene));
         }
     }
 }

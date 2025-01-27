@@ -72,22 +72,24 @@ public class SettingsController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        resolutionDropdown.ClearOptions();
-        List<string> options = new List<string>();
-        resolutions = Screen.resolutions;
         int currentResolutionIndex = 0;
+        if(resolutionDropdown != null) {
+            resolutionDropdown.ClearOptions();
+            List<string> options = new List<string>();
+            resolutions = Screen.resolutions;
 
-        for (int i = 0; i < resolutions.Length; i++)
-        {
-            string option = resolutions[i].width + " x " + resolutions[i].height;
-            options.Add(option);
+            for (int i = 0; i < resolutions.Length; i++)
+            {
+                string option = resolutions[i].width + " x " + resolutions[i].height;
+                options.Add(option);
 
-            if (resolutions[i].width == Screen.width && resolutions[i].height == Screen.height)
-                currentResolutionIndex = i;
+                if (resolutions[i].width == Screen.width && resolutions[i].height == Screen.height)
+                    currentResolutionIndex = i;
+            }
+
+            resolutionDropdown.AddOptions(options);
+            resolutionDropdown.RefreshShownValue();
         }
-
-        resolutionDropdown.AddOptions(options);
-        resolutionDropdown.RefreshShownValue();
         LoadSettings(currentResolutionIndex);
     }
 
