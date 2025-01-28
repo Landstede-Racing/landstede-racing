@@ -6,6 +6,8 @@ using TMPro;
 using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.HighDefinition;
 using UnityEngine.UI;
 
 public class Control
@@ -58,18 +60,21 @@ public class Controls
 public class SettingsController : MonoBehaviour
 {
     public AudioMixer audioMixer;
-    public Dropdown resolutionDropdown;
-    public Dropdown qualityDropdown;
-    public Dropdown textureDropdown;
-    public Dropdown aaDropdown;
+    public TMP_Dropdown resolutionDropdown;
+    public TMP_Dropdown qualityDropdown;
+    public TMP_Dropdown textureDropdown;
+    public TMP_Dropdown aaDropdown;
+    public TMP_Dropdown cloudsDropdown;
     public Slider volumeSlider;
     float currentVolume;
     public Resolution[] resolutions;
 
+    public VolumeProfile volumeProfile;
+
     public GameObject controlGo;
     public ScrollRect controlScrollView;
 
-    public Dropdown controllerDropdown;
+    public TMP_Dropdown controllerDropdown;
     public static int DeviceController { get; set; } = 2;
     public Text connectedDeviceText;
     private bool listening = false;
@@ -190,6 +195,19 @@ public class SettingsController : MonoBehaviour
         qualityDropdown.value = 6;
     }
 
+    public void SetCloudsQuality(int cloudsIndex)
+    {
+        if(volumeProfile.TryGet<VisualEnvironment>(out var visualEnvironment)) {
+            visualEnvironment.cloudType.value = cloudsIndex == 1 ? 1 : 0;
+        }
+        if(volumeProfile.TryGet<VolumetricClouds>(out var volumetricClouds)) {
+            volumetricClouds.enable.value = cloudsIndex >= 2;
+            volumetricClouds.cloudSimpleMode.value = cloudsIndex == 3 ? VolumetricClouds.CloudSimpleMode.Quality : VolumetricClouds.CloudSimpleMode.Performance;
+            Debug.Log(volumetricClouds.enable.value);
+        }
+        qualityDropdown.value = 6;
+    }
+
     public void SetQuality(int qualityIndex)
     {
         if (qualityIndex != 6) // if the user is not using any of the presets
@@ -200,26 +218,32 @@ public class SettingsController : MonoBehaviour
             case 0: // quality level - very low
                 textureDropdown.value = 3;
                 aaDropdown.value = 0;
+                cloudsDropdown.value = 0;
                 break;
             case 1: // quality level - low
                 textureDropdown.value = 2;
                 aaDropdown.value = 0;
+                cloudsDropdown.value = 1;
                 break;
             case 2: // quality level - medium
                 textureDropdown.value = 1;
                 aaDropdown.value = 0;
+                cloudsDropdown.value = 1;
                 break;
             case 3: // quality level - high
                 textureDropdown.value = 0;
-                aaDropdown.value = 0;
+                aaDropdown.value = 1;
+                cloudsDropdown.value = 2;
                 break;
             case 4: // quality level - very high
                 textureDropdown.value = 0;
-                aaDropdown.value = 1;
+                aaDropdown.value = 2;
+                cloudsDropdown.value = 2;
                 break;
             case 5: // quality level - ultra
                 textureDropdown.value = 0;
-                aaDropdown.value = 2;
+                aaDropdown.value = 3;
+                cloudsDropdown.value = 3;
                 break;
         }
         
@@ -239,6 +263,7 @@ public class SettingsController : MonoBehaviour
         {
             PlayerPrefs.SetInt("Control" + control.controlNumber, control.button);
         }
+        PlayerPrefs.SetInt("CloudsQualityPreference", cloudsDropdown.value);
         PlayerPrefs.Save();
     }
 
@@ -286,5 +311,9 @@ public class SettingsController : MonoBehaviour
                 control.button = PlayerPrefs.GetInt("Control" + control.controlNumber);
             }
         }
+        if(PlayerPrefs.HasKey("CloudsQualityPreference"))
+            cloudsDropdown.value = PlayerPrefs.GetInt("CloudsQualityPreference");
+        else
+            cloudsDropdown.value = 2;
     }
 }
