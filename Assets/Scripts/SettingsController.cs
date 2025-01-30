@@ -65,6 +65,10 @@ public class SettingsController : MonoBehaviour
     public TMP_Dropdown textureDropdown;
     public TMP_Dropdown aaDropdown;
     public TMP_Dropdown cloudsDropdown;
+    public TMP_Dropdown ssrDropdown;
+    public TMP_Dropdown shadowsDropdown;
+    public Toggle ssLensFlareToggle;
+
     public Slider volumeSlider;
     float currentVolume;
     public Resolution[] resolutions;
@@ -208,6 +212,45 @@ public class SettingsController : MonoBehaviour
         qualityDropdown.value = 6;
     }
 
+    public void SetSSR(int ssrIndex)
+    {
+        if(volumeProfile.TryGet<ScreenSpaceReflection>(out var screenSpaceReflection)) {
+            screenSpaceReflection.active = ssrIndex != 0;
+            screenSpaceReflection.quality.value = ssrIndex;
+        }
+        qualityDropdown.value = 6;
+    }
+
+    public void SetShadows(int shadowIndex)
+    {
+        if(volumeProfile.TryGet<HDShadowSettings>(out var hdShadowSettings)) {
+            switch (shadowIndex)
+            {
+                case 0:
+                    hdShadowSettings.maxShadowDistance.value = 0;
+                    break;
+                case 1:
+                    hdShadowSettings.maxShadowDistance.value = 300;
+                    break;
+                case 2:
+                    hdShadowSettings.maxShadowDistance.value = 600;
+                    break;
+                case 3:
+                    hdShadowSettings.maxShadowDistance.value = 1000;
+                    break;
+            }
+        }
+        qualityDropdown.value = 6;
+    }
+
+    public void SetSSLensFlare(bool ssLensFlare)
+    {
+        if(volumeProfile.TryGet<ScreenSpaceLensFlare>(out var screenSpaceLensFlare)) {
+            screenSpaceLensFlare.active = ssLensFlare;
+        }
+        qualityDropdown.value = 6;
+    }
+
     public void SetQuality(int qualityIndex)
     {
         if (qualityIndex != 6) // if the user is not using any of the presets
@@ -219,31 +262,49 @@ public class SettingsController : MonoBehaviour
                 textureDropdown.value = 3;
                 aaDropdown.value = 0;
                 cloudsDropdown.value = 0;
+                ssrDropdown.value = 0;
+                shadowsDropdown.value = 0;
+                ssLensFlareToggle.isOn = false;
                 break;
             case 1: // quality level - low
                 textureDropdown.value = 2;
                 aaDropdown.value = 0;
                 cloudsDropdown.value = 1;
+                ssrDropdown.value = 0;
+                shadowsDropdown.value = 1;
+                ssLensFlareToggle.isOn = false;
                 break;
             case 2: // quality level - medium
                 textureDropdown.value = 1;
                 aaDropdown.value = 0;
                 cloudsDropdown.value = 1;
+                ssrDropdown.value = 1;
+                shadowsDropdown.value = 2;
+                ssLensFlareToggle.isOn = false;
                 break;
             case 3: // quality level - high
                 textureDropdown.value = 0;
                 aaDropdown.value = 1;
                 cloudsDropdown.value = 2;
+                ssrDropdown.value = 2;
+                shadowsDropdown.value = 2;
+                ssLensFlareToggle.isOn = true;
                 break;
             case 4: // quality level - very high
                 textureDropdown.value = 0;
                 aaDropdown.value = 2;
                 cloudsDropdown.value = 2;
+                ssrDropdown.value = 2;
+                shadowsDropdown.value = 2;
+                ssLensFlareToggle.isOn = true;
                 break;
             case 5: // quality level - ultra
                 textureDropdown.value = 0;
                 aaDropdown.value = 3;
                 cloudsDropdown.value = 3;
+                ssrDropdown.value = 3;
+                shadowsDropdown.value = 3;
+                ssLensFlareToggle.isOn = true;
                 break;
         }
         
@@ -264,6 +325,9 @@ public class SettingsController : MonoBehaviour
             PlayerPrefs.SetInt("Control" + control.controlNumber, control.button);
         }
         PlayerPrefs.SetInt("CloudsQualityPreference", cloudsDropdown.value);
+        PlayerPrefs.SetInt("SSRQualityPreference", ssrDropdown.value);
+        PlayerPrefs.SetInt("ShadowsQualityPreference", shadowsDropdown.value);
+        PlayerPrefs.SetInt("SSLensFlarePreference", Convert.ToInt32(ssLensFlareToggle.isOn));
         PlayerPrefs.Save();
     }
 
@@ -315,5 +379,17 @@ public class SettingsController : MonoBehaviour
             cloudsDropdown.value = PlayerPrefs.GetInt("CloudsQualityPreference");
         else
             cloudsDropdown.value = 2;
+        if(PlayerPrefs.HasKey("SSRQualityPreference"))
+            ssrDropdown.value = PlayerPrefs.GetInt("SSRQualityPreference");
+        else
+            ssrDropdown.value = 2;
+        if(PlayerPrefs.HasKey("ShadowsQualityPreference"))
+            shadowsDropdown.value = PlayerPrefs.GetInt("ShadowsQualityPreference");
+        else
+            shadowsDropdown.value = 2;
+        if(PlayerPrefs.HasKey("SSLensFlarePreference"))
+            ssLensFlareToggle.isOn = Convert.ToBoolean(PlayerPrefs.GetInt("SSLensFlarePreference"));
+        else
+            ssLensFlareToggle.isOn = true;
     }
 }

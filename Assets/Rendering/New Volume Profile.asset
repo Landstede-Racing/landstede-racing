@@ -1,5 +1,49 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8339096927100168052
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ddcec8a8eb2d684d833ac8f5d26aebd, type: 3}
+  m_Name: HDShadowSettings
+  m_EditorClassIdentifier: 
+  active: 1
+  interCascadeBorders: 1
+  maxShadowDistance:
+    m_OverrideState: 1
+    m_Value: 1000
+  directionalTransmissionMultiplier:
+    m_OverrideState: 0
+    m_Value: 1
+  cascadeShadowSplitCount:
+    m_OverrideState: 0
+    m_Value: 4
+  cascadeShadowSplit0:
+    m_OverrideState: 0
+    m_Value: 0.05
+  cascadeShadowSplit1:
+    m_OverrideState: 0
+    m_Value: 0.15
+  cascadeShadowSplit2:
+    m_OverrideState: 0
+    m_Value: 0.3
+  cascadeShadowBorder0:
+    m_OverrideState: 0
+    m_Value: 0
+  cascadeShadowBorder1:
+    m_OverrideState: 0
+    m_Value: 0
+  cascadeShadowBorder2:
+    m_OverrideState: 0
+    m_Value: 0
+  cascadeShadowBorder3:
+    m_OverrideState: 0
+    m_Value: 0
 --- !u!114 &-6614921159682440782
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -163,6 +207,123 @@ MonoBehaviour:
     castShadows:
       m_OverrideState: 0
       m_Value: 0
+--- !u!114 &-4259037138640048901
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 384c4d03a551c44448145f4093304119, type: 3}
+  m_Name: ScreenSpaceReflection
+  m_EditorClassIdentifier: 
+  active: 1
+  quality:
+    m_OverrideState: 1
+    m_Value: 1
+  enabled:
+    m_OverrideState: 0
+    m_Value: 1
+  enabledTransparent:
+    m_OverrideState: 0
+    m_Value: 1
+  tracing:
+    m_OverrideState: 0
+    m_Value: 1
+  m_MinSmoothness:
+    m_OverrideState: 0
+    m_Value: 0.9
+  m_SmoothnessFadeStart:
+    m_OverrideState: 0
+    m_Value: 0.9
+  reflectSky:
+    m_OverrideState: 0
+    m_Value: 1
+  usedAlgorithm:
+    m_OverrideState: 0
+    m_Value: 0
+  depthBufferThickness:
+    m_OverrideState: 0
+    m_Value: 0.01
+  screenFadeDistance:
+    m_OverrideState: 0
+    m_Value: 0.1
+  accumulationFactor:
+    m_OverrideState: 0
+    m_Value: 0.75
+  biasFactor:
+    m_OverrideState: 0
+    m_Value: 0.5
+  speedRejectionParam:
+    m_OverrideState: 0
+    m_Value: 0.5
+  speedRejectionScalerFactor:
+    m_OverrideState: 0
+    m_Value: 0.2
+  speedSmoothReject:
+    m_OverrideState: 0
+    m_Value: 0
+  speedSurfaceOnly:
+    m_OverrideState: 0
+    m_Value: 1
+  speedTargetOnly:
+    m_OverrideState: 0
+    m_Value: 1
+  enableWorldSpeedRejection:
+    m_OverrideState: 0
+    m_Value: 0
+  m_RayMaxIterations:
+    m_OverrideState: 1
+    m_Value: 32
+  rayMiss:
+    m_OverrideState: 0
+    m_Value: 3
+  lastBounceFallbackHierarchy:
+    m_OverrideState: 0
+    m_Value: 3
+  ambientProbeDimmer:
+    m_OverrideState: 0
+    m_Value: 1
+  layerMask:
+    m_OverrideState: 0
+    m_Value:
+      serializedVersion: 2
+      m_Bits: 4294967295
+  textureLodBias:
+    m_OverrideState: 0
+    m_Value: 1
+  m_RayLength:
+    m_OverrideState: 0
+    m_Value: 50
+  m_ClampValue:
+    m_OverrideState: 0
+    m_Value: 100
+  m_Denoise:
+    m_OverrideState: 0
+    m_Value: 1
+  m_DenoiserRadius:
+    m_OverrideState: 0
+    m_Value: 0.75
+  m_DenoiserAntiFlickeringStrength:
+    m_OverrideState: 0
+    m_Value: 1
+  mode:
+    m_OverrideState: 0
+    m_Value: 2
+  m_FullResolution:
+    m_OverrideState: 0
+    m_Value: 0
+  sampleCount:
+    m_OverrideState: 0
+    m_Value: 1
+  bounceCount:
+    m_OverrideState: 0
+    m_Value: 1
+  m_RayMaxIterationsRT:
+    m_OverrideState: 0
+    m_Value: 48
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -180,6 +341,9 @@ MonoBehaviour:
   - {fileID: 5999185269235238953}
   - {fileID: 2858758107523225025}
   - {fileID: -6614921159682440782}
+  - {fileID: -8339096927100168052}
+  - {fileID: -4259037138640048901}
+  - {fileID: 6197313793857291893}
 --- !u!114 &2858758107523225025
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -549,6 +713,79 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: 0
   m_Version: 1
+--- !u!114 &6197313793857291893
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15cc4c5fcb677014ebdc0d8be227b40c, type: 3}
+  m_Name: ScreenSpaceLensFlare
+  m_EditorClassIdentifier: 
+  active: 1
+  intensity:
+    m_OverrideState: 0
+    m_Value: 0
+  tintColor:
+    m_OverrideState: 0
+    m_Value: {r: 1, g: 1, b: 1, a: 1}
+  bloomMip:
+    m_OverrideState: 0
+    m_Value: 1
+  firstFlareIntensity:
+    m_OverrideState: 0
+    m_Value: 1
+  secondaryFlareIntensity:
+    m_OverrideState: 0
+    m_Value: 1
+  warpedFlareIntensity:
+    m_OverrideState: 0
+    m_Value: 1
+  warpedFlareScale:
+    m_OverrideState: 0
+    m_Value: {x: 1, y: 1}
+  samples:
+    m_OverrideState: 0
+    m_Value: 1
+  sampleDimmer:
+    m_OverrideState: 0
+    m_Value: 0.5
+  vignetteEffect:
+    m_OverrideState: 0
+    m_Value: 1
+  startingPosition:
+    m_OverrideState: 0
+    m_Value: 1.25
+  scale:
+    m_OverrideState: 0
+    m_Value: 1.5
+  streaksIntensity:
+    m_OverrideState: 0
+    m_Value: 1
+  streaksLength:
+    m_OverrideState: 0
+    m_Value: 0.5
+  streaksOrientation:
+    m_OverrideState: 0
+    m_Value: 0
+  streaksThreshold:
+    m_OverrideState: 0
+    m_Value: 0.25
+  resolution:
+    m_OverrideState: 0
+    m_Value: 4
+  spectralLut:
+    m_OverrideState: 0
+    m_Value: {fileID: 0}
+  chromaticAbberationIntensity:
+    m_OverrideState: 0
+    m_Value: 0.5
+  chromaticAbberationSampleCount:
+    m_OverrideState: 0
+    m_Value: 3
 --- !u!114 &8290420348175008949
 MonoBehaviour:
   m_ObjectHideFlags: 3
