@@ -1,13 +1,16 @@
+using UnityEngine.InputSystem;
 using UnityEngine;
+
 
 public class InputController : MonoBehaviour
 {
     public VehicleController vehicleController;
-    public CameraController cameraController;
     private GamepadController gamepadControls;
     private KeyboardController keyboardControls;
+    public CameraController cameraController;
+    public MfdController mfdController;
 
-    private void Awake()
+    void Awake()
     {
         gamepadControls = new GamepadController();
         keyboardControls = new KeyboardController();
@@ -17,7 +20,6 @@ public class InputController : MonoBehaviour
             Debug.LogError("GamepadController failed to initialize.");
             return;
         }
-
         if (keyboardControls == null)
         {
             Debug.LogError("KeyboardController failed to initialize.");
@@ -26,86 +28,125 @@ public class InputController : MonoBehaviour
 
         Debug.Log("Awake from InputController!");
 
-        if (vehicleController == null) Debug.LogError("VehicleController reference is not set in InputController.");
+        if (vehicleController == null)
+        {
+            Debug.LogError("VehicleController reference is not set in InputController.");
+        }
     }
 
-    private void Update()
-    {
-        if (SettingsController.DeviceController == "gamepadController")
-            if (vehicleController != null && gamepadControls != null)
-                ProcessGamepadInputs();
-
-        if (SettingsController.DeviceController == "keyboardController")
-            if (vehicleController != null && keyboardControls != null)
-                ProcessKeyboardInputs();
-    }
-
-    private void OnEnable()
+    void OnEnable()
     {
         gamepadControls?.Enable();
         keyboardControls?.Enable();
     }
 
-    private void OnDisable()
+    void OnDisable()
     {
         gamepadControls?.Disable();
         keyboardControls?.Disable();
     }
 
+    void Update()
+    {
+        if (SettingsController.DeviceController == 0)
+        {
+            if (vehicleController != null && gamepadControls != null) ProcessGamepadInputs();
+        }
+
+        if (SettingsController.DeviceController == 1)
+        {
+            if (vehicleController != null && keyboardControls != null) ProcessKeyboardInputs();
+        }
+    }
+
     private void ProcessGamepadInputs()
     {
         // Accelerate
-        var gas = gamepadControls.vehicleControls.Accelerate.ReadValue<float>();
+        float gas = gamepadControls.vehicleControls.Accelerate.ReadValue<float>();
         vehicleController.SetGas(gas);
 
 
         // Brake
-        var brake = gamepadControls.vehicleControls.Brake.ReadValue<float>();
+        float brake = gamepadControls.vehicleControls.Brake.ReadValue<float>();
         vehicleController.SetBrake(brake);
 
         // Steering
-        var steerVector = gamepadControls.vehicleControls.Steer.ReadValue<Vector2>();
-        var steer = steerVector.x;
+        Vector2 steerVector = gamepadControls.vehicleControls.Steer.ReadValue<Vector2>();
+        float steer = steerVector.x;
         vehicleController.SetSteeringAngle(steer);
 
         // Gear Up
-        if (gamepadControls.vehicleControls.GearUp.triggered) StartCoroutine(vehicleController.ChangeGear(1));
+        if (gamepadControls.vehicleControls.GearUp.triggered)
+        {
+            StartCoroutine(vehicleController.ChangeGear(1));
+        }
 
         // Gear Down
-        if (gamepadControls.vehicleControls.GearDown.triggered) StartCoroutine(vehicleController.ChangeGear(-1));
+        if (gamepadControls.vehicleControls.GearDown.triggered)
+        {
+            StartCoroutine(vehicleController.ChangeGear(-1));
+        }
 
-        if (gamepadControls.vehicleControls.DRS.triggered) vehicleController.ToggleDRS();
+        if (gamepadControls.vehicleControls.DRS.triggered)
+        {
+            vehicleController.ToggleDRS();
+        }
+
+        if (gamepadControls.vehicleControls.MFD.triggered)
+        {
+            mfdController.NextPage();
+        }
 
         if (gamepadControls.vehicleControls.LookBack.triggered)
+        {
             cameraController.SetReverseCam(true);
-        else if (gamepadControls.vehicleControls.LookBack.WasReleasedThisFrame()) cameraController.SetReverseCam(false);
+        }
+        else if (gamepadControls.vehicleControls.LookBack.WasReleasedThisFrame())
+        {
+            cameraController.SetReverseCam(false);
+        }
 
-        if (gamepadControls.vehicleControls.NextCam.triggered) cameraController.NextCamera();
+        if (gamepadControls.vehicleControls.NextCam.triggered)
+        {
+            cameraController.NextCamera();
+        }
     }
 
     private void ProcessKeyboardInputs()
     {
         // Accelerate
-        var gas = keyboardControls.vehicleControls.Accelerate.ReadValue<float>();
+        float gas = keyboardControls.vehicleControls.Accelerate.ReadValue<float>();
         vehicleController.SetGas(gas);
 
 
         // Brake
-        var brake = keyboardControls.vehicleControls.Brake.ReadValue<float>();
+        float brake = keyboardControls.vehicleControls.Brake.ReadValue<float>();
         vehicleController.SetBrake(brake);
 
         // Steering
-        var steer = keyboardControls.vehicleControls.Steer.ReadValue<float>();
+        float steer = keyboardControls.vehicleControls.Steer.ReadValue<float>();
         vehicleController.SetSteeringAngle(steer);
 
         // Gear Up
-        if (keyboardControls.vehicleControls.GearUp.triggered) StartCoroutine(vehicleController.ChangeGear(1));
+        if (keyboardControls.vehicleControls.GearUp.triggered)
+        {
+            StartCoroutine(vehicleController.ChangeGear(1));
+        }
 
         // Gear Down
-        if (keyboardControls.vehicleControls.GearDown.triggered) StartCoroutine(vehicleController.ChangeGear(-1));
+        if (keyboardControls.vehicleControls.GearDown.triggered)
+        {
+            StartCoroutine(vehicleController.ChangeGear(-1));
+        }
 
-        if (keyboardControls.vehicleControls.DRS.triggered) vehicleController.ToggleDRS();
+        if (keyboardControls.vehicleControls.DRS.triggered)
+        {
+            vehicleController.ToggleDRS();
+        }
 
-        if (keyboardControls.vehicleControls.NextCam.triggered) cameraController.NextCamera();
+        if (keyboardControls.vehicleControls.NextCam.triggered)
+        {
+            cameraController.NextCamera();
+        }
     }
 }

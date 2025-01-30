@@ -51,6 +51,7 @@ MonoBehaviour:
   wheelModel: {fileID: 5197454518024367261}
   part: {fileID: 5077888096311739867}
   damagablePart: {fileID: 8988950090481509109}
+  track: {fileID: 0}
   WheelCollider: {fileID: 0}
   steerable: 0
   motorized: 1
@@ -145,6 +146,10 @@ MonoBehaviour:
   maxDamage: 250
   currentDamage: 0
   damageMultiplier: 1e-10
+  temperature: 0
+  optimalTemperature: 0
+  temperatureMultiplier: 0.001
+  coollingRate: 0.001
   shouldDestroy: 0
   part: {fileID: 5077888096311739867}
 --- !u!1 &197395448533882703
@@ -942,6 +947,7 @@ MonoBehaviour:
   wheelModel: {fileID: 5397589320269079537}
   part: {fileID: 4443486069242049666}
   damagablePart: {fileID: 8084501954310197572}
+  track: {fileID: 0}
   WheelCollider: {fileID: 0}
   steerable: 1
   motorized: 0
@@ -1014,6 +1020,10 @@ MonoBehaviour:
   maxDamage: 250
   currentDamage: 0
   damageMultiplier: 1e-10
+  temperature: 0
+  optimalTemperature: 0
+  temperatureMultiplier: 0.001
+  coollingRate: 0.001
   shouldDestroy: 0
   part: {fileID: 4443486069242049666}
 --- !u!1 &983549935273434966
@@ -1971,6 +1981,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63595b3c6e09b6f4d9ac15f5474b1e1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   cameraController: {fileID: 5331579456627287725}
 --- !u!1 &1743147843427580759
 GameObject:
@@ -2850,6 +2861,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63595b3c6e09b6f4d9ac15f5474b1e1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   cameraController: {fileID: 5331579456627287725}
 --- !u!1 &2461556134062184706
 GameObject:
@@ -6102,6 +6114,7 @@ MonoBehaviour:
   wheelModel: {fileID: 6284078465990781603}
   part: {fileID: 5936679717511684981}
   damagablePart: {fileID: 5685201402986769838}
+  track: {fileID: 0}
   WheelCollider: {fileID: 0}
   steerable: 0
   motorized: 1
@@ -6196,6 +6209,10 @@ MonoBehaviour:
   maxDamage: 250
   currentDamage: 0
   damageMultiplier: 1e-10
+  temperature: 0
+  optimalTemperature: 0
+  temperatureMultiplier: 0.001
+  coollingRate: 0.001
   shouldDestroy: 0
   part: {fileID: 5936679717511684981}
 --- !u!1 &6149953525098474431
@@ -7142,6 +7159,7 @@ MonoBehaviour:
   wheelModel: {fileID: 5447331750104201021}
   part: {fileID: 5341463745145682075}
   damagablePart: {fileID: 2961729771102953374}
+  track: {fileID: 0}
   WheelCollider: {fileID: 0}
   steerable: 1
   motorized: 0
@@ -7214,6 +7232,10 @@ MonoBehaviour:
   maxDamage: 250
   currentDamage: 0
   damageMultiplier: 1e-10
+  temperature: 0
+  optimalTemperature: 0
+  temperatureMultiplier: 0.001
+  coollingRate: 0.001
   shouldDestroy: 0
   part: {fileID: 5341463745145682075}
 --- !u!1 &7145196943743629067
@@ -9363,9 +9385,6 @@ PrefabInstance:
       addedObject: {fileID: 8745581474219053939}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 31073083d533471429332d6cc461014a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 6160202423919749189}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 31073083d533471429332d6cc461014a, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 393979885593322988}
     - targetCorrespondingSourceObject: {fileID: -1576497113921633660, guid: 31073083d533471429332d6cc461014a, type: 3}
       insertIndex: -1
@@ -9556,6 +9575,10 @@ MonoBehaviour:
   maxDamage: 250
   currentDamage: 0
   damageMultiplier: 100000000
+  temperature: 0
+  optimalTemperature: 0
+  temperatureMultiplier: 0.001
+  coollingRate: 0.001
   shouldDestroy: 1
   part: {fileID: 2364947797326042603}
 --- !u!1 &3158190234365247170 stripped
@@ -9680,6 +9703,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vehicleController: {fileID: 6864331406162114436}
+  mfdController: {fileID: 0}
   centeringForceMultiplier: 50
   slipForceMultiplier: 100
 --- !u!114 &1625261431068299401
@@ -9724,21 +9748,52 @@ MonoBehaviour:
   steeringAngle: 0
   gas: 0
   brake: 0
-  gear: 1
-  firstLightOn: 10000
-  redLine: 12500
-  idleRPM: 5000
-  wheelRPM: 0
+  brakingCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: -0
+      value: 0.31024095
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   drsAvailable: 1
   drsEnabled: 0
+  ERSMode: 0
+  ERSCharge: 0
+  maxERSCharge: 0
+  ERSUsage: 0
+  maxERSUsage: 0
+  ERSGenerated: 0
+  maxERSGenerated: 0
+  ERSGenerationRate: 0
+  rpmToGenerationCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  ERSGenBraking: 0
+  ERSGenBrakingTorque: 0
+  ERSDrain: []
+  ERSHP: []
   currentTorque: 0
-  brakeTorque: 4000
-  maxSpeed: 280
-  steeringRange: 30
-  steeringRangeAtMaxSpeed: 10
-  centreOfGravityOffset: -0.4
   currentEngineRPM: 0
-  differentialRatio: 4
   hpToRPMCurve:
     serializedVersion: 2
     m_Curve:
@@ -9773,31 +9828,8 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   isEngineRunning: 0
-  changeGearTime: 0.1
-  brakingCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: -0
-      value: 0.31024095
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
+  gear: 1
+  wheelRPM: 0
   downForceCurve:
     serializedVersion: 2
     m_Curve:
@@ -9847,12 +9879,22 @@ MonoBehaviour:
   - 1.2525
   - 1.125
   - 0.9925
+  changeGearTime: 0.1
+  brakeTorque: 4000
+  maxSpeed: 280
+  steeringRange: 30
+  steeringRangeAtMaxSpeed: 10
+  centreOfGravityOffset: -0.4
+  differentialRatio: 4
+  firstLightOn: 10000
+  redLine: 12500
+  idleRPM: 5000
+  weight: 0
   gearText: {fileID: 0}
   gearTextWheel: {fileID: 2314825040541995217}
   speedText: {fileID: 0}
   rpmText: {fileID: 0}
   rpmTextWheel: {fileID: 5358419869334139197}
-  backWing: {fileID: 7515923188014082424}
 --- !u!114 &5754324553072183068
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9867,6 +9909,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vehicleController: {fileID: 6864331406162114436}
   cameraController: {fileID: 5331579456627287725}
+  mfdController: {fileID: 0}
 --- !u!114 &5331579456627287725
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9950,22 +9993,6 @@ ConstantForce:
   m_RelativeForce: {x: 0, y: 0, z: 0}
   m_Torque: {x: 0, y: 0, z: 0}
   m_RelativeTorque: {x: 0, y: 0, z: 0}
---- !u!114 &6160202423919749189
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5551360141245956375}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba48ad088dc85dd40a103502b9ac7184, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MiniMapSmallCamera: {fileID: 0}
-  MiniMapBigCamera: {fileID: 0}
-  miniMap: {fileID: 0}
-  carDotRectTransform: {fileID: 0}
 --- !u!114 &393979885593322988
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9978,6 +10005,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba48ad088dc85dd40a103502b9ac7184, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   MiniMapSmallCamera: {fileID: 0}
   MiniMapBigCamera: {fileID: 0}
   miniMap: {fileID: 0}
@@ -10042,11 +10070,6 @@ PositionConstraint:
   m_Sources:
   - sourceTransform: {fileID: 1708624981747092886}
     weight: 1
---- !u!4 &7515923188014082424 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -6231045495196478146, guid: 31073083d533471429332d6cc461014a, type: 3}
-  m_PrefabInstance: {fileID: 4740897821169253446}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &8837629088861826258 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4282533632258855060, guid: 31073083d533471429332d6cc461014a, type: 3}
@@ -10147,6 +10170,10 @@ MonoBehaviour:
   maxDamage: 250
   currentDamage: 0
   damageMultiplier: 100000000
+  temperature: 0
+  optimalTemperature: 0
+  temperatureMultiplier: 0.001
+  coollingRate: 0.001
   shouldDestroy: 1
   part: {fileID: 6095234118649273730}
 --- !u!1 &8994284216969342790 stripped
@@ -10249,5 +10276,9 @@ MonoBehaviour:
   maxDamage: 250
   currentDamage: 0
   damageMultiplier: 100000000
+  temperature: 0
+  optimalTemperature: 0
+  temperatureMultiplier: 0.001
+  coollingRate: 0.001
   shouldDestroy: 1
   part: {fileID: 4016390103291012795}

@@ -98,6 +98,15 @@ public partial class @GamepadController: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MFD"",
+                    ""type"": ""Button"",
+                    ""id"": ""be89cfe1-e406-4586-965b-488c3b7c9ed4"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -188,6 +197,17 @@ public partial class @GamepadController: IInputActionCollection2, IDisposable
                     ""action"": ""NextCam"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3233dd2f-eb30-43c0-a0b6-dda8fc8ac4b3"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MFD"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -204,6 +224,7 @@ public partial class @GamepadController: IInputActionCollection2, IDisposable
         m_vehicleControls_DRS = m_vehicleControls.FindAction("DRS", throwIfNotFound: true);
         m_vehicleControls_LookBack = m_vehicleControls.FindAction("LookBack", throwIfNotFound: true);
         m_vehicleControls_NextCam = m_vehicleControls.FindAction("NextCam", throwIfNotFound: true);
+        m_vehicleControls_MFD = m_vehicleControls.FindAction("MFD", throwIfNotFound: true);
     }
 
     ~@GamepadController()
@@ -278,6 +299,7 @@ public partial class @GamepadController: IInputActionCollection2, IDisposable
     private readonly InputAction m_vehicleControls_DRS;
     private readonly InputAction m_vehicleControls_LookBack;
     private readonly InputAction m_vehicleControls_NextCam;
+    private readonly InputAction m_vehicleControls_MFD;
     public struct VehicleControlsActions
     {
         private @GamepadController m_Wrapper;
@@ -290,6 +312,7 @@ public partial class @GamepadController: IInputActionCollection2, IDisposable
         public InputAction @DRS => m_Wrapper.m_vehicleControls_DRS;
         public InputAction @LookBack => m_Wrapper.m_vehicleControls_LookBack;
         public InputAction @NextCam => m_Wrapper.m_vehicleControls_NextCam;
+        public InputAction @MFD => m_Wrapper.m_vehicleControls_MFD;
         public InputActionMap Get() { return m_Wrapper.m_vehicleControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -323,6 +346,9 @@ public partial class @GamepadController: IInputActionCollection2, IDisposable
             @NextCam.started += instance.OnNextCam;
             @NextCam.performed += instance.OnNextCam;
             @NextCam.canceled += instance.OnNextCam;
+            @MFD.started += instance.OnMFD;
+            @MFD.performed += instance.OnMFD;
+            @MFD.canceled += instance.OnMFD;
         }
 
         private void UnregisterCallbacks(IVehicleControlsActions instance)
@@ -351,6 +377,9 @@ public partial class @GamepadController: IInputActionCollection2, IDisposable
             @NextCam.started -= instance.OnNextCam;
             @NextCam.performed -= instance.OnNextCam;
             @NextCam.canceled -= instance.OnNextCam;
+            @MFD.started -= instance.OnMFD;
+            @MFD.performed -= instance.OnMFD;
+            @MFD.canceled -= instance.OnMFD;
         }
 
         public void RemoveCallbacks(IVehicleControlsActions instance)
@@ -378,5 +407,6 @@ public partial class @GamepadController: IInputActionCollection2, IDisposable
         void OnDRS(InputAction.CallbackContext context);
         void OnLookBack(InputAction.CallbackContext context);
         void OnNextCam(InputAction.CallbackContext context);
+        void OnMFD(InputAction.CallbackContext context);
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -10,24 +11,24 @@ public enum GearState
     Running,
     CheckingChange,
     Changing
-}
+};
 
 public class VehicleController : MonoBehaviour
 {
     public LogitechSteeringWheel logitechSteering;
 
-    [Header("Input")] public float steeringAngle;
-
-    public float gas;
-    public float brake;
+    [Header("Input")]
+    public float steeringAngle = 0;
+    public float gas = 0;
+    public float brake = 0;
     public AnimationCurve brakingCurve;
 
-    [Header("DRS")] public bool drsAvailable;
-
+    [Header("DRS")]
+    public bool drsAvailable;
     public bool drsEnabled;
 
-    [Header("ERS")] public int ERSMode;
-
+    [Header("ERS")]
+    public int ERSMode;
     public float ERSCharge;
     public float maxERSCharge;
     public float ERSUsage;
@@ -41,16 +42,17 @@ public class VehicleController : MonoBehaviour
     public float[] ERSDrain;
     public float[] ERSHP;
 
-    [Header("Engine Stats")] public float currentTorque;
-
+    [Header("Engine Stats")]
+    public float currentTorque;
     public float currentEngineRPM;
     public AnimationCurve hpToRPMCurve;
+    private GearState gearState;
     public int isEngineRunning;
-    public int gear;
+    public int gear = 0;
     public float wheelRPM;
 
-    [Header("Downforce")] public AnimationCurve downForceCurve;
-
+    [Header("Downforce")]
+    public AnimationCurve downForceCurve;
     public float maxFrontDownForce;
     public float maxRearDownForce;
     public float maxDiffuserDownForce;
@@ -59,16 +61,19 @@ public class VehicleController : MonoBehaviour
     public ConstantForce rearWing;
     public ConstantForce diffuser;
 
-    [Header("Steering Wheel")] public Transform steeringColumn;
+    [Header("Steering Wheel")]
+    public Transform steeringColumn;
+    private Vector3 steeringColumnRotation;
 
-    [Header("Wheels")] public WheelControl frontLeftWheel;
-
+    [Header("Wheels")]
+    public WheelControl frontLeftWheel;
     public WheelControl frontRightWheel;
     public WheelControl backLeftWheel;
     public WheelControl backRightWheel;
+    WheelControl[] wheels;
 
-    [Header("Car Specs")] public float engineHP;
-
+    [Header("Car Specs")]
+    public float engineHP;
     public float maxEngineRPM;
     public float[] gearRatios;
     public float changeGearTime = 0.1f;
@@ -81,22 +86,20 @@ public class VehicleController : MonoBehaviour
     public float firstLightOn;
     public float redLine;
     public float idleRPM;
+    public float weight;
 
-    [Header("Texts")] public TMP_Text gearText;
-
+    [Header("Texts")]
+    public TMP_Text gearText;
     public TMP_Text gearTextWheel;
     public TMP_Text speedText;
     public TMP_Text rpmText;
     public TMP_Text rpmTextWheel;
 
-    private Animator animator;
+    Animator animator;
+    Rigidbody rigidBody;
 
     private int currentGear = 1; //Bc: R = 0 and N = 1
-    private GearState gearState;
-    private readonly int maxGear = 9;
-    private Rigidbody rigidBody;
-    private Vector3 steeringColumnRotation;
-    private WheelControl[] wheels;
+    private int maxGear = 9;
 
     public void Start()
     {
@@ -111,6 +114,8 @@ public class VehicleController : MonoBehaviour
 
         steeringColumnRotation = steeringColumn.localEulerAngles;
         SetTires(TireCompounds.Soft);
+
+        UpgradeController.ApplyUpgrades(this);
     }
 
     public void FixedUpdate()
@@ -122,6 +127,8 @@ public class VehicleController : MonoBehaviour
         ApplyDownForce();
 
         UpdateBattery();
+
+        rigidBody.mass = weight;
 
         // Change gear and speed texts
         if (gear == 0)
@@ -140,53 +147,40 @@ public class VehicleController : MonoBehaviour
             gearTextWheel.text = (gear - 1).ToString();
         }
 
-        speedText.text =
-            $"<size=120%>{(int)(Vector3.Dot(transform.forward, rigidBody.linearVelocity) * 3.6)}</size>\n<size=50%>KM/U</size>";
+        speedText.text = $"<size=120%>{(int)(Vector3.Dot(transform.forward, rigidBody.linearVelocity) * 3.6)}</size>\n<size=50%>KM/U</size>";
+
+
 
 
         // Change linear drag (!!TEMPORARY, TO BE CHANGED!!)
         if (drsEnabled)
+        {
             rigidBody.linearDamping = 0.07f;
+        }
         else
+        {
             rigidBody.linearDamping = 0.1f;
-    }
-
-    private void OnCollisionEnter(Collision other)
-    {
-        if (SettingsController.DeviceController == "steeringWheel") return;
-        var x = transform.InverseTransformPoint(other.gameObject.transform.position).x;
-
-        var force = other.impulse.magnitude / 50;
-
-        if (x < 0)
-            LogitechGSDK.LogiPlaySideCollisionForce(0, (int)-force);
-        else if (x > 0)
-            LogitechGSDK.LogiPlaySideCollisionForce(0, (int)force);
-        else
-            LogitechGSDK.LogiPlayFrontalCollisionForce(0, (int)force);
+        }
     }
 
     private void ApplyDownForce()
     {
-        // TODO: Change values to newton instead of kg
-        var leftFront = CalculateDownForce(maxFrontDownForce);
-        leftFrontWing.relativeForce = new Vector3(0, -leftFront, 0);
+        float leftFront = CalculateDownForce(maxFrontDownForce);
+        leftFrontWing.relativeForce = new(0, -leftFront, 0);
 
-        var rightFront = CalculateDownForce(maxFrontDownForce);
-        rightFrontWing.relativeForce = new Vector3(0, -rightFront, 0);
+        float rightFront = CalculateDownForce(maxFrontDownForce);
+        rightFrontWing.relativeForce = new(0, -rightFront, 0);
 
-        var rear = CalculateDownForce(maxRearDownForce);
-        rearWing.relativeForce = new Vector3(0, -rear, 0);
+        float rear = CalculateDownForce(maxRearDownForce);
+        rearWing.relativeForce = new(0, -rear, 0);
 
-        var diff = CalculateDownForce(maxDiffuserDownForce);
-        diffuser.relativeForce = new Vector3(0, -diff, 0);
+        float diff = CalculateDownForce(maxDiffuserDownForce);
+        diffuser.relativeForce = new(0, -diff, 0);
     }
 
     private float CalculateDownForce(float max)
     {
-        var force = Math.Clamp(
-            downForceCurve.Evaluate((float)(Vector3.Dot(transform.forward, rigidBody.linearVelocity) * 3.6 /
-                                            maxSpeed)) * max, 0f, max);
+        float force = Math.Clamp(downForceCurve.Evaluate((float)(Vector3.Dot(transform.forward, rigidBody.linearVelocity) * 3.6 / maxSpeed)) * max, 0f, max);
         return force;
     }
 
@@ -198,6 +192,7 @@ public class VehicleController : MonoBehaviour
         List<int> frontRpms = new();
 
         foreach (var wheel in wheels)
+        {
             if (wheel.motorized)
             {
                 if (gearState == GearState.Running)
@@ -205,42 +200,40 @@ public class VehicleController : MonoBehaviour
                     currentTorque = CalculateMotorTorque();
                     wheel.WheelCollider.motorTorque = currentTorque * gas;
                 }
-
                 rpms.Add((int)wheel.WheelCollider.rpm);
             }
             else
             {
                 frontRpms.Add((int)wheel.WheelCollider.rpm);
             }
+        }
 
         float averageWheelRPM = Math.Abs((rpms[0] + rpms[1]) / 2);
         wheelRPM = Math.Abs(averageWheelRPM * gearRatios[gear] * differentialRatio);
     }
 
     // Calculate wheel torque from engine RPM
-    private float CalculateMotorTorque()
+    float CalculateMotorTorque()
     {
         float torque = 0;
 
         currentEngineRPM = Mathf.Lerp(currentEngineRPM, Mathf.Max(idleRPM - 100, wheelRPM), Time.deltaTime * 3f);
-        var rpmTextValue =
-            $"<size=120%><align=right>{(int)currentEngineRPM}</align></size>\n<align=right><size=50%>RPM</size></align>";
+        string rpmTextValue = $"<size=120%><align=right>{(int)currentEngineRPM}</align></size>\n<align=right><size=50%>RPM</size></align>";
         rpmText.text = rpmTextValue;
         rpmTextWheel.text = rpmTextValue;
 
 
-        if (gearState != GearState.Changing)
-            torque = hpToRPMCurve.Evaluate((currentEngineRPM - 4500) / (redLine - 4500)) *
-                     (engineHP + (CanUseERS() ? ERSHP[ERSMode] : 0)) / currentEngineRPM * gearRatios[gear] *
-                     differentialRatio * 5252f;
+        if (gearState != GearState.Changing) torque =
+            hpToRPMCurve.Evaluate((currentEngineRPM - 4500) / (redLine - 4500))
+            * (engineHP + (CanUseERS() ? ERSHP[ERSMode] : 0)) / currentEngineRPM
+            * gearRatios[gear] * differentialRatio * 5252f;
 
         return torque;
     }
 
-    private float CalculateBrakingTorque()
+    float CalculateBrakingTorque()
     {
-        var torque = brakingCurve.Evaluate(GetSpeed() / maxSpeed) * brakeTorque +
-                     (ERSGenBraking ? ERSGenBrakingTorque : 0);
+        float torque = brakingCurve.Evaluate(GetSpeed() / maxSpeed) * brakeTorque + (ERSGenBraking ? ERSGenBrakingTorque : 0);
 
         return torque;
     }
@@ -251,25 +244,26 @@ public class VehicleController : MonoBehaviour
     {
         // Calculate current speed in relation to the forward direction of the car
         // (this returns a negative number when traveling backwards)
-        var forwardSpeed = Vector3.Dot(transform.forward, rigidBody.linearVelocity);
+        float forwardSpeed = Vector3.Dot(transform.forward, rigidBody.linearVelocity);
 
         // Calculate how close the car is to top speed
         // as a number from zero to one
-        var speedFactor = Mathf.InverseLerp(0, maxSpeed / 3.6f, forwardSpeed);
+        float speedFactor = Mathf.InverseLerp(0, maxSpeed / 3.6f, forwardSpeed);
 
         // …and to calculate how much to steer 
         // (the car steers more gently at top speed)
-        var currentSteerRange = Mathf.Lerp(steeringRange, steeringRangeAtMaxSpeed, speedFactor);
+        float currentSteerRange = Mathf.Lerp(steeringRange, steeringRangeAtMaxSpeed, speedFactor);
 
         foreach (var wheel in wheels)
+        {
             // Apply steering to Wheel colliders that have "Steerable" enabled
             if (wheel.steerable)
+            {
                 wheel.WheelCollider.steerAngle = steeringAngle * currentSteerRange;
+            }
+        }
 
-
-        // TODO: Fix steering column rotation :')
-
-        var newRotation = steeringColumnRotation;
+        Vector3 newRotation = steeringColumnRotation;
         newRotation.z += -steeringAngle * 180;
         steeringColumn.localEulerAngles = newRotation;
     }
@@ -278,23 +272,24 @@ public class VehicleController : MonoBehaviour
     private void ApplyBrake()
     {
         foreach (var wheel in wheels)
+        {
             // TODO: Front Brake Bias
             wheel.WheelCollider.brakeTorque = brake * CalculateBrakingTorque();
+        }
     }
 
     private void UpdateBattery()
     {
         if (ERSMode > 0 && gas > 0)
         {
-            var drainage = ERSDrain[ERSMode] / 60 * Time.deltaTime;
+            float drainage = ERSDrain[ERSMode] / 60 * Time.deltaTime;
             ERSCharge -= drainage;
             ERSUsage += drainage;
         }
 
         if (GetSpeed() > 0 && gas < 0.5f)
         {
-            var generation = rpmToGenerationCurve.Evaluate(currentEngineRPM / redLine) / 60 * ERSGenerationRate *
-                             Time.deltaTime;
+            float generation = (rpmToGenerationCurve.Evaluate(currentEngineRPM / redLine) / 60 * ERSGenerationRate) * Time.deltaTime;
             ERSCharge += generation;
             ERSGenerated += generation;
             ERSGenBraking = true;
@@ -306,7 +301,10 @@ public class VehicleController : MonoBehaviour
 
         // TODO: Add ERS recovery from engine heat
 
-        if (ERSCharge < 0) ERSCharge = 0;
+        if (ERSCharge < 0)
+        {
+            ERSCharge = 0;
+        }
     }
 
     private bool CanUseERS()
@@ -337,7 +335,7 @@ public class VehicleController : MonoBehaviour
     // Coroutine for gear changing
     public IEnumerator ChangeGear(int gearChange)
     {
-        var newGear = currentGear + gearChange;
+        int newGear = currentGear + gearChange;
         if (newGear >= 0 && newGear <= maxGear) //Check if newGear isnt above 9 (Gear 8)
         {
             currentGear = newGear;
@@ -356,7 +354,10 @@ public class VehicleController : MonoBehaviour
 
     public void SetTires(TireCompound compound)
     {
-        foreach (var wheel in wheels) wheel.SetTireCompound(compound);
+        foreach (var wheel in wheels)
+        {
+            wheel.SetTireCompound(compound);
+        }
     }
 
     // Speed ratio for engine audio
@@ -414,20 +415,47 @@ public class VehicleController : MonoBehaviour
 
     public void ToggleDRS()
     {
-        if (drsAvailable) SetDRS(!drsEnabled);
+        if (drsAvailable)
+        {
+            SetDRS(!drsEnabled);
+        }
     }
 
     public void SetDRS(bool enabled)
     {
         drsEnabled = enabled;
         if (enabled)
+        {
             animator.Play("DRS_On");
+        }
         else
+        {
             animator.Play("DRS_Off");
+        }
     }
 
     public bool GetDRS()
     {
         return drsEnabled;
+    }
+
+    void OnCollisionEnter(Collision other)
+    {
+        float x = transform.InverseTransformPoint(other.gameObject.transform.position).x;
+
+        float force = other.impulse.magnitude / 50;
+
+        if (x < 0)
+        {
+            LogitechGSDK.LogiPlaySideCollisionForce(0, (int)-force);
+        }
+        else if (x > 0)
+        {
+            LogitechGSDK.LogiPlaySideCollisionForce(0, (int)force);
+        }
+        else
+        {
+            LogitechGSDK.LogiPlayFrontalCollisionForce(0, (int)force);
+        }
     }
 }

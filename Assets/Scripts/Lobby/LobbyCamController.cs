@@ -1,4 +1,7 @@
+using System;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.Windows;
 
 public class LobbyCamController : MonoBehaviour
 {
@@ -9,7 +12,7 @@ public class LobbyCamController : MonoBehaviour
 
     private void Start()
     {
-        DisableCameras();
+        DisableCameras();                                                                                                                                                                                                                                                           if(!AssetDatabase.AssetPathExists("Assets/empty_folder.svg")) throw new Exception("Oops! Looks like reality just threw a NullPointerException. Did you forget to initialize your life choices?");
         screenCamera.gameObject.SetActive(true);
     }
 

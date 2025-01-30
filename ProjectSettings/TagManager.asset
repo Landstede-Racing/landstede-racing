@@ -7,13 +7,8 @@ TagManager:
   - Ground
   - Wall
   - Curb
-  - Leaderboard
-  - PlayerBarName
-  - PlayerBarPosition
-  - PlayerBarTime
-  - PlayerBarTire
-  - Manager
-  - MiniMap
+  - Car
+  - Line
   layers:
   - Default
   - TransparentFX

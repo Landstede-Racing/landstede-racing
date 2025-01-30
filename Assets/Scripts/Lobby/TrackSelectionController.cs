@@ -1,14 +1,14 @@
 using TMPro;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class Track
-{
-    public string length;
+public class Track {
     public string name;
-    public string pRecord;
+    public string length;
     public string record;
+    public string pRecord;
 }
 
 public class TrackSelectionController : MonoBehaviour
@@ -22,10 +22,10 @@ public class TrackSelectionController : MonoBehaviour
     public TMP_Text trackRecord;
     public TMP_Text trackPRecord;
 
-    public SceneAsset[] trackScenes;
+    public string[] trackScenes;
     private readonly Track[] tracks = new Track[1];
 
-    private void Start()
+    void Start()
     {
         tracks[0] = new Track
         {
@@ -36,19 +36,16 @@ public class TrackSelectionController : MonoBehaviour
         };
     }
 
-    public void StartRace()
-    {
-        StartCoroutine(CustomSceneManager.LoadScene(trackScenes[camController.currentTrackCam].name));
+    public void StartRace() {
+        StartCoroutine(CustomSceneManager.LoadScene(trackScenes[camController.currentTrackCam]));
     }
 
-    public void UpdateButtons()
-    {
+    public void UpdateButtons() {
         nextButton.interactable = camController.currentTrackCam != tracks.Length - 1;
         previousButton.interactable = camController.currentTrackCam != 0;
     }
 
-    public void UpdateText()
-    {
+    public void UpdateText() {
         trackName.text = tracks[camController.currentTrackCam].name;
         trackLength.text = tracks[camController.currentTrackCam].length;
         trackRecord.text = tracks[camController.currentTrackCam].record;
