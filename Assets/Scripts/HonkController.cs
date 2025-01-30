@@ -1,25 +1,25 @@
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
 public class CarHorn : MonoBehaviour
 {
     public AudioClip hornClip;
-    private AudioSource hornSource;
-    private bool isHornPlaying = false;
     public float fadeOutDuration = 0.1f;
 
     public float volume = 0.8f; // volume TODO: adjust volume to engine sound in futrue
+    private AudioSource hornSource;
+    private bool isHornPlaying;
 
-    void Start()
+    private void Start()
     {
         hornSource = GetComponent<AudioSource>();
         hornSource.clip = hornClip;
-        hornSource.loop = true;          // Loopie, doesnt work correctly, for demo xox 
+        hornSource.loop = true; // Loopie, doesnt work correctly, for demo xox 
         hornSource.volume = volume;
     }
 
-    void Update()
+    private void Update()
     {
         if (Input.GetKeyDown(KeyCode.H) && !isHornPlaying)
         {
@@ -36,8 +36,8 @@ public class CarHorn : MonoBehaviour
 
     private IEnumerator FadeOutHorn()
     {
-        float startVolume = hornSource.volume;
-        float timeElapsed = 0f;
+        var startVolume = hornSource.volume;
+        var timeElapsed = 0f;
 
         while (timeElapsed < fadeOutDuration)
         {

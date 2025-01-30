@@ -1,20 +1,23 @@
+using Unity.Netcode;
 using UnityEngine;
 
-public class MirrorController : MonoBehaviour
+public class MirrorController : NetworkBehaviour
 {
-    Transform trans;
-    Vector3 offset;
     public CameraController cameraController;
+    private Vector3 offset;
+    private Transform trans;
 
-    void Start()
+    private void Start()
     {
         trans = cameraController.GetCurrentCam().GetComponent<Transform>();
         offset = trans.rotation.eulerAngles - transform.rotation.eulerAngles;
     }
 
-    void Update()
+    private void Update()
     {
-        Quaternion rot = Quaternion.Euler(cameraController.GetCurrentCam().GetComponent<Transform>().rotation.eulerAngles - offset * -1f);
+        if (IsServer) return;
+        var rot = Quaternion.Euler(cameraController.GetCurrentCam().GetComponent<Transform>().rotation.eulerAngles -
+                                   offset * -1f);
         gameObject.transform.rotation = rot;
     }
 }

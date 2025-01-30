@@ -7,12 +7,14 @@ public static class TireCompounds
     public static readonly TireCompound Hard = new(0.8f, 0.4f, new Color(0.0f, 0.0f, 0.0f));
 }
 
-public class TireCompound {
+public class TireCompound
+{
+    public Color color;
     public float grip;
     public float wearRate;
-    public Color color;
 
-    public TireCompound(float grip, float wearRate, Color color) {
+    public TireCompound(float grip, float wearRate, Color color)
+    {
         this.grip = grip;
         this.wearRate = wearRate;
         this.color = color;

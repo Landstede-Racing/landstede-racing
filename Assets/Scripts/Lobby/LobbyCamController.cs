@@ -7,7 +7,7 @@ public class LobbyCamController : MonoBehaviour
     public Camera[] trackCameras;
     public int currentTrackCam = -1;
 
-    void Start()
+    private void Start()
     {
         DisableCameras();
         screenCamera.gameObject.SetActive(true);
@@ -35,28 +35,26 @@ public class LobbyCamController : MonoBehaviour
 
     public void NextTrackCamera()
     {
-        int newCam = currentTrackCam + 1;
+        var newCam = currentTrackCam + 1;
         if (newCam >= trackCameras.Length) newCam = 0;
         SetTrackCamera(newCam);
     }
 
     public void PreviousTrackCamera()
     {
-        int newCam = currentTrackCam - 1;
+        var newCam = currentTrackCam - 1;
         if (newCam <= 0) newCam = trackCameras.Length - 1;
         SetTrackCamera(newCam);
     }
 
     private void DisableTrackCameras()
     {
-        foreach (Camera camera in trackCameras)
-        {
-            camera.gameObject.SetActive(false);
-        }
+        foreach (var camera in trackCameras) camera.gameObject.SetActive(false);
         currentTrackCam = -1;
     }
 
-    public void DisableCameras() {
+    public void DisableCameras()
+    {
         screenCamera.gameObject.SetActive(false);
         garageCamera.gameObject.SetActive(false);
         DisableTrackCameras();

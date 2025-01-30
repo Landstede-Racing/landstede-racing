@@ -1,6 +1,4 @@
-using System;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 public class WheelControl : MonoBehaviour
 {
@@ -8,10 +6,6 @@ public class WheelControl : MonoBehaviour
 
     public Part part;
     public DamagablePart damagablePart;
-    public TireCompound tireCompound;
-
-    public WheelFrictionCurve defaultForwardFriction;
-    public WheelFrictionCurve defaultSidewaysFriction;
 
     [HideInInspector] public WheelCollider WheelCollider;
 
@@ -21,8 +15,12 @@ public class WheelControl : MonoBehaviour
     public bool steerable;
     public bool motorized;
 
-    Vector3 position;
-    Quaternion rotation;
+    public WheelFrictionCurve defaultForwardFriction;
+    public WheelFrictionCurve defaultSidewaysFriction;
+
+    private Vector3 position;
+    private Quaternion rotation;
+    public TireCompound tireCompound;
 
     // Start is called before the first frame update
     private void Start()
@@ -33,7 +31,7 @@ public class WheelControl : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         // Get the Wheel collider's world pose values and
         // use them to set the wheel model's position and rotation
@@ -41,7 +39,8 @@ public class WheelControl : MonoBehaviour
         wheelModel.transform.position = position;
         wheelModel.transform.rotation = rotation;
 
-        wheelModel.GetComponent<MeshRenderer>().materials[1].SetFloat("_Wear", damagablePart.currentDamage / damagablePart.maxDamage);
+        wheelModel.GetComponent<MeshRenderer>().materials[1]
+            .SetFloat("_Wear", damagablePart.currentDamage / damagablePart.maxDamage);
 
         // var matsCopy = wheelModel.GetComponent<MeshRenderer>().materials;
         // matsCopy[1].SetFloat("_Wear", damagablePart.currentDamage / damagablePart.maxDamage);
@@ -53,12 +52,13 @@ public class WheelControl : MonoBehaviour
         // Debug.Log(Math.Floor(damagablePart.currentDamage / damagablePart.maxDamage * 100));
     }
 
-    void FixedUpdate() {
+    private void FixedUpdate()
+    {
         // Damage from driving (get force from ground hit, and calculate damage using that)
         if (WheelCollider.isGrounded)
         {
-            WheelCollider.GetGroundHit(out WheelHit hit);
-            TerrainInfo hitTerrain = hit.collider.GetComponent<TerrainInfo>();
+            WheelCollider.GetGroundHit(out var hit);
+            var hitTerrain = hit.collider.GetComponent<TerrainInfo>();
 
             if (damagablePart.currentDamage < damagablePart.maxDamage && hit.force > 1400)
             {
@@ -67,25 +67,24 @@ public class WheelControl : MonoBehaviour
                     damagablePart.currentDamage += (hit.force - 1400) * damagablePart.damageMultiplier * 10;
 
                     if (damagablePart.currentDamage >= damagablePart.maxDamage)
-                    {
                         Debug.Log("Here it will fly to the moon");
-                    }
-                } else if(hitTerrain != null) {
-                    damagablePart.currentDamage += (hit.force - 1400) * damagablePart.damageMultiplier * hitTerrain.damageMultiplier * tireCompound.wearRate;
+                }
+                else if (hitTerrain != null)
+                {
+                    damagablePart.currentDamage += (hit.force - 1400) * damagablePart.damageMultiplier *
+                                                   hitTerrain.damageMultiplier * tireCompound.wearRate;
 
                     if (damagablePart.currentDamage >= damagablePart.maxDamage)
-                    {
                         Debug.Log("Here it will break in a less horrible way than the others");
-                    }
                 }
             }
 
-            if(hitTerrain != null)
+            if (hitTerrain != null)
             {
-                WheelFrictionCurve newForwardFriction = defaultForwardFriction;
+                var newForwardFriction = defaultForwardFriction;
                 newForwardFriction.stiffness *= hitTerrain.gripMultiplier;
                 newForwardFriction.stiffness *= tireCompound.grip;
-                WheelFrictionCurve newSidewaysFriction = defaultSidewaysFriction;
+                var newSidewaysFriction = defaultSidewaysFriction;
                 newSidewaysFriction.stiffness *= hitTerrain.gripMultiplier;
                 newSidewaysFriction.stiffness *= tireCompound.grip;
 

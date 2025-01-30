@@ -638,8 +638,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd7d6dced81047a59aac16709bf64665, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _position: {fileID: 3500497884004523724}
-  _shortName: {fileID: 8428900564143980690}
-  _time: {fileID: 7526395166540785824}
-  _tire: {fileID: 465929905044125237}
-  playerObject: {fileID: 0}
+  position: {fileID: 3500497884004523724}
+  shortName: {fileID: 8428900564143980690}
+  time: {fileID: 7526395166540785824}
+  tire: {fileID: 465929905044125237}
+  playerObject:
+    position: 0
+    shortName: 
+    time: 0
+    tire: 

@@ -4,7 +4,86 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="91ef9fc2-b80f-47f3-b860-e45100693df9" name="Changes" comment="" />
+    <list default="true" id="91ef9fc2-b80f-47f3-b860-e45100693df9" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Types/PlayerInfo.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Types/PlayerInfo.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Types/PlayerInfoExtensions.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Types/PlayerInfoExtensions.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.landstede-racing/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.landstede-racing/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DefaultNetworkPrefabs.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/DefaultNetworkPrefabs.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Font/Formula1 Display-Bold Bold SDF 1.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Font/Formula1 Display-Bold Bold SDF 1.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Font/Formula1 Display-Italic Italic SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Font/Formula1 Display-Italic Italic SDF.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Font/Formula1 Display-regular regular SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Font/Formula1 Display-regular regular SDF.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Input/InputController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Input/InputController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Logitech SDK/LogitechGSDK.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Logitech SDK/LogitechGSDK.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Logitech SDK/Script Sample/LogitechArxControl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Logitech SDK/Script Sample/LogitechArxControl.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Logitech SDK/Script Sample/LogitechGKey.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Logitech SDK/Script Sample/LogitechGKey.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Logitech SDK/Script Sample/LogitechLCD.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Logitech SDK/Script Sample/LogitechLCD.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Logitech SDK/Script Sample/LogitechLed.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Logitech SDK/Script Sample/LogitechLed.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Leaderboard/PlayerBar.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Leaderboard/PlayerBar.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Leaderboard/Wap.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Leaderboard/Wap.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/CameraController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CameraController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Components.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Components/Stopwatch.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Components/Stopwatch.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/CustomSceneManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CustomSceneManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/DamagablePart.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/DamagablePart.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/DamageController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/DamageController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/DashboardController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/DashboardController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/EngineAudio.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/EngineAudio.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/FinishLineController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/FinishLineController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/HonkController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/HonkController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/LeaderBoardPosition.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/LeaderBoardPosition.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Lobby/AnimatorParamRandomizer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Lobby/AnimatorParamRandomizer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Lobby/LobbyCamController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Lobby/LobbyCamController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Lobby/LobbyMenuController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Lobby/LobbyMenuController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Lobby/TrackSelectionController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Lobby/TrackSelectionController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Location.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Location.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/LogitechSteeringWheel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/LogitechSteeringWheel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MiniMap.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MiniMap.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MiniMapController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MiniMapController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MirrorController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MirrorController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MultiplayerTestManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MultiplayerTestManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MultiplayerTestPlayer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MultiplayerTestPlayer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Part.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Part.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PartController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PartController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlayerPositionUI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PlayerPositionUI.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlayerStats.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PlayerStats.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RPMLightController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RPMLightController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SectorController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SectorController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SettingsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SettingsController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SparkController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SparkController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TerrainInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TerrainInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TireCompound.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TireCompound.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Types/PlayerTiming.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Types/PlayerTiming.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Types/PlayerTimingList.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Types/PlayerTimingList.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/VehicleController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/VehicleController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/WheelControl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/WheelControl.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TestScenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TestScenes/SampleScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Shaders/SDFFunctions.hlsl" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Shaders/SDFFunctions.hlsl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Shaders/TMP_Bitmap-Custom-Atlas.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Shaders/TMP_Bitmap-Custom-Atlas.shader" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Shaders/TMP_Bitmap-Mobile.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Shaders/TMP_Bitmap-Mobile.shader" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Shaders/TMP_Bitmap.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Shaders/TMP_Bitmap.shader" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Shaders/TMP_SDF Overlay.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Shaders/TMP_SDF Overlay.shader" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Shaders/TMP_SDF SSD.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Shaders/TMP_SDF SSD.shader" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile Masking.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile Masking.shader" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile Overlay.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile Overlay.shader" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile SSD.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile SSD.shader" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile-2-Pass.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile-2-Pass.shader" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile.shader" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Shaders/TMP_SDF-Surface-Mobile.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Shaders/TMP_SDF-Surface-Mobile.shader" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Shaders/TMP_SDF-Surface.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Shaders/TMP_SDF-Surface.shader" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Shaders/TMP_SDF.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Shaders/TMP_SDF.shader" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Shaders/TMP_Sprite.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Shaders/TMP_Sprite.shader" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Shaders/TMPro.cginc" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Shaders/TMPro.cginc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Shaders/TMPro_Mobile.cginc" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Shaders/TMPro_Mobile.cginc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Shaders/TMPro_Properties.cginc" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Shaders/TMPro_Properties.cginc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Shaders/TMPro_Surface.cginc" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Shaders/TMPro_Surface.cginc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Sprites/EmojiOne.json" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Sprites/EmojiOne.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -13,23 +92,120 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="LARC-23-leaderboard" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="mock:///Applications/documentsv2/C# solutions/landstede-racing/Assets/Scripts/LeaderBoardPosition.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Applications/documentsv2/C# solutions/landstede-racing/Assets/Scripts/LeaderBoardPosition.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Applications/documentsv2/C# solutions/landstede-racing/Assets/Scripts/LeaderBoardPosition.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Applications/documentsv2/C# solutions/landstede-racing/Assets/Scripts/PlayerPositionUI.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Applications/documentsv2/C# solutions/landstede-racing/Assets/Scripts/Types/PlayerInfo.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Applications/documentsv2/C# solutions/landstede-racing/Assets/Scripts/Types/PlayerInfo.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Applications/documentsv2/C# solutions/landstede-racing/Assets/Scripts/Types/PlayerInfo.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Applications/documentsv2/C# solutions/landstede-racing/Assets/Scripts/Types/PlayerInfo.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Applications/documentsv2/C# solutions/landstede-racing/Assets/Scripts/Types/PlayerInfo.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Applications/documentsv2/C# solutions/landstede-racing/Assets/Scripts/Types/PlayerInfo.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Applications/documentsv2/C# solutions/landstede-racing/Assets/Scripts/Types/PlayerInfo.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Applications/documentsv2/C# solutions/landstede-racing/Assets/Scripts/Types/PlayerInfoExtensions.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Types/PlayerInfoExtensions.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Applications/documentsv2/C# solutions/landstede-racing/Assets/Scripts/Types/PlayerInfoExtensions.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Applications/documentsv2/C# solutions/landstede-racing/Assets/Scripts/Types/PlayerInfoExtensions.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/50cef547136cdc141995d1711546dca37446f6f270f77467af10dfd676dbd3d0/System.Diagnostics.cs" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="false" />
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "dart.analysis.tool.window.visible": "false",
-    "node.js.selected.package.tslint": "(autodetect)"
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="2s4RhFMJ8CczcG8QymB9tkVIIN7" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;LARC-23-leaderboard&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
+  <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
+    <configuration name="Start Unity" type="RunUnityExe" factoryName="Unity Executable">
+      <option name="EXE_PATH" value="$PROJECT_DIR$/../../../Unity/Hub/Editor/6000.0.25f1/Unity.app/Contents/MacOS/Unity" />
+      <option name="PROGRAM_PARAMETERS" value="-projectPath &quot;$PROJECT_DIR$&quot; -debugCodeOptimization" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="PASS_PARENT_ENVS" value="1" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Unit Tests (batch mode)" type="RunUnityExe" factoryName="Unity Executable">
+      <option name="EXE_PATH" value="$PROJECT_DIR$/../../../Unity/Hub/Editor/6000.0.25f1/Unity.app/Contents/MacOS/Unity" />
+      <option name="PROGRAM_PARAMETERS" value="-runTests -batchmode -projectPath &quot;$PROJECT_DIR$&quot; -testResults Logs/results.xml -logFile Logs/Editor.log -testPlatform EditMode -debugCodeOptimization" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="PASS_PARENT_ENVS" value="1" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Attach to Unity Editor &amp; Play" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="UNITY_ATTACH_AND_PLAY" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+      <option name="allowRunningInParallel" value="false" />
+      <option name="listenPortForConnections" value="false" />
+      <option name="pid" />
+      <option name="projectPathOnTarget" />
+      <option name="runtimes">
+        <list />
+      </option>
+      <option name="selectedOptions">
+        <list />
+      </option>
+      <method v="2" />
+    </configuration>
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+      <option name="allowRunningInParallel" value="false" />
+      <option name="listenPortForConnections" value="false" />
+      <option name="pid" />
+      <option name="projectPathOnTarget" />
+      <option name="runtimes">
+        <list />
+      </option>
+      <option name="selectedOptions">
+        <list />
+      </option>
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="91ef9fc2-b80f-47f3-b860-e45100693df9" name="Changes" comment="" />
+      <created>1737712978241</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1737712978241</updated>
+      <workItem from="1737712979564" duration="373000" />
+      <workItem from="1737713572817" duration="43000" />
+      <workItem from="1737713626660" duration="6206000" />
+      <workItem from="1737972891971" duration="3530000" />
+    </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="UnityCheckinConfiguration" checkUnsavedScenes="false" />
   <component name="UnityProjectConfiguration" hasMinimizedUI="true" />
+  <component name="UnityProjectDiscoverer">
+    <option name="hasUnityReference" value="true" />
+    <option name="unityProject" value="true" />
+    <option name="unityProjectFolder" value="true" />
+  </component>
   <component name="UnityUnitTestConfiguration" currentTestLauncher="Both" />
   <component name="VcsManagerConfiguration">
     <option name="LAST_COMMIT_MESSAGE" value="" />

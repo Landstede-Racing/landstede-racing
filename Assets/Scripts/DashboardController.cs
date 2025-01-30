@@ -11,13 +11,16 @@ public class DashboardController : MonoBehaviour
     public GameObject ERSGeneratedIndicator;
     public VehicleController vehicleController;
 
-    void Update()
+    private void Update()
     {
-        throttleIndicator.GetComponent<RectTransform>().localScale = new(1, vehicleController.gas, 1);
-        brakeIndicator.GetComponent<RectTransform>().localScale = new(1, vehicleController.brake, 1);
-        ERSUsageIndicator.GetComponent<RectTransform>().localScale = new(vehicleController.GetERSUsagePercentage(), 1, 1);
-        ERSChargeIndicator.GetComponent<RectTransform>().localScale = new(vehicleController.GetERSPercentage(), 1, 1);
+        throttleIndicator.GetComponent<RectTransform>().localScale = new Vector3(1, vehicleController.gas, 1);
+        brakeIndicator.GetComponent<RectTransform>().localScale = new Vector3(1, vehicleController.brake, 1);
+        ERSUsageIndicator.GetComponent<RectTransform>().localScale =
+            new Vector3(vehicleController.GetERSUsagePercentage(), 1, 1);
+        ERSChargeIndicator.GetComponent<RectTransform>().localScale =
+            new Vector3(vehicleController.GetERSPercentage(), 1, 1);
         ERSChargeText.SetText(vehicleController.GetERSPercentage().ToString("P0"));
-        ERSGeneratedIndicator.GetComponent<RectTransform>().localScale = new(vehicleController.GetERSGeneratedPercentage(), 1, 1);
+        ERSGeneratedIndicator.GetComponent<RectTransform>().localScale =
+            new Vector3(vehicleController.GetERSGeneratedPercentage(), 1, 1);
     }
 }

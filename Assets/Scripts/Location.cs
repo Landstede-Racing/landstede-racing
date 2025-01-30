@@ -1,4 +1,4 @@
-public enum Location 
+public enum Location
 {
     MGU_K,
     MGU_H,
@@ -16,6 +16,5 @@ public enum Location
     RearLeftWheel,
     RearRightWheel,
     LeftSidepod,
-    RightSidepod,
-    
+    RightSidepod
 }

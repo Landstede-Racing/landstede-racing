@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EngineAudio : MonoBehaviour
@@ -13,18 +12,20 @@ public class EngineAudio : MonoBehaviour
     public AudioSource idleSound;
     public float idleMaxVolume;
     public float speedRatio;
-    private float revLimiter;
     public float LimiterSound = 1f;
     public float LimiterFrequency = 3f;
     public float LimiterEngage = 0.8f;
-    public bool isEngineRunning = false;
+    public bool isEngineRunning;
 
     public AudioSource startingSound;
 
 
     private VehicleController carController;
+
+    private float revLimiter;
+
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         carController = GetComponent<VehicleController>();
         idleSound.volume = 0;
@@ -33,7 +34,7 @@ public class EngineAudio : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         float speedSign = 0;
         if (carController)
@@ -41,10 +42,9 @@ public class EngineAudio : MonoBehaviour
             speedSign = Mathf.Sign(carController.GetSpeedRatio());
             speedRatio = Mathf.Abs(carController.GetSpeedRatio());
         }
+
         if (speedRatio > LimiterEngage)
-        {
             revLimiter = (Mathf.Sin(Time.time * LimiterFrequency) + 1f) * LimiterSound * (speedRatio - LimiterEngage);
-        }
         if (isEngineRunning)
         {
             idleSound.volume = Mathf.Lerp(0.1f, idleMaxVolume, speedRatio);
@@ -67,6 +67,7 @@ public class EngineAudio : MonoBehaviour
             runningSound.volume = 0;
         }
     }
+
     public IEnumerator StartEngine()
     {
         startingSound.Play();
@@ -75,7 +76,7 @@ public class EngineAudio : MonoBehaviour
 
         isEngineRunning = true;
         yield return new WaitForSeconds(0.4f);
-        
+
         carController.isEngineRunning = 2;
     }
 }

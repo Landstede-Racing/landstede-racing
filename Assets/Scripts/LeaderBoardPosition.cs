@@ -1,109 +1,125 @@
 using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
 using Unity.Netcode;
+using UnityEngine;
 using UnityEngine.UI;
+using GameObject = UnityEngine.GameObject;
 
 public class LeaderBoardPosition : NetworkBehaviour
 {
-    private List<PlayerStats> _players = new();
-
     public int test = 1;
 
     [SerializeField] private ScrollRect leaderBoard;
     [SerializeField] private GameObject playerData;
-
-    public override void OnNetworkSpawn()
-    {
-        List<GameObject> players = GameObject.FindGameObjectsWithTag("Player").ToList();
-        Debug.Log(players.Count);
-        for (int i = 0; i < players.Count; i++)
-        {
-            PlayerStats playerInfo = players[i].GetComponent<PlayerStats>();
-            AddPlayer(playerInfo, i + 1);
-        }
-    }
+    private List<PlayerStats> _players = new();
+    private List<PlayerInfo> playersInfo = new();
 
     private void Update()
     {
-        switch(Input.inputString)
+        switch (Input.inputString)
         {
-            case "L":
+            case "l":
                 StartRace();
                 break;
             case "K":
-                for (int player = 0; player < _players.Count; player++)
-                {
-                    for (int i = player + 1; i < _players[player].playerTimings.Count; i++)
-                    {
-                        Debug.Log(_players[player].NetworkObjectId + ", " + _players[player].playerTimings[i].Timing);
-                    }
-                }
+                for (var player = 0; player < _players.Count; player++)
+                for (var i = player + 1; i < _players[player].playerTimings.Count; i++)
+                    Debug.Log(_players[player].GetComponent<NetworkObject>().NetworkObjectId + ", " +
+                              _players[player].playerTimings[i].Timing);
+
                 break;
         }
     }
 
-    public void UpdateLeaderBoard()
+    public override void OnNetworkSpawn()
     {
-        List<PlayerStats> players = _players.OrderBy(s => s.playerTimings[^1].Lap).ThenBy(s => s.playerTimings[^1].SectorId).ThenBy(s => s.playerTimings[^1].Timing).ToList(); // .ThenBy(s => s.totalDriveTime)
-        bool isEqual = true;
-        string leaderboardString = "";
-        
+        StartRace();
+    }
+
+    [Rpc(SendTo.Server)]
+    public void UpdateLeaderBoardServerRpc()
+    {
+        if (!IsServer) return;
+        var players = _players.OrderBy(s => s.playerTimings[^1].Timing).ThenBy(s => s.playerTimings[^1].SectorId)
+            .ThenBy(s => s.playerTimings[^1].Lap).ToList();
+        var isEqual = true;
+        var leaderboardString = "";
+
         isEqual = _players.SequenceEqual(players);
-        
-        if (isEqual)
+
+        if (isEqual) _players = players;
+
+        for (var i = 0; i < _players.Count; i++)
         {
-            _players = players;
-            //TODO: implement a function that updates the leaderboard on screen when people change position
-        }
-    
-        for(int i = 0; i < _players.Count; i++)
-        {
-            if(leaderboardString != "") leaderboardString += ", ";
-            PlayerStats player = _players[i];
+            if (leaderboardString != "") leaderboardString += ", ";
+            var player = _players[i];
             player.position = i + 1;
             leaderboardString += $"#{player.position} {player.name}";
         }
-        
+
         Debug.Log(leaderboardString);
+
+        StatsToInfo(_players);
         
-        UpdateLeaderBoardGUI();
+        Debug.Log(">>>>>>>>>>>>>>>>>>>>>>>>>>>> PlayerTime:" + playersInfo[0].time);
+
+        UpdateLeaderBoardGUIClientRpc(playersInfo.ToArray());
     }
 
     public void AddPlayer(PlayerStats player)
     {
-        GameObject newPlayerData = Instantiate(playerData, leaderBoard.content);
+        var newPlayerData = Instantiate(playerData, leaderBoard.content);
         _players.Add(player);
-        newPlayerData.GetComponent<PlayerPositionUI>().UpdateUI(player);
+        newPlayerData.GetComponent<PlayerPositionUI>()
+            .UpdateUI(new PlayerInfo(player.position, player.name, player.time, player.tire));
     }
-    
+
     public void AddPlayer(PlayerStats player, int position)
     {
-        GameObject newPlayerData = Instantiate(playerData, leaderBoard.content);
+        var newPlayerData = Instantiate(playerData, leaderBoard.content);
         _players.Add(player);
         player.position = position;
-        newPlayerData.GetComponent<PlayerPositionUI>().UpdateUI(player);
+        newPlayerData.GetComponent<PlayerPositionUI>()
+            .UpdateUI(new PlayerInfo(player.position, player.name, player.time, player.tire));
     }
 
-    private void UpdateLeaderBoardGUI()
+    [Rpc(SendTo.ClientsAndHost)]
+    private void UpdateLeaderBoardGUIClientRpc(PlayerInfo[] players)
     {
+        playersInfo = new List<PlayerInfo>(players);
         if (leaderBoard == null) return;
 
-        for (int player = 0; player < leaderBoard.content.transform.childCount; player++)
+        for (var player = 0; player < leaderBoard.content.transform.childCount; player++)
         {
-            Transform go = leaderBoard.content.transform;
+            var go = leaderBoard.content.transform;
 
-            for (int index = 0; index < go.childCount; index++)
-            {
-                go.GetChild(index).gameObject.GetComponent<PlayerPositionUI>().UpdateUI(_players[index]);
-            }
+            for (var index = 0; index < go.childCount; index++)
+                go.GetChild(index).gameObject.GetComponent<PlayerPositionUI>().UpdateUI(playersInfo[index]);
         }
-        
+
         Debug.Log(leaderBoard.content.transform.childCount);
     }
 
+
     public void StartRace()
     {
-        
+        var players = GameObject.FindGameObjectsWithTag("Player").ToList();
+        Debug.Log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>PlayerCount: " + players.Count);
+        for (var i = 0; i < players.Count; i++)
+        {
+            var playerInfo = players[i].GetComponent<PlayerStats>();
+            AddPlayer(playerInfo, i + 1);
+        }
+    }
+
+    private void StatsToInfo(List<PlayerStats> players)
+    {
+        playersInfo.Clear();
+
+        foreach (var player in players)
+        {
+            playersInfo.Add(new PlayerInfo(player.position, player.name, player.playerTimings[^1].Timing, player.tire));
+            Debug.Log(player.playerTimings[^1].Timing);
+        }
     }
 }

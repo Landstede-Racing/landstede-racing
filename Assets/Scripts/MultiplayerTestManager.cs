@@ -4,12 +4,16 @@ using UnityEngine.UIElements;
 
 public class MultiplayerTestManager : MonoBehaviour
 {
-    private VisualElement _rootVisualElement;
-    private Button _hostButton;
     private Button _clientButton;
+    private Button _hostButton;
+    private VisualElement _rootVisualElement;
     private Button _serverButton;
-    private Button _moveButton;
     private Label _statusLabel;
+
+    private void Update()
+    {
+        UpdateUI();
+    }
 
     private void OnEnable()
     {
@@ -19,25 +23,17 @@ public class MultiplayerTestManager : MonoBehaviour
         _hostButton = CreateButton("HostButton", "Host");
         _clientButton = CreateButton("ClientButton", "Client");
         _serverButton = CreateButton("ServerButton", "Server");
-        _moveButton = CreateButton("MoveButton", "Move");
         _statusLabel = CreateLabel("StatusLabel", "Not Connected");
 
         _rootVisualElement.Clear();
         _rootVisualElement.Add(_hostButton);
         _rootVisualElement.Add(_clientButton);
         _rootVisualElement.Add(_serverButton);
-        _rootVisualElement.Add(_moveButton);
         _rootVisualElement.Add(_statusLabel);
 
         _hostButton.clicked += OnHostButtonClicked;
         _clientButton.clicked += OnClientButtonClicked;
         _serverButton.clicked += OnServerButtonClicked;
-        _moveButton.clicked += SubmitNewPosition;
-    }
-
-    void Update()
-    {
-        UpdateUI();
     }
 
     private void OnDisable()
@@ -45,17 +41,23 @@ public class MultiplayerTestManager : MonoBehaviour
         _hostButton.clicked -= OnHostButtonClicked;
         _clientButton.clicked -= OnClientButtonClicked;
         _serverButton.clicked -= OnServerButtonClicked;
-        _moveButton.clicked -= SubmitNewPosition;
     }
 
-    private static void OnHostButtonClicked() => NetworkManager.Singleton.StartHost();
+    private static void OnHostButtonClicked()
+    {
+        NetworkManager.Singleton.StartHost();
+    }
 
-    private static void OnClientButtonClicked() => NetworkManager.Singleton.StartClient();
+    private static void OnClientButtonClicked()
+    {
+        NetworkManager.Singleton.StartClient();
+    }
 
-    private static void OnServerButtonClicked() => NetworkManager.Singleton.StartServer();
+    private static void OnServerButtonClicked()
+    {
+        NetworkManager.Singleton.StartServer();
+    }
 
-    // Disclaimer: This is not the recommended way to create and stylize the UI elements, it is only utilized for the sake of simplicity.
-    // The recommended way is to use UXML and USS. Please see this link for more information: https://docs.unity3d.com/Manual/UIE-USS.html
     private static Button CreateButton(string name, string text)
     {
         var button = new Button
@@ -93,7 +95,6 @@ public class MultiplayerTestManager : MonoBehaviour
         if (!NetworkManager.Singleton)
         {
             SetStartButtons(false);
-            SetMoveButton(false);
             SetStatusText("NetworkManager not found");
             return;
         }
@@ -101,13 +102,11 @@ public class MultiplayerTestManager : MonoBehaviour
         if (!NetworkManager.Singleton.IsClient && !NetworkManager.Singleton.IsServer)
         {
             SetStartButtons(true);
-            SetMoveButton(false);
             SetStatusText("Not connected");
         }
         else
         {
             SetStartButtons(false);
-            SetMoveButton(true);
             UpdateStatusLabels();
         }
     }
@@ -119,41 +118,16 @@ public class MultiplayerTestManager : MonoBehaviour
         _serverButton.style.display = state ? DisplayStyle.Flex : DisplayStyle.None;
     }
 
-    private void SetMoveButton(bool state)
+    private void SetStatusText(string text)
     {
-        _moveButton.style.display = state ? DisplayStyle.Flex : DisplayStyle.None;
-        if (state)
-        {
-            _moveButton.text = NetworkManager.Singleton.IsServer ? "Move" : "Request Position Change";
-        }
+        _statusLabel.text = text;
     }
-
-    private void SetStatusText(string text) => _statusLabel.text = text;
 
     private void UpdateStatusLabels()
     {
         var mode = NetworkManager.Singleton.IsHost ? "Host" : NetworkManager.Singleton.IsServer ? "Server" : "Client";
-        string transport = "Transport: " + NetworkManager.Singleton.NetworkConfig.NetworkTransport.GetType().Name;
-        string modeText = "Mode: " + mode;
+        var transport = "Transport: " + NetworkManager.Singleton.NetworkConfig.NetworkTransport.GetType().Name;
+        var modeText = "Mode: " + mode;
         SetStatusText($"{transport}\n{modeText}");
-    }
-
-    void SubmitNewPosition()
-    {
-        if (NetworkManager.Singleton.IsServer && !NetworkManager.Singleton.IsClient)
-        {
-            foreach (ulong uid in NetworkManager.Singleton.ConnectedClientsIds)
-            {
-                var playerObject = NetworkManager.Singleton.SpawnManager.GetPlayerNetworkObject(uid);
-                var player = playerObject.GetComponent<MultiplayerTestPlayer>();
-                player.Move();
-            }
-        }
-        else if (NetworkManager.Singleton.IsClient)
-        {
-            var playerObject = NetworkManager.Singleton.SpawnManager.GetLocalPlayerObject();
-            var player = playerObject.GetComponent<MultiplayerTestPlayer>();
-            player.Move();
-        }
     }
 }

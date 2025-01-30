@@ -1,56 +1,63 @@
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using LandstedeRacing.Types;
 using Unity.Netcode;
 using UnityEngine;
-using Unity.VisualScripting;
-using LandstedeRacing.Components.Stopwatch;
-using LandstedeRacing.Types;
+using Random = UnityEngine.Random;
 
-public class PlayerStats : NetworkBehaviour
+[Serializable]
+public class PlayerStats : NetworkBehaviour, INetworkSerializeByMemcpy
 {
-    [SerializeField] private Rigidbody rb;
+    public List<PlayerTiming> playerTimings = new();
 
-    [DoNotSerialize] public Stopwatch stopwatch = new();
-    
-    [DoNotSerialize] public List<PlayerTiming> playerTimings = new();
-    
-    [DoNotSerialize] public int position = 0;
+    public int position;
 
-    [DoNotSerialize] public long totalDriveTime = 0;
+    public long totalDriveTime;
 
     public string shortName;
     public float time;
     public string tire;
-    
-    
+    private Rigidbody rb;
+
+    public Stopwatch stopwatch = new();
 
     private void Start()
     {
         shortName = Random.Range(0, 999).ToString();
-        time = Random.Range(0f, 3f);
+        // time = Random.Range(0f, 3f);
+        time = 0;
         tire = RandomTire(Random.Range(0, 2));
     }
 
     public override void OnNetworkSpawn()
     {
-        playerTimings.Add(new(NetworkObjectId, 999999999, 0, 0));
+        playerTimings.Add(new PlayerTiming(NetworkObjectId, 999999999, 0, 0));
 
         name = NetworkObjectId.ToString();
     }
 
-    public void NewTiming(int sectorId)
-    {
-        PlayerTiming playerTiming = new(NetworkObjectId, stopwatch.ElapsedMilliseconds, sectorId, 1);
-        playerTimings.Add(playerTiming);
-        stopwatch.Restart();
-        totalDriveTime = totalDriveTime + stopwatch.ElapsedMilliseconds;
-        // Debug.Log(playerTimings[playerTimings.Count - 1].NetworkId + ", " + playerTimings[playerTimings.Count - 1].Timing);
-    }
-    
+    // public void NewTiming(int sectorId)
+    // {
+    //     PlayerTiming playerTiming = new(NetworkObjectId, stopwatch.ElapsedMilliseconds, sectorId, 1);
+    //     playerTimings.Add(playerTiming);
+    //     stopwatch.Restart();
+    //     totalDriveTime = totalDriveTime + stopwatch.ElapsedMilliseconds;
+    //     // Debug.Log(playerTimings[playerTimings.Count - 1].NetworkId + ", " + playerTimings[playerTimings.Count - 1].Timing);
+    // }
+
     public void NewTiming(int sectorId, bool lapUp)
     {
-        PlayerTiming playerTiming = new(NetworkObjectId, stopwatch.ElapsedMilliseconds, sectorId, playerTimings[^1].Lap + 1);
+        PlayerTiming playerTiming;
+        if (lapUp)
+            playerTiming = new PlayerTiming(NetworkObjectId, stopwatch.ElapsedMilliseconds, sectorId,
+                playerTimings[^1].Lap + 1);
+        else
+            playerTiming = new PlayerTiming(NetworkObjectId, stopwatch.ElapsedMilliseconds, sectorId,
+                playerTimings[^1].Lap);
         playerTimings.Add(playerTiming);
         stopwatch.Restart();
+        time = stopwatch.ElapsedMilliseconds;
         totalDriveTime = totalDriveTime + stopwatch.ElapsedMilliseconds;
         // Debug.Log(playerTimings[playerTimings.Count - 1].NetworkId + ", " + playerTimings[playerTimings.Count - 1].Timing);
     }
