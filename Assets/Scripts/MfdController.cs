@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VectorGraphics;
 using UnityEngine;
 
@@ -11,6 +12,7 @@ public enum Page
 
 public class MfdController : MonoBehaviour
 {
+    public GameObject optionsMfd;
     public GameObject heatMfd;
     public GameObject damageMfd;
     public DamagablePart[] damageableParts;
@@ -25,6 +27,9 @@ public class MfdController : MonoBehaviour
 
     private Dictionary<GameObject, DamagablePart> mfdPartMapDamage = new();
     private Dictionary<GameObject, DamagablePart> mfdPartMapHeat = new();
+    [SerializeField] private MFDStepper[] mfdSteppers;
+    private bool wasReleased;
+    private int selectedStepper = 0;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -136,7 +141,78 @@ public class MfdController : MonoBehaviour
             }
         }
 
+        if(optionsMfd.activeSelf) {
+            MFDStepper stepper = mfdSteppers[selectedStepper];
+            switch (SettingsController.DeviceController)
+            {
+                case 1:
+                    if (Input.GetKeyDown(KeyCode.LeftArrow)) {
+                        if(wasReleased) stepper.Previous();
+                        wasReleased = false;
+                    }
+                    else if (Input.GetKeyDown(KeyCode.RightArrow)) {
+                        if(wasReleased) stepper.Next();
+                        wasReleased = false;
+                    }
+                    else if (Input.GetKeyDown(KeyCode.UpArrow)) {
+                        if(wasReleased) {
+                            stepper.SelectPrevious();
+                            UpdateSelectedStepper();
+                        }
+                        wasReleased = false;
+                    }
+                    else if (Input.GetKeyDown(KeyCode.DownArrow)) {
+                        if(wasReleased) {
+                            stepper.SelectNext();
+                            UpdateSelectedStepper();
+                        }
+                        wasReleased = false;
+                    }
+                    else wasReleased = true;
+                    break;
+                case 2:
+                    if(LogitechGSDK.LogiIsConnected(0)) {
+                        switch (LogitechGSDK.LogiGetStateUnity(0).rgdwPOV[0])
+                        {
+                            case 27000:
+                                if(wasReleased) stepper.Previous();
+                                wasReleased = false;
+                                break;
+                            case 9000:
+                                if(wasReleased) stepper.Next();
+                                wasReleased = false;
+                                break;
+                            case 0:
+                                if(wasReleased) {
+                                    stepper.SelectPrevious();
+                                    UpdateSelectedStepper();
+                                }
+                                wasReleased = false;
+                                break;
+                            case 18000:
+                                if(wasReleased) {
+                                    stepper.SelectNext();
+                                    UpdateSelectedStepper();
+                                }
+                                wasReleased = false;
+                                break;
+                            default:
+                                wasReleased = true;
+                                break;
+                        }
+                    }
+                    break;
+            }
+        }
+
         if(Input.GetKeyDown(KeyCode.B)) NextPage();
+    }
+
+    private void UpdateSelectedStepper() {
+        for (int i = 0; i < mfdSteppers.Length; i++)
+        {
+            if(mfdSteppers[i].selected) selectedStepper = i;
+        }
     }
 
     public void UpdateIndicators() {
