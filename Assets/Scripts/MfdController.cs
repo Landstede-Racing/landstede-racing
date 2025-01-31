@@ -16,6 +16,7 @@ public class MfdController : MonoBehaviour
     public DamagablePart[] damageableParts;
     public GameObject car;
     public int currentPage;
+    private GameObject activePage;
     public GameObject[] pages;
     public GameObject pagesIndicator;
     public GameObject mainBackground;
@@ -161,15 +162,15 @@ public class MfdController : MonoBehaviour
             page.SetActive(false);
         }
 
-        if(currentPage > 0) pages[currentPage - 1].SetActive(true);
+        if(currentPage > 0) {
+            activePage = pages[currentPage - 1];
+            activePage.SetActive(true);
+        } else activePage = null;
 
-        if(currentPage == 0) {
-            mainBackground.SetActive(false);
-            pagesBackground.transform.position = pagesBackgroundStartPosition - new Vector3(0, 337.7f, 0);
-        } else {
-            mainBackground.SetActive(true);
-            pagesBackground.transform.position = pagesBackgroundStartPosition;
-        }
+        mainBackground.SetActive(activePage != null);
+        Rect rect = mainBackground.GetComponent<RectTransform>().rect;
+        mainBackground.GetComponent<RectTransform>().rect.Set(rect.x, rect.y, rect.width, activePage != null ? activePage.GetComponent<RectTransform>().rect.height : 0);
+        pagesBackground.transform.position = pagesBackgroundStartPosition + new Vector3(0, activePage != null ? activePage.GetComponent<RectTransform>().rect.height : 0, 0);
 
         UpdateIndicators();
     }
