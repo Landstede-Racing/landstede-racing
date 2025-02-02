@@ -132,7 +132,7 @@ public class MfdController : MonoBehaviour
             colorKeys[3] = new GradientColorKey(color4, 0);
 
             gradient.SetKeys(colorKeys, new GradientAlphaKey[0]);
-            mfdpart.GetComponent<SVGImage>().color = gradient.Evaluate(heatPercentage / 100f);
+            mfdpart.GetComponent<SVGImage>().color = gradient.Evaluate(heatPercentage / 100f);  
             
             if(!tempsPageIndicator.warning && !tempsPageIndicator.critical && heatPercentage > 50) tempsPageIndicator.warning = true;
             if(!tempsPageIndicator.critical && heatPercentage > 75) {
@@ -141,7 +141,7 @@ public class MfdController : MonoBehaviour
             }
         }
 
-        if(optionsMfd.activeSelf) {
+        if(optionsMfd.activeInHierarchy) {
             MFDStepper stepper = mfdSteppers[selectedStepper];
             switch (SettingsController.DeviceController)
             {
@@ -155,17 +155,11 @@ public class MfdController : MonoBehaviour
                         wasReleased = false;
                     }
                     else if (Input.GetKeyDown(KeyCode.UpArrow)) {
-                        if(wasReleased) {
-                            stepper.SelectPrevious();
-                            UpdateSelectedStepper();
-                        }
+                        if(wasReleased) SelectStepper(selectedStepper - 1);
                         wasReleased = false;
                     }
                     else if (Input.GetKeyDown(KeyCode.DownArrow)) {
-                        if(wasReleased) {
-                            stepper.SelectNext();
-                            UpdateSelectedStepper();
-                        }
+                        if(wasReleased) SelectStepper(selectedStepper + 1);
                         wasReleased = false;
                     }
                     else wasReleased = true;
@@ -183,17 +177,11 @@ public class MfdController : MonoBehaviour
                                 wasReleased = false;
                                 break;
                             case 0:
-                                if(wasReleased) {
-                                    stepper.SelectPrevious();
-                                    UpdateSelectedStepper();
-                                }
+                                if(wasReleased) SelectStepper(selectedStepper - 1);
                                 wasReleased = false;
                                 break;
                             case 18000:
-                                if(wasReleased) {
-                                    stepper.SelectNext();
-                                    UpdateSelectedStepper();
-                                }
+                                if(wasReleased) SelectStepper(selectedStepper + 1);
                                 wasReleased = false;
                                 break;
                             default:
@@ -208,11 +196,13 @@ public class MfdController : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.B)) NextPage();
     }
 
-    private void UpdateSelectedStepper() {
-        for (int i = 0; i < mfdSteppers.Length; i++)
-        {
-            if(mfdSteppers[i].selected) selectedStepper = i;
-        }
+    private void SelectStepper(int index)
+    {
+        if(index < 0) index = mfdSteppers.Length - 1;
+        if(index >= mfdSteppers.Length) index = 0;
+        mfdSteppers[selectedStepper].SetSelected(false);
+        selectedStepper = index;
+        mfdSteppers[selectedStepper].SetSelected(true);
     }
 
     public void UpdateIndicators() {
@@ -244,8 +234,6 @@ public class MfdController : MonoBehaviour
         } else activePage = null;
 
         mainBackground.SetActive(activePage != null);
-        Rect rect = mainBackground.GetComponent<RectTransform>().rect;
-        mainBackground.GetComponent<RectTransform>().rect.Set(rect.x, rect.y, rect.width, activePage != null ? activePage.GetComponent<RectTransform>().rect.height : 0);
         pagesBackground.transform.position = pagesBackgroundStartPosition + new Vector3(0, activePage != null ? activePage.GetComponent<RectTransform>().rect.height : 0, 0);
 
         UpdateIndicators();

@@ -10,9 +10,17 @@ public enum MFDStepperType
     OPTIONS
 }
 
+public enum MFDStepperAction
+{
+    BRAKE_BIAS,
+    DIFFERENTIAL,
+    ERS_DEPLOY
+}
+
 public class MFDStepper : MonoBehaviour
 {
     public MFDStepperType stepperType;
+    public MFDStepperAction action;
     public string[] options;
     public int intMax;
     public int value;
@@ -20,6 +28,7 @@ public class MFDStepper : MonoBehaviour
     [SerializeField] private SVGImage rightArrow;
     [SerializeField] private Image background;
     [SerializeField] private TMP_Text optionText;
+    [SerializeField] private VehicleController vehicleController;
     public bool selected;
 
     [SerializeField] private Color arrowColor = new(1, 1, 1, 1);
@@ -27,8 +36,32 @@ public class MFDStepper : MonoBehaviour
     [SerializeField] private Color selectedColor = new(0.31f, 0.31f, 0.31f, 0.7f);
     [SerializeField] private Color unselectedColor = new(0.25f, 0.25f, 0.25f, 0.7f);
 
-    private void Awake() {
-        UpdateUI();
+    private void Start() {
+        SetValue(value);
+    }
+
+    void FixedUpdate()
+    {
+        switch (action)
+        {
+            case MFDStepperAction.BRAKE_BIAS:
+                UpdateValue(Mathf.RoundToInt(vehicleController.GetBrakeBias() * 100));
+                break;
+            // case MFDStepperAction.DIFFERENTIAL:
+            //     value = vehicleController.GetDifferential();
+            //     break;
+            case MFDStepperAction.ERS_DEPLOY:
+                UpdateValue(vehicleController.GetERSMode());
+                break;
+            default:
+                break;
+        }
+    }
+
+    void UpdateValue(int newValue) {
+        if(newValue != value) {
+            SetValue(newValue);
+        }
     }
 
     void UpdateUI() {
@@ -51,18 +84,6 @@ public class MFDStepper : MonoBehaviour
     public void SetSelected(bool value) {
         selected = value;
         UpdateUI();
-    }
-
-    public void SelectNext() {
-        int childIndex = transform.GetSiblingIndex();
-        transform.parent.GetChild(childIndex < transform.parent.childCount - 1 ? childIndex + 1 : 0).GetComponent<MFDStepper>().SetSelected(true);
-        SetSelected(false);
-    }
-
-    public void SelectPrevious() {
-        int childIndex = transform.GetSiblingIndex();
-        transform.parent.GetChild(childIndex > 0 ? childIndex - 1 : transform.parent.childCount - 1).GetComponent<MFDStepper>().SetSelected(true);
-        SetSelected(false);
     }
 
     public void Next()
@@ -92,6 +113,22 @@ public class MFDStepper : MonoBehaviour
         else if (stepperType == MFDStepperType.OPTIONS && option >= options.Length)
         {
             option = options.Length - 1;
+        }
+
+        switch (action)
+        {
+            case MFDStepperAction.BRAKE_BIAS:
+                vehicleController.SetBrakeBias(option / 100f);
+                Debug.Log(vehicleController.GetBrakeBias());
+                break;
+            // case MFDStepperAction.DIFFERENTIAL:
+            //     vehicleController.SetDifferential(option);
+            //     break;
+            case MFDStepperAction.ERS_DEPLOY:
+                vehicleController.SetERSMode(option);
+                break;
+            default:
+                break;
         }
 
         value = option;
