@@ -2,6 +2,8 @@ using System;
 using System.Linq;
 using NUnit.Framework;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.HighDefinition;
 
 public class WeatherController : MonoBehaviour
 {
@@ -11,6 +13,7 @@ public class WeatherController : MonoBehaviour
     public GameObject rainFallSystem;
     public bool isRaining = false;
     public float timeRaining = 0;
+    public VolumeProfile volumeProfile;
 
     public float maxRainTime = 60;
 
@@ -30,11 +33,9 @@ public class WeatherController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        UpdateClouds();
 
-        if (rainFallSystem.activeSelf == true)
-        {
-            isRaining = true;
-        }
+        isRaining = rainFallSystem.activeSelf;
 
         if (trackGrounds.Length > 0)
         {
@@ -46,7 +47,7 @@ public class WeatherController : MonoBehaviour
                     // Debug.Log("Track renderer found");
                     foreach (Material mat in trackRenderer.materials)
                     {
-                        if (mat.shader == Shader.Find("Shader Graphs/AsphaltShader"))
+                        if (mat.shader == Shader.Find("Shader Graphs/NewAsphaltShader"))
                         {
                             mat.SetFloat("_Smoothness", matDefaultSmoothess + GetRainTimer());
                         }
@@ -55,6 +56,17 @@ public class WeatherController : MonoBehaviour
             }
         }
 
+    }
+
+    public void UpdateClouds() {
+        if(volumeProfile.TryGet<VolumetricClouds>(out var clouds)) {
+            clouds.cloudPreset = isRaining ? VolumetricClouds.CloudPresets.Overcast : VolumetricClouds.CloudPresets.Sparse;
+        }
+        if(volumeProfile.TryGet<CloudLayer>(out var cloudLayer)) {
+            CloudLayer.CloudMap layer = cloudLayer.layerA;
+            layer.opacityA.value = isRaining ? 1 : 0;
+            layer.opacityR.value = isRaining ? 0 : 1;
+        }
     }
 
     void FixedUpdate()
