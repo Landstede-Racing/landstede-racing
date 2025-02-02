@@ -53,7 +53,9 @@ public class LogitechSteeringWheel : MonoBehaviour
         forcesLabel += "Set example controller properties : PageUp\n";
         forcesLabel += "Play Leds : P\n";
         activeForceAndEffect = new string[9];
-        Debug.Log("SteeringInit:" + LogitechGSDK.LogiSteeringInitialize(false));
+        if(SettingsController.DeviceController == 2) {
+            Debug.Log("SteeringInit:" + LogitechGSDK.LogiSteeringInitialize(false));
+        }
     }
 
     void OnApplicationQuit()

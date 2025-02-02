@@ -79,7 +79,7 @@ public class SettingsController : MonoBehaviour
     public ScrollRect controlScrollView;
 
     public TMP_Dropdown controllerDropdown;
-    public static int DeviceController { get; set; } = 2;
+    public static int DeviceController { get; set; } = 1;
     public Text connectedDeviceText;
     private bool listening = false;
     private int listeningForControl = -1;
@@ -88,7 +88,6 @@ public class SettingsController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        LogitechGSDK.LogiSteeringInitialize(false);
         int currentResolutionIndex = 0;
         if(resolutionDropdown != null) {
             resolutionDropdown.ClearOptions();
@@ -165,6 +164,9 @@ public class SettingsController : MonoBehaviour
     public void SetDevice(int deviceIndex)
     {
         DeviceController = deviceIndex;
+        if(deviceIndex == 2) {
+            LogitechGSDK.LogiSteeringInitialize(false);
+        }
     }
 
 
