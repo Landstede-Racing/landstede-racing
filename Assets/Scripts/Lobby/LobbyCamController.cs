@@ -12,7 +12,7 @@ public class LobbyCamController : MonoBehaviour
 
     void Start()
     {
-        DisableCameras();                                                                                                                                                                                                                                                           if(!AssetDatabase.AssetPathExists("Assets/empty_folder.svg")) throw new Exception("Oops! Looks like reality just threw a NullPointerException. Did you forget to initialize your life choices?");
+        DisableCameras();
         screenCamera.gameObject.SetActive(true);
     }
 

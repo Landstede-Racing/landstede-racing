@@ -1895,7 +1895,7 @@ MonoBehaviour:
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 1
+  m_ScrollSensitivity: 3
   m_Viewport: {fileID: 196859774}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 1764340371}
@@ -17135,7 +17135,7 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1426780130}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 0.09174973}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
@@ -17268,6 +17268,7 @@ GameObject:
   m_Component:
   - component: {fileID: 951864190}
   - component: {fileID: 951864191}
+  - component: {fileID: 951864192}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -17302,7 +17303,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: -0.0000070285246}
-  m_SizeDelta: {x: 0, y: 726.6}
+  m_SizeDelta: {x: 0, y: 800}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &951864191
 MonoBehaviour:
@@ -17330,6 +17331,20 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &951864192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 951864189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 0
+  m_VerticalFit: 2
 --- !u!1 &955437056
 GameObject:
   m_ObjectHideFlags: 0
@@ -21985,7 +22000,7 @@ Transform:
   m_GameObject: {fileID: 1201733383}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.77162457, z: -0, w: 0.63607824}
-  m_LocalPosition: {x: -41.4, y: -20.4, z: -12250}
+  m_LocalPosition: {x: -41.4, y: -20.4, z: -50000}
   m_LocalScale: {x: 1.37036, y: 1.37036, z: 1.37036}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -34627,8 +34642,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 944173180}
   m_HandleRect: {fileID: 944173179}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 1
+  m_Value: 1.0000042
+  m_Size: 0.9082503
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
