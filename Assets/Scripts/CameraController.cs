@@ -6,7 +6,6 @@ public class CameraController : MonoBehaviour
     public Camera[] reverseCameras;
     public int currentCam;
     bool reverse = false;
-    // Test
 
     public void SetCamera(int camera) {
         if(currentCam >= cameras.Length) camera = cameras.Length - 1;
