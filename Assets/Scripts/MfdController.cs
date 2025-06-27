@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VectorGraphics;
 using UnityEngine;
 
@@ -11,11 +12,13 @@ public enum Page
 
 public class MfdController : MonoBehaviour
 {
+    public GameObject optionsMfd;
     public GameObject heatMfd;
     public GameObject damageMfd;
     public DamagablePart[] damageableParts;
     public GameObject car;
     public int currentPage;
+    private GameObject activePage;
     public GameObject[] pages;
     public GameObject pagesIndicator;
     public GameObject mainBackground;
@@ -24,6 +27,9 @@ public class MfdController : MonoBehaviour
 
     private Dictionary<GameObject, DamagablePart> mfdPartMapDamage = new();
     private Dictionary<GameObject, DamagablePart> mfdPartMapHeat = new();
+    [SerializeField] private MFDStepper[] mfdSteppers;
+    private bool wasReleased;
+    private int selectedStepper = 0;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -126,7 +132,7 @@ public class MfdController : MonoBehaviour
             colorKeys[3] = new GradientColorKey(color4, 0);
 
             gradient.SetKeys(colorKeys, new GradientAlphaKey[0]);
-            mfdpart.GetComponent<SVGImage>().color = gradient.Evaluate(heatPercentage / 100f);
+            mfdpart.GetComponent<SVGImage>().color = gradient.Evaluate(heatPercentage / 100f);  
             
             if(!tempsPageIndicator.warning && !tempsPageIndicator.critical && heatPercentage > 50) tempsPageIndicator.warning = true;
             if(!tempsPageIndicator.critical && heatPercentage > 75) {
@@ -135,7 +141,68 @@ public class MfdController : MonoBehaviour
             }
         }
 
+        if(optionsMfd.activeInHierarchy) {
+            MFDStepper stepper = mfdSteppers[selectedStepper];
+            switch (SettingsController.DeviceController)
+            {
+                case 1:
+                    if (Input.GetKeyDown(KeyCode.LeftArrow)) {
+                        if(wasReleased) stepper.Previous();
+                        wasReleased = false;
+                    }
+                    else if (Input.GetKeyDown(KeyCode.RightArrow)) {
+                        if(wasReleased) stepper.Next();
+                        wasReleased = false;
+                    }
+                    else if (Input.GetKeyDown(KeyCode.UpArrow)) {
+                        if(wasReleased) SelectStepper(selectedStepper - 1);
+                        wasReleased = false;
+                    }
+                    else if (Input.GetKeyDown(KeyCode.DownArrow)) {
+                        if(wasReleased) SelectStepper(selectedStepper + 1);
+                        wasReleased = false;
+                    }
+                    else wasReleased = true;
+                    break;
+                case 2:
+                    if(LogitechGSDK.LogiIsConnected(0)) {
+                        switch (LogitechGSDK.LogiGetStateUnity(0).rgdwPOV[0])
+                        {
+                            case 27000:
+                                if(wasReleased) stepper.Previous();
+                                wasReleased = false;
+                                break;
+                            case 9000:
+                                if(wasReleased) stepper.Next();
+                                wasReleased = false;
+                                break;
+                            case 0:
+                                if(wasReleased) SelectStepper(selectedStepper - 1);
+                                wasReleased = false;
+                                break;
+                            case 18000:
+                                if(wasReleased) SelectStepper(selectedStepper + 1);
+                                wasReleased = false;
+                                break;
+                            default:
+                                wasReleased = true;
+                                break;
+                        }
+                    }
+                    break;
+            }
+        }
+
         if(Input.GetKeyDown(KeyCode.B)) NextPage();
+    }
+
+    private void SelectStepper(int index)
+    {
+        if(index < 0) index = mfdSteppers.Length - 1;
+        if(index >= mfdSteppers.Length) index = 0;
+        mfdSteppers[selectedStepper].SetSelected(false);
+        selectedStepper = index;
+        mfdSteppers[selectedStepper].SetSelected(true);
     }
 
     public void UpdateIndicators() {
@@ -161,15 +228,13 @@ public class MfdController : MonoBehaviour
             page.SetActive(false);
         }
 
-        if(currentPage > 0) pages[currentPage - 1].SetActive(true);
+        if(currentPage > 0) {
+            activePage = pages[currentPage - 1];
+            activePage.SetActive(true);
+        } else activePage = null;
 
-        if(currentPage == 0) {
-            mainBackground.SetActive(false);
-            pagesBackground.transform.position = pagesBackgroundStartPosition - new Vector3(0, 337.7f, 0);
-        } else {
-            mainBackground.SetActive(true);
-            pagesBackground.transform.position = pagesBackgroundStartPosition;
-        }
+        mainBackground.SetActive(activePage != null);
+        pagesBackground.transform.position = pagesBackgroundStartPosition + new Vector3(0, activePage != null ? activePage.GetComponent<RectTransform>().rect.height : 0, 0);
 
         UpdateIndicators();
     }

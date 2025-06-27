@@ -22,6 +22,7 @@ public class VehicleController : MonoBehaviour
     public float gas = 0;
     public float brake = 0;
     public AnimationCurve brakingCurve;
+    public float brakeBias;
 
     [Header("DRS")]
     public bool drsAvailable;
@@ -274,7 +275,11 @@ public class VehicleController : MonoBehaviour
         foreach (var wheel in wheels)
         {
             // TODO: Front Brake Bias
-            wheel.WheelCollider.brakeTorque = brake * CalculateBrakingTorque();
+            if(wheel.steerable) {
+                wheel.WheelCollider.brakeTorque = brake * 2 * brakeBias * CalculateBrakingTorque();
+            } else {
+                wheel.WheelCollider.brakeTorque = brake * 2 * (100 - brakeBias) * CalculateBrakingTorque();
+            }
         }
     }
 
@@ -373,6 +378,16 @@ public class VehicleController : MonoBehaviour
         return Math.Abs(Vector3.Dot(transform.forward, rigidBody.linearVelocity) * 3.6f);
     }
 
+    public void SetBrakeBias(float bias)
+    {
+        brakeBias = bias;
+    }
+
+    public float GetBrakeBias()
+    {
+        return brakeBias;
+    }
+
     public void SetSteeringAngle(float steeringAngle)
     {
         this.steeringAngle = steeringAngle;
@@ -411,6 +426,11 @@ public class VehicleController : MonoBehaviour
     public void SetERSMode(int mode)
     {
         ERSMode = Math.Clamp(mode, 0, 3);
+    }
+
+    public int GetERSMode()
+    {
+        return ERSMode;
     }
 
     public void ToggleDRS()
