@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.Netcode;
@@ -21,11 +22,11 @@ public class LeaderBoardPosition : NetworkBehaviour
             case "l":
                 StartRace();
                 break;
-            case "K":
+            case "k":
                 for (var player = 0; player < _players.Count; player++)
-                for (var i = player + 1; i < _players[player].playerTimings.Count; i++)
-                    Debug.Log(_players[player].GetComponent<NetworkObject>().NetworkObjectId + ", " +
-                              _players[player].playerTimings[i].Timing);
+                    for (var i = player + 1; i < _players[player].playerTimings.Count; i++)
+                        Debug.Log(_players[player].GetComponent<NetworkObject>().NetworkObjectId + ", " +
+                                  _players[player].playerTimings[i].Timing);
 
                 break;
         }
@@ -33,7 +34,8 @@ public class LeaderBoardPosition : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        StartRace();
+        // StartRace();
+        NetworkManager.OnClientConnectedCallback += OnClientConnected;
     }
 
     [Rpc(SendTo.Server)]
@@ -60,7 +62,7 @@ public class LeaderBoardPosition : NetworkBehaviour
         Debug.Log(leaderboardString);
 
         StatsToInfo(_players);
-        
+
         Debug.Log(">>>>>>>>>>>>>>>>>>>>>>>>>>>> PlayerTime:" + playersInfo[0].time);
 
         UpdateLeaderBoardGUIClientRpc(playersInfo.ToArray());
@@ -89,12 +91,24 @@ public class LeaderBoardPosition : NetworkBehaviour
         playersInfo = new List<PlayerInfo>(players);
         if (leaderBoard == null) return;
 
-        for (var player = 0; player < leaderBoard.content.transform.childCount; player++)
+        if (leaderBoard.content.transform.childCount == 0)
         {
-            var go = leaderBoard.content.transform;
+            Debug.Log("Creating new player data in leaderboard");
+            for (var i = 0; i < playersInfo.Count; i++)
+            {
+                var newPlayerData = Instantiate(playerData, leaderBoard.content);
+                newPlayerData.GetComponent<PlayerPositionUI>().UpdateUI(playersInfo[i]);
+            }
+        }
+        else
+        {
+            for (var player = 0; player < leaderBoard.content.transform.childCount; player++)
+            {
+                var go = leaderBoard.content.transform;
 
-            for (var index = 0; index < go.childCount; index++)
-                go.GetChild(index).gameObject.GetComponent<PlayerPositionUI>().UpdateUI(playersInfo[index]);
+                for (var index = 0; index < go.childCount; index++)
+                    go.GetChild(index).gameObject.GetComponent<PlayerPositionUI>().UpdateUI(playersInfo[index]);
+            }   
         }
 
         Debug.Log(leaderBoard.content.transform.childCount);
@@ -107,7 +121,7 @@ public class LeaderBoardPosition : NetworkBehaviour
         Debug.Log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>PlayerCount: " + players.Count);
         for (var i = 0; i < players.Count; i++)
         {
-            var playerInfo = players[i].GetComponent<PlayerStats>();
+            var playerInfo = players[i].GetComponentInChildren<PlayerStats>();
             AddPlayer(playerInfo, i + 1);
         }
     }
@@ -121,5 +135,22 @@ public class LeaderBoardPosition : NetworkBehaviour
             playersInfo.Add(new PlayerInfo(player.position, player.name, player.playerTimings[^1].Timing, player.tire));
             Debug.Log(player.playerTimings[^1].Timing);
         }
+    }
+    
+    private void OnClientConnected(ulong clientId)
+    {
+        Debug.Log("Client connected: " + clientId);
+        if (!IsServer) return;
+
+        var player = NetworkManager.SpawnManager.GetPlayerNetworkObject(clientId);
+        if (player == null) return;
+        Debug.Log("Player found: " + player.name);
+
+        var playerStats = player.GetComponent<PlayerStats>();
+        if (playerStats == null) return;
+        Debug.Log("PlayerStats found: " + playerStats.name);
+
+        AddPlayer(playerStats);
+        UpdateLeaderBoardServerRpc();
     }
 }

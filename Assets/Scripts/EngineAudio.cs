@@ -106,19 +106,16 @@ public class EngineAudio : NetworkBehaviour
 
     private void SpeedRatioChanged(float oldValue, float newValue)
     {
-        Debug.Log($"Speed Ratio changed from {oldValue} to {newValue}");
         speedRatio = newValue;
     }
 
     private void SpeedSignChanged(float oldValue, float newValue)
     {
-        Debug.Log($"Speed Sign changed from {oldValue} to {newValue}");
         speedSign = newValue;
     }
 
     private void IsEngineRunningChanged(bool oldValue, bool newValue)
     {
-        Debug.Log($"Engine Running changed from {oldValue} to {newValue}");
         isEngineRunning = newValue;
     }
 }
