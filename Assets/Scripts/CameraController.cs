@@ -1,14 +1,20 @@
+using Unity.Netcode;
 using UnityEngine;
 
-public class CameraController : MonoBehaviour
+public class CameraController : NetworkBehaviour
 {
     public Camera[] cameras;
     public Camera[] reverseCameras;
     public int currentCam;
     private bool reverse;
 
+    private void Start() {
+        if (IsOwner) SetCamera(currentCam);
+    }
+
     public void SetCamera(int camera)
     {
+        if(!IsOwner) return;
         if (currentCam >= cameras.Length) camera = cameras.Length - 1;
         cameras[currentCam].gameObject.SetActive(false);
         cameras[camera].gameObject.SetActive(true);
@@ -31,6 +37,7 @@ public class CameraController : MonoBehaviour
 
     public void SetReverseCam(bool active)
     {
+        if(!IsOwner || IsServer) return;
         reverse = active;
         reverseCameras[currentCam].gameObject.SetActive(active);
         cameras[currentCam].gameObject.SetActive(!active);

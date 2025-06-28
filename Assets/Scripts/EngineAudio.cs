@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
+using Unity.Netcode;
 using UnityEngine;
 
-public class EngineAudio : MonoBehaviour
+public class EngineAudio : NetworkBehaviour
 {
     public AudioSource runningSound;
     public float runningMaxVolume;
@@ -12,6 +14,7 @@ public class EngineAudio : MonoBehaviour
     public AudioSource idleSound;
     public float idleMaxVolume;
     public float speedRatio;
+    public float speedSign;
     public float LimiterSound = 1f;
     public float LimiterFrequency = 3f;
     public float LimiterEngage = 0.8f;
@@ -24,7 +27,29 @@ public class EngineAudio : MonoBehaviour
 
     private float revLimiter;
 
+    private NetworkVariable<float> m_SpeedRatio = new(0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    private NetworkVariable<float> m_SpeedSign = new(0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    private NetworkVariable<bool> m_IsEngineRunning = new(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+
+    public override void OnNetworkSpawn()
+    {
+        m_SpeedRatio.OnValueChanged += SpeedRatioChanged;
+        m_SpeedSign.OnValueChanged += SpeedSignChanged;
+        m_IsEngineRunning.OnValueChanged += IsEngineRunningChanged;
+        base.OnNetworkSpawn();
+    }
+
+    public override void OnNetworkDespawn()
+    {
+        m_SpeedRatio.OnValueChanged -= SpeedRatioChanged;
+        m_SpeedSign.OnValueChanged -= SpeedSignChanged;
+        m_IsEngineRunning.OnValueChanged -= IsEngineRunningChanged;
+        base.OnNetworkDespawn();
+    }
+
+
     // Start is called before the first frame update
+
     private void Start()
     {
         carController = GetComponent<VehicleController>();
@@ -33,14 +58,12 @@ public class EngineAudio : MonoBehaviour
         reverseSound.volume = 0;
     }
 
-    // Update is called once per frame
-    private void Update()
+    private void FixedUpdate()
     {
-        float speedSign = 0;
-        if (carController)
+        if (carController && IsOwner)
         {
-            speedSign = Mathf.Sign(carController.GetSpeedRatio());
-            speedRatio = Mathf.Abs(carController.GetSpeedRatio());
+            m_SpeedSign.Value = Mathf.Sign(carController.GetSpeedRatio());
+            m_SpeedRatio.Value = Mathf.Abs(carController.GetSpeedRatio());
         }
 
         if (speedRatio > LimiterEngage)
@@ -75,8 +98,27 @@ public class EngineAudio : MonoBehaviour
         yield return new WaitForSeconds(0.6f);
 
         isEngineRunning = true;
+        m_IsEngineRunning.Value = true;
         yield return new WaitForSeconds(0.4f);
 
         carController.isEngineRunning = 2;
+    }
+
+    private void SpeedRatioChanged(float oldValue, float newValue)
+    {
+        Debug.Log($"Speed Ratio changed from {oldValue} to {newValue}");
+        speedRatio = newValue;
+    }
+
+    private void SpeedSignChanged(float oldValue, float newValue)
+    {
+        Debug.Log($"Speed Sign changed from {oldValue} to {newValue}");
+        speedSign = newValue;
+    }
+
+    private void IsEngineRunningChanged(bool oldValue, bool newValue)
+    {
+        Debug.Log($"Engine Running changed from {oldValue} to {newValue}");
+        isEngineRunning = newValue;
     }
 }
