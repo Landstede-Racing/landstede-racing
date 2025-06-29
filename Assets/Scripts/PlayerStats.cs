@@ -32,7 +32,7 @@ public class PlayerStats : NetworkBehaviour, INetworkSerializeByMemcpy
 
     public override void OnNetworkSpawn()
     {
-        playerTimings.Add(new PlayerTiming(NetworkObjectId, 999999999, 0, 0));
+        playerTimings.Add(new PlayerTiming(NetworkObjectId, 0, 0, 0));
 
         name = NetworkObjectId.ToString();
     }
@@ -56,10 +56,10 @@ public class PlayerStats : NetworkBehaviour, INetworkSerializeByMemcpy
             playerTiming = new PlayerTiming(NetworkObjectId, stopwatch.ElapsedMilliseconds, sectorId,
                 playerTimings[^1].Lap);
         playerTimings.Add(playerTiming);
-        stopwatch.Restart();
         time = stopwatch.ElapsedMilliseconds;
         totalDriveTime = totalDriveTime + stopwatch.ElapsedMilliseconds;
-        // Debug.Log(playerTimings[playerTimings.Count - 1].NetworkId + ", " + playerTimings[playerTimings.Count - 1].Timing);
+        stopwatch.Restart();
+        UnityEngine.Debug.Log(playerTimings[playerTimings.Count - 1].NetworkId + ", " + playerTimings[playerTimings.Count - 1].Timing);
     }
 
     private static string RandomTire(int tireIndex)
@@ -71,5 +71,29 @@ public class PlayerStats : NetworkBehaviour, INetworkSerializeByMemcpy
             2 => "H",
             _ => "M"
         };
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        var sectorController = other.GetComponent<SectorController>();
+        if (sectorController == null || !IsServer) return;
+        UnityEngine.Debug.Log("Player " + name + " entered sector " + sectorController.sectorId);
+        if (stopwatch.ElapsedMilliseconds > 0 && playerTimings[^1].SectorId < sectorController.sectorId)
+        {
+            UnityEngine.Debug.Log("New timing for sector " + sectorController.sectorId);
+            NewTiming(sectorController.sectorId, false);
+        }
+        else if (playerTimings[^1].SectorId < sectorController.sectorId)
+        {
+            UnityEngine.Debug.Log("Starting stopwatch on sector " + sectorController.sectorId);
+            stopwatch.Start();
+            // _startRace = true;
+        }
+        else if (stopwatch.ElapsedMilliseconds > 0 && sectorController.isFinish)
+        {
+            UnityEngine.Debug.Log("Finishing timing for sector " + sectorController.sectorId);
+            NewTiming(sectorController.sectorId, true);
+        }
+        GameObject.FindGameObjectWithTag("Manager").GetComponent<LeaderBoardPosition>().UpdateLeaderBoardServerRpc();
     }
 }

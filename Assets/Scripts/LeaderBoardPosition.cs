@@ -15,12 +15,15 @@ public class LeaderBoardPosition : NetworkBehaviour
     private List<PlayerStats> _players = new();
     private List<PlayerInfo> playersInfo = new();
 
+    private NetworkList<PlayerInfo> m_playersInfo = new(
+        new List<PlayerInfo>(), NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
+
     private void Update()
     {
         switch (Input.inputString)
         {
             case "l":
-                StartRace();
+                StartRaceServerRpc();
                 break;
             case "k":
                 for (var player = 0; player < _players.Count; player++)
@@ -36,26 +39,29 @@ public class LeaderBoardPosition : NetworkBehaviour
     {
         // StartRace();
         NetworkManager.OnClientConnectedCallback += OnClientConnected;
+        m_playersInfo.OnListChanged += OnPlayerInfoChanged;
     }
 
     [Rpc(SendTo.Server)]
     public void UpdateLeaderBoardServerRpc()
     {
         if (!IsServer) return;
-        var players = _players.OrderBy(s => s.playerTimings[^1].Timing).ThenBy(s => s.playerTimings[^1].SectorId)
-            .ThenBy(s => s.playerTimings[^1].Lap).ToList();
-        var isEqual = true;
+        Debug.Log("UpdateLeaderBoardServerRpc called");
         var leaderboardString = "";
 
-        isEqual = _players.SequenceEqual(players);
+        _players = _players.OrderByDescending(s => s.playerTimings[^1].Lap)
+            .ThenByDescending(s => s.playerTimings[^1].SectorId)
+            .ThenBy(s => s.playerTimings[^1].Timing)
+            .ToList();
 
-        if (isEqual) _players = players;
-
+        Debug.Log(">>>>>>>>>>>>>>>>>>>>>>>>>>>> Player Positions");
         for (var i = 0; i < _players.Count; i++)
         {
             if (leaderboardString != "") leaderboardString += ", ";
+            Debug.Log($"Index: {i}");
             var player = _players[i];
             player.position = i + 1;
+            Debug.Log($"Player: {player.name}, Position: {player.position}, Time: {player.playerTimings[^1].Timing}, Sector: {player.playerTimings[^1].SectorId}, Lap: {player.playerTimings[^1].Lap}");
             leaderboardString += $"#{player.position} {player.name}";
         }
 
@@ -83,6 +89,18 @@ public class LeaderBoardPosition : NetworkBehaviour
         player.position = position;
         newPlayerData.GetComponent<PlayerPositionUI>()
             .UpdateUI(new PlayerInfo(player.position, player.name, player.time, player.tire));
+    }
+
+    [Rpc(SendTo.Server)]
+    public void StartRaceServerRpc()
+    {
+        if (!IsServer) return;
+
+        Debug.Log("StartRaceServerRpc called");
+        var players = GameObject.FindGameObjectsWithTag("Player").Select(p => p.GetComponentInChildren<PlayerStats>()).ToList();
+        Debug.Log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>PlayerCount: " + players.Count);
+        _players = players;
+        UpdateLeaderBoardServerRpc();
     }
 
     [Rpc(SendTo.ClientsAndHost)]
@@ -113,7 +131,7 @@ public class LeaderBoardPosition : NetworkBehaviour
 
         Debug.Log(leaderBoard.content.transform.childCount);
     }
-
+    
 
     public void StartRace()
     {
@@ -135,8 +153,14 @@ public class LeaderBoardPosition : NetworkBehaviour
             playersInfo.Add(new PlayerInfo(player.position, player.name, player.playerTimings[^1].Timing, player.tire));
             Debug.Log(player.playerTimings[^1].Timing);
         }
+
+        m_playersInfo.Clear();
+        foreach (var info in playersInfo)
+        {
+            m_playersInfo.Add(info);
+        }
     }
-    
+
     private void OnClientConnected(ulong clientId)
     {
         Debug.Log("Client connected: " + clientId);
@@ -152,5 +176,62 @@ public class LeaderBoardPosition : NetworkBehaviour
 
         AddPlayer(playerStats);
         UpdateLeaderBoardServerRpc();
+    }
+
+    private void OnPlayerInfoChanged(NetworkListEvent<PlayerInfo> changeEvent)
+    {
+        if (IsServer) return;
+        // This method is called on clients when the player info list changes
+        // We need to update the leaderboard UI based on the new player info
+        switch (changeEvent.Type)
+        {
+            case NetworkListEvent<PlayerInfo>.EventType.Add:
+                Debug.Log("PlayerInfo added: " + changeEvent.Value.shortName);
+                playersInfo.Add(changeEvent.Value);
+                break;
+            case NetworkListEvent<PlayerInfo>.EventType.Remove:
+                Debug.Log("PlayerInfo removed: " + changeEvent.Value.shortName);
+                playersInfo.Remove(changeEvent.Value);
+                break;
+            case NetworkListEvent<PlayerInfo>.EventType.Clear:
+                Debug.Log("PlayerInfo list cleared");
+                playersInfo.Clear();
+                break;
+            case NetworkListEvent<PlayerInfo>.EventType.Full:
+                Debug.Log("PlayerInfo list updated, count: " + m_playersInfo.Count);
+                playersInfo = new List<PlayerInfo>();
+                foreach (var info in m_playersInfo)
+                {
+                    playersInfo.Add(info);
+                }
+                break;
+        }
+        Debug.Log("PlayerInfo changed, updating leaderboard UI");
+        if (leaderBoard == null) return;
+        Debug.Log("LeaderBoard not null, updating UI");
+        Debug.Log("LeaderBoard content child count: " + leaderBoard.content.transform.childCount);
+
+        if (leaderBoard.content.transform.childCount <= 0)
+        {
+            Debug.Log("Creating new player data in leaderboard");
+            for (var i = 0; i < playersInfo.Count; i++)
+            {
+                var newPlayerData = Instantiate(playerData, leaderBoard.content);
+                newPlayerData.GetComponent<PlayerPositionUI>().UpdateUI(playersInfo[i]);
+            }
+        }
+        else
+        {
+            for (var player = 0; player < leaderBoard.content.transform.childCount; player++)
+            {
+                var go = leaderBoard.content.transform;
+
+                for (var index = 0; index < go.childCount; index++)
+                    go.GetChild(index).gameObject.GetComponent<PlayerPositionUI>()
+                        .UpdateUI(playersInfo[index]);
+            }
+        }
+
+        Debug.Log(leaderBoard.content.transform.childCount);
     }
 }

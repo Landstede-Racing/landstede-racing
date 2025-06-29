@@ -14,12 +14,13 @@ public class PlayerPositionUI : MonoBehaviour
 
     public void UpdateUI(PlayerInfo player)
     {
+        Debug.Log("Updating UI for player: " + player.shortName);
         playerObject = player;
         if (!position || !shortName || !time || !tire) InitializeTextObjects();
         position.text = player.position.ToString();
-        shortName.text = player.shortName;
+        shortName.text = player.shortName.ToString();
         time.text = Math.Round(player.time, 3).ToString();
-        tire.text = player.tire;
+        tire.text = player.tire.ToString();
     }
 
     private void InitializeTextObjects()

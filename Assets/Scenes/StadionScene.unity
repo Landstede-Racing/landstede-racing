@@ -141700,6 +141700,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LandstedeRacingManager
       objectReference: {fileID: 0}
+    - target: {fileID: 1784013373076400264, guid: cf00d596df1a1444796690d36e8f534a, type: 3}
+      propertyPath: m_TagString
+      value: Manager
+      objectReference: {fileID: 0}
     - target: {fileID: 3577092415376916070, guid: cf00d596df1a1444796690d36e8f534a, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 2207940227
