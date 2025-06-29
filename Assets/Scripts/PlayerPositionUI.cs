@@ -14,7 +14,6 @@ public class PlayerPositionUI : MonoBehaviour
 
     public void UpdateUI(PlayerInfo player)
     {
-        Debug.Log("Updating UI for player: " + player.shortName);
         playerObject = player;
         if (!position || !shortName || !time || !tire) InitializeTextObjects();
         position.text = player.position.ToString();

@@ -77,23 +77,13 @@ public class PlayerStats : NetworkBehaviour, INetworkSerializeByMemcpy
     {
         var sectorController = other.GetComponent<SectorController>();
         if (sectorController == null || !IsServer) return;
-        UnityEngine.Debug.Log("Player " + name + " entered sector " + sectorController.sectorId);
+        
         if (stopwatch.ElapsedMilliseconds > 0 && playerTimings[^1].SectorId < sectorController.sectorId)
-        {
-            UnityEngine.Debug.Log("New timing for sector " + sectorController.sectorId);
             NewTiming(sectorController.sectorId, false);
-        }
         else if (playerTimings[^1].SectorId < sectorController.sectorId)
-        {
-            UnityEngine.Debug.Log("Starting stopwatch on sector " + sectorController.sectorId);
             stopwatch.Start();
-            // _startRace = true;
-        }
         else if (stopwatch.ElapsedMilliseconds > 0 && sectorController.isFinish)
-        {
-            UnityEngine.Debug.Log("Finishing timing for sector " + sectorController.sectorId);
             NewTiming(sectorController.sectorId, true);
-        }
         GameObject.FindGameObjectWithTag("Manager").GetComponent<LeaderBoardPosition>().UpdateLeaderBoardServerRpc();
     }
 }
