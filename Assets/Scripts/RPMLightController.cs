@@ -1,52 +1,46 @@
-using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class RPMLightController : MonoBehaviour
 {
     public VehicleController vehicleController;
-    private Image[] lights;
     public Color greenColor;
     public Color redColor;
     public Color blueColor;
 
     public TMP_Text drsText;
+    private Image[] lights;
 
-    void Start()
+    private void Start()
     {
         lights = GetComponentsInChildren<Image>();
 
         greenColor = new Color(0f, 1f, 0f, 0.5f);
     }
 
-    void Update()
+    private void Update()
     {
         // Calculate how many lights should be on
-        float i = Mathf.InverseLerp(vehicleController.firstLightOn, vehicleController.redLine, vehicleController.currentEngineRPM) * 13;
-        int j = 0;
-        foreach (Image light in lights)
+        var i = Mathf.InverseLerp(vehicleController.firstLightOn, vehicleController.redLine,
+            vehicleController.currentEngineRPM) * 13;
+        var j = 0;
+        foreach (var light in lights)
         {
             // Check if RPM lights should be on
             if (i >= j + 1) light.color = j < 5 ? greenColor : j < 10 ? redColor : blueColor;
             else light.color = Color.gray;
 
             // Check light 14 for DRS enabled
-            if (j == 13 && vehicleController.drsEnabled)
-            {
-                light.color = blueColor;
-            }
+            if (j == 13 && vehicleController.drsEnabled) light.color = blueColor;
 
             // Check light 15 for DRS available
-            if (j == 14 && vehicleController.drsAvailable)
-            {
-                light.color = blueColor;
-            }
+            if (j == 14 && vehicleController.drsAvailable) light.color = blueColor;
             j++;
         }
 
         //TODO: DRS zone distence?! instead of the text.
-        if(drsText != null) 
+        if (drsText != null)
         {
             if (vehicleController.drsEnabled)
             {

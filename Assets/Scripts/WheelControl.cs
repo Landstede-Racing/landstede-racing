@@ -1,8 +1,9 @@
 using System;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-public class WheelControl : MonoBehaviour
+public class WheelControl : NetworkBehaviour
 {
     public Transform wheelModel;
 

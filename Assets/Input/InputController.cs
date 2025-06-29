@@ -1,8 +1,9 @@
 using UnityEngine.InputSystem;
 using UnityEngine;
+using Unity.Netcode;
 
 
-public class InputController : MonoBehaviour
+public class InputController : NetworkBehaviour
 {
     public VehicleController vehicleController;
     private GamepadController gamepadControls;
@@ -32,6 +33,16 @@ public class InputController : MonoBehaviour
         {
             Debug.LogError("VehicleController reference is not set in InputController.");
         }
+    }
+
+    public override void OnNetworkSpawn()
+    {
+        if (!IsOwner)
+        {
+            enabled = false;
+            return;
+        }
+        vehicleController = GetComponent<VehicleController>();
     }
 
     void OnEnable()

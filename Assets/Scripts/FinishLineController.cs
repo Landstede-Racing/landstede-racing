@@ -1,14 +1,13 @@
-using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
+using UnityEngine;
 
 public class FinishLine : MonoBehaviour
 {
     public TMP_Text lapTimeText;
     private float lapTime;
-    private bool raceStarted;
-    private float toggleCooldown = 2.0f; // Cooldown duration in seconds
     private float lastToggleTime;
+    private bool raceStarted;
+    private readonly float toggleCooldown = 2.0f; // Cooldown duration in seconds
 
     private void Start()
     {
@@ -23,8 +22,8 @@ public class FinishLine : MonoBehaviour
             lapTime += Time.deltaTime;
             if (lapTime >= 60)
             {
-                int minutes = (int)(lapTime / 60);
-                float seconds = lapTime % 60;
+                var minutes = (int)(lapTime / 60);
+                var seconds = lapTime % 60;
                 lapTimeText.text = string.Format("Lap Time: {0}:{1:F2} minutes", minutes, seconds);
             }
             else
@@ -41,10 +40,7 @@ public class FinishLine : MonoBehaviour
             raceStarted = !raceStarted;
             lastToggleTime = Time.time;
             // Reset lap time when race starts
-            if (raceStarted)
-            {
-                lapTime = 0;
-            }
+            if (raceStarted) lapTime = 0;
         }
     }
 }

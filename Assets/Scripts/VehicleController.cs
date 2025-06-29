@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using Unity.Netcode;
 using UnityEngine;
 
 public enum GearState
@@ -13,7 +14,7 @@ public enum GearState
     Changing
 };
 
-public class VehicleController : MonoBehaviour
+public class VehicleController : NetworkBehaviour
 {
     public LogitechSteeringWheel logitechSteering;
 
@@ -95,12 +96,31 @@ public class VehicleController : MonoBehaviour
     public TMP_Text speedText;
     public TMP_Text rpmText;
     public TMP_Text rpmTextWheel;
+    public GameObject hud;
 
     Animator animator;
     Rigidbody rigidBody;
 
     private int currentGear = 1; //Bc: R = 0 and N = 1
     private int maxGear = 9;
+
+
+    // Network Variables
+    public NetworkVariable<int> m_IsEngineRunning = new(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    private NetworkVariable<float> m_CurrentEngineRPM = new(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+
+    public override void OnNetworkSpawn()
+    {
+        m_IsEngineRunning.OnValueChanged += IsEngineRunningChanged;
+        m_CurrentEngineRPM.OnValueChanged += CurrentEngineRPMChanged;
+
+        if (!IsOwner)
+        {
+            hud.SetActive(false);
+            return;
+        }
+    }
+
 
     public void Start()
     {
@@ -121,6 +141,7 @@ public class VehicleController : MonoBehaviour
 
     public void FixedUpdate()
     {
+        if (!IsOwner) return;
         if (isEngineRunning == 0) StartCoroutine(GetComponent<EngineAudio>().StartEngine());
         ApplyMotor();
         ApplySteering();
@@ -219,6 +240,7 @@ public class VehicleController : MonoBehaviour
         float torque = 0;
 
         currentEngineRPM = Mathf.Lerp(currentEngineRPM, Mathf.Max(idleRPM - 100, wheelRPM), Time.deltaTime * 3f);
+        m_CurrentEngineRPM.Value = currentEngineRPM;
         string rpmTextValue = $"<size=120%><align=right>{(int)currentEngineRPM}</align></size>\n<align=right><size=50%>RPM</size></align>";
         rpmText.text = rpmTextValue;
         rpmTextWheel.text = rpmTextValue;
@@ -275,9 +297,12 @@ public class VehicleController : MonoBehaviour
         foreach (var wheel in wheels)
         {
             // TODO: Front Brake Bias
-            if(wheel.steerable) {
+            if (wheel.steerable)
+            {
                 wheel.WheelCollider.brakeTorque = brake * 2 * brakeBias * CalculateBrakingTorque();
-            } else {
+            }
+            else
+            {
                 wheel.WheelCollider.brakeTorque = brake * 2 * (100 - brakeBias) * CalculateBrakingTorque();
             }
         }
@@ -368,8 +393,6 @@ public class VehicleController : MonoBehaviour
     // Speed ratio for engine audio
     public float GetSpeedRatio()
     {
-        var gasA = Mathf.Clamp(Mathf.Abs(gas), 0.5f, 1f);
-
         return currentEngineRPM / redLine;
     }
 
@@ -477,5 +500,21 @@ public class VehicleController : MonoBehaviour
         {
             LogitechGSDK.LogiPlayFrontalCollisionForce(0, (int)force);
         }
+    }
+
+    // Network Variable Change Handler
+    private void IsEngineRunningChanged(int previousValue, int newValue)
+    {
+        if (IsOwner) return;
+        isEngineRunning = newValue;
+    }
+
+    private void CurrentEngineRPMChanged(float previousValue, float newValue)
+    {
+        if (IsOwner) return;
+        currentEngineRPM = newValue;
+        string rpmTextValue = $"<size=120%><align=right>{(int)currentEngineRPM}</align></size>\n<align=right><size=50%>RPM</size></align>";
+        rpmText.text = rpmTextValue;
+        rpmTextWheel.text = rpmTextValue;
     }
 }
