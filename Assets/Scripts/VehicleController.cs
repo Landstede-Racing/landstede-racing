@@ -106,7 +106,7 @@ public class VehicleController : NetworkBehaviour
 
 
     // Network Variables
-    private NetworkVariable<int> m_IsEngineRunning = new(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    public NetworkVariable<int> m_IsEngineRunning = new(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     private NetworkVariable<float> m_CurrentEngineRPM = new(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
     public override void OnNetworkSpawn()

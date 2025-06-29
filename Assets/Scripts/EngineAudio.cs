@@ -95,6 +95,7 @@ public class EngineAudio : NetworkBehaviour
     {
         startingSound.Play();
         carController.isEngineRunning = 1;
+        carController.m_IsEngineRunning.Value = 1;
         yield return new WaitForSeconds(0.6f);
 
         isEngineRunning = true;
@@ -102,6 +103,7 @@ public class EngineAudio : NetworkBehaviour
         yield return new WaitForSeconds(0.4f);
 
         carController.isEngineRunning = 2;
+        carController.m_IsEngineRunning.Value = 2;
     }
 
     private void SpeedRatioChanged(float oldValue, float newValue)
