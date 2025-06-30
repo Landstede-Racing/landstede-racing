@@ -8,6 +8,7 @@ public static class EventService
     public static event Action RaceStarted;
     public static event Action RaceEnded;
     public static event Action<ulong, string> PlayerPenalty;
+    public static event Action<ulong, string> PlayerPenaltyGiven;
 
     public static void InvokeRaceStarted()
     {
@@ -32,5 +33,10 @@ public static class EventService
     public static void InvokePlayerPenalty(ulong playerId, string penalty)
     {
         PlayerPenalty?.Invoke(playerId, penalty);
+    }
+
+    public static void InvokePlayerPenaltyGiven(ulong playerId, string penalty)
+    {
+        PlayerPenaltyGiven?.Invoke(playerId, penalty);
     }
 }

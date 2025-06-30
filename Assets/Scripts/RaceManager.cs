@@ -20,24 +20,11 @@ public class RaceManager : NetworkBehaviour
     public override void OnNetworkSpawn()
     {
         currentLap.OnValueChanged += OnCurrentLapChanged;
-        EventService.PlayerPenalty += (playerId, penalty) =>
-        {
-            if (!playerPenalties.ContainsKey(playerId))
-            {
-                playerPenalties[playerId] = new List<string>();
-            }
-            if (!playerPenalties[playerId].Contains(penalty))
-            {
-                playerPenalties[playerId].Add(penalty);
-                Debug.Log($"Player {playerId} received penalty: {penalty}");
-                return;
-            }
-            
-        };
 
         if (IsServer)
         {
             EventService.PlayerMoved += PlayerMoved;
+            EventService.PlayerPenalty += PlayerPenaltyGiven;
         }
 
         if (!IsServer)
@@ -50,6 +37,11 @@ public class RaceManager : NetworkBehaviour
     public override void OnNetworkDespawn()
     {
         currentLap.OnValueChanged -= OnCurrentLapChanged;
+        if (IsServer)
+        {
+            EventService.PlayerMoved -= PlayerMoved;
+            EventService.PlayerPenalty -= PlayerPenaltyGiven;
+        }
         base.OnNetworkDespawn();
     }
 
@@ -128,5 +120,29 @@ public class RaceManager : NetworkBehaviour
         {
             EventService.InvokePlayerPenalty(playerId, "falseStart");
         }
+    }
+
+    private void PlayerPenaltyGiven(ulong playerId, string penalty)
+    {
+        if (!IsServer) return;
+
+        if (!playerPenalties.ContainsKey(playerId))
+        {
+            playerPenalties[playerId] = new List<string>();
+        }
+        if (!playerPenalties[playerId].Contains(penalty))
+        {
+            playerPenalties[playerId].Add(penalty);
+            Debug.Log($"Player {playerId} received penalty: {penalty}");
+            PlayerPenaltyGivenClientRpc(playerId, penalty);
+        }
+    }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    private void PlayerPenaltyGivenClientRpc(ulong playerId, string penalty)
+    {
+        if (!IsClient) return;
+        Debug.Log("PlayerPenaltyGivenClientRpc called on client");
+        EventService.InvokePlayerPenaltyGiven(playerId, penalty);
     }
 }
