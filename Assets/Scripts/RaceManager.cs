@@ -14,6 +14,7 @@ public class RaceManager : NetworkBehaviour
     [SerializeField] private List<GameObject> startingLights;
     [SerializeField] private Material lightOnMaterial;
     [SerializeField] private Material lightOffMaterial;
+    [SerializeField] private AudioSource lightBoopSound;
     private NetworkVariable<int> currentLap = new NetworkVariable<int>(1, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
     public override void OnNetworkSpawn()
     {
@@ -34,7 +35,12 @@ public class RaceManager : NetworkBehaviour
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.L))
-            StartRace();
+        {
+            if (IsHost)
+            {
+                StartRaceRpc();
+            }
+        }
         raceLapText.text = $"{lap}/{maxLaps}";
         UpdateLap();
     }
@@ -50,7 +56,8 @@ public class RaceManager : NetworkBehaviour
         }
     }
 
-    public void StartRace()
+    [Rpc(SendTo.Server)]
+    public void StartRaceRpc()
     {
         if (!IsServer) return;
 
@@ -88,5 +95,6 @@ public class RaceManager : NetworkBehaviour
         if (lightIndex < 0 || lightIndex >= startingLights.Count) return;
         var renderer = startingLights[lightIndex].GetComponent<MeshRenderer>();
         renderer.material = isOn ? lightOnMaterial : lightOffMaterial;
+        lightBoopSound.Play();
     }
 }
