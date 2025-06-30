@@ -70,17 +70,34 @@ public class RaceManager : NetworkBehaviour
     //     - Starting
     private IEnumerator StartRaceCoroutine()
     {
+        Debug.Log("Start");
         yield return new WaitForSeconds(1f);
+        Debug.Log("Starting lights sequence");
         for (int i = 0; i < startingLights.Count; i++)
         {
+            Debug.Log($"Light {i + 1} ON");
             startingLights[i].GetComponent<MeshRenderer>().material = lightOnMaterial;
+            SetLightsOnClientRpc(i, true);
             yield return new WaitForSeconds(1f);
         }
+        Debug.Log("Countdown started");
         yield return new WaitForSeconds(1f);
+        Debug.Log("GO!");
         for (int i = 0; i < startingLights.Count; i++)
         {
+            Debug.Log($"Light {i + 1} OFF");
             startingLights[i].GetComponent<MeshRenderer>().material = lightOffMaterial;
+            SetLightsOnClientRpc(i, false);
         }
         raceStarted = true;
+    }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    private void SetLightsOnClientRpc(int lightIndex, bool isOn)
+    {
+        Debug.Log($"Setting light {lightIndex} to {(isOn ? "ON" : "OFF")}");
+        if (lightIndex < 0 || lightIndex >= startingLights.Count) return;
+        var renderer = startingLights[lightIndex].GetComponent<MeshRenderer>();
+        renderer.material = isOn ? lightOnMaterial : lightOffMaterial;
     }
 }
