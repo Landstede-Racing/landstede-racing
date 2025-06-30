@@ -12,28 +12,11 @@ public class LeaderBoardPosition : NetworkBehaviour
 
     [SerializeField] private ScrollRect leaderBoard;
     [SerializeField] private GameObject playerData;
-    private List<PlayerStats> _players = new();
+    public List<PlayerStats> _players = new();
     private List<PlayerInfo> playersInfo = new();
 
     private NetworkList<PlayerInfo> m_playersInfo = new(
         new List<PlayerInfo>(), NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
-
-    private void Update()
-    {
-        switch (Input.inputString)
-        {
-            case "l":
-                StartRaceServerRpc();
-                break;
-            case "k":
-                for (var player = 0; player < _players.Count; player++)
-                    for (var i = player + 1; i < _players[player].playerTimings.Count; i++)
-                        Debug.Log(_players[player].GetComponent<NetworkObject>().NetworkObjectId + ", " +
-                                  _players[player].playerTimings[i].Timing);
-
-                break;
-        }
-    }
 
     public override void OnNetworkSpawn()
     {
