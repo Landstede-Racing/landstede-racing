@@ -141,6 +141,13 @@ public class VehicleController : NetworkBehaviour
 
     public void FixedUpdate()
     {
+        if (IsServer)
+        {
+            if (rigidBody.linearVelocity.magnitude > 0.1f)
+            {
+                EventService.InvokePlayerMoved(OwnerClientId);
+            }
+        }
         if (!IsOwner) return;
         if (isEngineRunning == 0) StartCoroutine(GetComponent<EngineAudio>().StartEngine());
         ApplyMotor();

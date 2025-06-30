@@ -16,9 +16,30 @@ public class RaceManager : NetworkBehaviour
     [SerializeField] private Material lightOffMaterial;
     [SerializeField] private AudioSource lightBoopSound;
     private NetworkVariable<int> currentLap = new NetworkVariable<int>(1, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
+    private Dictionary<ulong, List<string>> playerPenalties = new Dictionary<ulong, List<string>>();
     public override void OnNetworkSpawn()
     {
         currentLap.OnValueChanged += OnCurrentLapChanged;
+        EventService.PlayerPenalty += (playerId, penalty) =>
+        {
+            if (!playerPenalties.ContainsKey(playerId))
+            {
+                playerPenalties[playerId] = new List<string>();
+            }
+            if (!playerPenalties[playerId].Contains(penalty))
+            {
+                playerPenalties[playerId].Add(penalty);
+                Debug.Log($"Player {playerId} received penalty: {penalty}");
+                return;
+            }
+            
+        };
+
+        if (IsServer)
+        {
+            EventService.PlayerMoved += PlayerMoved;
+        }
+
         if (!IsServer)
         {
             enabled = false;
@@ -87,6 +108,7 @@ public class RaceManager : NetworkBehaviour
             SetLightsOnClientRpc(i, false);
         }
         raceStarted = true;
+        EventService.InvokeRaceStarted();
     }
 
     [Rpc(SendTo.ClientsAndHost)]
@@ -96,5 +118,15 @@ public class RaceManager : NetworkBehaviour
         var renderer = startingLights[lightIndex].GetComponent<MeshRenderer>();
         renderer.material = isOn ? lightOnMaterial : lightOffMaterial;
         lightBoopSound.Play();
+    }
+
+    private void PlayerMoved(ulong playerId)
+    {
+        if (!IsServer) return;
+
+        if (!raceStarted)
+        {
+            EventService.InvokePlayerPenalty(playerId, "falseStart");
+        }
     }
 }
