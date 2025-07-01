@@ -86,6 +86,8 @@ public class RaceManager : NetworkBehaviour
 
     private IEnumerator StartRaceCoroutine()
     {
+        EventService.InvokeCountdownStarted();
+        RaceCountdownStartedClientRpc();
         yield return new WaitForSeconds(1f);
         for (int i = 0; i < startingLights.Count; i++)
         {
@@ -136,6 +138,13 @@ public class RaceManager : NetworkBehaviour
             Debug.Log($"Player {playerId} received penalty: {penalty}");
             PlayerPenaltyGivenClientRpc(playerId, penalty);
         }
+    }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    private void RaceCountdownStartedClientRpc()
+    {
+        if (!IsClient) return;
+        EventService.InvokeCountdownStarted();
     }
 
     [Rpc(SendTo.ClientsAndHost)]
