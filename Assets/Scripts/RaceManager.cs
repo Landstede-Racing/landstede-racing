@@ -9,6 +9,7 @@ public class RaceManager : NetworkBehaviour
     public int lap = 1;
     public int maxLaps = 3;
     public bool raceStarted = false;
+    [SerializeField] private GameObject preRaceUI;
     [SerializeField] private TMP_Text raceLapText;
     [SerializeField] private LeaderBoardPosition leaderBoardPosition;
     [SerializeField] private List<GameObject> startingLights;
@@ -43,6 +44,21 @@ public class RaceManager : NetworkBehaviour
             EventService.PlayerPenalty -= PlayerPenaltyGiven;
         }
         base.OnNetworkDespawn();
+    }
+
+    private void Start() {
+        preRaceUI.SetActive(true);
+        // Get child of preRaceUI by name
+        var hostUI = preRaceUI.transform.Find("HostUI");
+        if (hostUI != null)
+        {
+            hostUI.gameObject.SetActive(IsHost);
+        }
+        var clientUI = preRaceUI.transform.Find("ClientUI");
+        if (clientUI != null)
+        {
+            clientUI.gameObject.SetActive(IsClient);
+        }
     }
 
     private void Update()
@@ -117,6 +133,8 @@ public class RaceManager : NetworkBehaviour
     private void PlayerMoved(ulong playerId)
     {
         if (!IsServer) return;
+
+        preRaceUI.SetActive(false);
 
         if (!raceStarted)
         {
