@@ -320,7 +320,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 4175925274
+  GlobalObjectIdHash: 969500527
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -143478,7 +143478,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 3458813904
+  GlobalObjectIdHash: 2394452165
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 0
@@ -143503,7 +143503,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 310261456
+  GlobalObjectIdHash: 2224655772
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 0
@@ -143528,7 +143528,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 3279084511
+  GlobalObjectIdHash: 2235880410
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 0
@@ -143553,7 +143553,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 3271200904
+  GlobalObjectIdHash: 241979425
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 0
@@ -143746,7 +143746,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 361651325
+  GlobalObjectIdHash: 3051301191
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 0
@@ -144181,7 +144181,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 3019979641
+  GlobalObjectIdHash: 3658490941
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -144582,79 +144582,6 @@ WheelCollider:
   m_LayerOverridePriority: 0
   m_Enabled: 1
   m_ProvidesContacts: 0
---- !u!1001 &9173582502463502843
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1391048525403150706, guid: 08aea57e0de75ac418629bf4e16bf831, type: 3}
-      propertyPath: m_Data.m_Target
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1856289914789606325, guid: 08aea57e0de75ac418629bf4e16bf831, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 351.65
-      objectReference: {fileID: 0}
-    - target: {fileID: 1856289914789606325, guid: 08aea57e0de75ac418629bf4e16bf831, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 25.639
-      objectReference: {fileID: 0}
-    - target: {fileID: 1856289914789606325, guid: 08aea57e0de75ac418629bf4e16bf831, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -108.34
-      objectReference: {fileID: 0}
-    - target: {fileID: 1856289914789606325, guid: 08aea57e0de75ac418629bf4e16bf831, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1856289914789606325, guid: 08aea57e0de75ac418629bf4e16bf831, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1856289914789606325, guid: 08aea57e0de75ac418629bf4e16bf831, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1856289914789606325, guid: 08aea57e0de75ac418629bf4e16bf831, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1856289914789606325, guid: 08aea57e0de75ac418629bf4e16bf831, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1856289914789606325, guid: 08aea57e0de75ac418629bf4e16bf831, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1856289914789606325, guid: 08aea57e0de75ac418629bf4e16bf831, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2736581994525936514, guid: 08aea57e0de75ac418629bf4e16bf831, type: 3}
-      propertyPath: m_Data.m_Target
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5243026145371166920, guid: 08aea57e0de75ac418629bf4e16bf831, type: 3}
-      propertyPath: m_Name
-      value: PreRacePlayerObject
-      objectReference: {fileID: 0}
-    - target: {fileID: 8427739756585691046, guid: 08aea57e0de75ac418629bf4e16bf831, type: 3}
-      propertyPath: GlobalObjectIdHash
-      value: 1636645813
-      objectReference: {fileID: 0}
-    - target: {fileID: 8427739756585691046, guid: 08aea57e0de75ac418629bf4e16bf831, type: 3}
-      propertyPath: InScenePlacedSourceGlobalObjectIdHash
-      value: 3434898165
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 08aea57e0de75ac418629bf4e16bf831, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -144673,4 +144600,3 @@ SceneRoots:
   - {fileID: 206480206}
   - {fileID: 18777483}
   - {fileID: 166269084}
-  - {fileID: 9173582502463502843}
