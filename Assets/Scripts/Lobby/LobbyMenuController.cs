@@ -15,7 +15,7 @@ public class LobbyMenuController : MonoBehaviour
     {
         mainMenu.SetActive(true);
         singlePlayerMenu.SetActive(false);
-        // multiplayerMenu.SetActive(false);
+        multiplayerMenu.SetActive(false);
         settingsMenu.SetActive(false);
     }
 
@@ -23,7 +23,7 @@ public class LobbyMenuController : MonoBehaviour
     {
         mainMenu.SetActive(false);
         singlePlayerMenu.SetActive(true);
-        // multiplayerMenu.SetActive(false);
+        multiplayerMenu.SetActive(false);
         settingsMenu.SetActive(false);
     }
 
@@ -31,7 +31,7 @@ public class LobbyMenuController : MonoBehaviour
     {
         mainMenu.SetActive(false);
         singlePlayerMenu.SetActive(false);
-        // multiplayerMenu.SetActive(true);
+        multiplayerMenu.SetActive(true);
         settingsMenu.SetActive(false);
     }
 
@@ -39,7 +39,7 @@ public class LobbyMenuController : MonoBehaviour
     {
         mainMenu.SetActive(false);
         singlePlayerMenu.SetActive(false);
-        // multiplayerMenu.SetActive(false);
+        multiplayerMenu.SetActive(false);
         settingsMenu.SetActive(true);
     }
 
