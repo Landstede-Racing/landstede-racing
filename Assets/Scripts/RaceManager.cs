@@ -25,6 +25,7 @@ public class RaceManager : NetworkBehaviour
         {
             EventService.PlayerMoved += PlayerMoved;
             EventService.PlayerPenalty += PlayerPenaltyGiven;
+            EventService.RaceReady += StartRaceRpc;
         }
 
         if (!IsServer)
@@ -72,7 +73,9 @@ public class RaceManager : NetworkBehaviour
     [Rpc(SendTo.Server)]
     public void StartRaceRpc()
     {
+        Debug.Log("StartRaceRpc called");
         if (!IsServer) return;
+        Debug.Log("StartRaceRpc executed on server");
 
         leaderBoardPosition.StartRaceServerRpc();
         StartCoroutine(StartRaceCoroutine());

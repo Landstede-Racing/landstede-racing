@@ -9,11 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8564949080499913975}
-  - component: {fileID: 5692063037034750931}
   - component: {fileID: 3577092415376916070}
   - component: {fileID: 5125944128768141514}
   - component: {fileID: 6684428905438018898}
-  - component: {fileID: 5123803689502115077}
   m_Layer: 0
   m_Name: LandstedeRacingManager
   m_TagString: Manager
@@ -37,18 +35,6 @@ Transform:
   - {fileID: 875949485112427857}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5692063037034750931
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1784013373076400264}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0ed553bf2b54719b9363b6f62fa7e91, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &3577092415376916070
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68,7 +54,7 @@ MonoBehaviour:
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
   ActiveSceneSynchronization: 0
-  SceneMigrationSynchronization: 1
+  SceneMigrationSynchronization: 0
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
@@ -118,25 +104,6 @@ MonoBehaviour:
   lightOnMaterial: {fileID: 2100000, guid: c602d498540cdd94b84ede071ff6e963, type: 2}
   lightOffMaterial: {fileID: 2100000, guid: adf433f0d457ad14f88079131b9936bd, type: 2}
   lightBoopSound: {fileID: 1721574986735918054}
---- !u!114 &5123803689502115077
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1784013373076400264}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_PanelSettings: {fileID: 11400000, guid: 75a44fd70b4fa4f5eb777fff7926998a, type: 2}
-  m_ParentUI: {fileID: 0}
-  sourceAsset: {fileID: 0}
-  m_SortingOrder: 0
-  m_WorldSpaceSizeMode: 1
-  m_WorldSpaceWidth: 1920
-  m_WorldSpaceHeight: 1080
 --- !u!1 &4929142694858681522
 GameObject:
   m_ObjectHideFlags: 0

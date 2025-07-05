@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PlayerManager : NetworkBehaviour
 {
-    [SerializeField] private GameObject playerPrefab;
+    [SerializeField] private NetworkObject playerPrefab;
     [SerializeField] private GameObject preRacePrefab;
     private bool preRace = true;
 
@@ -13,9 +13,6 @@ public class PlayerManager : NetworkBehaviour
 
         if (IsServer)
         {
-            preRacePrefab.SetActive(true);
-            playerPrefab.SetActive(false);
-            SetPreRacePrefabEnabledClientRpc(true);
             EventService.RaceReady += OnRaceReady;
             NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
         }
@@ -40,8 +37,9 @@ public class PlayerManager : NetworkBehaviour
     {
         if (IsServer)
         {
-            playerPrefab.SetActive(true);
             preRacePrefab.SetActive(false);
+            NetworkManager.Singleton.SpawnManager.InstantiateAndSpawn(playerPrefab, OwnerClientId);
+            Destroy(gameObject);
             preRace = false;
             SetPreRacePrefabEnabledClientRpc(false);
         }
@@ -53,7 +51,6 @@ public class PlayerManager : NetworkBehaviour
         if (IsClient)
         {
             preRacePrefab.SetActive(enabled);
-            playerPrefab.SetActive(!enabled);
         }
     }
 
