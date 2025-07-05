@@ -15,6 +15,7 @@ public class RaceManager : NetworkBehaviour
     [SerializeField] private Material lightOnMaterial;
     [SerializeField] private Material lightOffMaterial;
     [SerializeField] private AudioSource lightBoopSound;
+    [SerializeField] private GameObject startingPositions;
     private NetworkVariable<int> currentLap = new NetworkVariable<int>(1, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
     private Dictionary<ulong, List<string>> playerPenalties = new Dictionary<ulong, List<string>>();
     public override void OnNetworkSpawn()
@@ -156,5 +157,47 @@ public class RaceManager : NetworkBehaviour
         if (!IsClient) return;
         Debug.Log("PlayerPenaltyGivenClientRpc called on client");
         EventService.InvokePlayerPenaltyGiven(playerId, penalty);
+    }
+
+    public void PlacePlayerOnSpawn(GameObject playerGo, ulong clientId)
+    {
+        if (!IsServer) return;
+
+        if (startingPositions != null && startingPositions.transform.childCount > 0)
+        {
+            var index = (int)(clientId % (ulong)startingPositions.transform.childCount);
+            Debug.Log($"Placing player {clientId}\'s object {playerGo.name} on spawn position {index}.");
+            Transform spawnPosition = startingPositions.transform.GetChild(index);
+            if (spawnPosition == null)
+            {
+                Debug.LogError($"Spawn position {index} is null for client {clientId}.");
+                return;
+            }
+            Debug.Log($"Setting player {clientId} position to {spawnPosition.position} and rotation to {spawnPosition.rotation}");
+            playerGo.transform.SetPositionAndRotation(spawnPosition.position, spawnPosition.rotation);
+            SetPlayerPositionClientRpc(clientId, spawnPosition.position, spawnPosition.rotation);
+        }
+        else
+        {
+            Debug.LogWarning("No starting positions available.");
+        }
+    }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    public void SetPlayerPositionClientRpc(ulong clientId, Vector3 position, Quaternion rotation)
+    {
+        if (!IsClient) return;
+        Debug.Log($"Setting player position for client {clientId} to {position} and rotation {rotation}");
+
+        var playerObject = NetworkManager.Singleton.SpawnManager.GetPlayerNetworkObject(clientId).GetComponentInChildren<VehicleController>().gameObject;
+        if (playerObject != null)
+        {
+            Debug.Log($"Found player object for client {clientId}: {playerObject.name}");
+            playerObject.transform.SetPositionAndRotation(position, rotation);
+        }
+        else
+        {
+            Debug.LogError($"Player object for client {clientId} not found.");
+        }
     }
 }

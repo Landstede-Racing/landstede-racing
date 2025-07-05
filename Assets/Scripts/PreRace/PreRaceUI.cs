@@ -30,6 +30,16 @@ public class PreRaceUI : NetworkBehaviour
     [Rpc(SendTo.Server)]
     public void RaceReadyRpc()
     {
+        if (!IsServer) return;
+        var players = FindObjectsByType<PlayerManager>(FindObjectsSortMode.None);
+        // For loop through all players
+        foreach (var player in players)
+        {
+            if (player != null && player.IsServer)
+            {
+                player.OnRaceReady();
+            }
+        }
         EventService.InvokeRaceReady();
     }
 

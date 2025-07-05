@@ -13,7 +13,6 @@ public class PlayerManager : NetworkBehaviour
 
         if (IsServer)
         {
-            EventService.RaceReady += OnRaceReady;
             NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
         }
     }
@@ -24,7 +23,7 @@ public class PlayerManager : NetworkBehaviour
 
         if (IsServer)
         {
-            EventService.RaceReady -= OnRaceReady;
+            NetworkManager.Singleton.OnClientConnectedCallback -= OnClientConnected;
         }
     }
 
@@ -33,12 +32,18 @@ public class PlayerManager : NetworkBehaviour
         return preRacePrefab;
     }
 
-    private void OnRaceReady()
+    public void OnRaceReady()
     {
         if (IsServer)
         {
             preRacePrefab.SetActive(false);
-            NetworkManager.Singleton.SpawnManager.InstantiateAndSpawn(playerPrefab, OwnerClientId);
+            Debug.Log($"Spawning player for client {OwnerClientId}");
+            var newPlayerGo = NetworkManager.Singleton.SpawnManager.InstantiateAndSpawn(playerPrefab, OwnerClientId);
+            var raceManager = FindAnyObjectByType<RaceManager>();
+            if (raceManager != null)
+            {
+                raceManager.PlacePlayerOnSpawn(newPlayerGo.GetComponentInChildren<VehicleController>().gameObject, OwnerClientId);
+            }
             Destroy(gameObject);
             preRace = false;
             SetPreRacePrefabEnabledClientRpc(false);
