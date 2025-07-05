@@ -40,7 +40,7 @@ public class PreRaceManager : NetworkBehaviour
                     
 
                     int index = (int)(clientId % (ulong)spawnPositions.Count); // Simple round-robin assignment
-                    playerObject.transform.SetPositionAndRotation(spawnPositions[index].transform.position, spawnPositions[index].transform.rotation);
+                    playerObject.GetComponent<PlayerManager>().GetPreRacePrefab().transform.SetPositionAndRotation(spawnPositions[index].transform.position, spawnPositions[index].transform.rotation);
                 }
                 else
                 {

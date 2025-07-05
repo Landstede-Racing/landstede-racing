@@ -19,6 +19,20 @@ public class PreRaceUI : NetworkBehaviour
         gameObject.SetActive(false);
     }
 
+    public void StartButtonClicked()
+    {
+        if (IsHost)
+        {
+            RaceReadyRpc();
+        }
+    }
+
+    [Rpc(SendTo.Server)]
+    public void RaceReadyRpc()
+    {
+        EventService.InvokeRaceReady();
+    }
+
     public void LeaveButtonClicked()
     {
         NetworkManager.Singleton.Shutdown();
