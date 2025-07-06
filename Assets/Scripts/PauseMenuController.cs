@@ -21,6 +21,6 @@ public class PauseMenuController : MonoBehaviour
     }
 
     public void ExitToMainMenu() {
-        StartCoroutine(CustomSceneManager.LoadScene("LobbyScene"));
+        StartCoroutine(CustomSceneManager.LoadScene("LobbyScene", false));
     }
 }

@@ -11,6 +11,7 @@ public static class EventService
     public static event Action RaceReady;
     public static event Action<ulong, string> PlayerPenalty;
     public static event Action<ulong, string> PlayerPenaltyGiven;
+    public static event Action StartMultiplayer;
 
     public static void InvokeRaceStarted()
     {
@@ -50,5 +51,10 @@ public static class EventService
     public static void InvokePlayerPenaltyGiven(ulong playerId, string penalty)
     {
         PlayerPenaltyGiven?.Invoke(playerId, penalty);
+    }
+
+    public static void InvokeStartMultiplayer()
+    {
+        StartMultiplayer?.Invoke();
     }
 }

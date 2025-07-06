@@ -1,6 +1,7 @@
+using Unity.Netcode;
 using UnityEngine;
 
-public class LobbyMenuController : MonoBehaviour
+public class LobbyMenuController : NetworkBehaviour
 {
     public GameObject mainMenu;
     public GameObject singlePlayerMenu;
@@ -50,15 +51,23 @@ public class LobbyMenuController : MonoBehaviour
         SetMainMenu();
     }
 
-    public void StartTrackSelection()
+    public void StartTrackSelection(bool multiplayer)
     {
+        NetworkLaunchManager.Instance.SetShouldStartHost(multiplayer);
         camController.SetTrackCamera(0);
+        trackSelectionController.multiplayer = multiplayer;
         trackSelectionController.UpdateButtons();
         trackSelectionController.UpdateText();
     }
 
+    public void JoinOnlineGame()
+    {
+        NetworkManager.Singleton.StartClient();
+    }
+
     public void Back()
     {
+        NetworkLaunchManager.Instance.Reset();
         if (camController.currentTrackCam != -1 || camController.garageCamera.gameObject.activeSelf)
         {
             camController.DisableCameras();

@@ -23,6 +23,11 @@ public class PreRaceManager : NetworkBehaviour
         base.OnNetworkDespawn();
     }
 
+    private void Start()
+    {
+        EventService.StartMultiplayer += OnStartMultiplayer;
+    }
+
     private void OnClientConnected(ulong clientId)
     {
         if (IsServer)
@@ -37,7 +42,7 @@ public class PreRaceManager : NetworkBehaviour
                 if (spawnPositions.Count > 0)
                 {
                     // Get player number based on clientId
-                    
+
 
                     int index = (int)(clientId % (ulong)spawnPositions.Count); // Simple round-robin assignment
                     playerObject.GetComponent<PlayerManager>().GetPreRacePrefab().transform.SetPositionAndRotation(spawnPositions[index].transform.position, spawnPositions[index].transform.rotation);
@@ -52,5 +57,11 @@ public class PreRaceManager : NetworkBehaviour
                 Debug.LogError($"Player object for client {clientId} not found.");
             }
         }
+    }
+
+    private void OnStartMultiplayer()
+    {
+        Debug.Log("Starting multiplayer session.");
+        NetworkManager.Singleton.StartHost();
     }
 }
