@@ -1,6 +1,7 @@
+using Unity.Netcode;
 using UnityEngine;
 
-public class LobbyMenuController : MonoBehaviour
+public class LobbyMenuController : NetworkBehaviour
 {
     public GameObject mainMenu;
     public GameObject singlePlayerMenu;
@@ -15,7 +16,7 @@ public class LobbyMenuController : MonoBehaviour
     {
         mainMenu.SetActive(true);
         singlePlayerMenu.SetActive(false);
-        // multiplayerMenu.SetActive(false);
+        multiplayerMenu.SetActive(false);
         settingsMenu.SetActive(false);
     }
 
@@ -23,7 +24,7 @@ public class LobbyMenuController : MonoBehaviour
     {
         mainMenu.SetActive(false);
         singlePlayerMenu.SetActive(true);
-        // multiplayerMenu.SetActive(false);
+        multiplayerMenu.SetActive(false);
         settingsMenu.SetActive(false);
     }
 
@@ -31,7 +32,7 @@ public class LobbyMenuController : MonoBehaviour
     {
         mainMenu.SetActive(false);
         singlePlayerMenu.SetActive(false);
-        // multiplayerMenu.SetActive(true);
+        multiplayerMenu.SetActive(true);
         settingsMenu.SetActive(false);
     }
 
@@ -39,7 +40,7 @@ public class LobbyMenuController : MonoBehaviour
     {
         mainMenu.SetActive(false);
         singlePlayerMenu.SetActive(false);
-        // multiplayerMenu.SetActive(false);
+        multiplayerMenu.SetActive(false);
         settingsMenu.SetActive(true);
     }
 
@@ -50,15 +51,23 @@ public class LobbyMenuController : MonoBehaviour
         SetMainMenu();
     }
 
-    public void StartTrackSelection()
+    public void StartTrackSelection(bool multiplayer)
     {
+        NetworkLaunchManager.Instance.SetShouldStartHost(multiplayer);
         camController.SetTrackCamera(0);
+        trackSelectionController.multiplayer = multiplayer;
         trackSelectionController.UpdateButtons();
         trackSelectionController.UpdateText();
     }
 
+    public void JoinOnlineGame()
+    {
+        NetworkManager.Singleton.StartClient();
+    }
+
     public void Back()
     {
+        NetworkLaunchManager.Instance.Reset();
         if (camController.currentTrackCam != -1 || camController.garageCamera.gameObject.activeSelf)
         {
             camController.DisableCameras();

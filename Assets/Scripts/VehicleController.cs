@@ -48,7 +48,7 @@ public class VehicleController : NetworkBehaviour
     public float currentTorque;
     public float currentEngineRPM;
     public AnimationCurve hpToRPMCurve;
-    private GearState gearState;
+    private GearState gearState = GearState.Running;
     public int isEngineRunning;
     public int gear = 0;
     public float wheelRPM;
@@ -103,6 +103,8 @@ public class VehicleController : NetworkBehaviour
 
     private int currentGear = 1; //Bc: R = 0 and N = 1
     private int maxGear = 9;
+    // Get and set for controllable
+    public bool IsControllable { get; private set; } = false;
 
 
     // Network Variables
@@ -113,6 +115,8 @@ public class VehicleController : NetworkBehaviour
     {
         m_IsEngineRunning.OnValueChanged += IsEngineRunningChanged;
         m_CurrentEngineRPM.OnValueChanged += CurrentEngineRPMChanged;
+
+        EventService.CountdownStarted += OnCountdownStart;
 
         if (!IsOwner)
         {
@@ -141,8 +145,15 @@ public class VehicleController : NetworkBehaviour
 
     public void FixedUpdate()
     {
+        if (IsServer)
+        {
+            if (rigidBody.linearVelocity.magnitude > 0.1f)
+            {
+                EventService.InvokePlayerMoved(OwnerClientId);
+            }
+        }
         if (!IsOwner) return;
-        if (isEngineRunning == 0) StartCoroutine(GetComponent<EngineAudio>().StartEngine());
+        if (isEngineRunning == 0) GetComponent<EngineAudio>().StartEngine();
         ApplyMotor();
         ApplySteering();
         ApplyBrake();
@@ -499,6 +510,14 @@ public class VehicleController : NetworkBehaviour
         else
         {
             LogitechGSDK.LogiPlayFrontalCollisionForce(0, (int)force);
+        }
+    }
+
+    private void OnCountdownStart()
+    {
+        if (IsOwner)
+        {
+            IsControllable = true;
         }
     }
 

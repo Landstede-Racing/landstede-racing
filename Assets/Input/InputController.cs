@@ -72,35 +72,38 @@ public class InputController : NetworkBehaviour
 
     private void ProcessGamepadInputs()
     {
-        // Accelerate
-        float gas = gamepadControls.vehicleControls.Accelerate.ReadValue<float>();
-        vehicleController.SetGas(gas);
-
-
-        // Brake
-        float brake = gamepadControls.vehicleControls.Brake.ReadValue<float>();
-        vehicleController.SetBrake(brake);
-
-        // Steering
-        Vector2 steerVector = gamepadControls.vehicleControls.Steer.ReadValue<Vector2>();
-        float steer = steerVector.x;
-        vehicleController.SetSteeringAngle(steer);
-
-        // Gear Up
-        if (gamepadControls.vehicleControls.GearUp.triggered)
+        if (vehicleController.IsControllable)
         {
-            StartCoroutine(vehicleController.ChangeGear(1));
-        }
+            // Accelerate
+            float gas = gamepadControls.vehicleControls.Accelerate.ReadValue<float>();
+            vehicleController.SetGas(gas);
 
-        // Gear Down
-        if (gamepadControls.vehicleControls.GearDown.triggered)
-        {
-            StartCoroutine(vehicleController.ChangeGear(-1));
-        }
 
-        if (gamepadControls.vehicleControls.DRS.triggered)
-        {
-            vehicleController.ToggleDRS();
+            // Brake
+            float brake = gamepadControls.vehicleControls.Brake.ReadValue<float>();
+            vehicleController.SetBrake(brake);
+
+            // Steering
+            Vector2 steerVector = gamepadControls.vehicleControls.Steer.ReadValue<Vector2>();
+            float steer = steerVector.x;
+            vehicleController.SetSteeringAngle(steer);
+
+            // Gear Up
+            if (gamepadControls.vehicleControls.GearUp.triggered)
+            {
+                StartCoroutine(vehicleController.ChangeGear(1));
+            }
+
+            // Gear Down
+            if (gamepadControls.vehicleControls.GearDown.triggered)
+            {
+                StartCoroutine(vehicleController.ChangeGear(-1));
+            }
+
+            if (gamepadControls.vehicleControls.DRS.triggered)
+            {
+                vehicleController.ToggleDRS();
+            }   
         }
 
         if (gamepadControls.vehicleControls.MFD.triggered)
@@ -125,34 +128,37 @@ public class InputController : NetworkBehaviour
 
     private void ProcessKeyboardInputs()
     {
-        // Accelerate
-        float gas = keyboardControls.vehicleControls.Accelerate.ReadValue<float>();
-        vehicleController.SetGas(gas);
-
-
-        // Brake
-        float brake = keyboardControls.vehicleControls.Brake.ReadValue<float>();
-        vehicleController.SetBrake(brake);
-
-        // Steering
-        float steer = keyboardControls.vehicleControls.Steer.ReadValue<float>();
-        vehicleController.SetSteeringAngle(steer);
-
-        // Gear Up
-        if (keyboardControls.vehicleControls.GearUp.triggered)
+        if (vehicleController.IsControllable)
         {
-            StartCoroutine(vehicleController.ChangeGear(1));
-        }
+            // Accelerate
+            float gas = keyboardControls.vehicleControls.Accelerate.ReadValue<float>();
+            vehicleController.SetGas(gas);
 
-        // Gear Down
-        if (keyboardControls.vehicleControls.GearDown.triggered)
-        {
-            StartCoroutine(vehicleController.ChangeGear(-1));
-        }
 
-        if (keyboardControls.vehicleControls.DRS.triggered)
-        {
-            vehicleController.ToggleDRS();
+            // Brake
+            float brake = keyboardControls.vehicleControls.Brake.ReadValue<float>();
+            vehicleController.SetBrake(brake);
+
+            // Steering
+            float steer = keyboardControls.vehicleControls.Steer.ReadValue<float>();
+            vehicleController.SetSteeringAngle(steer);
+
+            // Gear Up
+            if (keyboardControls.vehicleControls.GearUp.triggered)
+            {
+                StartCoroutine(vehicleController.ChangeGear(1));
+            }
+
+            // Gear Down
+            if (keyboardControls.vehicleControls.GearDown.triggered)
+            {
+                StartCoroutine(vehicleController.ChangeGear(-1));
+            }
+
+            if (keyboardControls.vehicleControls.DRS.triggered)
+            {
+                vehicleController.ToggleDRS();
+            }   
         }
 
         if (keyboardControls.vehicleControls.NextCam.triggered)

@@ -18,7 +18,10 @@ EditorBuildSettings:
     path: Assets/Scenes/PauseScene.unity
     guid: df141c082942b104dbba4fea9cb37463
   - enabled: 1
-    path: Assets/Scenes/StadionScene.unity
+    path: Assets/Scenes/PreRaceStadionScene.unity
     guid: b18cb0412e1e8034297f50b4617b3d02
+  - enabled: 1
+    path: Assets/Scenes/RaceStadionScene.unity
+    guid: e839d8045afbbc045b44e1d16e66a329
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

@@ -8,8 +8,18 @@ public class CameraController : NetworkBehaviour
     public int currentCam;
     private bool reverse;
 
-    private void Start() {
-        if (IsOwner) SetCamera(currentCam);
+    private void Start()
+    {
+        if (IsOwner)
+        {
+            Debug.Log("CameraController started for owner");
+            SetCamera(currentCam);
+        }
+        else
+        {
+            Debug.Log("CameraController started for non-owner");
+        }
+        
     }
 
     public void SetCamera(int camera)

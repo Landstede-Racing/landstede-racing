@@ -91,17 +91,10 @@ public class EngineAudio : NetworkBehaviour
         }
     }
 
-    public IEnumerator StartEngine()
+    public void StartEngine()
     {
-        startingSound.Play();
-        carController.isEngineRunning = 1;
-        carController.m_IsEngineRunning.Value = 1;
-        yield return new WaitForSeconds(0.6f);
-
         isEngineRunning = true;
         m_IsEngineRunning.Value = true;
-        yield return new WaitForSeconds(0.4f);
-
         carController.isEngineRunning = 2;
         carController.m_IsEngineRunning.Value = 2;
     }

@@ -125,6 +125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a1915c3ff2294d4995e4ee6b1e9806c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   wheelModel: {fileID: 5197454518024367261}
   part: {fileID: 0}
   damagablePart: {fileID: 8988950090481509109}
@@ -1484,6 +1485,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a1915c3ff2294d4995e4ee6b1e9806c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   wheelModel: {fileID: 5397589320269079537}
   part: {fileID: 4443486069242049666}
   damagablePart: {fileID: 8084501954310197572}
@@ -8859,6 +8861,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a1915c3ff2294d4995e4ee6b1e9806c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   wheelModel: {fileID: 6284078465990781603}
   part: {fileID: 5936679717511684981}
   damagablePart: {fileID: 5685201402986769838}
@@ -10467,6 +10470,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a1915c3ff2294d4995e4ee6b1e9806c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   wheelModel: {fileID: 5447331750104201021}
   part: {fileID: 5341463745145682075}
   damagablePart: {fileID: 2961729771102953374}
@@ -17363,6 +17367,9 @@ PrefabInstance:
       addedObject: {fileID: 6450280369138269187}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 31073083d533471429332d6cc461014a, type: 3}
       insertIndex: -1
+      addedObject: {fileID: -6627306400531276364}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 31073083d533471429332d6cc461014a, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 1625261431068299401}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 31073083d533471429332d6cc461014a, type: 3}
       insertIndex: -1
@@ -17382,9 +17389,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 31073083d533471429332d6cc461014a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8745581474219053939}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 31073083d533471429332d6cc461014a, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: -6627306400531276364}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 31073083d533471429332d6cc461014a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 393979885593322988}
@@ -17733,6 +17737,31 @@ MonoBehaviour:
   mfdController: {fileID: 5227760965394871366}
   centeringForceMultiplier: 50
   slipForceMultiplier: 100
+--- !u!114 &-6627306400531276364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5551360141245956375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 2203236257
+  InScenePlacedSourceGlobalObjectIdHash: 2203236257
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!114 &1625261431068299401
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17745,6 +17774,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32e4f16d5d34d0343a438550bef23bea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   runningSound: {fileID: 5504349388108250359}
   runningMaxVolume: 1
   runningMaxPitch: 2
@@ -17754,6 +17784,7 @@ MonoBehaviour:
   idleSound: {fileID: 4710739200806570046}
   idleMaxVolume: 1
   speedRatio: 0
+  speedSign: 0
   LimiterSound: 3
   LimiterFrequency: 10
   LimiterEngage: 0.8
@@ -17771,6 +17802,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78942c6e946a7324ca7f2609e5671f81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   logitechSteering: {fileID: 6450280369138269187}
   steeringAngle: 0
   gas: 0
@@ -17949,6 +17981,9 @@ MonoBehaviour:
   speedText: {fileID: 3753240314648609878}
   rpmText: {fileID: 8704963908160952762}
   rpmTextWheel: {fileID: 5358419869334139197}
+  hud: {fileID: 0}
+  m_IsEngineRunning:
+    m_InternalValue: 0
 --- !u!114 &5754324553072183068
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17961,6 +17996,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 905542a1b3081364cb526c367e6c152b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   vehicleController: {fileID: 6864331406162114436}
   cameraController: {fileID: 5331579456627287725}
   mfdController: {fileID: 5227760965394871366}
@@ -17976,6 +18012,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30c677a4cfb4219659917bd9a489dfff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   cameras:
   - {fileID: 4379335182023354954}
   - {fileID: 3912379372956717237}
@@ -18047,31 +18084,6 @@ ConstantForce:
   m_RelativeForce: {x: 0, y: 0, z: 0}
   m_Torque: {x: 0, y: 0, z: 0}
   m_RelativeTorque: {x: 0, y: 0, z: 0}
---- !u!114 &-6627306400531276364
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5551360141245956375}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 378805499
-  InScenePlacedSourceGlobalObjectIdHash: 2203236257
-  DeferredDespawnTick: 0
-  Ownership: 1
-  AlwaysReplicateAsRoot: 0
-  SynchronizeTransform: 1
-  ActiveSceneSynchronization: 0
-  SceneMigrationSynchronization: 1
-  SpawnWithObservers: 1
-  DontDestroyWithOwner: 0
-  AutoObjectParentSync: 1
-  SyncOwnerTransformWhenParented: 1
-  AllowOwnerToParent: 0
 --- !u!114 &393979885593322988
 MonoBehaviour:
   m_ObjectHideFlags: 0

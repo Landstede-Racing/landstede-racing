@@ -25,6 +25,8 @@ public class TrackSelectionController : MonoBehaviour
     public string[] trackScenes;
     private readonly Track[] tracks = new Track[1];
 
+    public bool multiplayer = false;
+
     void Start()
     {
         tracks[0] = new Track
@@ -37,7 +39,7 @@ public class TrackSelectionController : MonoBehaviour
     }
 
     public void StartRace() {
-        StartCoroutine(CustomSceneManager.LoadScene(trackScenes[camController.currentTrackCam]));
+        StartCoroutine(CustomSceneManager.LoadScene(trackScenes[camController.currentTrackCam], multiplayer));
     }
 
     public void UpdateButtons() {

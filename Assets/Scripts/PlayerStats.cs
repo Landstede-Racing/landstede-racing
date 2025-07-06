@@ -24,6 +24,7 @@ public class PlayerStats : NetworkBehaviour, INetworkSerializeByMemcpy
 
     private void Start()
     {
+        playerTimings.Add(new PlayerTiming(NetworkObjectId, 0, 0, 0));
         shortName = Random.Range(0, 999).ToString();
         // time = Random.Range(0f, 3f);
         time = 0;

@@ -89,32 +89,38 @@ public class LogitechSteeringWheel : MonoBehaviour
                 // lRz: Brake pedal (32767 to -32766)
 
 
-                // Calculate steering angle with a max of 180 degrees, mapped to a value from -1 to 1
-                steeringAngle = Mathf.InverseLerp(-32768f / 2.5f, 32767f / 2.5f, rec.lX) * 2 - 1;
-                vehicleController.SetSteeringAngle(steeringAngle);
+                if (vehicleController.IsControllable)
+                {
+                    // Calculate steering angle with a max of 180 degrees, mapped to a value from -1 to 1
+                    steeringAngle = Mathf.InverseLerp(-32768f / 2.5f, 32767f / 2.5f, rec.lX) * 2 - 1;
+                    vehicleController.SetSteeringAngle(steeringAngle);
 
-                // Calculate gas amount mapped to a value from 0 to 1
-                gas = Mathf.InverseLerp(32767, -32768, rec.lY);
-                vehicleController.SetGas(gas);
+                    // Calculate gas amount mapped to a value from 0 to 1
+                    gas = Mathf.InverseLerp(32767, -32768, rec.lY);
+                    vehicleController.SetGas(gas);
 
-                // Calculate brake amount mapped to a value from 0 to 1
-                brake = Mathf.InverseLerp(32767, -32766, rec.lRz);
-                vehicleController.SetBrake(brake);
+                    // Calculate brake amount mapped to a value from 0 to 1
+                    brake = Mathf.InverseLerp(32767, -32766, rec.lRz);
+                    vehicleController.SetBrake(brake);
+
+                    if (LogitechGSDK.LogiButtonTriggered(0, Controls.NextGearButton.button))
+                        StartCoroutine(vehicleController.ChangeGear(1));
+
+                    if (LogitechGSDK.LogiButtonTriggered(0, Controls.PreviousGearButton.button))
+                        StartCoroutine(vehicleController.ChangeGear(-1));
+
+                    if (LogitechGSDK.LogiButtonTriggered(0, Controls.DrsButton.button))
+                        vehicleController.ToggleDRS();
+
+                    if(LogitechGSDK.LogiButtonReleased(0, Controls.NextErsModeButton.button)) 
+                        vehicleController.NextERSMode();
+                        
+                    if (LogitechGSDK.LogiButtonReleased(0, Controls.PreviousErsModeButton.button))
+                        vehicleController.PreviousERSMode();
+                }
 
                 if(LogitechGSDK.LogiButtonTriggered(0, Controls.MfdButton.button)) {
                     mfdController.NextPage();
-                }
-                if (LogitechGSDK.LogiButtonTriggered(0, Controls.NextGearButton.button))
-                {
-                    StartCoroutine(vehicleController.ChangeGear(1));
-                }
-                if (LogitechGSDK.LogiButtonTriggered(0, Controls.PreviousGearButton.button))
-                {
-                    StartCoroutine(vehicleController.ChangeGear(-1));
-                }
-                if (LogitechGSDK.LogiButtonTriggered(0, Controls.DrsButton.button))
-                {
-                    vehicleController.ToggleDRS();
                 }
                 if (LogitechGSDK.LogiButtonTriggered(0, Controls.NextCamButton.button))
                 {
@@ -127,12 +133,6 @@ public class LogitechSteeringWheel : MonoBehaviour
                 if (LogitechGSDK.LogiButtonReleased(0, Controls.ReverseCamButton.button))
                 {
                     cameraController.SetReverseCam(false);
-                }
-                if(LogitechGSDK.LogiButtonReleased(0, Controls.NextErsModeButton.button)) {
-                    vehicleController.NextERSMode();
-                }
-                if(LogitechGSDK.LogiButtonReleased(0, Controls.PreviousErsModeButton.button)) {
-                    vehicleController.PreviousERSMode();
                 }
 
                 if (LogitechGSDK.LogiButtonTriggered(0, 23))

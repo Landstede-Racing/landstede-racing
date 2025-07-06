@@ -12,28 +12,11 @@ public class LeaderBoardPosition : NetworkBehaviour
 
     [SerializeField] private ScrollRect leaderBoard;
     [SerializeField] private GameObject playerData;
-    private List<PlayerStats> _players = new();
+    public List<PlayerStats> _players = new();
     private List<PlayerInfo> playersInfo = new();
 
     private NetworkList<PlayerInfo> m_playersInfo = new(
         new List<PlayerInfo>(), NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
-
-    private void Update()
-    {
-        switch (Input.inputString)
-        {
-            case "l":
-                StartRaceServerRpc();
-                break;
-            case "k":
-                for (var player = 0; player < _players.Count; player++)
-                    for (var i = player + 1; i < _players[player].playerTimings.Count; i++)
-                        Debug.Log(_players[player].GetComponent<NetworkObject>().NetworkObjectId + ", " +
-                                  _players[player].playerTimings[i].Timing);
-
-                break;
-        }
-    }
 
     public override void OnNetworkSpawn()
     {
@@ -45,9 +28,12 @@ public class LeaderBoardPosition : NetworkBehaviour
     [Rpc(SendTo.Server)]
     public void UpdateLeaderBoardServerRpc()
     {
+        Debug.Log("UpdateLeaderBoardServerRpc called");
         if (!IsServer) return;
+        Debug.Log("UpdateLeaderBoardServerRpc executed on server");
         var leaderboardString = "";
 
+        Debug.Log($"Updating leaderboard with {_players.Count} players");
         _players = _players.OrderByDescending(s => s.playerTimings[^1].Lap)
             .ThenByDescending(s => s.playerTimings[^1].SectorId)
             .ThenBy(s => s.playerTimings[^1].Timing)
@@ -59,6 +45,7 @@ public class LeaderBoardPosition : NetworkBehaviour
             var player = _players[i];
             player.position = i + 1;
             leaderboardString += $"#{player.position} {player.name}";
+            Debug.Log($"Player: {player.name}, Position: {player.position}, Time: {player.playerTimings[^1].Timing}, Tire: {player.tire}");
         }
 
         Debug.Log(leaderboardString);
@@ -88,9 +75,18 @@ public class LeaderBoardPosition : NetworkBehaviour
     [Rpc(SendTo.Server)]
     public void StartRaceServerRpc()
     {
+        Debug.Log("StartRaceServerRpc called");
         if (!IsServer) return;
+        Debug.Log("StartRaceServerRpc executed on server");
+        StartRace();
 
         var players = GameObject.FindGameObjectsWithTag("Player").Select(p => p.GetComponentInChildren<PlayerStats>()).ToList();
+        if (players.Count == 0)
+        {
+            Debug.LogWarning("No players found to start");
+            return;
+        }
+        Debug.Log($"Starting with {players.Count} players");
         _players = players;
         UpdateLeaderBoardServerRpc();
     }
@@ -98,26 +94,32 @@ public class LeaderBoardPosition : NetworkBehaviour
     [Rpc(SendTo.ClientsAndHost)]
     private void UpdateLeaderBoardGUIClientRpc(PlayerInfo[] players)
     {
+        Debug.Log("UpdateLeaderBoardGUIClientRpc called");
         playersInfo = new List<PlayerInfo>(players);
         if (leaderBoard == null) return;
+        Debug.Log("Leaderboard is not null");
 
         if (leaderBoard.content.transform.childCount == 0)
         {
+            Debug.Log("No existing player data, creating new ones");
             for (var i = 0; i < playersInfo.Count; i++)
             {
+                Debug.Log($"Creating player data for {playersInfo[i].shortName} at position {playersInfo[i].position}");
                 var newPlayerData = Instantiate(playerData, leaderBoard.content);
                 newPlayerData.GetComponent<PlayerPositionUI>().UpdateUI(playersInfo[i]);
             }
         }
         else
         {
+            Debug.Log("Updating existing player data");
             for (var player = 0; player < leaderBoard.content.transform.childCount; player++)
             {
+                Debug.Log($"Updating player data for index {player}");
                 var go = leaderBoard.content.transform;
 
                 for (var index = 0; index < go.childCount; index++)
                     go.GetChild(index).gameObject.GetComponent<PlayerPositionUI>().UpdateUI(playersInfo[index]);
-            }   
+            }
         }
     }
     
