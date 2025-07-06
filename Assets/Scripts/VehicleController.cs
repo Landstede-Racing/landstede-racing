@@ -48,7 +48,7 @@ public class VehicleController : NetworkBehaviour
     public float currentTorque;
     public float currentEngineRPM;
     public AnimationCurve hpToRPMCurve;
-    private GearState gearState;
+    private GearState gearState = GearState.Running;
     public int isEngineRunning;
     public int gear = 0;
     public float wheelRPM;
@@ -153,7 +153,7 @@ public class VehicleController : NetworkBehaviour
             }
         }
         if (!IsOwner) return;
-        if (isEngineRunning == 0) StartCoroutine(GetComponent<EngineAudio>().StartEngine());
+        if (isEngineRunning == 0) GetComponent<EngineAudio>().StartEngine();
         ApplyMotor();
         ApplySteering();
         ApplyBrake();

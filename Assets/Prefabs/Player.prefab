@@ -3428,14 +3428,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 3511333484
-  InScenePlacedSourceGlobalObjectIdHash: 0
+  GlobalObjectIdHash: 882850768
+  InScenePlacedSourceGlobalObjectIdHash: 3511333484
   DeferredDespawnTick: 0
   Ownership: 1
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
   ActiveSceneSynchronization: 0
-  SceneMigrationSynchronization: 1
+  SceneMigrationSynchronization: 0
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
@@ -8823,8 +8823,8 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: 392c1ddd901802847bd5bbb86d71034f, type: 3}
   m_Resource: {fileID: 8300000, guid: 392c1ddd901802847bd5bbb86d71034f, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
-  m_Pitch: 1
+  m_Volume: 0.7
+  m_Pitch: 1.5
   Loop: 0
   Mute: 0
   Spatialize: 0
