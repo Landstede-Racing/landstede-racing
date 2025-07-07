@@ -161,8 +161,6 @@ public class RaceManager : NetworkBehaviour
 
     public void PlacePlayerOnSpawn(GameObject playerGo, ulong clientId)
     {
-        if (!IsServer) return;
-
         if (startingPositions != null && startingPositions.transform.childCount > 0)
         {
             var index = (int)(clientId % (ulong)startingPositions.transform.childCount);
@@ -175,7 +173,8 @@ public class RaceManager : NetworkBehaviour
             }
             Debug.Log($"Setting player {clientId} position to {spawnPosition.position} and rotation to {spawnPosition.rotation}");
             playerGo.transform.SetPositionAndRotation(spawnPosition.position, spawnPosition.rotation);
-            SetPlayerPositionClientRpc(clientId, spawnPosition.position, spawnPosition.rotation);
+            // SetPlayerPositionClientRpc(clientId, spawnPosition.position, spawnPosition.rotation);
+            EventService.InvokePlayerPlaced();
         }
         else
         {

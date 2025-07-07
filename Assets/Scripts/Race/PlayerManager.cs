@@ -38,15 +38,8 @@ public class PlayerManager : NetworkBehaviour
         {
             preRacePrefab.SetActive(false);
             Debug.Log($"Spawning player for client {OwnerClientId}");
-            var newPlayerGo = NetworkManager.Singleton.SpawnManager.InstantiateAndSpawn(playerPrefab, OwnerClientId);
-            var raceManager = FindAnyObjectByType<RaceManager>();
-            if (raceManager != null)
-            {
-                raceManager.PlacePlayerOnSpawn(newPlayerGo.GetComponentInChildren<VehicleController>().gameObject, OwnerClientId);
-            }
+            NetworkManager.Singleton.SpawnManager.InstantiateAndSpawn(playerPrefab, OwnerClientId);
             Destroy(gameObject);
-            preRace = false;
-            SetPreRacePrefabEnabledClientRpc(false);
         }
     }
 

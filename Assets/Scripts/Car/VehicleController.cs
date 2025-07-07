@@ -113,6 +113,33 @@ public class VehicleController : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
+        if (IsOwner)
+        {
+            EventService.PlayerPlaced += () =>
+            {
+                if (rigidBody)
+                {
+                    rigidBody.isKinematic = false;
+                    Rigidbody[] rbs = GetComponentsInChildren<Rigidbody>();
+                    foreach (var rb in rbs)
+                    {
+                        rb.isKinematic = false;
+                    }
+                    Debug.Log("Rigidbody has to go to work :(");
+                }
+            };
+
+            var raceManager = FindFirstObjectByType<RaceManager>();
+            if (raceManager != null)
+            {
+                Debug.Log("Race manager found");
+                raceManager.PlacePlayerOnSpawn(gameObject, OwnerClientId);
+            }
+            else
+            {
+                Debug.Log("Race manager not found!!!!");
+            }
+        }
         m_IsEngineRunning.OnValueChanged += IsEngineRunningChanged;
         m_CurrentEngineRPM.OnValueChanged += CurrentEngineRPMChanged;
 
@@ -121,16 +148,28 @@ public class VehicleController : NetworkBehaviour
         if (!IsOwner)
         {
             hud.SetActive(false);
-            return;
         }
+    }
+
+    public void Awake()
+    {
+        rigidBody = GetComponent<Rigidbody>();
+        if (rigidBody && IsOwner)
+        {
+            rigidBody.isKinematic = false;
+            Rigidbody[] rbs = GetComponentsInChildren<Rigidbody>();
+            foreach (var rb in rbs)
+            {
+                rb.isKinematic = false;
+            }
+            Debug.Log("Rigidbody has to go to work :(");
+        }       
     }
 
 
     public void Start()
     {
         wheels = GetComponentsInChildren<WheelControl>();
-
-        rigidBody = GetComponent<Rigidbody>();
 
         animator = GetComponent<Animator>();
 
