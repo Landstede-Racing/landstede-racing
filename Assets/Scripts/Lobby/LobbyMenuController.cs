@@ -10,16 +10,16 @@ using UnityEngine;
 
 public class LobbyMenuController : NetworkBehaviour
 {
-    public GameObject mainMenu;
-    public GameObject singlePlayerMenu;
-    public GameObject multiplayerMenu;
-    public GameObject settingsMenu;
-    public GameObject joinMultiplayerMenu;
-    public LobbyCamController camController;
-    public TrackSelectionController trackSelectionController;
-    public SettingsController settingsController;
-    public SettingsMenuController settingsMenuController;
-    private string joinCode;
+    [SerializeField] private GameObject mainMenu;
+    [SerializeField] private GameObject singlePlayerMenu;
+    [SerializeField] private GameObject multiplayerMenu;
+    [SerializeField] private GameObject settingsMenu;
+    [SerializeField] private GameObject joinMultiplayerMenu;
+    [SerializeField] private TMP_InputField codeInputField;
+    [SerializeField] private LobbyCamController camController;
+    [SerializeField] private TrackSelectionController trackSelectionController;
+    [SerializeField] private SettingsController settingsController;
+    [SerializeField] private SettingsMenuController settingsMenuController;
 
     public void SetMainMenu()
     {
@@ -96,6 +96,9 @@ public class LobbyMenuController : NetworkBehaviour
             await AuthenticationService.Instance.SignInAnonymouslyAsync();
         }
 
+        var joinCode = codeInputField.text;
+        Debug.Log("Join Code entered: " + joinCode);
+
         var allocation = await RelayService.Instance.JoinAllocationAsync(joinCode: joinCode);
         NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(AllocationUtils.ToRelayServerData(allocation, "udp"));
         NetworkManager.Singleton.StartClient();
@@ -113,11 +116,6 @@ public class LobbyMenuController : NetworkBehaviour
         {
             SetMainMenu();
         }
-    }
-
-    public void SetJoinCodeInput(string code)
-    {
-        joinCode = code;
     }
 
     public void QuitGame()

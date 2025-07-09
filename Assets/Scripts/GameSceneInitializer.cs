@@ -11,6 +11,7 @@ using Unity.Services.Relay;
 
 public class GameSceneInitializer : MonoBehaviour
 {
+    public string JoinCode { get; private set; }
     private void OnEnable()
     {
         SceneManager.sceneLoaded += async (scene, mode) => await OnSceneLoadedAsync(scene, mode);
@@ -34,8 +35,8 @@ public class GameSceneInitializer : MonoBehaviour
             var connectionType = "udp";
             var allocation = await RelayService.Instance.CreateAllocationAsync(maxConnections);
             NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(AllocationUtils.ToRelayServerData(allocation, connectionType));
-            var joinCode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
-            Debug.Log("Joincode: " + joinCode);
+            JoinCode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
+            Debug.Log("Joincode: " + JoinCode);
             NetworkManager.Singleton.StartHost();
             NetworkLaunchManager.Instance.Reset();
         }
