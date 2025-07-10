@@ -62,6 +62,7 @@ public class PreRaceUI : NetworkBehaviour
     public void LeaveButtonClicked()
     {
         NetworkManager.Singleton.Shutdown();
+        StartCoroutine(CustomSceneManager.LoadScene("LobbyScene", false));
     }
 
     private void OnJoinCodeReceive(string code)
