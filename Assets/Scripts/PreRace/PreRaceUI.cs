@@ -1,3 +1,4 @@
+using TMPro;
 using Unity.Netcode;
 using Unity.Networking.Transport.Error;
 using UnityEngine;
@@ -5,6 +6,21 @@ using UnityEngine;
 public class PreRaceUI : NetworkBehaviour
 {
     [SerializeField] private GameObject startButton;
+    [SerializeField] private TMP_Text joinCodeText;
+    private string joinCode;
+
+    public override void OnNetworkSpawn()
+    {
+        EventService.ReceivedJoinCode += OnJoinCodeReceive;
+
+        var gameSceneInit = FindFirstObjectByType<GameSceneInitializer>();
+        if (gameSceneInit != null)
+        {
+            joinCode = gameSceneInit.JoinCode;
+            joinCodeText.text = joinCode;
+        }
+    }
+
     public void Show()
     {
         gameObject.SetActive(true);
@@ -46,5 +62,12 @@ public class PreRaceUI : NetworkBehaviour
     public void LeaveButtonClicked()
     {
         NetworkManager.Singleton.Shutdown();
+        StartCoroutine(CustomSceneManager.LoadScene("LobbyScene", false));
+    }
+
+    private void OnJoinCodeReceive(string code)
+    {
+        joinCode = code;
+        joinCodeText.text = code;
     }
 }

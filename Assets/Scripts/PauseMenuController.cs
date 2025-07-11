@@ -1,7 +1,7 @@
+using Unity.Netcode;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public class PauseMenuController : MonoBehaviour
+public class PauseMenuController : NetworkBehaviour
 {
     public GameObject pauseGo;
     public GameObject settingsGo;
@@ -21,6 +21,7 @@ public class PauseMenuController : MonoBehaviour
     }
 
     public void ExitToMainMenu() {
+        NetworkManager.Singleton.Shutdown();
         StartCoroutine(CustomSceneManager.LoadScene("LobbyScene", false));
     }
 }
