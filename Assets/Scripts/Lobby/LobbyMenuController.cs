@@ -32,6 +32,7 @@ public class LobbyMenuController : NetworkBehaviour
 
     public void SetSinglePlayerMenu()
     {
+        NetworkLaunchManager.Instance.SetShouldStartSingleplayer(true);
         mainMenu.SetActive(false);
         singlePlayerMenu.SetActive(true);
         multiplayerMenu.SetActive(false);

@@ -5,6 +5,7 @@ public class NetworkLaunchManager : MonoBehaviour
     public static NetworkLaunchManager Instance { get; private set; }
 
     public bool ShouldStartHost { get; private set; }
+    public bool ShouldStartSingleplayer { get; private set; }
 
     private void Awake()
     {
@@ -23,8 +24,14 @@ public class NetworkLaunchManager : MonoBehaviour
         ShouldStartHost = shouldStartHost;
     }
 
+    public void SetShouldStartSingleplayer(bool shouldStartSingleplayer)
+    {
+        ShouldStartSingleplayer = shouldStartSingleplayer;
+    }
+
     public void Reset()
     {
         ShouldStartHost = false;
+        ShouldStartSingleplayer = false;
     }
 }
