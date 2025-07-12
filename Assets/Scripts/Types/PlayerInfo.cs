@@ -7,14 +7,14 @@ public struct PlayerInfo : INetworkSerializable, IEquatable<PlayerInfo>
 {
     public int position;
     public FixedString64Bytes shortName;
-    public float time;
+    public float gapToFront;
     public FixedString64Bytes tire;
 
-    public PlayerInfo(int position, string shortName, float time, string tire)
+    public PlayerInfo(int position, string shortName, float gapToFront, string tire)
     {
         this.position = position;
         this.shortName = shortName;
-        this.time = time;
+        this.gapToFront = gapToFront;
         this.tire = tire;
     }
 
@@ -22,7 +22,7 @@ public struct PlayerInfo : INetworkSerializable, IEquatable<PlayerInfo>
     {
         return position == other.position &&
                shortName == other.shortName &&
-               time.Equals(other.time) &&
+               gapToFront == other.gapToFront &&
                tire == other.tire;
     }
 
@@ -33,14 +33,14 @@ public struct PlayerInfo : INetworkSerializable, IEquatable<PlayerInfo>
 
     public override int GetHashCode()
     {
-        return HashCode.Combine(position, shortName, time, tire);
+        return HashCode.Combine(position, shortName, gapToFront, tire);
     }
 
     public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
     {
         serializer.SerializeValue(ref position);
         serializer.SerializeValue(ref shortName);
-        serializer.SerializeValue(ref time);
+        serializer.SerializeValue(ref gapToFront);
         serializer.SerializeValue(ref tire);
     }
 }
