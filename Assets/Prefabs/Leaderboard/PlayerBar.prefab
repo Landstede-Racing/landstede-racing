@@ -640,10 +640,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {fileID: 3500497884004523724}
   shortName: {fileID: 8428900564143980690}
-  time: {fileID: 7526395166540785824}
+  gapText: {fileID: 7526395166540785824}
   tire: {fileID: 465929905044125237}
-  playerObject:
-    position: 0
-    shortName: 
-    time: 0
-    tire: 

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using LandstedeRacing.Types;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
@@ -36,16 +37,30 @@ public class LeaderBoardPosition : NetworkBehaviour
         Debug.Log($"Updating leaderboard with {_players.Count} players");
         _players = _players.OrderByDescending(s => s.playerTimings[^1].Lap)
             .ThenByDescending(s => s.playerTimings[^1].SectorId)
-            .ThenBy(s => s.playerTimings[^1].Timing)
+            .ThenBy(s => s.playerTimings[^1].SectorTimestamp)
             .ToList();
 
         for (var i = 0; i < _players.Count; i++)
         {
-            if (leaderboardString != "") leaderboardString += ", ";
             var player = _players[i];
             player.position = i + 1;
-            leaderboardString += $"#{player.position} {player.name}";
-            Debug.Log($"Player: {player.name}, Position: {player.position}, Time: {player.playerTimings[^1].Timing}, Tire: {player.tire}");
+
+            if (i == 0)
+            {
+                player.gapToFront = 0f; // Leader
+            }
+            else
+            {
+                var front = _players[i - 1];
+                PlayerTiming playerTiming = player.playerTimings[^1];
+                PlayerTiming frontPlayerTiming = front.playerTimings
+                    .Reverse()
+                    .FirstOrDefault(t => t.SectorId == playerTiming.SectorId);
+
+                player.gapToFront = frontPlayerTiming != null 
+                    ? playerTiming.SectorTimestamp - frontPlayerTiming.SectorTimestamp 
+                    : 0f; // Default gap if no matching sector is found
+            }
         }
 
         Debug.Log(leaderboardString);
@@ -60,16 +75,17 @@ public class LeaderBoardPosition : NetworkBehaviour
         var newPlayerData = Instantiate(playerData, leaderBoard.content);
         _players.Add(player);
         newPlayerData.GetComponent<PlayerPositionUI>()
-            .UpdateUI(new PlayerInfo(player.position, player.name, player.time, player.tire));
+            .UpdateUI(new PlayerInfo(player.position, player.name, 0, player.tire));
     }
 
     public void AddPlayer(PlayerStats player, int position)
     {
         var newPlayerData = Instantiate(playerData, leaderBoard.content);
-        _players.Add(player);
         player.position = position;
+        _players.Add(player);
+        Debug.Log($"Updating UI for player {player.OwnerClientId} at position {position}");
         newPlayerData.GetComponent<PlayerPositionUI>()
-            .UpdateUI(new PlayerInfo(player.position, player.name, player.time, player.tire));
+            .UpdateUI(new PlayerInfo(player.position, player.name, 0, player.tire));
     }
 
     [Rpc(SendTo.Server)]
@@ -127,9 +143,11 @@ public class LeaderBoardPosition : NetworkBehaviour
     public void StartRace()
     {
         var players = GameObject.FindGameObjectsWithTag("Player").ToList();
+        Debug.Log($"Found {players.Count} players");
         for (var i = 0; i < players.Count; i++)
         {
             var playerInfo = players[i].GetComponentInChildren<PlayerStats>();
+            Debug.Log($"Adding player {playerInfo.OwnerClientId}");
             AddPlayer(playerInfo, i + 1);
         }
     }
@@ -140,8 +158,16 @@ public class LeaderBoardPosition : NetworkBehaviour
 
         foreach (var player in players)
         {
-            playersInfo.Add(new PlayerInfo(player.position, player.name, player.playerTimings[^1].Timing, player.tire));
-            Debug.Log(player.playerTimings[^1].Timing);
+            Debug.Log($"Player {player.shortName}, position: {player.position}, totalTime: {player.totalDriveTime}, gapToFront: {player.gapToFront}");
+            playersInfo.Add(
+                new PlayerInfo
+                {
+                    shortName = player.name, 
+                    position = player.position,
+                    gapToFront = player.gapToFront,
+                    tire = player.tire
+                });
+            Debug.Log($"Player {player.shortName}, total time: {player.totalDriveTime}, gap to front: {player.gapToFront}");
         }
 
         m_playersInfo.Clear();

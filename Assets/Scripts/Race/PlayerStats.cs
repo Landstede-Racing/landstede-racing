@@ -18,13 +18,14 @@ public class PlayerStats : NetworkBehaviour, INetworkSerializeByMemcpy
     public string shortName;
     public float time;
     public string tire;
+    public float gapToFront;
     private Rigidbody rb;
 
     public Stopwatch stopwatch = new();
 
     private void Start()
     {
-        playerTimings.Add(new PlayerTiming(NetworkObjectId, 0, 0, 0));
+        playerTimings.Add(new PlayerTiming(NetworkObjectId, 0, 0, 0, 0));
         shortName = Random.Range(0, 999).ToString();
         // time = Random.Range(0f, 3f);
         time = 0;
@@ -33,7 +34,7 @@ public class PlayerStats : NetworkBehaviour, INetworkSerializeByMemcpy
 
     public override void OnNetworkSpawn()
     {
-        playerTimings.Add(new PlayerTiming(NetworkObjectId, 0, 0, 0));
+        playerTimings.Add(new PlayerTiming(NetworkObjectId, 0, 0, 0, 0));
 
         name = NetworkObjectId.ToString();
     }
@@ -49,17 +50,17 @@ public class PlayerStats : NetworkBehaviour, INetworkSerializeByMemcpy
 
     public void NewTiming(int sectorId, bool lapUp)
     {
+        PlayerTiming previousPlayerTiming = playerTimings[^1];
         PlayerTiming playerTiming;
         if (lapUp)
-            playerTiming = new PlayerTiming(NetworkObjectId, stopwatch.ElapsedMilliseconds, sectorId,
+            playerTiming = new PlayerTiming(NetworkObjectId, stopwatch.ElapsedMilliseconds - previousPlayerTiming.SectorTimestamp, sectorId, stopwatch.ElapsedMilliseconds,
                 playerTimings[^1].Lap + 1);
         else
-            playerTiming = new PlayerTiming(NetworkObjectId, stopwatch.ElapsedMilliseconds, sectorId,
+            playerTiming = new PlayerTiming(NetworkObjectId, stopwatch.ElapsedMilliseconds - previousPlayerTiming.SectorTimestamp, sectorId, stopwatch.ElapsedMilliseconds,
                 playerTimings[^1].Lap);
         playerTimings.Add(playerTiming);
         time = stopwatch.ElapsedMilliseconds;
-        totalDriveTime = totalDriveTime + stopwatch.ElapsedMilliseconds;
-        stopwatch.Restart();
+        totalDriveTime = stopwatch.ElapsedMilliseconds;
         UnityEngine.Debug.Log(playerTimings[playerTimings.Count - 1].NetworkId + ", " + playerTimings[playerTimings.Count - 1].Timing);
     }
 
@@ -87,4 +88,5 @@ public class PlayerStats : NetworkBehaviour, INetworkSerializeByMemcpy
             NewTiming(sectorController.sectorId, true);
         GameObject.FindGameObjectWithTag("Manager").GetComponent<LeaderBoardPosition>().UpdateLeaderBoardServerRpc();
     }
+    
 }
