@@ -2,8 +2,6 @@ using System;
 using LandstedeRacing.Types;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Rendering;
-
 public class PlayerPositionUI : MonoBehaviour
 {
     public TMP_Text position;
