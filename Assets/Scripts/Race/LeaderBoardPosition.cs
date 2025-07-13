@@ -53,9 +53,13 @@ public class LeaderBoardPosition : NetworkBehaviour
             {
                 var front = _players[i - 1];
                 PlayerTiming playerTiming = player.playerTimings[^1];
-                PlayerTiming frontPlayerTiming = front.playerTimings.Where(t => t.SectorId == playerTiming.SectorId).Last();
+                PlayerTiming frontPlayerTiming = front.playerTimings
+                    .Reverse()
+                    .FirstOrDefault(t => t.SectorId == playerTiming.SectorId);
 
-                player.gapToFront = playerTiming.SectorTimestamp - frontPlayerTiming.SectorTimestamp;
+                player.gapToFront = frontPlayerTiming != null 
+                    ? playerTiming.SectorTimestamp - frontPlayerTiming.SectorTimestamp 
+                    : 0f; // Default gap if no matching sector is found
             }
         }
 
