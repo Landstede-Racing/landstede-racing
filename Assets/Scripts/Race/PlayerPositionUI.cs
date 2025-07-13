@@ -17,7 +17,6 @@ public class PlayerPositionUI : MonoBehaviour
     {
         playerObject = player;
         if (!position || !shortName || !gapText || !tire) InitializeTextObjects();
-        position.text = "Test";
         position.text = player.position.ToString();
         shortName.text = player.shortName.ToString();
 
