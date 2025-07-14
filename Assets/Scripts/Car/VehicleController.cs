@@ -558,6 +558,23 @@ public class VehicleController : NetworkBehaviour
         {
             IsControllable = true;
         }
+        else
+        {
+            StartCoroutine(SetColliderCoroutine());
+        }
+    }
+
+    private IEnumerator SetColliderCoroutine()
+    {
+        yield return new WaitForSeconds(1f);
+        gameObject.layer = 8;
+        var colliders = GetComponentsInChildren<MeshCollider>();
+
+        foreach (var collider in colliders)
+        {
+            collider.gameObject.layer = 8;
+            collider.excludeLayers = new();
+        }
     }
 
     // Network Variable Change Handler
