@@ -83,7 +83,7 @@ public class PlayerStats : NetworkBehaviour, INetworkSerializeByMemcpy
             NewTiming(sectorController.sectorId, false);
         else if (playerTimings[^1].SectorId < sectorController.sectorId)
             stopwatch.Start();
-        else if (stopwatch.ElapsedMilliseconds > 0 && sectorController.isFinish)
+        else if (stopwatch.ElapsedMilliseconds > 0 && sectorController.sectorType == SectorTypeEnum.Finish)
             NewTiming(sectorController.sectorId, true);
         GameObject.FindGameObjectWithTag("Manager").GetComponent<LeaderBoardPosition>().UpdateLeaderBoardServerRpc();
     }
