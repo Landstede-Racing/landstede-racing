@@ -52,6 +52,7 @@ public class VehicleController : NetworkBehaviour
     public int isEngineRunning;
     public int gear = 0;
     public float wheelRPM;
+    public bool pitLimiter;
 
     [Header("Downforce")]
     public AnimationCurve downForceCurve;
@@ -530,6 +531,21 @@ public class VehicleController : NetworkBehaviour
     public bool GetDRS()
     {
         return drsEnabled;
+    }
+
+    public void TogglePitLimiter()
+    {
+        SetPitLimiter(!pitLimiter);
+    }
+
+    public void SetPitLimiter(bool enabled)
+    {
+        pitLimiter = enabled;
+    }
+
+    public bool GetPitLimiter()
+    {
+        return pitLimiter;
     }
 
     void OnCollisionEnter(Collision other)

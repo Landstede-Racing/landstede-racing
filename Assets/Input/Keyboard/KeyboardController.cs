@@ -89,6 +89,15 @@ public partial class @KeyboardController: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pit Limiter"",
+                    ""type"": ""Button"",
+                    ""id"": ""ae0c8b41-be02-4a61-9a2a-0cd0743b4e5e"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -190,6 +199,17 @@ public partial class @KeyboardController: IInputActionCollection2, IDisposable
                     ""action"": ""DRS"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f0b87625-efc9-4c5e-ba5c-21fb5d8c0778"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pit Limiter"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -205,6 +225,7 @@ public partial class @KeyboardController: IInputActionCollection2, IDisposable
         m_vehicleControls_GearUp = m_vehicleControls.FindAction("GearUp", throwIfNotFound: true);
         m_vehicleControls_GearDown = m_vehicleControls.FindAction("GearDown", throwIfNotFound: true);
         m_vehicleControls_DRS = m_vehicleControls.FindAction("DRS", throwIfNotFound: true);
+        m_vehicleControls_PitLimiter = m_vehicleControls.FindAction("Pit Limiter", throwIfNotFound: true);
     }
 
     ~@KeyboardController()
@@ -278,6 +299,7 @@ public partial class @KeyboardController: IInputActionCollection2, IDisposable
     private readonly InputAction m_vehicleControls_GearUp;
     private readonly InputAction m_vehicleControls_GearDown;
     private readonly InputAction m_vehicleControls_DRS;
+    private readonly InputAction m_vehicleControls_PitLimiter;
     public struct VehicleControlsActions
     {
         private @KeyboardController m_Wrapper;
@@ -289,6 +311,7 @@ public partial class @KeyboardController: IInputActionCollection2, IDisposable
         public InputAction @GearUp => m_Wrapper.m_vehicleControls_GearUp;
         public InputAction @GearDown => m_Wrapper.m_vehicleControls_GearDown;
         public InputAction @DRS => m_Wrapper.m_vehicleControls_DRS;
+        public InputAction @PitLimiter => m_Wrapper.m_vehicleControls_PitLimiter;
         public InputActionMap Get() { return m_Wrapper.m_vehicleControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -319,6 +342,9 @@ public partial class @KeyboardController: IInputActionCollection2, IDisposable
             @DRS.started += instance.OnDRS;
             @DRS.performed += instance.OnDRS;
             @DRS.canceled += instance.OnDRS;
+            @PitLimiter.started += instance.OnPitLimiter;
+            @PitLimiter.performed += instance.OnPitLimiter;
+            @PitLimiter.canceled += instance.OnPitLimiter;
         }
 
         private void UnregisterCallbacks(IVehicleControlsActions instance)
@@ -344,6 +370,9 @@ public partial class @KeyboardController: IInputActionCollection2, IDisposable
             @DRS.started -= instance.OnDRS;
             @DRS.performed -= instance.OnDRS;
             @DRS.canceled -= instance.OnDRS;
+            @PitLimiter.started -= instance.OnPitLimiter;
+            @PitLimiter.performed -= instance.OnPitLimiter;
+            @PitLimiter.canceled -= instance.OnPitLimiter;
         }
 
         public void RemoveCallbacks(IVehicleControlsActions instance)
@@ -370,5 +399,6 @@ public partial class @KeyboardController: IInputActionCollection2, IDisposable
         void OnGearUp(InputAction.CallbackContext context);
         void OnGearDown(InputAction.CallbackContext context);
         void OnDRS(InputAction.CallbackContext context);
+        void OnPitLimiter(InputAction.CallbackContext context);
     }
 }

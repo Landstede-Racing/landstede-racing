@@ -107,6 +107,15 @@ public partial class @GamepadController: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pit Limiter"",
+                    ""type"": ""Button"",
+                    ""id"": ""e6ece9af-92bc-4348-90fd-763abf9b3bcc"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -208,6 +217,17 @@ public partial class @GamepadController: IInputActionCollection2, IDisposable
                     ""action"": ""MFD"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b2f6c3e5-a5bd-4390-9ffb-785bd04e5af1"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pit Limiter"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -225,6 +245,7 @@ public partial class @GamepadController: IInputActionCollection2, IDisposable
         m_vehicleControls_LookBack = m_vehicleControls.FindAction("LookBack", throwIfNotFound: true);
         m_vehicleControls_NextCam = m_vehicleControls.FindAction("NextCam", throwIfNotFound: true);
         m_vehicleControls_MFD = m_vehicleControls.FindAction("MFD", throwIfNotFound: true);
+        m_vehicleControls_PitLimiter = m_vehicleControls.FindAction("Pit Limiter", throwIfNotFound: true);
     }
 
     ~@GamepadController()
@@ -300,6 +321,7 @@ public partial class @GamepadController: IInputActionCollection2, IDisposable
     private readonly InputAction m_vehicleControls_LookBack;
     private readonly InputAction m_vehicleControls_NextCam;
     private readonly InputAction m_vehicleControls_MFD;
+    private readonly InputAction m_vehicleControls_PitLimiter;
     public struct VehicleControlsActions
     {
         private @GamepadController m_Wrapper;
@@ -313,6 +335,7 @@ public partial class @GamepadController: IInputActionCollection2, IDisposable
         public InputAction @LookBack => m_Wrapper.m_vehicleControls_LookBack;
         public InputAction @NextCam => m_Wrapper.m_vehicleControls_NextCam;
         public InputAction @MFD => m_Wrapper.m_vehicleControls_MFD;
+        public InputAction @PitLimiter => m_Wrapper.m_vehicleControls_PitLimiter;
         public InputActionMap Get() { return m_Wrapper.m_vehicleControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -349,6 +372,9 @@ public partial class @GamepadController: IInputActionCollection2, IDisposable
             @MFD.started += instance.OnMFD;
             @MFD.performed += instance.OnMFD;
             @MFD.canceled += instance.OnMFD;
+            @PitLimiter.started += instance.OnPitLimiter;
+            @PitLimiter.performed += instance.OnPitLimiter;
+            @PitLimiter.canceled += instance.OnPitLimiter;
         }
 
         private void UnregisterCallbacks(IVehicleControlsActions instance)
@@ -380,6 +406,9 @@ public partial class @GamepadController: IInputActionCollection2, IDisposable
             @MFD.started -= instance.OnMFD;
             @MFD.performed -= instance.OnMFD;
             @MFD.canceled -= instance.OnMFD;
+            @PitLimiter.started -= instance.OnPitLimiter;
+            @PitLimiter.performed -= instance.OnPitLimiter;
+            @PitLimiter.canceled -= instance.OnPitLimiter;
         }
 
         public void RemoveCallbacks(IVehicleControlsActions instance)
@@ -408,5 +437,6 @@ public partial class @GamepadController: IInputActionCollection2, IDisposable
         void OnLookBack(InputAction.CallbackContext context);
         void OnNextCam(InputAction.CallbackContext context);
         void OnMFD(InputAction.CallbackContext context);
+        void OnPitLimiter(InputAction.CallbackContext context);
     }
 }
