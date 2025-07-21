@@ -138,11 +138,6 @@ public class LogitechSteeringWheel : MonoBehaviour
                     cameraController.SetReverseCam(false);
                 }
 
-                if (LogitechGSDK.LogiButtonTriggered(0, 23))
-                {
-                    SceneManager.LoadScene(0);
-                }
-
 
                 // |-------------------------------------------|
                 // | Default LogitechSDK code (debug and such) |
