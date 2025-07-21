@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using TMPro;
 using Unity.Netcode;
 using UnityEngine;
@@ -99,6 +98,9 @@ public class VehicleController : NetworkBehaviour
     public TMP_Text rpmTextWheel;
     public GameObject hud;
 
+    [Header("Pit")]
+    public TireCompound nextCompound = TireCompounds.Medium;
+
     Animator animator;
     Rigidbody rigidBody;
 
@@ -145,6 +147,8 @@ public class VehicleController : NetworkBehaviour
         m_CurrentEngineRPM.OnValueChanged += CurrentEngineRPMChanged;
 
         EventService.CountdownStarted += OnCountdownStart;
+        EventService.PitStopEnd += OnPitStopEnd;
+        EventService.PitStopStart += OnPitStopStart;
 
         if (!IsOwner)
         {
@@ -164,7 +168,7 @@ public class VehicleController : NetworkBehaviour
                 rb.isKinematic = false;
             }
             Debug.Log("Rigidbody has to go to work :(");
-        }       
+        }
     }
 
 
@@ -607,5 +611,15 @@ public class VehicleController : NetworkBehaviour
         string rpmTextValue = $"<size=120%><align=right>{(int)currentEngineRPM}</align></size>\n<align=right><size=50%>RPM</size></align>";
         rpmText.text = rpmTextValue;
         rpmTextWheel.text = rpmTextValue;
+    }
+
+    private void OnPitStopStart()
+    {
+        IsControllable = false;
+    }
+
+    private void OnPitStopEnd()
+    {
+        IsControllable = true;
     }
 }

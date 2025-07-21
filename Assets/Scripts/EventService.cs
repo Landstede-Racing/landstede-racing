@@ -14,6 +14,8 @@ public static class EventService
     public static event Action<ulong, string> PlayerPenaltyGiven;
     public static event Action StartMultiplayer;
     public static event Action<string> ReceivedJoinCode;
+    public static event Action PitStopStart;
+    public static event Action PitStopEnd;
 
     public static void InvokeRaceStarted()
     {
@@ -68,5 +70,15 @@ public static class EventService
     public static void InvokeReceivedJoinCode(string code)
     {
         ReceivedJoinCode?.Invoke(code);
+    }
+
+    public static void InvokePitStopStart()
+    {
+        PitStopStart?.Invoke();
+    }
+
+    public static void InvokePitStopEnd()
+    {
+        PitStopEnd?.Invoke();
     }
 }
