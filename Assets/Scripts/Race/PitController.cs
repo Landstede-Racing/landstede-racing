@@ -8,18 +8,18 @@ public class PitController : NetworkBehaviour
     [SerializeField] private ulong ownerId = 0;
     [SerializeField] private bool stopInProgress;
     [SerializeField] private bool readyForNext = true;
-    private NetworkVariable<ulong> m_OwnerGameObject = new(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
+    private NetworkVariable<ulong> m_OwnerId = new(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
 
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
-        m_OwnerGameObject.OnValueChanged += OwnerGameObjectChanged;
+        m_OwnerId.OnValueChanged += OwnerGameObjectChanged;
     }
 
     public override void OnNetworkDespawn()
     {
         base.OnNetworkDespawn();
-        m_OwnerGameObject.OnValueChanged -= OwnerGameObjectChanged;
+        m_OwnerId.OnValueChanged -= OwnerGameObjectChanged;
     }
 
     public void SetOwnerGameObject(GameObject ownerGameObject)
@@ -28,7 +28,7 @@ public class PitController : NetworkBehaviour
         if (vehicleController)
         {
             this.ownerGameObject = ownerGameObject;
-            m_OwnerGameObject.Value = vehicleController.OwnerClientId;
+            m_OwnerId.Value = vehicleController.OwnerClientId;
             ownerId = vehicleController.OwnerClientId;
         }
     }
