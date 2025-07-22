@@ -8,12 +8,17 @@ public class PitController : NetworkBehaviour
     [SerializeField] private ulong ownerId = 0;
     [SerializeField] private bool stopInProgress;
     [SerializeField] private bool readyForNext = true;
+    [SerializeField] private GameObject indicator;
     private NetworkVariable<ulong> m_OwnerId = new(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
 
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
+        indicator.SetActive(false);
         m_OwnerId.OnValueChanged += OwnerGameObjectChanged;
+
+        EventService.CarEnteredPit += OnCarEnteredPit;
+        EventService.CarExitedPit += OnCarExitedPit;
     }
 
     public override void OnNetworkDespawn()
@@ -93,5 +98,17 @@ public class PitController : NetworkBehaviour
 
         yield return new WaitForSecondsRealtime(2);
         readyForNext = true;
+    }
+
+    private void OnCarEnteredPit(ulong clientId)
+    {
+        if (!IsClient || ownerId != clientId) return;
+        indicator.SetActive(true);
+    }
+
+    private void OnCarExitedPit(ulong clientId)
+    {
+        if (!IsClient || ownerId != clientId) return;
+        indicator.SetActive(false);
     }
 }
