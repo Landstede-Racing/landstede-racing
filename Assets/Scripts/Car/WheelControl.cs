@@ -141,5 +141,7 @@ public class WheelControl : NetworkBehaviour
     {
         this.tireCompound = tireCompound;
         wheelModel.GetComponent<MeshRenderer>().materials[0].SetColor("_Tire_Color", tireCompound.color);
+        damagablePart.currentDamage = 0;
+        damagablePart.temperature = 0; //TODO: Set to default temperature
     }
 }

@@ -44,47 +44,70 @@ public class DamagablePart : MonoBehaviour
                     if (subParts[i] != null)
                     {
                         DestroySubPart(subParts[i], collision);
-                        subParts[i] = null;
                     }
                 }
             }
         }
-        else if (shouldDestroy) DestroyPart();
+        else if (shouldDestroy) DestroyPart(collision);
     }
 
     void DestroySubPart(GameObject go, Collision collision)
     {
-        var flyingPart = Instantiate(flyingPartPrefab);
-        flyingPart.transform.parent = null;
-        flyingPart.transform.SetPositionAndRotation(go.transform.position, go.transform.rotation);
-        var meshCollider = flyingPart.GetComponent<MeshCollider>();
-        meshCollider.sharedMesh = go.GetComponent<SkinnedMeshRenderer>().sharedMesh;
-        flyingPart.GetComponent<MeshRenderer>().material = go.GetComponent<SkinnedMeshRenderer>().material;
-        flyingPart.GetComponent<MeshFilter>().sharedMesh = go.GetComponent<SkinnedMeshRenderer>().sharedMesh;
-        var rb = flyingPart.GetComponent<Rigidbody>();
-        rb.linearVelocity = transform.forward * collision.relativeVelocity.magnitude;
-        // rb.isKinematic = true;
-        Destroy(go);
+        if (go.activeInHierarchy)
+        {
+            var flyingPart = Instantiate(flyingPartPrefab);
+            flyingPart.transform.parent = null;
+            flyingPart.transform.SetPositionAndRotation(go.transform.position, go.transform.rotation);
+            var meshCollider = flyingPart.GetComponent<MeshCollider>();
+            meshCollider.sharedMesh = go.GetComponent<SkinnedMeshRenderer>().sharedMesh;
+            flyingPart.GetComponent<MeshRenderer>().material = go.GetComponent<SkinnedMeshRenderer>().material;
+            flyingPart.GetComponent<MeshFilter>().sharedMesh = go.GetComponent<SkinnedMeshRenderer>().sharedMesh;
+            var rb = flyingPart.GetComponent<Rigidbody>();
+            rb.linearVelocity = transform.forward * collision.relativeVelocity.magnitude;
+            // rb.isKinematic = true;
+            go.SetActive(false);
+        }
     }
 
-    void DestroyPart()
+    void DestroyPart(Collision collision)
     {
         Debug.Log("Part: " + part.name + " is destroyed");
-        Destroy(gameObject);
         subParts.ForEach((part) =>
         {
-            Destroy(part);
+            DestroySubPart(part, collision);
         });
+        DestroySubPart(gameObject, collision);
         DestroyPartRpc();
     }
 
     [Rpc(SendTo.ClientsAndHost)]
     void DestroyPartRpc()
     {
-        Destroy(gameObject);
         subParts.ForEach((part) =>
         {
-            Destroy(part);
+            part.SetActive(false);
+        });
+        gameObject.SetActive(false);
+    }
+
+    public void RepairPart()
+    {
+        currentDamage = 0;
+        gameObject.SetActive(true);
+        subParts.ForEach((part) =>
+        {
+            part.SetActive(true);
+        });
+        RepairPartRpc();
+    }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    void RepairPartRpc()
+    {
+        gameObject.SetActive(true);
+        subParts.ForEach((part) =>
+        {
+            part.SetActive(true);
         });
     }
 }

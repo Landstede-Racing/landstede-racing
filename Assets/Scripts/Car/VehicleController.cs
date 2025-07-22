@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using Unity.Netcode;
 using UnityEngine;
@@ -98,8 +99,13 @@ public class VehicleController : NetworkBehaviour
     public TMP_Text rpmTextWheel;
     public GameObject hud;
 
+    [Header("Parts")]
+    [SerializeField] private List<DamagablePart> damagableParts;
+
     [Header("Pit")]
     public TireCompound nextCompound = TireCompounds.Medium;
+    public bool changeTires = true;
+    public bool replaceWing = true;
 
     Animator animator;
     Rigidbody rigidBody;
@@ -143,6 +149,9 @@ public class VehicleController : NetworkBehaviour
                 Debug.Log("Race manager not found!!!!");
             }
         }
+
+        damagableParts = GetComponentsInChildren<DamagablePart>().ToList();
+
         m_IsEngineRunning.OnValueChanged += IsEngineRunningChanged;
         m_CurrentEngineRPM.OnValueChanged += CurrentEngineRPMChanged;
 
@@ -550,6 +559,11 @@ public class VehicleController : NetworkBehaviour
     public bool GetPitLimiter()
     {
         return pitLimiter;
+    }
+
+    public DamagablePart GetDamagablePart(Location location)
+    {
+        return damagableParts.Where((part) => part.part.location == location).First();
     }
 
     void OnCollisionEnter(Collision other)

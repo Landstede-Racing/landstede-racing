@@ -87,12 +87,35 @@ public class PitController : NetworkBehaviour
         yield return new WaitWhile(() => vehicleController.GetSpeed() > 1);
 
         EventService.InvokePitStopStart();
+        float minStop = 0;
+        float maxStop = 0;
         TireCompound newCompound = vehicleController.nextCompound;
+        if (vehicleController.changeTires)
+        {
+            minStop += 3;
+            maxStop += 5;
+        }
+        if (vehicleController.replaceWing)
+        {
+            minStop += 3;
+            maxStop += 6;
+        }
 
-        float stopLength = Random.Range(3, 5);
+        float stopLength = Random.Range(minStop, maxStop);
         yield return new WaitForSecondsRealtime(stopLength);
 
-        vehicleController.SetTires(newCompound);
+        if (vehicleController.changeTires)
+            vehicleController.SetTires(newCompound);
+
+        if (vehicleController.replaceWing)
+        {
+            DamagablePart leftFrontWing = vehicleController.GetDamagablePart(Location.FrontLeftWing);
+            DamagablePart rightFrontWing = vehicleController.GetDamagablePart(Location.FrontRightWing);
+
+            leftFrontWing.RepairPart();
+            rightFrontWing.RepairPart();
+        }
+
         EventService.InvokePitStopEnd();
         stopInProgress = false;
 
