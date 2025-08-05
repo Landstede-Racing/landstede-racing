@@ -229,6 +229,7 @@ public class MfdController : MonoBehaviour
 
     private void SelectStepper(int index)
     {
+        if (activePage == null) return;
         MFDStepper[] mfdSteppers = activePage.GetComponent<MFDPage>().mfdSteppers;
         if (index < 0) index = mfdSteppers.Length - 1;
         if(index >= mfdSteppers.Length) index = 0;

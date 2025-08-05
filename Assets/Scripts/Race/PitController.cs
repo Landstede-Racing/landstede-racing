@@ -4,6 +4,9 @@ using System.Collections;
 
 public class PitController : NetworkBehaviour
 {
+    private readonly float PIT_STOP_SPEED_THRESHOLD = 1;
+    private readonly float POST_PIT_WAIT_TIME = 2;
+
     [SerializeField] private GameObject ownerGameObject;
     [SerializeField] private ulong ownerId = 0;
     [SerializeField] private bool stopInProgress;
@@ -84,7 +87,7 @@ public class PitController : NetworkBehaviour
     private IEnumerator PitStopCoroutine()
     {
         VehicleController vehicleController = ownerGameObject.GetComponent<VehicleController>();
-        yield return new WaitWhile(() => vehicleController.GetSpeed() > 1);
+        yield return new WaitWhile(() => vehicleController.GetSpeed() > PIT_STOP_SPEED_THRESHOLD);
 
         EventService.InvokePitStopStart();
         float minStop = 0;
@@ -119,7 +122,7 @@ public class PitController : NetworkBehaviour
         EventService.InvokePitStopEnd();
         stopInProgress = false;
 
-        yield return new WaitForSecondsRealtime(2);
+        yield return new WaitForSecondsRealtime(POST_PIT_WAIT_TIME);
         readyForNext = true;
     }
 
