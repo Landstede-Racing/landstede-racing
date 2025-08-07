@@ -53,16 +53,6 @@ public class VehicleController : NetworkBehaviour
     public int gear = 0;
     public float wheelRPM;
 
-    [Header("Downforce")]
-    public AnimationCurve downForceCurve;
-    public float maxFrontDownForce;
-    public float maxRearDownForce;
-    public float maxDiffuserDownForce;
-    public ConstantForce leftFrontWing;
-    public ConstantForce rightFrontWing;
-    public ConstantForce rearWing;
-    public ConstantForce diffuser;
-
     [Header("Steering Wheel")]
     public Transform steeringColumn;
     private Vector3 steeringColumnRotation;
@@ -196,7 +186,6 @@ public class VehicleController : NetworkBehaviour
         ApplyMotor();
         ApplySteering();
         ApplyBrake();
-        ApplyDownForce();
 
         UpdateBattery();
 
@@ -233,27 +222,6 @@ public class VehicleController : NetworkBehaviour
         {
             rigidBody.linearDamping = 0.1f;
         }
-    }
-
-    private void ApplyDownForce()
-    {
-        float leftFront = CalculateDownForce(maxFrontDownForce);
-        leftFrontWing.relativeForce = new(0, -leftFront, 0);
-
-        float rightFront = CalculateDownForce(maxFrontDownForce);
-        rightFrontWing.relativeForce = new(0, -rightFront, 0);
-
-        float rear = CalculateDownForce(maxRearDownForce);
-        rearWing.relativeForce = new(0, -rear, 0);
-
-        float diff = CalculateDownForce(maxDiffuserDownForce);
-        diffuser.relativeForce = new(0, -diff, 0);
-    }
-
-    private float CalculateDownForce(float max)
-    {
-        float force = Math.Clamp(downForceCurve.Evaluate((float)(Vector3.Dot(transform.forward, rigidBody.linearVelocity) * 3.6 / maxSpeed)) * max, 0f, max);
-        return force;
     }
 
 
