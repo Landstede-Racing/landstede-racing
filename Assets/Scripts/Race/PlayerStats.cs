@@ -78,13 +78,38 @@ public class PlayerStats : NetworkBehaviour, INetworkSerializeByMemcpy
     {
         var sectorController = other.GetComponent<SectorController>();
         if (sectorController == null || !IsServer) return;
-        
+
         if (stopwatch.ElapsedMilliseconds > 0 && playerTimings[^1].SectorId < sectorController.sectorId)
             NewTiming(sectorController.sectorId, false);
         else if (playerTimings[^1].SectorId < sectorController.sectorId)
             stopwatch.Start();
-        else if (stopwatch.ElapsedMilliseconds > 0 && sectorController.isFinish)
+        else if (stopwatch.ElapsedMilliseconds > 0 && sectorController.sectorType == SectorTypeEnum.Finish)
             NewTiming(sectorController.sectorId, true);
+
+        switch (sectorController.sectorType)
+        {
+            case SectorTypeEnum.PitEntrance:
+                PitEnteredClientRpc(OwnerClientId);
+                break;
+            case SectorTypeEnum.PitExit:
+                PitExitedClientRpc(OwnerClientId);
+                break;
+            default:
+                break;
+        }
+        
         GameObject.FindGameObjectWithTag("Manager").GetComponent<LeaderBoardPosition>().UpdateLeaderBoardServerRpc();
+    }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    void PitEnteredClientRpc(ulong clientId)
+    {
+        EventService.InvokeCarEnteredPit(clientId);
+    }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    void PitExitedClientRpc(ulong clientId)
+    {
+        EventService.InvokeCarExitedPit(clientId);
     }
 }

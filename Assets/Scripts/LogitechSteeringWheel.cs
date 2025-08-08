@@ -112,7 +112,10 @@ public class LogitechSteeringWheel : MonoBehaviour
                     if (LogitechGSDK.LogiButtonTriggered(0, Controls.DrsButton.button))
                         vehicleController.ToggleDRS();
 
-                    if(LogitechGSDK.LogiButtonReleased(0, Controls.NextErsModeButton.button)) 
+                    if (LogitechGSDK.LogiButtonTriggered(0, Controls.PitLimiterButton.button))
+                        vehicleController.TogglePitLimiter();
+
+                    if (LogitechGSDK.LogiButtonReleased(0, Controls.NextErsModeButton.button))
                         vehicleController.NextERSMode();
                         
                     if (LogitechGSDK.LogiButtonReleased(0, Controls.PreviousErsModeButton.button))
@@ -133,11 +136,6 @@ public class LogitechSteeringWheel : MonoBehaviour
                 if (LogitechGSDK.LogiButtonReleased(0, Controls.ReverseCamButton.button))
                 {
                     cameraController.SetReverseCam(false);
-                }
-
-                if (LogitechGSDK.LogiButtonTriggered(0, 23))
-                {
-                    SceneManager.LoadScene(0);
                 }
 
 

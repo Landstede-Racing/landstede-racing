@@ -103,7 +103,12 @@ public class InputController : NetworkBehaviour
             if (gamepadControls.vehicleControls.DRS.triggered)
             {
                 vehicleController.ToggleDRS();
-            }   
+            }
+
+            if (gamepadControls.vehicleControls.PitLimiter.triggered)
+            {
+                vehicleController.TogglePitLimiter();
+            }
         }
 
         if (gamepadControls.vehicleControls.MFD.triggered)
@@ -158,7 +163,12 @@ public class InputController : NetworkBehaviour
             if (keyboardControls.vehicleControls.DRS.triggered)
             {
                 vehicleController.ToggleDRS();
-            }   
+            }
+
+            if (keyboardControls.vehicleControls.PitLimiter.triggered)
+            {
+                vehicleController.TogglePitLimiter();
+            }
         }
 
         if (keyboardControls.vehicleControls.NextCam.triggered)
