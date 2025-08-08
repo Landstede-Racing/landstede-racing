@@ -4,7 +4,7 @@ using Unity.Netcode;
 using UnityEngine;
 
 [RequireComponent(typeof(MeshCollider))]
-public class DamagablePart : MonoBehaviour
+public class DamageablePart : MonoBehaviour
 {
     public float maxDamage = 100;
     public float currentDamage;

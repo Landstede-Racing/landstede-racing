@@ -17,7 +17,7 @@ public class MfdController : MonoBehaviour
     public GameObject pitMfd;
     public GameObject heatMfd;
     public GameObject damageMfd;
-    public DamagablePart[] damageableParts;
+    public DamageablePart[] damageableParts;
     public GameObject car;
     public int currentPage;
     private GameObject activePage;
@@ -27,8 +27,8 @@ public class MfdController : MonoBehaviour
     public GameObject pagesBackground;
     private Vector3 pagesBackgroundStartPosition;
 
-    private Dictionary<GameObject, DamagablePart> mfdPartMapDamage = new();
-    private Dictionary<GameObject, DamagablePart> mfdPartMapHeat = new();
+    private Dictionary<GameObject, DamageablePart> mfdPartMapDamage = new();
+    private Dictionary<GameObject, DamageablePart> mfdPartMapHeat = new();
     private bool wasReleased;
     private int selectedStepper = 0;
 
@@ -41,40 +41,40 @@ public class MfdController : MonoBehaviour
         {
             initStarted = true;
             yield return new WaitForFixedUpdate();
-            damageableParts = car.GetComponentsInChildren<DamagablePart>();
+            damageableParts = car.GetComponentsInChildren<DamageablePart>();
             pagesBackgroundStartPosition = pagesBackground.transform.position;
             for (int i = 0; i < damageMfd.transform.childCount; i++)
             {
                 GameObject mfdpart = damageMfd.transform.GetChild(i).gameObject;
-                DamagablePart damagablePart = Array.Find(damageableParts, dmgblePart => dmgblePart.part.name.Replace(" ", "") == mfdpart.name);
+                DamageablePart damageablePart = Array.Find(damageableParts, dmgblePart => dmgblePart.part.name.Replace(" ", "") == mfdpart.name);
 
-                if (damagablePart != null)
+                if (damageablePart != null)
                 {
-                    mfdPartMapDamage.Add(mfdpart, damagablePart);
+                    mfdPartMapDamage.Add(mfdpart, damageablePart);
                 }
                 else
                 {
-                    Debug.Log("No DamagablePart found for " + mfdpart.name);
+                    Debug.Log("No DamageablePart found for " + mfdpart.name);
                 }
             }
 
             for (int i = 0; i < heatMfd.transform.childCount; i++)
             {
                 GameObject mfdpart = heatMfd.transform.GetChild(i).gameObject;
-                DamagablePart damagablePart = Array.Find(damageableParts, dmgblePart => dmgblePart.part.name.Replace(" ", "") == mfdpart.name);
+                DamageablePart damageablePart = Array.Find(damageableParts, dmgblePart => dmgblePart.part.name.Replace(" ", "") == mfdpart.name);
 
-                if (damagablePart != null)
+                if (damageablePart != null)
                 {
                     if (mfdpart.transform.Find("Wheel-Temperature-Outside") == null)
                     {
                         Debug.Log("No Wheel-Temperature-Outside found for " + mfdpart.name);
                         continue;
                     }
-                    mfdPartMapHeat.Add(mfdpart.transform.Find("Wheel-Temperature-Outside").gameObject, damagablePart);
+                    mfdPartMapHeat.Add(mfdpart.transform.Find("Wheel-Temperature-Outside").gameObject, damageablePart);
                 }
                 else
                 {
-                    Debug.Log("No DamagablePart found for " + mfdpart.name);
+                    Debug.Log("No DamageablePart found for " + mfdpart.name);
                 }
             }
 
@@ -97,12 +97,12 @@ public class MfdController : MonoBehaviour
             MFDPageIndicator damagePageIndicator = pagesIndicator.transform.GetChild(0).GetComponent<MFDPageIndicator>();
             MFDPageIndicator tempsPageIndicator = pagesIndicator.transform.GetChild(1).GetComponent<MFDPageIndicator>();
 
-            foreach (KeyValuePair<GameObject, DamagablePart> entry in mfdPartMapDamage)
+            foreach (KeyValuePair<GameObject, DamageablePart> entry in mfdPartMapDamage)
             {
                 GameObject mfdPart = entry.Key;
-                DamagablePart damagablePart = entry.Value;
+                DamageablePart damageablePart = entry.Value;
 
-                int damagePercentage = (int)((int)damagablePart.currentDamage / damagablePart.maxDamage * 100);
+                int damagePercentage = (int)((int)damageablePart.currentDamage / damageablePart.maxDamage * 100);
 
                 var gradient = new Gradient();
                 var colorKeys = new GradientColorKey[3];
@@ -127,12 +127,12 @@ public class MfdController : MonoBehaviour
                 }
             }
 
-            foreach (KeyValuePair<GameObject, DamagablePart> entry in mfdPartMapHeat)
+            foreach (KeyValuePair<GameObject, DamageablePart> entry in mfdPartMapHeat)
             {
                 GameObject mfdpart = entry.Key;
-                DamagablePart damagablePart = entry.Value;
+                DamageablePart damageablePart = entry.Value;
 
-                int heatPercentage = (int)((int)damagablePart.temperature / damagablePart.optimalTemperature * 50);
+                int heatPercentage = (int)((int)damageablePart.temperature / damageablePart.optimalTemperature * 50);
 
                 var gradient = new Gradient();
                 var colorKeys = new GradientColorKey[4];

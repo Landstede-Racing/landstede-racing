@@ -1700,7 +1700,7 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   wheelModel: {fileID: 8037714387406014107}
   part: {fileID: 2445168278001471350}
-  damagablePart: {fileID: 1181070329393265682}
+  damageablePart: {fileID: 1181070329393265682}
   track: {fileID: 0}
   WheelCollider: {fileID: 0}
   steerable: 1
@@ -3080,8 +3080,6 @@ GameObject:
   - component: {fileID: 7977588224556887558}
   - component: {fileID: 1958925890594309386}
   - component: {fileID: 2623702663637660798}
-  - component: {fileID: 654001864088856519}
-  - component: {fileID: 1868948323068521566}
   - component: {fileID: 1646009925006400460}
   m_Layer: 7
   m_Name: Back Right Wheel
@@ -3120,7 +3118,7 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   wheelModel: {fileID: 8297589747837360901}
   part: {fileID: 1958925890594309386}
-  damagablePart: {fileID: 2623702663637660798}
+  damageablePart: {fileID: 2623702663637660798}
   track: {fileID: 0}
   WheelCollider: {fileID: 0}
   steerable: 0
@@ -3222,44 +3220,6 @@ MonoBehaviour:
   coollingRate: 0.001
   shouldDestroy: 0
   part: {fileID: 1958925890594309386}
-  subParts: []
-  flyingPartPrefab: {fileID: 0}
---- !u!114 &654001864088856519
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1286367342130905078}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c865870ea273ab48b4b726e3dc17990, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  name: Rear Right Wheel
-  location: 14
-  description: Spinny boi
---- !u!114 &1868948323068521566
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1286367342130905078}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c07dd2d0fe5127649bd172d77a71e526, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxDamage: 250
-  currentDamage: 0
-  damageMultiplier: 1e-10
-  temperature: 0
-  optimalTemperature: 0
-  temperatureMultiplier: 0.001
-  coollingRate: 0.001
-  shouldDestroy: 0
-  part: {fileID: 654001864088856519}
   subParts: []
   flyingPartPrefab: {fileID: 0}
 --- !u!114 &1646009925006400460
@@ -3652,7 +3612,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 4258860895
+  GlobalObjectIdHash: 3511333484
   InScenePlacedSourceGlobalObjectIdHash: 3511333484
   DeferredDespawnTick: 0
   Ownership: 1
@@ -6815,8 +6775,6 @@ GameObject:
   - component: {fileID: 7643803928839215233}
   - component: {fileID: 6754364073592466275}
   - component: {fileID: 8143931256532805285}
-  - component: {fileID: 7766282235964597795}
-  - component: {fileID: 1528521662221523415}
   - component: {fileID: 2641340162646704107}
   m_Layer: 7
   m_Name: Front Left Wheel
@@ -6877,7 +6835,7 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   wheelModel: {fileID: 7997103315758322263}
   part: {fileID: 6754364073592466275}
-  damagablePart: {fileID: 8143931256532805285}
+  damageablePart: {fileID: 8143931256532805285}
   track: {fileID: 0}
   WheelCollider: {fileID: 0}
   steerable: 1
@@ -6957,44 +6915,6 @@ MonoBehaviour:
   coollingRate: 0.001
   shouldDestroy: 0
   part: {fileID: 6754364073592466275}
-  subParts: []
-  flyingPartPrefab: {fileID: 0}
---- !u!114 &7766282235964597795
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3168941852949636014}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c865870ea273ab48b4b726e3dc17990, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  name: Front Left Wheel
-  location: 11
-  description: Die wielen van de bus gaan rond en rond
---- !u!114 &1528521662221523415
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3168941852949636014}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c07dd2d0fe5127649bd172d77a71e526, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxDamage: 250
-  currentDamage: 0
-  damageMultiplier: 1e-10
-  temperature: 0
-  optimalTemperature: 0
-  temperatureMultiplier: 0.001
-  coollingRate: 0.001
-  shouldDestroy: 0
-  part: {fileID: 7766282235964597795}
   subParts: []
   flyingPartPrefab: {fileID: 0}
 --- !u!114 &2641340162646704107
@@ -13540,8 +13460,6 @@ GameObject:
   - component: {fileID: 7191942425352507877}
   - component: {fileID: 2747396120927672646}
   - component: {fileID: 2429750009774027945}
-  - component: {fileID: 1308222723872678537}
-  - component: {fileID: 3997017920752322725}
   - component: {fileID: 15034998558278373}
   m_Layer: 7
   m_Name: Back Left Wheel
@@ -13579,8 +13497,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   wheelModel: {fileID: 7796413352449432891}
-  part: {fileID: 0}
-  damagablePart: {fileID: 2429750009774027945}
+  part: {fileID: 2747396120927672646}
+  damageablePart: {fileID: 2429750009774027945}
   track: {fileID: 0}
   WheelCollider: {fileID: 0}
   steerable: 0
@@ -13682,44 +13600,6 @@ MonoBehaviour:
   coollingRate: 0.001
   shouldDestroy: 0
   part: {fileID: 2747396120927672646}
-  subParts: []
-  flyingPartPrefab: {fileID: 0}
---- !u!114 &1308222723872678537
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6204954996809139948}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c865870ea273ab48b4b726e3dc17990, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  name: Rear Left Wheel
-  location: 13
-  description: Spinny boi go brrr
---- !u!114 &3997017920752322725
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6204954996809139948}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c07dd2d0fe5127649bd172d77a71e526, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxDamage: 250
-  currentDamage: 0
-  damageMultiplier: 1e-10
-  temperature: 0
-  optimalTemperature: 0
-  temperatureMultiplier: 0.001
-  coollingRate: 0.001
-  shouldDestroy: 0
-  part: {fileID: 1308222723872678537}
   subParts: []
   flyingPartPrefab: {fileID: 0}
 --- !u!114 &15034998558278373
@@ -26882,7 +26762,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7254852951433108042, guid: 31073083d533471429332d6cc461014a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.000000070789156
+      value: -0.000000056653075
       objectReference: {fileID: 0}
     - target: {fileID: -7254852951433108042, guid: 31073083d533471429332d6cc461014a, type: 3}
       propertyPath: m_LocalPosition.y
@@ -26890,7 +26770,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7254852951433108042, guid: 31073083d533471429332d6cc461014a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.004152992
+      value: 0.004152336
       objectReference: {fileID: 0}
     - target: {fileID: -7254852951433108042, guid: 31073083d533471429332d6cc461014a, type: 3}
       propertyPath: m_LocalRotation.w
@@ -27002,15 +26882,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -3933396956505827599, guid: 31073083d533471429332d6cc461014a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.0043485994
+      value: -0.00434877
       objectReference: {fileID: 0}
     - target: {fileID: -3933396956505827599, guid: 31073083d533471429332d6cc461014a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.0025798297
+      value: 0.0025798138
       objectReference: {fileID: 0}
     - target: {fileID: -3933396956505827599, guid: 31073083d533471429332d6cc461014a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.013339099
+      value: -0.013339971
       objectReference: {fileID: 0}
     - target: {fileID: -3849518956021998809, guid: 31073083d533471429332d6cc461014a, type: 3}
       propertyPath: m_Layer
@@ -27110,7 +26990,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 512916723304092343, guid: 31073083d533471429332d6cc461014a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.0025798297
+      value: 0.0025798148
       objectReference: {fileID: 0}
     - target: {fileID: 512916723304092343, guid: 31073083d533471429332d6cc461014a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -27290,7 +27170,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7260836711247187699, guid: 31073083d533471429332d6cc461014a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.0043488755
+      value: 0.004348747
       objectReference: {fileID: 0}
     - target: {fileID: 7260836711247187699, guid: 31073083d533471429332d6cc461014a, type: 3}
       propertyPath: m_LocalPosition.y
@@ -27298,7 +27178,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7260836711247187699, guid: 31073083d533471429332d6cc461014a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.011908481
+      value: 0.011907825
       objectReference: {fileID: 0}
     - target: {fileID: 7536624730385767350, guid: 31073083d533471429332d6cc461014a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -28389,7 +28269,7 @@ MonoBehaviour:
   rpmText: {fileID: 5788672015433348144}
   rpmTextWheel: {fileID: 1664151160878603964}
   hud: {fileID: 214328937087168272}
-  damagableParts: []
+  damageableParts: []
   changeTires: 0
   replaceWing: 0
   m_IsEngineRunning:

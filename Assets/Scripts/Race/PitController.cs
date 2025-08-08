@@ -112,8 +112,8 @@ public class PitController : NetworkBehaviour
 
         if (vehicleController.replaceWing)
         {
-            DamagablePart leftFrontWing = vehicleController.GetDamagablePart(Location.FrontLeftWing);
-            DamagablePart rightFrontWing = vehicleController.GetDamagablePart(Location.FrontRightWing);
+            DamageablePart leftFrontWing = vehicleController.GetDamageablePart(Location.FrontLeftWing);
+            DamageablePart rightFrontWing = vehicleController.GetDamageablePart(Location.FrontRightWing);
 
             leftFrontWing.RepairPart();
             rightFrontWing.RepairPart();

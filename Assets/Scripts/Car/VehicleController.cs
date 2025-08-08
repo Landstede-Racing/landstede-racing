@@ -100,7 +100,7 @@ public class VehicleController : NetworkBehaviour
     public GameObject hud;
 
     [Header("Parts")]
-    [SerializeField] private List<DamagablePart> damagableParts;
+    [SerializeField] private List<DamageablePart> damageableParts;
 
     [Header("Pit")]
     public TireCompound nextCompound = TireCompounds.Medium;
@@ -150,7 +150,7 @@ public class VehicleController : NetworkBehaviour
             }
         }
 
-        damagableParts = GetComponentsInChildren<DamagablePart>().ToList();
+        damageableParts = GetComponentsInChildren<DamageablePart>().ToList();
 
         m_IsEngineRunning.OnValueChanged += IsEngineRunningChanged;
         m_CurrentEngineRPM.OnValueChanged += CurrentEngineRPMChanged;
@@ -561,9 +561,9 @@ public class VehicleController : NetworkBehaviour
         return pitLimiter;
     }
 
-    public DamagablePart GetDamagablePart(Location location)
+    public DamageablePart GetDamageablePart(Location location)
     {
-        return damagableParts.Where((part) => part.part.location == location).First();
+        return damageableParts.Where((part) => part.part.location == location).First();
     }
 
     void OnCollisionEnter(Collision other)
