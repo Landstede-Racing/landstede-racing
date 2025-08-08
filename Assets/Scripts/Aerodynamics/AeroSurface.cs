@@ -1,5 +1,5 @@
+using System;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(ConstantForce))]
@@ -10,10 +10,10 @@ public class AeroSurface : MonoBehaviour
     [SerializeField] private float surfaceWidth = 1f;
     [SerializeField] private float surfaceHeight = 1f;
     [SerializeField] private float angle = 0f;
-    private Rigidbody rb;
-    private ConstantForce constantForce;
+    [SerializeField] private ParentTransform parentTransform;
 
     [Header("Aerodynamic Coefficients")]
+    [SerializeField] private float CLGain = 1f;
     [SerializeField]
     private AnimationCurve angleToCLCurve = new(
         new Keyframe(-10, -0.2f),
@@ -28,6 +28,7 @@ public class AeroSurface : MonoBehaviour
         new Keyframe(0f, 1f),
         new Keyframe(1f, 1f)
     );
+    [SerializeField] private float CDGain = 1f;
     [SerializeField]
     private AnimationCurve angleToCDCurve = new(
         new Keyframe(-10, 1f),
@@ -55,6 +56,9 @@ public class AeroSurface : MonoBehaviour
     [Header("Overrides")]
     [SerializeField] private float speedOverride;
 
+    private Rigidbody rb;
+    private ConstantForce constantForce;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -63,12 +67,29 @@ public class AeroSurface : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (parentTransform.transform != null)
+        {
+            switch (parentTransform.axis)
+            {
+                case ParentTransform.Axis.X:
+                    angle = parentTransform.transform.localEulerAngles.x;
+                    break;
+                case ParentTransform.Axis.Y:
+                    angle = parentTransform.transform.localEulerAngles.y;
+                    break;
+                case ParentTransform.Axis.Z:
+                    angle = parentTransform.transform.localEulerAngles.z;
+                    break;
+                default: break;
+            }
+        }
+
         float speed = speedOverride != 0 ? speedOverride : Vector3.Dot(rb.linearVelocity, transform.forward);
         float referenceArea = surfaceWidth * surfaceHeight;
         float airDensity = 1.225f;
         float heightFromGround = GetGroundHeight();
-        float liftCoefficient = angleToCLCurve.Evaluate(angle) * heightToCLCurve.Evaluate(heightFromGround);
-        float dragCoefficient = angleToCDCurve.Evaluate(angle) * heightToCDCurve.Evaluate(heightFromGround);
+        float liftCoefficient = angleToCLCurve.Evaluate(angle) * heightToCLCurve.Evaluate(heightFromGround) * CLGain;
+        float dragCoefficient = angleToCDCurve.Evaluate(angle) * heightToCDCurve.Evaluate(heightFromGround) * CDGain;
         float liftForce = -liftCoefficient * (0.5f * airDensity * (speed * speed) * referenceArea);
         float dragForce = 0.5f * dragCoefficient * airDensity * (speed * speed) * referenceArea;
 
@@ -99,5 +120,19 @@ public class AeroSurface : MonoBehaviour
         Gizmos.matrix = Matrix4x4.TRS(transform.position, transform.rotation * Quaternion.Euler(90 + angle, 0, 0), Vector3.one);
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireCube(Vector3.zero, new(surfaceWidth, surfaceHeight));
+    }
+
+    [Serializable]
+    private class ParentTransform
+    {
+        public Transform transform;
+        public Axis axis;
+
+        public enum Axis
+        {
+            X,
+            Y,
+            Z
+        }
     }
 }

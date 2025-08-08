@@ -94,7 +94,7 @@ public class VehicleController : NetworkBehaviour
     private int currentGear = 1; //Bc: R = 0 and N = 1
     private int maxGear = 9;
     // Get and set for controllable
-    public bool IsControllable { get; private set; } = false;
+    public bool IsControllable { get; private set; } = true;
 
 
     // Network Variables
@@ -209,19 +209,6 @@ public class VehicleController : NetworkBehaviour
         }
 
         speedText.text = $"<size=120%>{(int)(Vector3.Dot(transform.forward, rigidBody.linearVelocity) * 3.6)}</size>\n<size=50%>KM/U</size>";
-
-
-
-
-        // Change linear drag (!!TEMPORARY, TO BE CHANGED!!)
-        if (drsEnabled)
-        {
-            rigidBody.linearDamping = 0.07f;
-        }
-        else
-        {
-            rigidBody.linearDamping = 0.1f;
-        }
     }
 
 

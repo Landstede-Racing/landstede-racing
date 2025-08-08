@@ -417,6 +417,10 @@ MonoBehaviour:
   surfaceWidth: 1.6
   surfaceHeight: 1
   angle: 3
+  parentTransform:
+    transform: {fileID: 0}
+    axis: 0
+  CLGain: 0
   angleToCLCurve:
     serializedVersion: 2
     m_Curve:
@@ -501,6 +505,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  CDGain: 1
   angleToCDCurve:
     serializedVersion: 2
     m_Curve:
@@ -10349,6 +10354,10 @@ MonoBehaviour:
   surfaceWidth: 0.8
   surfaceHeight: 0.8
   angle: 14
+  parentTransform:
+    transform: {fileID: 0}
+    axis: 0
+  CLGain: 0.99246
   angleToCLCurve:
     serializedVersion: 2
     m_Curve:
@@ -10685,6 +10694,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  CDGain: 1
   angleToCDCurve:
     serializedVersion: 2
     m_Curve:
@@ -12445,6 +12455,10 @@ MonoBehaviour:
   surfaceWidth: 1.2
   surfaceHeight: 0.5
   angle: 20
+  parentTransform:
+    transform: {fileID: 0}
+    axis: 0
+  CLGain: 0.816
   angleToCLCurve:
     serializedVersion: 2
     m_Curve:
@@ -12853,6 +12867,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  CDGain: 1.1
   angleToCDCurve:
     serializedVersion: 2
     m_Curve:
@@ -14079,6 +14094,10 @@ MonoBehaviour:
   surfaceWidth: 1.2
   surfaceHeight: 0.5
   angle: 20.1
+  parentTransform:
+    transform: {fileID: 836636245235812257}
+    axis: 0
+  CLGain: 1.02
   angleToCLCurve:
     serializedVersion: 2
     m_Curve:
@@ -14415,6 +14434,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  CDGain: 1
   angleToCDCurve:
     serializedVersion: 2
     m_Curve:
@@ -17172,6 +17192,10 @@ MonoBehaviour:
   surfaceWidth: 1.6
   surfaceHeight: 1
   angle: 3
+  parentTransform:
+    transform: {fileID: 0}
+    axis: 0
+  CLGain: 0.54162
   angleToCLCurve:
     serializedVersion: 2
     m_Curve:
@@ -17310,6 +17334,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  CDGain: 0
   angleToCDCurve:
     serializedVersion: 2
     m_Curve:
@@ -19744,6 +19769,10 @@ MonoBehaviour:
   surfaceWidth: 0.8
   surfaceHeight: 1
   angle: 3
+  parentTransform:
+    transform: {fileID: 0}
+    axis: 0
+  CLGain: 0.55896
   angleToCLCurve:
     serializedVersion: 2
     m_Curve:
@@ -19927,6 +19956,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  CDGain: 1.043
   angleToCDCurve:
     serializedVersion: 2
     m_Curve:
@@ -21391,6 +21421,10 @@ MonoBehaviour:
   surfaceWidth: 0.8
   surfaceHeight: 1
   angle: 3
+  parentTransform:
+    transform: {fileID: 0}
+    axis: 0
+  CLGain: 0.55896
   angleToCLCurve:
     serializedVersion: 2
     m_Curve:
@@ -21574,6 +21608,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  CDGain: 1.043
   angleToCDCurve:
     serializedVersion: 2
     m_Curve:
@@ -22724,6 +22759,10 @@ MonoBehaviour:
   surfaceWidth: 0.8
   surfaceHeight: 0.8
   angle: 14
+  parentTransform:
+    transform: {fileID: 0}
+    axis: 0
+  CLGain: 0.99246
   angleToCLCurve:
     serializedVersion: 2
     m_Curve:
@@ -23060,6 +23099,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  CDGain: 1
   angleToCDCurve:
     serializedVersion: 2
     m_Curve:
@@ -27372,6 +27412,11 @@ PositionConstraint:
   m_Sources:
   - sourceTransform: {fileID: 985761292727911318}
     weight: 1
+--- !u!4 &836636245235812257 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -6231045495196478146, guid: 31073083d533471429332d6cc461014a, type: 3}
+  m_PrefabInstance: {fileID: 2457475669101859487}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &953212795210952462 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3395935006673911185, guid: 31073083d533471429332d6cc461014a, type: 3}
