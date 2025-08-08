@@ -7,14 +7,17 @@ public enum MFDStepperType
 {
     PERCENTAGE,
     INT,
-    OPTIONS
+    OPTIONS,
+    BOOL
 }
 
 public enum MFDStepperAction
 {
     BRAKE_BIAS,
     DIFFERENTIAL,
-    ERS_DEPLOY
+    ERS_DEPLOY,
+    NEXT_COMPOUND,
+    REPAIR_WING,
 }
 
 public class MFDStepper : MonoBehaviour
@@ -37,6 +40,7 @@ public class MFDStepper : MonoBehaviour
     [SerializeField] private Color unselectedColor = new(0.25f, 0.25f, 0.25f, 0.7f);
 
     private void Start() {
+        value = vehicleController.frontLeftWheel.tireCompound.index;
         SetValue(value);
     }
 
@@ -53,6 +57,12 @@ public class MFDStepper : MonoBehaviour
             case MFDStepperAction.ERS_DEPLOY:
                 UpdateValue(vehicleController.GetERSMode());
                 break;
+            case MFDStepperAction.NEXT_COMPOUND:
+                UpdateValue(vehicleController.nextCompound.index);
+                break;
+            case MFDStepperAction.REPAIR_WING:
+                UpdateValue(vehicleController.replaceWing == true ? 1 : 0);
+                break;
             default:
                 break;
         }
@@ -66,18 +76,32 @@ public class MFDStepper : MonoBehaviour
 
     void UpdateUI() {
         background.color = selected ? selectedColor : unselectedColor;
-        if(stepperType == MFDStepperType.PERCENTAGE) {
-            optionText.text = value + "%";
-            leftArrow.GetComponent<SVGImage>().color = value > 0 ? arrowColor : arrowDisabledColor;
-            rightArrow.GetComponent<SVGImage>().color = value < 100 ? arrowColor : arrowDisabledColor;
-        } else if(stepperType == MFDStepperType.INT) {
-            optionText.text = value.ToString();
-            leftArrow.GetComponent<SVGImage>().color = value > 0 ? arrowColor : arrowDisabledColor;
-            rightArrow.GetComponent<SVGImage>().color = value < intMax ? arrowColor : arrowDisabledColor;
-        } else if(stepperType == MFDStepperType.OPTIONS) {
-            optionText.text = options[value];
-            leftArrow.GetComponent<SVGImage>().color = value > 0 ? arrowColor : arrowDisabledColor;
-            rightArrow.GetComponent<SVGImage>().color = value < options.Length - 1 ? arrowColor : arrowDisabledColor;
+        switch (stepperType)
+        {
+            case MFDStepperType.PERCENTAGE:
+                optionText.text = value + "%";
+                leftArrow.GetComponent<SVGImage>().color = value > 0 ? arrowColor : arrowDisabledColor;
+                rightArrow.GetComponent<SVGImage>().color = value < 100 ? arrowColor : arrowDisabledColor;
+                break;
+            case MFDStepperType.INT:
+                optionText.text = value.ToString();
+                leftArrow.GetComponent<SVGImage>().color = value > 0 ? arrowColor : arrowDisabledColor;
+                rightArrow.GetComponent<SVGImage>().color = value < intMax ? arrowColor : arrowDisabledColor;
+                break;
+            case MFDStepperType.OPTIONS:
+                optionText.text = options[value];
+                leftArrow.GetComponent<SVGImage>().color = value > 0 ? arrowColor : arrowDisabledColor;
+                rightArrow.GetComponent<SVGImage>().color = value < options.Length - 1 ? arrowColor : arrowDisabledColor;
+                break;
+            case MFDStepperType.BOOL:
+                var actualValue = value == 1;
+                optionText.text = actualValue ? "Yes" : "No";
+                leftArrow.GetComponent<SVGImage>().color = actualValue ? arrowColor : arrowDisabledColor;
+                rightArrow.GetComponent<SVGImage>().color = !actualValue ? arrowColor : arrowDisabledColor;
+                break;
+
+            default:
+                break;
         }
     }
 
@@ -126,6 +150,13 @@ public class MFDStepper : MonoBehaviour
             //     break;
             case MFDStepperAction.ERS_DEPLOY:
                 vehicleController.SetERSMode(option);
+                break;
+            case MFDStepperAction.NEXT_COMPOUND:
+                vehicleController.nextCompound = TireCompounds.Values[option];
+                vehicleController.changeTires = option != vehicleController.frontLeftWheel.tireCompound.index;
+                break;
+            case MFDStepperAction.REPAIR_WING:
+                vehicleController.replaceWing = option == 1;
                 break;
             default:
                 break;

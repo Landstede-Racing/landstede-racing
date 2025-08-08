@@ -3,10 +3,10 @@ using UnityEngine;
 
 public class DamageController : MonoBehaviour
 {
-    public DamagablePart[] damagableParts;
-    private readonly Dictionary<DamagablePart, int> damages = new();
+    public DamageablePart[] damageableParts;
+    private readonly Dictionary<DamageablePart, int> damages = new();
 
-    public int GetDamage(DamagablePart part)
+    public int GetDamage(DamageablePart part)
     {
         return damages[part];
     }

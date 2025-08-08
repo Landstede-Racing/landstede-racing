@@ -8,7 +8,7 @@ public class WheelControl : NetworkBehaviour
     public Transform wheelModel;
 
     public Part part;
-    public DamagablePart damagablePart;
+    public DamageablePart damageablePart;
     public TireCompound tireCompound;
 
     public WheelFrictionCurve defaultForwardFriction;
@@ -48,10 +48,10 @@ public class WheelControl : NetworkBehaviour
         wheelModel.transform.position = position;
         wheelModel.transform.rotation = rotation;
 
-        wheelModel.GetComponent<MeshRenderer>().materials[1].SetFloat("_Wear", damagablePart.currentDamage / damagablePart.maxDamage);
+        wheelModel.GetComponent<MeshRenderer>().materials[1].SetFloat("_Wear", damageablePart.currentDamage / damageablePart.maxDamage);
 
         // var matsCopy = wheelModel.GetComponent<MeshRenderer>().materials;
-        // matsCopy[1].SetFloat("_Wear", damagablePart.currentDamage / damagablePart.maxDamage);
+        // matsCopy[1].SetFloat("_Wear", damageablePart.currentDamage / damageablePart.maxDamage);
         // wheelModel.GetComponent<MeshRenderer>().materials = matsCopy;
     }
 
@@ -75,37 +75,37 @@ public class WheelControl : NetworkBehaviour
 
     // public void HandleWheelTemperature(WheelHit hit)
     // {
-    //     damagablePart.temperature += (hit.force - 1400) * damagablePart.temperatureMultiplier;
+    //     damageablePart.temperature += (hit.force - 1400) * damageablePart.temperatureMultiplier;
 
-    //     if (damagablePart.temperature > damagablePart.optimalTemperature + 10)
+    //     if (damageablePart.temperature > damageablePart.optimalTemperature + 10)
     //     {
-    //         damagablePart.currentDamage += (damagablePart.temperature - damagablePart.optimalTemperature) * damagablePart.damageMultiplier * 10000000;
+    //         damageablePart.currentDamage += (damageablePart.temperature - damageablePart.optimalTemperature) * damageablePart.damageMultiplier * 10000000;
     //     }
 
-    //     if (damagablePart.temperature > 0f)
+    //     if (damageablePart.temperature > 0f)
     //     {
-    //         damagablePart.temperature -= damagablePart.temperature * damagablePart.coollingRate * damagablePart.temperatureMultiplier;
+    //         damageablePart.temperature -= damageablePart.temperature * damageablePart.coollingRate * damageablePart.temperatureMultiplier;
     //     }
     // }
 
     public void HandleWheelDamage(WheelHit hit, TerrainInfo hitTerrain)
     {
-        if (damagablePart.currentDamage < damagablePart.maxDamage && hit.force > 1400)
+        if (damageablePart.currentDamage < damageablePart.maxDamage && hit.force > 1400)
         {
             if (hit.collider.CompareTag("Wall"))
             {
-                damagablePart.currentDamage += (hit.force - 1400) * damagablePart.damageMultiplier * 10;
+                damageablePart.currentDamage += (hit.force - 1400) * damageablePart.damageMultiplier * 10;
 
-                if (damagablePart.currentDamage >= damagablePart.maxDamage)
+                if (damageablePart.currentDamage >= damageablePart.maxDamage)
                 {
                     Debug.Log("Here it will fly to the moon");
                 }
             }
             else if (hitTerrain != null)
             {
-                damagablePart.currentDamage += (hit.force - 1400) * damagablePart.damageMultiplier * hitTerrain.damageMultiplier * tireCompound.wearRate;
+                damageablePart.currentDamage += (hit.force - 1400) * damageablePart.damageMultiplier * hitTerrain.damageMultiplier * tireCompound.wearRate;
 
-                if (damagablePart.currentDamage >= damagablePart.maxDamage)
+                if (damageablePart.currentDamage >= damageablePart.maxDamage)
                 {
                     Debug.Log("Here it will break in a less horrible way than the others");
                 }
@@ -141,5 +141,7 @@ public class WheelControl : NetworkBehaviour
     {
         this.tireCompound = tireCompound;
         wheelModel.GetComponent<MeshRenderer>().materials[0].SetColor("_Tire_Color", tireCompound.color);
+        damageablePart.currentDamage = 0;
+        damageablePart.temperature = 0; //TODO: Set to default temperature
     }
 }

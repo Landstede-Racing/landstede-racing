@@ -72,6 +72,11 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: Pit
+    second: {fileID: 2100000, guid: 79401bd98b403cf4d94cb020a9481f48, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: Pit Lane Line
     second: {fileID: 2100000, guid: 1e6a34aa9a9413a4889b1179839c10dd, type: 2}
   - first:

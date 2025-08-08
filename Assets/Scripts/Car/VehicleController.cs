@@ -52,6 +52,7 @@ public class VehicleController : NetworkBehaviour
     public int isEngineRunning;
     public int gear = 0;
     public float wheelRPM;
+    public bool pitLimiter;
 
     [Header("Downforce")]
     public AnimationCurve downForceCurve;
@@ -98,6 +99,14 @@ public class VehicleController : NetworkBehaviour
     public TMP_Text rpmTextWheel;
     public GameObject hud;
 
+    [Header("Parts")]
+    [SerializeField] private List<DamageablePart> damageableParts;
+
+    [Header("Pit")]
+    public TireCompound nextCompound = TireCompounds.Medium;
+    public bool changeTires = false;
+    public bool replaceWing = false;
+
     Animator animator;
     Rigidbody rigidBody;
 
@@ -140,10 +149,15 @@ public class VehicleController : NetworkBehaviour
                 Debug.Log("Race manager not found!!!!");
             }
         }
+
+        damageableParts = GetComponentsInChildren<DamageablePart>().ToList();
+
         m_IsEngineRunning.OnValueChanged += IsEngineRunningChanged;
         m_CurrentEngineRPM.OnValueChanged += CurrentEngineRPMChanged;
 
         EventService.CountdownStarted += OnCountdownStart;
+        EventService.PitStopEnd += OnPitStopEnd;
+        EventService.PitStopStart += OnPitStopStart;
 
         if (!IsOwner)
         {
@@ -163,7 +177,7 @@ public class VehicleController : NetworkBehaviour
                 rb.isKinematic = false;
             }
             Debug.Log("Rigidbody has to go to work :(");
-        }       
+        }
     }
 
 
@@ -532,6 +546,26 @@ public class VehicleController : NetworkBehaviour
         return drsEnabled;
     }
 
+    public void TogglePitLimiter()
+    {
+        SetPitLimiter(!pitLimiter);
+    }
+
+    public void SetPitLimiter(bool enabled)
+    {
+        pitLimiter = enabled;
+    }
+
+    public bool GetPitLimiter()
+    {
+        return pitLimiter;
+    }
+
+    public DamageablePart GetDamageablePart(Location location)
+    {
+        return damageableParts.Where((part) => part.part.location == location).First();
+    }
+
     void OnCollisionEnter(Collision other)
     {
         float x = transform.InverseTransformPoint(other.gameObject.transform.position).x;
@@ -591,5 +625,15 @@ public class VehicleController : NetworkBehaviour
         string rpmTextValue = $"<size=120%><align=right>{(int)currentEngineRPM}</align></size>\n<align=right><size=50%>RPM</size></align>";
         rpmText.text = rpmTextValue;
         rpmTextWheel.text = rpmTextValue;
+    }
+
+    private void OnPitStopStart()
+    {
+        IsControllable = false;
+    }
+
+    private void OnPitStopEnd()
+    {
+        IsControllable = true;
     }
 }

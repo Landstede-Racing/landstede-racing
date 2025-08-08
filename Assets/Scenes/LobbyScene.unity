@@ -17473,7 +17473,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Option A
+  m_text: Steering Wheel
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -17482,7 +17482,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4281479730
   m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -17495,7 +17495,7 @@ MonoBehaviour:
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: 0
+  m_TextStyleHashCode: -1183493901
   m_overrideHtmlColors: 0
   m_faceColor:
     serializedVersion: 2
@@ -19024,8 +19024,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 55.03}
-  m_SizeDelta: {x: 0, y: -110.06}
+  m_AnchoredPosition: {x: 0, y: 91.8}
+  m_SizeDelta: {x: 0, y: -183.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &974215745
 CanvasRenderer:
@@ -23160,7 +23160,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 24300002, guid: 25451c6467bc1144882b4271e07617fd, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 5c7e418e3fd1b134ab4ba3f4a5212a82, type: 3}
+  m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 5c7e418e3fd1b134ab4ba3f4a5212a82, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -25564,8 +25564,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 55.029877}
-  m_SizeDelta: {x: 0, y: 110.059814}
+  m_AnchoredPosition: {x: 0, y: 91.77493}
+  m_SizeDelta: {x: 0, y: 183.55}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1286941323
 CanvasRenderer:
@@ -29819,8 +29819,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -0.024932861}
+  m_SizeDelta: {x: 0, y: -0.05011}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1542555474
 GameObject:
@@ -36408,8 +36408,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 944173180}
   m_HandleRect: {fileID: 944173179}
   m_Direction: 2
-  m_Value: 1.0000042
-  m_Size: 0.9082503
+  m_Value: 1.0000033
+  m_Size: 0.90825033
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
