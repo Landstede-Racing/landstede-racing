@@ -91,7 +91,7 @@ public class AeroSurface : MonoBehaviour
         float liftCoefficient = angleToCLCurve.Evaluate(angle) * heightToCLCurve.Evaluate(heightFromGround) * CLGain;
         float dragCoefficient = angleToCDCurve.Evaluate(angle) * heightToCDCurve.Evaluate(heightFromGround) * CDGain;
         float liftForce = -liftCoefficient * (0.5f * airDensity * (speed * speed) * referenceArea);
-        float dragForce = 0.5f * dragCoefficient * airDensity * (speed * speed) * referenceArea;
+        float dragForce = 0.5f * -dragCoefficient * airDensity * (speed * speed) * referenceArea;
 
         constantForce.relativeForce = new(0, liftForce, dragForce);
 
@@ -100,7 +100,7 @@ public class AeroSurface : MonoBehaviour
 
 #if UNITY_EDITOR
         DrawArrow.ForDebug(transform.position, transform.up * liftForce, Color.green);
-        DrawArrow.ForDebug(transform.position, -transform.forward * dragForce, Color.red);
+        DrawArrow.ForDebug(transform.position, transform.forward * dragForce, Color.red);
 #endif
     }
 
