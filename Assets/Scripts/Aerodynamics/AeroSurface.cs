@@ -106,9 +106,25 @@ public class AeroSurface : MonoBehaviour
 
     private float GetGroundHeight()
     {
-        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, MAX_RAYCAST_DISTANCE))
+        RaycastHit hit = new();
+        bool foundGround = false;
+        RaycastHit[] hitArray = Physics.RaycastAll(transform.position, Vector3.down, MAX_RAYCAST_DISTANCE);
+        foreach (RaycastHit possibleHit in hitArray)
+        {
+            if (possibleHit.transform.CompareTag("Ground"))
+            {
+                hit = possibleHit;
+                foundGround = true;
+                break;
+            }
+        }
+        
+        if (foundGround)
         {
             float heightFromGround = hit.distance;
+#if UNITY_EDITOR
+            Debug.DrawRay(transform.position, Vector3.down * heightFromGround, Color.yellow);
+#endif
             return heightFromGround;
         }
 
