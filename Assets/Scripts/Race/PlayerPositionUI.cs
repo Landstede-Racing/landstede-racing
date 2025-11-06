@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using LandstedeRacing.Types;
 using TMPro;
 using UnityEngine;
@@ -11,15 +12,41 @@ public class PlayerPositionUI : MonoBehaviour
     public TMP_Text tire;
 
     public PlayerInfo playerObject;
+    private bool shouldUpdate = true;
+    [SerializeField] private float freezeTime = 3;
 
     public void UpdateUI(PlayerInfo player)
     {
-        playerObject = player;
         if (!position || !shortName || !time || !tire) InitializeTextObjects();
-        position.text = player.position.ToString();
-        shortName.text = player.shortName.ToString();
-        time.text = Math.Round(player.time, 3).ToString();
-        tire.text = player.tire.ToString();
+        if (shouldUpdate)
+        {
+            position.text = player.position.ToString();
+            shortName.text = player.shortName.ToString();
+            tire.text = player.tire.ToString();
+
+            if (player.position == 1 && player.lap > playerObject.lap)
+            {
+                // Add lapTime from previous timing + time from new timing to get the total lap time
+                TimeSpan newTime = TimeSpan.FromMilliseconds(playerObject.lapTime + player.time);
+                time.text = newTime.ToString(@"mm\:ss\.fff");
+                StartCoroutine(LeaderNewLap());
+            } else
+            {
+                TimeSpan newTime = TimeSpan.FromMilliseconds(player.lapTime);
+                time.text = newTime.ToString(@"mm\:ss\.fff");
+            }
+        }
+
+        playerObject = player;
+    }
+    
+    public IEnumerator LeaderNewLap()
+    {
+        shouldUpdate = false;
+
+        yield return new WaitForSecondsRealtime(freezeTime);
+        
+        shouldUpdate = true;
     }
 
     private void InitializeTextObjects()

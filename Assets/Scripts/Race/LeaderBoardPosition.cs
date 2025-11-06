@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using LandstedeRacing.Types;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
@@ -59,8 +60,11 @@ public class LeaderBoardPosition : NetworkBehaviour
     {
         var newPlayerData = Instantiate(playerData, leaderBoard.content);
         _players.Add(player);
+
+        PlayerTiming lastTiming = player.playerTimings[^1];
+        float currentLapTime = player.playerTimings.FindAll((t) => t.Lap == lastTiming.Lap).Sum((t) => t.Timing);
         newPlayerData.GetComponent<PlayerPositionUI>()
-            .UpdateUI(new PlayerInfo(player.position, player.name, player.time, player.tire));
+            .UpdateUI(new PlayerInfo(player.position, player.name, player.time, player.tire, lastTiming.Lap, currentLapTime));
     }
 
     public void AddPlayer(PlayerStats player, int position)
@@ -68,8 +72,11 @@ public class LeaderBoardPosition : NetworkBehaviour
         var newPlayerData = Instantiate(playerData, leaderBoard.content);
         _players.Add(player);
         player.position = position;
+        
+        PlayerTiming lastTiming = player.playerTimings[^1];
+        float currentLapTime = player.playerTimings.FindAll((t) => t.Lap == lastTiming.Lap).Sum((t) => t.Timing);
         newPlayerData.GetComponent<PlayerPositionUI>()
-            .UpdateUI(new PlayerInfo(player.position, player.name, player.time, player.tire));
+            .UpdateUI(new PlayerInfo(player.position, player.name, player.time, player.tire, lastTiming.Lap, currentLapTime));
     }
 
     [Rpc(SendTo.Server)]
@@ -118,7 +125,9 @@ public class LeaderBoardPosition : NetworkBehaviour
                 var go = leaderBoard.content.transform;
 
                 for (var index = 0; index < go.childCount; index++)
+                {
                     go.GetChild(index).gameObject.GetComponent<PlayerPositionUI>().UpdateUI(playersInfo[index]);
+                }
             }
         }
     }
@@ -140,7 +149,9 @@ public class LeaderBoardPosition : NetworkBehaviour
 
         foreach (var player in players)
         {
-            playersInfo.Add(new PlayerInfo(player.position, player.name, player.playerTimings[^1].Timing, player.tire));
+            PlayerTiming lastTiming = player.playerTimings[^1];
+            float currentLapTime = player.playerTimings.FindAll((t) => t.Lap == lastTiming.Lap).Sum((t) => t.Timing);
+            playersInfo.Add(new PlayerInfo(player.position, player.name, lastTiming.Timing, player.tire, lastTiming.Lap, currentLapTime));
             Debug.Log(player.playerTimings[^1].Timing);
         }
 
