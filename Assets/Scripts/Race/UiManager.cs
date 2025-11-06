@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using Unity.Netcode;
 using UnityEngine;
@@ -5,6 +6,7 @@ using UnityEngine;
 public class UiManager : NetworkBehaviour
 {
     [SerializeField] private GameObject penaltyGo;
+    [SerializeField] private float penaltyVisibleTime = 3;
 
     public override void OnNetworkSpawn()
     {
@@ -22,15 +24,15 @@ public class UiManager : NetworkBehaviour
         Debug.Log("OnPlayerPenaltyGiven called on client");
         var penaltyGGo = Instantiate(penaltyGo, gameObject.transform);
         Debug.Log($"Penalty UI instantiated for player {playerId} with penalty {penalty}");
-        
+
         var texts = penaltyGGo.GetComponentsInChildren<TMP_Text>();
         foreach (var text in texts)
         {
-            if(text.name == "playerName")
+            if (text.name == "playerName")
             {
                 text.text = $"Player {playerId}";
             }
-            else if(text.name == "duration")
+            else if (text.name == "duration")
             {
                 if (penalty == "falseStart")
                 {
@@ -38,5 +40,14 @@ public class UiManager : NetworkBehaviour
                 }
             }
         }
+
+        StartCoroutine(PenaltyUICreated(penaltyGGo));
+    }
+    
+    private IEnumerator PenaltyUICreated(GameObject penaltyGGo)
+    {
+        yield return new WaitForSecondsRealtime(penaltyVisibleTime);
+
+        Destroy(penaltyGGo);
     }
 }
