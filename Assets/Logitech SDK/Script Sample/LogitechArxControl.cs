@@ -63,30 +63,30 @@ public class LogitechArxControl : MonoBehaviour
 
     private void ArxSDKCallback(int eventType, int eventValue, string eventArg, IntPtr context)
     {
-        Debug.Log("CALLBACK: type:" + eventType + ", value:" + eventValue + ", arg:" + eventArg);
+        CustomLogger.Log("CALLBACK: type:" + eventType + ", value:" + eventValue + ", arg:" + eventArg);
         if (eventType == LogitechGSDK.LOGI_ARX_EVENT_MOBILEDEVICE_ARRIVAL)
         {
             if (!LogitechGSDK.LogiArxAddFileAs("Assets//Logitech SDK//AppletData//applet.html", "applet.html", ""))
-                Debug.Log("Could not send applet.html : " + LogitechGSDK.LogiArxGetLastError());
+                CustomLogger.Log("Could not send applet.html : " + LogitechGSDK.LogiArxGetLastError());
             if (!LogitechGSDK.LogiArxAddFileAs("Assets//Logitech SDK//AppletData//background.png", "background.png",
-                    "")) Debug.Log("Could not send background.png : " + LogitechGSDK.LogiArxGetLastError());
+                    "")) CustomLogger.Log("Could not send background.png : " + LogitechGSDK.LogiArxGetLastError());
             if (!LogitechGSDK.LogiArxAddUTF8StringAs(getHtmlString(), "gameover.html"))
-                Debug.Log("Could not send gameover.html  : " + LogitechGSDK.LogiArxGetLastError());
+                CustomLogger.Log("Could not send gameover.html  : " + LogitechGSDK.LogiArxGetLastError());
 
             var gameoverImageBytes = File.ReadAllBytes("Assets//Logitech SDK//AppletData//gameover.png");
             if (!LogitechGSDK.LogiArxAddContentAs(gameoverImageBytes, gameoverImageBytes.Length, "gameover.png"))
-                Debug.Log("Could not send gameover.png  : " + LogitechGSDK.LogiArxGetLastError());
+                CustomLogger.Log("Could not send gameover.png  : " + LogitechGSDK.LogiArxGetLastError());
 
             if (!LogitechGSDK.LogiArxSetIndex("applet.html"))
-                Debug.Log("Could not set index : " + LogitechGSDK.LogiArxGetLastError());
+                CustomLogger.Log("Could not set index : " + LogitechGSDK.LogiArxGetLastError());
         }
         else if (eventType == LogitechGSDK.LOGI_ARX_EVENT_MOBILEDEVICE_REMOVAL)
         {
-            Debug.Log("NO DEVICES");
+            CustomLogger.Log("NO DEVICES");
         }
         else if (eventType == LogitechGSDK.LOGI_ARX_EVENT_TAP_ON_TAG)
         {
-            Debug.Log("Tap on tag with id :" + eventArg);
+            CustomLogger.Log("Tap on tag with id :" + eventArg);
         }
     }
 }

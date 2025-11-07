@@ -21,9 +21,9 @@ public class UiManager : NetworkBehaviour
     private void OnPlayerPenaltyGiven(ulong playerId, string penalty)
     {
         if (!IsClient) return;
-        Debug.Log("OnPlayerPenaltyGiven called on client");
+        CustomLogger.Log("OnPlayerPenaltyGiven called on client");
         var penaltyGGo = Instantiate(penaltyGo, gameObject.transform);
-        Debug.Log($"Penalty UI instantiated for player {playerId} with penalty {penalty}");
+        CustomLogger.Log($"Penalty UI instantiated for player {playerId} with penalty {penalty}");
 
         var texts = penaltyGGo.GetComponentsInChildren<TMP_Text>();
         foreach (var text in texts)

@@ -39,7 +39,7 @@ public class GameSceneInitializer : MonoBehaviour
                 var allocation = await RelayService.Instance.CreateAllocationAsync(maxConnections);
                 NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(AllocationUtils.ToRelayServerData(allocation, connectionType));
                 JoinCode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
-                Debug.Log("Joincode: " + JoinCode);
+                CustomLogger.Log("Joincode: " + JoinCode);
                 NetworkManager.Singleton.StartHost();
                 NetworkLaunchManager.Instance.Reset();
             }

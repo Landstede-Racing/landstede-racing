@@ -44,7 +44,7 @@ public class PlayerStats : NetworkBehaviour, INetworkSerializeByMemcpy
     //     playerTimings.Add(playerTiming);
     //     stopwatch.Restart();
     //     totalDriveTime = totalDriveTime + stopwatch.ElapsedMilliseconds;
-    //     // Debug.Log(playerTimings[playerTimings.Count - 1].NetworkId + ", " + playerTimings[playerTimings.Count - 1].Timing);
+    //     // CustomLogger.Log(playerTimings[playerTimings.Count - 1].NetworkId + ", " + playerTimings[playerTimings.Count - 1].Timing);
     // }
 
     public void NewTiming(int sectorId, bool lapUp)
@@ -60,7 +60,7 @@ public class PlayerStats : NetworkBehaviour, INetworkSerializeByMemcpy
         time = stopwatch.ElapsedMilliseconds;
         totalDriveTime = totalDriveTime + stopwatch.ElapsedMilliseconds;
         stopwatch.Restart();
-        UnityEngine.Debug.Log(playerTimings[playerTimings.Count - 1].NetworkId + ", " + playerTimings[playerTimings.Count - 1].Timing);
+        CustomLogger.Log(playerTimings[playerTimings.Count - 1].NetworkId + ", " + playerTimings[playerTimings.Count - 1].Timing);
     }
 
     private static string RandomTire(int tireIndex)

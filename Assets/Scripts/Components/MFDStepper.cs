@@ -143,7 +143,7 @@ public class MFDStepper : MonoBehaviour
         {
             case MFDStepperAction.BRAKE_BIAS:
                 vehicleController.SetBrakeBias(option / 100f);
-                Debug.Log(vehicleController.GetBrakeBias());
+                CustomLogger.Log(vehicleController.GetBrakeBias());
                 break;
             // case MFDStepperAction.DIFFERENTIAL:
             //     vehicleController.SetDifferential(option);

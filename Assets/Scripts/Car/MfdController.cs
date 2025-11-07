@@ -54,7 +54,7 @@ public class MfdController : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("No DamageablePart found for " + mfdpart.name);
+                    CustomLogger.Log("No DamageablePart found for " + mfdpart.name);
                 }
             }
 
@@ -67,14 +67,14 @@ public class MfdController : MonoBehaviour
                 {
                     if (mfdpart.transform.Find("Wheel-Temperature-Outside") == null)
                     {
-                        Debug.Log("No Wheel-Temperature-Outside found for " + mfdpart.name);
+                        CustomLogger.Log("No Wheel-Temperature-Outside found for " + mfdpart.name);
                         continue;
                     }
                     mfdPartMapHeat.Add(mfdpart.transform.Find("Wheel-Temperature-Outside").gameObject, damageablePart);
                 }
                 else
                 {
-                    Debug.Log("No DamageablePart found for " + mfdpart.name);
+                    CustomLogger.Log("No DamageablePart found for " + mfdpart.name);
                 }
             }
 

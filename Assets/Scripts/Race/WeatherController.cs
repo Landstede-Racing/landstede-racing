@@ -44,7 +44,7 @@ public class WeatherController : MonoBehaviour
                 Renderer trackRenderer = track.GetComponent<MeshRenderer>();
                 if (trackRenderer != null)
                 {
-                    // Debug.Log("Track renderer found");
+                    // CustomLogger.Log("Track renderer found");
                     foreach (Material mat in trackRenderer.materials)
                     {
                         if (mat.shader == Shader.Find("Shader Graphs/NewAsphaltShader"))
@@ -74,7 +74,7 @@ public class WeatherController : MonoBehaviour
         if (isRaining)
         {
             timeRaining += 0.02f;
-            // Debug.Log("Time raining: " + timeRaining);
+            // CustomLogger.Log("Time raining: " + timeRaining);
         }
     }
 

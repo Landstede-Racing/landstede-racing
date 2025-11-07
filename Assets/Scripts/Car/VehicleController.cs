@@ -134,19 +134,19 @@ public class VehicleController : NetworkBehaviour
                     {
                         rb.isKinematic = false;
                     }
-                    Debug.Log("Rigidbody has to go to work :(");
+                    CustomLogger.Log("Rigidbody has to go to work :(");
                 }
             };
 
             var raceManager = FindFirstObjectByType<RaceManager>();
             if (raceManager != null)
             {
-                Debug.Log("Race manager found");
+                CustomLogger.Log("Race manager found");
                 raceManager.PlacePlayerOnSpawn(gameObject, OwnerClientId);
             }
             else
             {
-                Debug.Log("Race manager not found!!!!");
+                CustomLogger.Log("Race manager not found!!!!");
             }
         }
 
@@ -176,7 +176,7 @@ public class VehicleController : NetworkBehaviour
             {
                 rb.isKinematic = false;
             }
-            Debug.Log("Rigidbody has to go to work :(");
+            CustomLogger.Log("Rigidbody has to go to work :(");
         }
     }
 
