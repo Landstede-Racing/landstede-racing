@@ -24,7 +24,7 @@ public class MiniMap : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("TrackPath has no children.");
+            CustomLogger.LogWarning("TrackPath has no children.");
         }
     }
 
@@ -37,7 +37,7 @@ public class MiniMap : MonoBehaviour
         }
         else
         {
-            Debug.LogError("LineRenderer is not assigned.");
+            CustomLogger.LogError("LineRenderer is not assigned.");
         }
     }
 }

@@ -33,7 +33,7 @@ public class PreRaceManager : NetworkBehaviour
         if (IsServer)
         {
             // Here you can handle the logic when a client connects, such as updating UI or game state.
-            Debug.Log($"Client {clientId} connected.");
+            CustomLogger.Log($"Client {clientId} connected.");
 
             // Get Player's spawned prefab and assign a spawn position
             if (NetworkManager.Singleton.SpawnManager.GetPlayerNetworkObject(clientId) is NetworkObject playerObject)
@@ -49,19 +49,19 @@ public class PreRaceManager : NetworkBehaviour
                 }
                 else
                 {
-                    Debug.LogWarning("No spawn positions available.");
+                    CustomLogger.LogWarning("No spawn positions available.");
                 }
             }
             else
             {
-                Debug.LogError($"Player object for client {clientId} not found.");
+                CustomLogger.LogError($"Player object for client {clientId} not found.");
             }
         }
     }
 
     private void OnStartMultiplayer()
     {
-        Debug.Log("Starting multiplayer session.");
+        CustomLogger.Log("Starting multiplayer session.");
         NetworkManager.Singleton.StartHost();
     }
 }

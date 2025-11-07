@@ -98,7 +98,7 @@ public class WheelControl : NetworkBehaviour
 
                 if (damageablePart.currentDamage >= damageablePart.maxDamage)
                 {
-                    Debug.Log("Here it will fly to the moon");
+                    CustomLogger.Log("Here it will fly to the moon");
                 }
             }
             else if (hitTerrain != null)
@@ -107,7 +107,7 @@ public class WheelControl : NetworkBehaviour
 
                 if (damageablePart.currentDamage >= damageablePart.maxDamage)
                 {
-                    Debug.Log("Here it will break in a less horrible way than the others");
+                    CustomLogger.Log("Here it will break in a less horrible way than the others");
                 }
             }
         }
@@ -125,7 +125,7 @@ public class WheelControl : NetworkBehaviour
 
         if (weatherController != null && weatherController.isRaining)
         {
-            // Debug.Log("It's raining from weatherController and is now changed in the wheelControl!!! YIPPPYYYYY");
+            // CustomLogger.Log("It's raining from weatherController and is now changed in the wheelControl!!! YIPPPYYYYY");
             float rainTime = weatherController.GetRainTimer();
 
             // Adjust the friction based on the rainTime

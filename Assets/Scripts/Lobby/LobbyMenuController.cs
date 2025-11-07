@@ -98,7 +98,7 @@ public class LobbyMenuController : NetworkBehaviour
         }
 
         var joinCode = codeInputField.text;
-        Debug.Log("Join Code entered: " + joinCode);
+        CustomLogger.Log("Join Code entered: " + joinCode);
 
         var allocation = await RelayService.Instance.JoinAllocationAsync(joinCode: joinCode);
         NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(AllocationUtils.ToRelayServerData(allocation, "udp"));

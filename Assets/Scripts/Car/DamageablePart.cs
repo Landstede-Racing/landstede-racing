@@ -71,7 +71,7 @@ public class DamageablePart : MonoBehaviour
 
     void DestroyPart(Collision collision)
     {
-        Debug.Log("Part: " + part.name + " is destroyed");
+        CustomLogger.Log("Part: " + part.name + " is destroyed");
         subParts.ForEach((part) =>
         {
             DestroySubPart(part, collision);
