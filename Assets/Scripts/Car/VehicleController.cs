@@ -106,7 +106,7 @@ public class VehicleController : NetworkBehaviour
     private int currentGear = 1; //Bc: R = 0 and N = 1
     private int maxGear = 9;
     // Get and set for controllable
-    public bool IsControllable = true;
+    public bool IsControllable { get; private set; } = true;
 
 
     // Network Variables
