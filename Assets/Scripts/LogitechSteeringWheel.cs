@@ -32,7 +32,7 @@ public class LogitechSteeringWheel : MonoBehaviour
         // Find all child GameObjects that have the WheelControl script attached
         cameraController = GetComponent<CameraController>();
 
-        Debug.Log($"[LogitechSteeringWheel] Device Name: {SettingsController.DeviceController}");
+        CustomLogger.Log($"[LogitechSteeringWheel] Device Name: {SettingsController.DeviceController}");
 
         activeForces = "";
         propertiesEdit = "";
@@ -54,13 +54,13 @@ public class LogitechSteeringWheel : MonoBehaviour
         forcesLabel += "Play Leds : P\n";
         activeForceAndEffect = new string[9];
         if(SettingsController.DeviceController == 2) {
-            Debug.Log("SteeringInit:" + LogitechGSDK.LogiSteeringInitialize(false));
+            CustomLogger.Log("SteeringInit:" + LogitechGSDK.LogiSteeringInitialize(false));
         }
     }
 
     void OnApplicationQuit()
     {
-        Debug.Log("SteeringShutdown:" + LogitechGSDK.LogiSteeringShutdown());
+        CustomLogger.Log("SteeringShutdown:" + LogitechGSDK.LogiSteeringShutdown());
     }
 
     // void OnGUI()
@@ -362,7 +362,7 @@ public class LogitechSteeringWheel : MonoBehaviour
                     // LogitechGSDK.LogiControllerPropertiesData existingProperties = new();
                     // LogitechGSDK.LogiGetCurrentControllerProperties(0, ref existingProperties);
 
-                    // Debug.Log(existingProperties.defaultSpringEnabled);
+                    // CustomLogger.Log(existingProperties.defaultSpringEnabled);
 
                     // existingProperties.defaultSpringEnabled = true;
                     // existingProperties.defaultSpringGain = 80;
@@ -371,11 +371,11 @@ public class LogitechSteeringWheel : MonoBehaviour
                     // // LogitechGSDK.LogiSet
                     // if (LogitechGSDK.LogiSetPreferredControllerProperties(existingProperties))
                     // {
-                    //     Debug.Log("Properties set");
+                    //     CustomLogger.Log("Properties set");
                     // }
                     // else
                     // {
-                    //     Debug.Log("DO NOT REDEEM. DO NOT REDEEM THE CARD.");
+                    //     CustomLogger.Log("DO NOT REDEEM. DO NOT REDEEM THE CARD.");
                     // }
 
                 }

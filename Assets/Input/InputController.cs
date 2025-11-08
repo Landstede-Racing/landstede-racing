@@ -18,20 +18,20 @@ public class InputController : NetworkBehaviour
 
         if (gamepadControls == null)
         {
-            Debug.LogError("GamepadController failed to initialize.");
+            CustomLogger.LogError("GamepadController failed to initialize.");
             return;
         }
         if (keyboardControls == null)
         {
-            Debug.LogError("KeyboardController failed to initialize.");
+            CustomLogger.LogError("KeyboardController failed to initialize.");
             return;
         }
 
-        Debug.Log("Awake from InputController!");
+        CustomLogger.Log("Awake from InputController!");
 
         if (vehicleController == null)
         {
-            Debug.LogError("VehicleController reference is not set in InputController.");
+            CustomLogger.LogError("VehicleController reference is not set in InputController.");
         }
     }
 

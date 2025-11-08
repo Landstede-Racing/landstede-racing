@@ -27,7 +27,7 @@ public class UpgradeMenuController : MonoBehaviour
 
         scrollRect = GetComponentInChildren<ScrollRect>();
         toggleGroup = GetComponentInChildren<ToggleGroup>();
-        Debug.Log(toggleGroup.ActiveToggles().FirstOrDefault().name);
+        CustomLogger.Log(toggleGroup.ActiveToggles().FirstOrDefault().name);
         closeButton.onClick.AddListener(CloseUpgradeScreen);
         buyButton.onClick.AddListener(BuyUpgrade);
         UpdateUpgrades();

@@ -162,7 +162,7 @@ public class SettingsController : MonoBehaviour
         if(volumeProfile.TryGet<VolumetricClouds>(out var volumetricClouds)) {
             volumetricClouds.enable.value = cloudsIndex >= 2;
             volumetricClouds.cloudSimpleMode.value = cloudsIndex == 3 ? VolumetricClouds.CloudSimpleMode.Quality : VolumetricClouds.CloudSimpleMode.Performance;
-            Debug.Log(volumetricClouds.enable.value);
+            CustomLogger.Log(volumetricClouds.enable.value);
         }
         qualityDropdown.value = 6;
     }
