@@ -18,12 +18,15 @@ public class VehicleController : NetworkBehaviour
 {
     public LogitechSteeringWheel logitechSteering;
 
+    [Header("Debugging")]
+    [SerializeField] private bool showDebug = false;
+
     [Header("Input")]
     public float steeringAngle = 0;
     public float gas = 0;
     public float brake = 0;
     public AnimationCurve brakingCurve;
-    public float brakeBias;
+    public float brakeBias = 0.57f;
 
     [Header("DRS")]
     public bool drsAvailable;
@@ -103,7 +106,7 @@ public class VehicleController : NetworkBehaviour
     private int currentGear = 1; //Bc: R = 0 and N = 1
     private int maxGear = 9;
     // Get and set for controllable
-    public bool IsControllable { get; private set; } = true;
+    public bool IsControllable = true;
 
 
     // Network Variables
@@ -223,6 +226,35 @@ public class VehicleController : NetworkBehaviour
         }
 
         speedText.text = $"<size=120%>{(int)(Vector3.Dot(transform.forward, rigidBody.linearVelocity) * 3.6)}</size>\n<size=50%>KM/U</size>";
+    }
+
+    void OnGUI()
+    {
+        if (showDebug)
+        {
+            string wheelDebugText = "Wheels: \n\n";
+            foreach (var wheel in wheels)
+            {
+                wheelDebugText += $"{wheel.gameObject.name}:\n";
+                wheelDebugText += $"Motor Torque: {wheel.WheelCollider.motorTorque}\n";
+                wheelDebugText += $"Brake Torque: {wheel.WheelCollider.brakeTorque}\n";
+                wheelDebugText += $"RPM: {wheel.WheelCollider.rpm}\n";
+                wheelDebugText += $"Is Grounded: {wheel.WheelCollider.isGrounded}\n";
+                wheelDebugText += $"Steer Angle: {wheel.WheelCollider.steerAngle}\n";
+                wheelDebugText += $"Suspension Distance {wheel.WheelCollider.suspensionDistance}\n";
+                wheelDebugText += $"Sprung Mass {wheel.WheelCollider.sprungMass}\n\n";
+            }
+            GUI.TextArea(new Rect(10, 10, 180, 500), wheelDebugText);
+
+            string wingDebugText = "Wings: \n\n";
+            foreach (var wing in transform.GetComponentsInChildren<AeroSurface>())
+            {
+                ConstantForce constantForce = wing.GetComponent<ConstantForce>();
+                wingDebugText += $"{wing.gameObject.name}:\n";
+                wingDebugText += $"Relative Force: {constantForce.relativeForce.x}, {constantForce.relativeForce.y}, {constantForce.relativeForce.z} \n\n";
+            }
+            GUI.TextArea(new Rect(200, 10, 300, 500), wingDebugText);
+        }
     }
 
 
