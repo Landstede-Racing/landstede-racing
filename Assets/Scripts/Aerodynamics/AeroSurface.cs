@@ -6,6 +6,7 @@ using UnityEngine;
 public class AeroSurface : MonoBehaviour
 {
     private readonly float MAX_RAYCAST_DISTANCE = 50f;
+    private readonly float AIR_DENSITY = 1.225f;
 
     [SerializeField] private float surfaceWidth = 1f;
     [SerializeField] private float surfaceHeight = 1f;
@@ -86,12 +87,11 @@ public class AeroSurface : MonoBehaviour
 
         float speed = speedOverride != 0 ? speedOverride : Vector3.Dot(rb.linearVelocity, transform.forward);
         float referenceArea = surfaceWidth * surfaceHeight;
-        float airDensity = 1.225f;
         float heightFromGround = GetGroundHeight();
         float liftCoefficient = angleToCLCurve.Evaluate(angle) * heightToCLCurve.Evaluate(heightFromGround) * CLGain;
         float dragCoefficient = angleToCDCurve.Evaluate(angle) * heightToCDCurve.Evaluate(heightFromGround) * CDGain;
-        float liftForce = -liftCoefficient * (0.5f * airDensity * (speed * speed) * referenceArea);
-        float dragForce = 0.5f * -dragCoefficient * airDensity * (speed * speed) * referenceArea;
+        float liftForce = -liftCoefficient * (0.5f * AIR_DENSITY * (speed * speed) * referenceArea);
+        float dragForce = 0.5f * -dragCoefficient * AIR_DENSITY * (speed * speed) * referenceArea;
 
         constantForce.relativeForce = new(0, liftForce, dragForce);
 
