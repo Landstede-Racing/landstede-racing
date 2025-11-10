@@ -65,8 +65,8 @@ public class SettingsController : MonoBehaviour
 
     void Update()
     {
-        if(LogitechGSDK.LogiUpdate() && LogitechGSDK.LogiIsConnected(0)) {
-            if(listening) {
+        if(listening) {
+            if(LogitechGSDK.LogiUpdate() && LogitechGSDK.LogiIsConnected(0)) {
                 for (int i = 0; i < 26; i++)
                 {
                     if(LogitechGSDK.LogiButtonReleased(0, i)) {
