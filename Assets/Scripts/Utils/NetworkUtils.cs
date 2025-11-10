@@ -43,17 +43,12 @@ public class NetworkUtils
 
         NetworkManager.Singleton.Shutdown();
 
-        await Task.Yield();
-
         foreach (var obj in Object.FindObjectsByType<NetworkObject>(FindObjectsSortMode.None))
         {
-            if (obj != null && obj.IsSpawned)
+            if (obj.IsSpawned)
+            {
                 obj.Despawn(true);
-            else
-                Object.Destroy(obj.gameObject);
+            }
         }
-
-        var spawnManager = NetworkManager.Singleton.SpawnManager;
-        spawnManager.SpawnedObjects.Clear();
     }
 }

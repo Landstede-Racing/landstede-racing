@@ -13,7 +13,5 @@ public class CustomSceneManager
         while (!loadLevel.isDone) yield return null;
 
         SceneManager.UnloadSceneAsync("LoadingScene");
-
-        NetworkManager.Singleton.SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
     }
 }
