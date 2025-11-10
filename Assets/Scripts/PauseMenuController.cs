@@ -22,6 +22,6 @@ public class PauseMenuController : NetworkBehaviour
 
     public void ExitToMainMenu() {
         NetworkUtils.StopHost();
-        StartCoroutine(CustomSceneManager.LoadScene("LobbyScene", false));
+        StartCoroutine(CustomSceneManager.LoadScene("LobbyScene"));
     }
 }

@@ -23,11 +23,6 @@ public class PreRaceManager : NetworkBehaviour
         base.OnNetworkDespawn();
     }
 
-    private void Start()
-    {
-        EventService.StartMultiplayer += OnStartMultiplayer;
-    }
-
     private void OnClientConnected(ulong clientId)
     {
         if (IsServer)
@@ -57,11 +52,5 @@ public class PreRaceManager : NetworkBehaviour
                 CustomLogger.LogError($"Player object for client {clientId} not found.");
             }
         }
-    }
-
-    private void OnStartMultiplayer()
-    {
-        CustomLogger.Log("Starting multiplayer session.");
-        NetworkManager.Singleton.StartHost();
     }
 }

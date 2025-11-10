@@ -24,6 +24,6 @@ public class IntroController : MonoBehaviour
     public void SkipIntro()
     {
         videoPlayer.Stop();
-        StartCoroutine(CustomSceneManager.LoadScene("LobbyScene", false));
+        StartCoroutine(CustomSceneManager.LoadScene("LobbyScene"));
     }
 }

@@ -39,7 +39,7 @@ public class TrackSelectionController : MonoBehaviour
     }
 
     public void StartRace() {
-        StartCoroutine(CustomSceneManager.LoadScene(trackScenes[camController.currentTrackCam], multiplayer));
+        StartCoroutine(CustomSceneManager.LoadScene(trackScenes[camController.currentTrackCam]));
     }
 
     public void UpdateButtons() {

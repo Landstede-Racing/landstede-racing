@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class CustomSceneManager
 {
-    public static IEnumerator LoadScene(string sceneName, bool startMultiplayer = false)
+    public static IEnumerator LoadScene(string sceneName)
     {
         SceneManager.LoadSceneAsync("LoadingScene", LoadSceneMode.Single);
         var loadLevel = SceneManager.LoadSceneAsync(sceneName);
@@ -14,11 +14,6 @@ public class CustomSceneManager
 
         SceneManager.UnloadSceneAsync("LoadingScene");
 
-        yield return new WaitForSeconds(0.5f);
-
-        if (startMultiplayer)
-        {
-            EventService.InvokeStartMultiplayer();
-        }
+        NetworkManager.Singleton.SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
     }
 }
