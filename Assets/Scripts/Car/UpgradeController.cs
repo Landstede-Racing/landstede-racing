@@ -62,15 +62,16 @@ public class UpgradeController : MonoBehaviour
                     case Stats.engineHP:
                         vehicleController.engineHP += value;
                         break;
-                    case Stats.frontDownForce:
-                        vehicleController.maxFrontDownForce += value;
-                        break;
-                    case Stats.rearDownForce:
-                        vehicleController.maxRearDownForce += value;
-                        break;
-                    case Stats.diffuserDownForce:
-                        vehicleController.maxDiffuserDownForce += value;
-                        break;
+                        // TODO: Fix upgrades
+                    // case Stats.frontDownForce:
+                    //     vehicleController.maxFrontDownForce += value;
+                    //     break;
+                    // case Stats.rearDownForce:
+                    //     vehicleController.maxRearDownForce += value;
+                    //     break;
+                    // case Stats.diffuserDownForce:
+                    //     vehicleController.maxDiffuserDownForce += value;
+                    //     break;
                     case Stats.brakeTorque:
                         vehicleController.brakeTorque += value;
                         break;
