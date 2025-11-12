@@ -25,7 +25,7 @@ public class GameSceneInitializer : MonoBehaviour
 
     private async Task OnSceneLoadedAsync(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name.StartsWith("Race") && NetworkManager.Singleton != null && !NetworkManager.Singleton.IsListening)
+        if (scene.name.StartsWith("Race"))
         {
             if (NetworkLaunchManager.Instance.ShouldStartHost)
             {

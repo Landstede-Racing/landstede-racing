@@ -95,13 +95,13 @@ public class AeroSurface : MonoBehaviour
 
         constantForce.relativeForce = new(0, liftForce, dragForce);
 
-        // CustomLogger.Log(gameObject.name + ": " + constantForce.relativeForce);
+        CustomLogger.Log(gameObject.name + ": " + constantForce.relativeForce);
 
 
-// #if UNITY_EDITOR
-//         DrawArrow.ForDebug(transform.position, transform.up * liftForce, Color.green);
-//         DrawArrow.ForDebug(transform.position, transform.forward * dragForce, Color.red);
-// #endif
+#if UNITY_EDITOR
+        DrawArrow.ForDebug(transform.position, transform.up * liftForce, Color.green);
+        DrawArrow.ForDebug(transform.position, transform.forward * dragForce, Color.red);
+#endif
     }
 
     private float GetGroundHeight()
