@@ -11,11 +11,13 @@ public class UiManager : NetworkBehaviour
     public override void OnNetworkSpawn()
     {
         EventService.PlayerPenaltyGiven += OnPlayerPenaltyGiven;
+        base.OnNetworkSpawn();
     }
 
     public override void OnNetworkDespawn()
     {
         EventService.PlayerPenaltyGiven -= OnPlayerPenaltyGiven;
+        base.OnNetworkSpawn();
     }
 
     private void OnPlayerPenaltyGiven(ulong playerId, string penalty)

@@ -19,6 +19,13 @@ public class PreRaceUI : NetworkBehaviour
             joinCode = gameSceneInit.JoinCode;
             joinCodeText.text = joinCode;
         }
+        base.OnNetworkSpawn();
+    }
+
+    public override void OnNetworkDespawn()
+    {
+        EventService.ReceivedJoinCode -= OnJoinCodeReceive;
+        base.OnNetworkDespawn();
     }
 
     public void Show()
@@ -62,7 +69,7 @@ public class PreRaceUI : NetworkBehaviour
     public void LeaveButtonClicked()
     {
         NetworkManager.Singleton.Shutdown();
-        StartCoroutine(CustomSceneManager.LoadScene("LobbyScene", false));
+        StartCoroutine(CustomSceneManager.LoadScene("LobbyScene"));
     }
 
     private void OnJoinCodeReceive(string code)

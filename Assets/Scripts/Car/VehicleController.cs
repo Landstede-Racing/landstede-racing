@@ -117,19 +117,7 @@ public class VehicleController : NetworkBehaviour
     {
         if (IsOwner)
         {
-            EventService.PlayerPlaced += () =>
-            {
-                if (rigidBody)
-                {
-                    rigidBody.isKinematic = false;
-                    Rigidbody[] rbs = GetComponentsInChildren<Rigidbody>();
-                    foreach (var rb in rbs)
-                    {
-                        rb.isKinematic = false;
-                    }
-                    CustomLogger.Log("Rigidbody has to go to work :(");
-                }
-            };
+            EventService.PlayerPlaced += FreezeRigidBody;
 
             var raceManager = FindFirstObjectByType<RaceManager>();
             if (raceManager != null)
@@ -155,6 +143,37 @@ public class VehicleController : NetworkBehaviour
         if (!IsOwner)
         {
             hud.SetActive(false);
+        }
+
+        base.OnNetworkSpawn();
+    }
+
+    public override void OnNetworkDespawn()
+    {
+        if (IsOwner)
+        {
+            EventService.PlayerPlaced -= FreezeRigidBody;
+        }
+        m_IsEngineRunning.OnValueChanged -= IsEngineRunningChanged;
+        m_CurrentEngineRPM.OnValueChanged -= CurrentEngineRPMChanged;
+
+        EventService.CountdownStarted -= OnCountdownStart;
+        EventService.PitStopEnd -= OnPitStopEnd;
+        EventService.PitStopStart -= OnPitStopStart;
+        base.OnNetworkDespawn();
+    }
+    
+    private void FreezeRigidBody()
+    {
+        if (rigidBody)
+        {
+            rigidBody.isKinematic = false;
+            Rigidbody[] rbs = GetComponentsInChildren<Rigidbody>();
+            foreach (var rb in rbs)
+            {
+                rb.isKinematic = false;
+            }
+            CustomLogger.Log("Rigidbody has to go to work :(");
         }
     }
 

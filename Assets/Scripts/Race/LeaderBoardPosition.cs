@@ -24,6 +24,14 @@ public class LeaderBoardPosition : NetworkBehaviour
         // StartRace();
         NetworkManager.OnClientConnectedCallback += OnClientConnected;
         m_playersInfo.OnListChanged += OnPlayerInfoChanged;
+        base.OnNetworkSpawn();
+    }
+
+    public override void OnNetworkDespawn()
+    {
+        NetworkManager.OnClientConnectedCallback -= OnClientConnected;
+        m_playersInfo.OnListChanged -= OnPlayerInfoChanged;
+        base.OnNetworkDespawn();
     }
 
     [Rpc(SendTo.Server)]

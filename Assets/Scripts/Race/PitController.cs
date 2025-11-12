@@ -28,6 +28,8 @@ public class PitController : NetworkBehaviour
     {
         base.OnNetworkDespawn();
         m_OwnerId.OnValueChanged -= OwnerGameObjectChanged;
+        EventService.CarEnteredPit -= OnCarEnteredPit;
+        EventService.CarExitedPit -= OnCarExitedPit;
     }
 
     public void SetOwnerGameObject(GameObject ownerGameObject)

@@ -34,6 +34,7 @@ public class RaceManager : NetworkBehaviour
             enabled = false;
             return;
         }
+        base.OnNetworkSpawn();
     }
 
     public override void OnNetworkDespawn()
@@ -43,6 +44,7 @@ public class RaceManager : NetworkBehaviour
         {
             EventService.PlayerMoved -= PlayerMoved;
             EventService.PlayerPenalty -= PlayerPenaltyGiven;
+            EventService.RaceReady -= StartRaceRpc;
         }
         base.OnNetworkDespawn();
     }

@@ -13,5 +13,6 @@ public class SectorController : NetworkBehaviour
     public override void OnNetworkSpawn()
     {
         leaderBoard = GameObject.FindGameObjectWithTag("Manager");
+        base.OnNetworkSpawn();
     }
 }

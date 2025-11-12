@@ -20,6 +20,7 @@ public class MiniMapController : NetworkBehaviour
     public override void OnNetworkSpawn()
     {
         miniMap = GameObject.FindGameObjectsWithTag("MiniMap")[0].gameObject.GetComponent<MiniMap>();
+        base.OnNetworkSpawn();
     }
 
     public void SetMiniMapSmallCameraActive(bool isActive)

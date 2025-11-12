@@ -36,6 +36,7 @@ public class PlayerStats : NetworkBehaviour, INetworkSerializeByMemcpy
         playerTimings.Add(new PlayerTiming(NetworkObjectId, 0, 0, 0));
 
         name = NetworkObjectId.ToString();
+        base.OnNetworkSpawn();
     }
 
     // public void NewTiming(int sectorId)
