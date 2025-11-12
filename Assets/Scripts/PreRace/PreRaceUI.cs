@@ -19,6 +19,13 @@ public class PreRaceUI : NetworkBehaviour
             joinCode = gameSceneInit.JoinCode;
             joinCodeText.text = joinCode;
         }
+        base.OnNetworkSpawn();
+    }
+
+    public override void OnNetworkDespawn()
+    {
+        EventService.ReceivedJoinCode -= OnJoinCodeReceive;
+        base.OnNetworkDespawn();
     }
 
     public void Show()
@@ -46,20 +53,16 @@ public class PreRaceUI : NetworkBehaviour
     [Rpc(SendTo.Server)]
     public void RaceReadyRpc()
     {
-        Debug.Log("RaceReadyRpc");
         if (!IsServer) return;
-        Debug.Log("RaceReadyRpc running on server");
         var players = FindObjectsByType<PlayerManager>(FindObjectsSortMode.None);
         // For loop through all players
         foreach (var player in players)
         {
             if (player != null && player.IsServer)
             {
-                Debug.Log($"Running OnRaceReady for player {player.NetworkObjectId}");
                 player.OnRaceReady();
             }
         }
-        Debug.Log("Invoking race ready");
         EventService.InvokeRaceReady();
     }
 

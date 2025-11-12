@@ -43,6 +43,7 @@ public class InputController : NetworkBehaviour
             return;
         }
         vehicleController = GetComponent<VehicleController>();
+        base.OnNetworkSpawn();
     }
 
     void OnEnable()

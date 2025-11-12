@@ -10,6 +10,7 @@ using Unity.Services.Core;
 using Unity.Services.Relay;
 using Unity.Services.Relay.Models;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class NetworkUtils
 {
@@ -41,6 +42,7 @@ public class NetworkUtils
         if (NetworkManager.Singleton == null)
             return;
 
+        var raceScene = SceneManager.GetActiveScene();
         NetworkManager.Singleton.Shutdown();
 
         foreach (var obj in Object.FindObjectsByType<NetworkObject>(FindObjectsSortMode.None))
