@@ -37,7 +37,8 @@ public class PlayerManager : NetworkBehaviour
         if (IsServer)
         {
             preRacePrefab.SetActive(false);
-            CustomLogger.Log($"Spawning player for client {OwnerClientId}");
+            if(DebugManager.Instance.ShouldDebugRace())
+                CustomLogger.Log($"Spawning player for client {OwnerClientId}");
             NetworkManager.Singleton.SpawnManager.InstantiateAndSpawn(playerPrefab, OwnerClientId);
             Destroy(gameObject);
         }

@@ -21,76 +21,97 @@ public static class EventService
 
     public static void InvokeRaceStarted()
     {
+        EventCalled("RaceStarted");
         RaceStarted?.Invoke();
     }
 
     public static void InvokeCountdownStarted()
     {
+        EventCalled("CountdownStarted");
         CountdownStarted?.Invoke();
     }
 
     public static void InvokeRaceEnded()
     {
+        EventCalled("RaceEnded");
         RaceEnded?.Invoke();
     }
 
     public static void InvokeRaceReady()
     {
+        EventCalled("RaceReady");
         RaceReady?.Invoke();
     }
 
     public static void InvokePlayerPlaced()
     {
+        EventCalled("PlayerPlaced");
         PlayerPlaced?.Invoke();
     }
 
     public static void InvokePlayerMoved(ulong playerId)
     {
+        EventCalled("PlayerMoved");
         PlayerMoved?.Invoke(playerId);
     }
 
     public static void InvokePlayerFinished(ulong playerId)
     {
+        EventCalled("PlayerFinished");
         PlayerFinished?.Invoke(playerId);
     }
 
     public static void InvokePlayerPenalty(ulong playerId, string penalty)
     {
+        EventCalled("PlayerPenalty");
         PlayerPenalty?.Invoke(playerId, penalty);
     }
 
     public static void InvokePlayerPenaltyGiven(ulong playerId, string penalty)
     {
+        EventCalled("PlayerPenaltyGiven");
         PlayerPenaltyGiven?.Invoke(playerId, penalty);
     }
 
     public static void InvokeStartMultiplayer()
     {
+        EventCalled("StartMultiplayer");
         StartMultiplayer?.Invoke();
     }
 
     public static void InvokeReceivedJoinCode(string code)
     {
+        EventCalled("ReceivedJoinCode");
         ReceivedJoinCode?.Invoke(code);
     }
 
     public static void InvokeCarEnteredPit(ulong clientId)
     {
+        EventCalled("CarEnteredPit");
         CarEnteredPit?.Invoke(clientId);
     }
 
     public static void InvokeCarExitedPit(ulong clientId)
     {
+        EventCalled("CarExitedPit");
         CarExitedPit?.Invoke(clientId);
     }
 
     public static void InvokePitStopStart()
     {
+        EventCalled("PitStopStart");
         PitStopStart?.Invoke();
     }
 
     public static void InvokePitStopEnd()
     {
+        EventCalled("PitStopEnd");
         PitStopEnd?.Invoke();
+    }
+
+    private static void EventCalled(string eventName)
+    {
+        if (DebugManager.Instance.ShouldDebugEvents())
+            CustomLogger.Log($"Event {eventName} has been called.");
     }
 }

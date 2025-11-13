@@ -76,9 +76,11 @@ public class RaceManager : NetworkBehaviour
     [Rpc(SendTo.Server)]
     public void StartRaceRpc()
     {
-        CustomLogger.Log("StartRaceRpc called");
+        if(DebugManager.Instance.ShouldDebugRace())
+            CustomLogger.Log("StartRaceRpc called");
         if (!IsServer) return;
-        CustomLogger.Log("StartRaceRpc executed on server");
+        if(DebugManager.Instance.ShouldDebugRace())
+            CustomLogger.Log("StartRaceRpc executed on server");
 
         leaderBoardPosition.StartRaceServerRpc();
         StartCoroutine(StartRaceCoroutine());
@@ -141,7 +143,8 @@ public class RaceManager : NetworkBehaviour
         if (!playerPenalties[playerId].Contains(penalty))
         {
             playerPenalties[playerId].Add(penalty);
-            CustomLogger.Log($"Player {playerId} received penalty: {penalty}");
+            if(DebugManager.Instance.ShouldDebugRace())
+                CustomLogger.Log($"Player {playerId} received penalty: {penalty}");
             PlayerPenaltyGivenClientRpc(playerId, penalty);
         }
     }
@@ -157,7 +160,6 @@ public class RaceManager : NetworkBehaviour
     private void PlayerPenaltyGivenClientRpc(ulong playerId, string penalty)
     {
         if (!IsClient) return;
-        CustomLogger.Log("PlayerPenaltyGivenClientRpc called on client");
         EventService.InvokePlayerPenaltyGiven(playerId, penalty);
     }
 
@@ -166,14 +168,16 @@ public class RaceManager : NetworkBehaviour
         if (startingPositions != null && startingPositions.transform.childCount > 0)
         {
             var index = (int)(clientId % (ulong)startingPositions.transform.childCount);
-            CustomLogger.Log($"Placing player {clientId}\'s object {playerGo.name} on spawn position {index}.");
+            if (DebugManager.Instance.ShouldDebugRace())
+                CustomLogger.Log($"Placing player {clientId}\'s object {playerGo.name} on spawn position {index}.");
             Transform spawnPosition = startingPositions.transform.GetChild(index);
             if (spawnPosition == null)
             {
                 CustomLogger.LogError($"Spawn position {index} is null for client {clientId}.");
                 return;
             }
-            CustomLogger.Log($"Setting player {clientId} position to {spawnPosition.position} and rotation to {spawnPosition.rotation}");
+            if(DebugManager.Instance.ShouldDebugRace())
+                CustomLogger.Log($"Setting player {clientId} position to {spawnPosition.position} and rotation to {spawnPosition.rotation}");
             playerGo.transform.SetPositionAndRotation(spawnPosition.position, spawnPosition.rotation);
             // SetPlayerPositionClientRpc(clientId, spawnPosition.position, spawnPosition.rotation);
             EventService.InvokePlayerPlaced();
@@ -188,12 +192,14 @@ public class RaceManager : NetworkBehaviour
     public void SetPlayerPositionClientRpc(ulong clientId, Vector3 position, Quaternion rotation)
     {
         if (!IsClient) return;
-        CustomLogger.Log($"Setting player position for client {clientId} to {position} and rotation {rotation}");
+        if (DebugManager.Instance.ShouldDebugRace())
+            CustomLogger.Log($"Setting player position for client {clientId} to {position} and rotation {rotation}");
 
         var playerObject = NetworkManager.Singleton.SpawnManager.GetPlayerNetworkObject(clientId).GetComponentInChildren<VehicleController>().gameObject;
         if (playerObject != null)
         {
-            CustomLogger.Log($"Found player object for client {clientId}: {playerObject.name}");
+            if(DebugManager.Instance.ShouldDebugRace())
+                CustomLogger.Log($"Found player object for client {clientId}: {playerObject.name}");
             playerObject.transform.SetPositionAndRotation(position, rotation);
         }
         else

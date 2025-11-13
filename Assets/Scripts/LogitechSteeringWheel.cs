@@ -32,7 +32,10 @@ public class LogitechSteeringWheel : MonoBehaviour
         // Find all child GameObjects that have the WheelControl script attached
         cameraController = GetComponent<CameraController>();
 
-        CustomLogger.Log($"[LogitechSteeringWheel] Device Name: {SettingsController.DeviceController}");
+        if (DebugManager.Instance.ShouldDebugInput())
+        {
+            CustomLogger.Log($"[LogitechSteeringWheel] Device Name: {SettingsController.DeviceController}");
+        }
 
         activeForces = "";
         propertiesEdit = "";
@@ -53,7 +56,7 @@ public class LogitechSteeringWheel : MonoBehaviour
         forcesLabel += "Set example controller properties : PageUp\n";
         forcesLabel += "Play Leds : P\n";
         activeForceAndEffect = new string[9];
-        if(SettingsController.DeviceController == 2) {
+        if(SettingsController.DeviceController == 2 && DebugManager.Instance.ShouldDebugInput()) {
             CustomLogger.Log("SteeringInit:" + LogitechGSDK.LogiSteeringInitialize(false));
         }
     }

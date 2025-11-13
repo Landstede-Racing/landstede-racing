@@ -61,7 +61,8 @@ public class PlayerStats : NetworkBehaviour, INetworkSerializeByMemcpy
         time = stopwatch.ElapsedMilliseconds;
         totalDriveTime = totalDriveTime + stopwatch.ElapsedMilliseconds;
         stopwatch.Restart();
-        CustomLogger.Log(playerTimings[playerTimings.Count - 1].NetworkId + ", " + playerTimings[playerTimings.Count - 1].Timing);
+        if(DebugManager.Instance.ShouldDebugRace())
+            CustomLogger.Log(playerTimings[playerTimings.Count - 1].NetworkId + ", " + playerTimings[playerTimings.Count - 1].Timing);
     }
 
     private static string RandomTire(int tireIndex)

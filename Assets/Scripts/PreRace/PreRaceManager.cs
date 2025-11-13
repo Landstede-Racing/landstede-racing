@@ -28,7 +28,8 @@ public class PreRaceManager : NetworkBehaviour
         if (IsServer)
         {
             // Here you can handle the logic when a client connects, such as updating UI or game state.
-            CustomLogger.Log($"Client {clientId} connected.");
+            if(DebugManager.Instance.ShouldDebugRace())
+                CustomLogger.Log($"Client {clientId} connected.");
 
             // Get Player's spawned prefab and assign a spawn position
             if (NetworkManager.Singleton.SpawnManager.GetPlayerNetworkObject(clientId) is NetworkObject playerObject)

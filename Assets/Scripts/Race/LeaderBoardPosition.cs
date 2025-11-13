@@ -90,9 +90,7 @@ public class LeaderBoardPosition : NetworkBehaviour
     [Rpc(SendTo.Server)]
     public void StartRaceServerRpc()
     {
-        CustomLogger.Log("StartRaceServerRpc called");
         if (!IsServer) return;
-        CustomLogger.Log("StartRaceServerRpc executed on server");
         StartRace();
 
         var players = GameObject.FindGameObjectsWithTag("Player").Select(p => p.GetComponentInChildren<PlayerStats>()).ToList();
@@ -101,7 +99,7 @@ public class LeaderBoardPosition : NetworkBehaviour
             CustomLogger.LogWarning("No players found to start");
             return;
         }
-        CustomLogger.Log($"Starting with {players.Count} players");
+        
         _players = players;
         UpdateLeaderBoardServerRpc();
     }
@@ -109,27 +107,30 @@ public class LeaderBoardPosition : NetworkBehaviour
     [Rpc(SendTo.ClientsAndHost)]
     private void UpdateLeaderBoardGUIClientRpc(PlayerInfo[] players)
     {
-        CustomLogger.Log("UpdateLeaderBoardGUIClientRpc called");
         playersInfo = new List<PlayerInfo>(players);
         if (leaderBoard == null) return;
-        CustomLogger.Log("Leaderboard is not null");
 
         if (leaderBoard.content.transform.childCount == 0)
         {
-            CustomLogger.Log("No existing player data, creating new ones");
+            if (DebugManager.Instance.ShouldDebugRace())
+                CustomLogger.Log("No existing player data, creating new ones");
+                
             for (var i = 0; i < playersInfo.Count; i++)
             {
-                CustomLogger.Log($"Creating player data for {playersInfo[i].shortName} at position {playersInfo[i].position}");
+                if(DebugManager.Instance.ShouldDebugRace())
+                    CustomLogger.Log($"Creating player data for {playersInfo[i].shortName} at position {playersInfo[i].position}");
                 var newPlayerData = Instantiate(playerData, leaderBoard.content);
                 newPlayerData.GetComponent<PlayerPositionUI>().UpdateUI(playersInfo[i]);
             }
         }
         else
         {
-            CustomLogger.Log("Updating existing player data");
+            if(DebugManager.Instance.ShouldDebugRace())
+                CustomLogger.Log("Updating existing player data");
             for (var player = 0; player < leaderBoard.content.transform.childCount; player++)
             {
-                CustomLogger.Log($"Updating player data for index {player}");
+                if(DebugManager.Instance.ShouldDebugRace())
+                    CustomLogger.Log($"Updating player data for index {player}");
                 var go = leaderBoard.content.transform;
 
                 for (var index = 0; index < go.childCount; index++)

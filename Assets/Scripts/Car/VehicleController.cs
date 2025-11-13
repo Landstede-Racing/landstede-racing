@@ -18,9 +18,6 @@ public class VehicleController : NetworkBehaviour
 {
     public LogitechSteeringWheel logitechSteering;
 
-    [Header("Debugging")]
-    [SerializeField] private bool showDebug = false;
-
     [Header("Input")]
     public float steeringAngle = 0;
     public float gas = 0;
@@ -122,12 +119,7 @@ public class VehicleController : NetworkBehaviour
             var raceManager = FindFirstObjectByType<RaceManager>();
             if (raceManager != null)
             {
-                CustomLogger.Log("Race manager found");
                 raceManager.PlacePlayerOnSpawn(gameObject, OwnerClientId);
-            }
-            else
-            {
-                CustomLogger.Log("Race manager not found!!!!");
             }
         }
 
@@ -173,7 +165,6 @@ public class VehicleController : NetworkBehaviour
             {
                 rb.isKinematic = false;
             }
-            CustomLogger.Log("Rigidbody has to go to work :(");
         }
     }
 
@@ -188,7 +179,6 @@ public class VehicleController : NetworkBehaviour
             {
                 rb.isKinematic = false;
             }
-            CustomLogger.Log("Rigidbody has to go to work :(");
         }
     }
 
@@ -249,7 +239,7 @@ public class VehicleController : NetworkBehaviour
 
     void OnGUI()
     {
-        if (showDebug)
+        if (DebugManager.Instance.ShouldDebugCar())
         {
             string wheelDebugText = "Wheels: \n\n";
             foreach (var wheel in wheels)

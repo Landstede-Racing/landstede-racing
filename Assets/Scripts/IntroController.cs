@@ -10,6 +10,11 @@ public class IntroController : MonoBehaviour
         videoPlayer.loopPointReached += EndReached;
     }
 
+    void OnDestroy()
+    {
+        videoPlayer.loopPointReached -= EndReached;
+    }
+
     void Update()
     {
         if(Input.anyKey) {

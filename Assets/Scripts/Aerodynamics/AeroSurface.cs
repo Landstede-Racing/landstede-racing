@@ -95,7 +95,8 @@ public class AeroSurface : MonoBehaviour
 
         constantForce.relativeForce = new(0, liftForce, dragForce);
 
-        CustomLogger.Log(gameObject.name + ": " + constantForce.relativeForce);
+        if(DebugManager.Instance.ShouldDebugAerodynamics())
+            CustomLogger.Log(gameObject.name + ": " + constantForce.relativeForce);
 
 
 #if UNITY_EDITOR

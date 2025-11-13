@@ -12,12 +12,14 @@ public class CameraController : NetworkBehaviour
     {
         if (IsOwner)
         {
-            CustomLogger.Log("CameraController started for owner");
+            if(DebugManager.Instance.ShouldDebugCar())
+                CustomLogger.Log("CameraController started for owner");
             SetCamera(currentCam);
         }
         else
         {
-            CustomLogger.Log("CameraController started for non-owner");
+            if(DebugManager.Instance.ShouldDebugCar())
+                CustomLogger.Log("CameraController started for non-owner");
         }
         
     }
