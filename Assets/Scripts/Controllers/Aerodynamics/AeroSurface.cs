@@ -96,13 +96,14 @@ public class AeroSurface : MonoBehaviour
         constantForce.relativeForce = new(0, liftForce, dragForce);
 
         if(DebugManager.Instance.ShouldDebugAerodynamics())
+        {
             CustomLogger.Log(gameObject.name + ": " + constantForce.relativeForce);
-
 
 #if UNITY_EDITOR
         DrawArrow.ForDebug(transform.position, transform.up * liftForce, Color.green);
         DrawArrow.ForDebug(transform.position, transform.forward * dragForce, Color.red);
 #endif
+        }
     }
 
     private float GetGroundHeight()
@@ -123,9 +124,12 @@ public class AeroSurface : MonoBehaviour
         if (foundGround)
         {
             float heightFromGround = hit.distance;
+            if(DebugManager.Instance.ShouldDebugAerodynamics())
+            {
 #if UNITY_EDITOR
             Debug.DrawRay(transform.position, Vector3.down * heightFromGround, Color.yellow);
 #endif
+            }
             return heightFromGround;
         }
 
