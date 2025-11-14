@@ -3,7 +3,7 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class CustomSceneManager
+public class CustomSceneUtils
 {
     public static IEnumerator LoadScene(string sceneName)
     {
