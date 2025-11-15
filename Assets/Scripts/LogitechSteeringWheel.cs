@@ -26,6 +26,8 @@ public class LogitechSteeringWheel : MonoBehaviour
     public float centeringForceMultiplier = 50f; // Strength of centering force
     public float slipForceMultiplier = 100f;    // Strength of slip feedback
 
+    private string ffbDebugText;
+
     // Use this for initialization
     void Start()
     {
@@ -416,6 +418,13 @@ public class LogitechSteeringWheel : MonoBehaviour
         }
     }
 
+    private void OnGUI() {
+        if(DebugManager.Instance.ShouldDebugFFB())
+        {
+            GUI.TextArea(new Rect(200, 10, 300, 500), ffbDebugText);
+        }
+    }
+
     private void ApplyForceFeedback()
     {
         WheelHit hit1;
@@ -467,11 +476,32 @@ public class LogitechSteeringWheel : MonoBehaviour
 
 
         // Apply centering force
+
         float slipForce = CalculateSlipForce();
         float centeringForce = centeringForceMultiplier * (vehicleController.GetSpeed() / vehicleController.maxSpeed) * 2.5f / Math.Max(slipForce / 3, 1);
         LogitechGSDK.LogiPlaySpringForce(0, 0, Mathf.Clamp(Mathf.Abs((int)centeringForce), 20, 100), 100);
 
         LogitechGSDK.LogiPlayDamperForce(0, (int)slipForce);
+
+        if(DebugManager.Instance.ShouldDebugFFB())
+        {
+            ffbDebugText = "Force Feedback: \n\n";
+            ffbDebugText += $"Left Sideways Slip: {GetWheelSlip(vehicleController.frontLeftWheel.WheelCollider)}\n";
+            ffbDebugText += $"Right Sideways Slip: {GetWheelSlip(vehicleController.frontRightWheel.WheelCollider)}\n";
+            ffbDebugText += $"Total slip: {slipForce}\n\n";
+
+            ffbDebugText += $"Centering Force: {centeringForce}\n\n";
+
+            ffbDebugText += $"Vibrations:\n";
+            ffbDebugText += $"On: {vibration}\n";
+            ffbDebugText += $"Frequency: {vibrationFrequency}\n";
+            ffbDebugText += $"Intensity: {vibrationIntensity}\n\n";
+
+            ffbDebugText += "Effects:\n";
+            ffbDebugText += $"Constant Force: {LogitechGSDK.LogiIsPlaying(0, LogitechGSDK.LOGI_FORCE_CONSTANT)}\n";
+            ffbDebugText += $"Spring Force: {LogitechGSDK.LogiIsPlaying(0, LogitechGSDK.LOGI_FORCE_SPRING)}\n";
+            ffbDebugText += $"Damper Force: {LogitechGSDK.LogiIsPlaying(0, LogitechGSDK.LOGI_FORCE_DAMPER)}\n";
+        }
     }
 
     private void SimulateVibration(int intensity, float frequency)

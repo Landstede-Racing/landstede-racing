@@ -7898,6 +7898,7 @@ MonoBehaviour:
   DebugNetwork: 0
   DebugCar: 0
   DebugInput: 0
+  DebugFFB: 1
 --- !u!4 &461076704
 Transform:
   m_ObjectHideFlags: 0
