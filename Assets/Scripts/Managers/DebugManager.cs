@@ -10,6 +10,7 @@ public class DebugManager : MonoBehaviour
     [SerializeField] private bool DebugNetwork = false;
     [SerializeField] private bool DebugCar = false;
     [SerializeField] private bool DebugInput = false;
+    [SerializeField] private bool DebugFFB = false;
 
     private void Awake()
     {
@@ -51,5 +52,10 @@ public class DebugManager : MonoBehaviour
     public bool ShouldDebugInput()
     {
         return DebugInput;
+    }
+
+    public bool ShouldDebugFFB()
+    {
+        return DebugFFB;
     }
 }
