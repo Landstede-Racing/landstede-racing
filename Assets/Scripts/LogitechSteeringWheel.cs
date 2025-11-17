@@ -65,6 +65,10 @@ public class LogitechSteeringWheel : MonoBehaviour
 
     void OnApplicationQuit()
     {
+        LogitechGSDK.LogiStopSoftstopForce(0);
+        LogitechGSDK.LogiStopConstantForce(0);
+        LogitechGSDK.LogiStopDamperForce(0);
+        LogitechGSDK.LogiStopSpringForce(0);
         CustomLogger.Log("SteeringShutdown:" + LogitechGSDK.LogiSteeringShutdown());
     }
 
@@ -478,10 +482,17 @@ public class LogitechSteeringWheel : MonoBehaviour
         // Apply centering force
 
         float slipForce = CalculateSlipForce();
-        float centeringForce = centeringForceMultiplier * (vehicleController.GetSpeed() / vehicleController.maxSpeed) * 2.5f / Math.Max(slipForce / 3, 1);
+        float centeringForce = centeringForceMultiplier * (vehicleController.GetSpeed() / vehicleController.maxSpeed) * 2.5f;
+        if(slipForce > 0)
+        {
+            centeringForce /= Math.Max(slipForce, 1);
+        }
+        
         LogitechGSDK.LogiPlaySpringForce(0, 0, Mathf.Clamp(Mathf.Abs((int)centeringForce), 20, 100), 100);
 
         LogitechGSDK.LogiPlayDamperForce(0, (int)slipForce);
+
+        LogitechGSDK.LogiPlaySoftstopForce(0, 40);
 
         if(DebugManager.Instance.ShouldDebugFFB())
         {
@@ -501,6 +512,7 @@ public class LogitechSteeringWheel : MonoBehaviour
             ffbDebugText += $"Constant Force: {LogitechGSDK.LogiIsPlaying(0, LogitechGSDK.LOGI_FORCE_CONSTANT)}\n";
             ffbDebugText += $"Spring Force: {LogitechGSDK.LogiIsPlaying(0, LogitechGSDK.LOGI_FORCE_SPRING)}\n";
             ffbDebugText += $"Damper Force: {LogitechGSDK.LogiIsPlaying(0, LogitechGSDK.LOGI_FORCE_DAMPER)}\n";
+            ffbDebugText += $"Soft Stop: {LogitechGSDK.LogiIsPlaying(0, LogitechGSDK.LOGI_FORCE_SOFTSTOP)}\n";
         }
     }
 
