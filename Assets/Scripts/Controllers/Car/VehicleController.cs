@@ -566,7 +566,7 @@ public class VehicleController : NetworkBehaviour
     {
         float x = transform.InverseTransformPoint(other.gameObject.transform.position).x;
 
-        float force = Math.Min(other.impulse.magnitude, 100);
+        float force = Math.Min(other.impulse.magnitude / 25, 100);
 
         if (x < 0)
         {

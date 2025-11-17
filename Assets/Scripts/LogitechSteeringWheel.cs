@@ -26,7 +26,7 @@ public class LogitechSteeringWheel : MonoBehaviour
     public float centeringForceMultiplier = 50f; // Strength of centering force
     public float slipForceMultiplier = 100f;    // Strength of slip feedback
 
-    private string ffbDebugText;
+    private string ffbDebugText = "";
 
     // Use this for initialization
     void Start()
