@@ -61,6 +61,10 @@ public class SettingsController : MonoBehaviour
         }
         LoadSettings(currentResolutionIndex);
         UpdateControls();
+        if(DeviceController == 2)
+        {
+            LogitechGSDK.LogiSteeringInitialize(false);
+        }
     }
 
     void Update()
