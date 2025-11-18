@@ -62,6 +62,7 @@ public class ForceFeedbackController : NetworkBehaviour
     public void ApplyForceFeedback()
     {
         if(vehicleController == null) return;
+
         float currentSpeedKmh = vehicleController.GetSpeed();
         float speedFactor = vehicleController.maxSpeed > 0f
             ? Mathf.Clamp01(currentSpeedKmh / vehicleController.maxSpeed)
@@ -101,14 +102,43 @@ public class ForceFeedbackController : NetworkBehaviour
             }
         }
 
-        float slipLeft = GetWheelSidewaysSlip(vehicleController.frontLeftWheel.WheelCollider);
-        float slipRight = GetWheelSidewaysSlip(vehicleController.frontRightWheel.WheelCollider);
-        float avgSlip = (slipLeft + slipRight) * 0.5f;
+        float sidewaysSlipLeft = GetWheelSidewaysSlip(vehicleController.frontLeftWheel.WheelCollider);
+        float sidewaysSlipRight = GetWheelSidewaysSlip(vehicleController.frontRightWheel.WheelCollider);
+        float avgSidewaysSlip = (sidewaysSlipLeft + sidewaysSlipRight) * 0.5f;
 
-        float forwardSlipLeft = GetWheelForwardSlip(vehicleController.frontLeftWheel.WheelCollider);
-        float forwardSlipRight = GetWheelForwardSlip(vehicleController.frontRightWheel.WheelCollider);
-        float avgForwardSlip = (forwardSlipLeft + forwardSlipRight) * 0.5f;
+        float forwardsidewaysSlipLeft = GetWheelForwardSlip(vehicleController.frontLeftWheel.WheelCollider);
+        float forwardsidewaysSlipRight = GetWheelForwardSlip(vehicleController.frontRightWheel.WheelCollider);
+        float avgForwardSlip = (forwardsidewaysSlipLeft + forwardsidewaysSlipRight) * 0.5f;
 
+        int damper = Mathf.Clamp((int)(Mathf.Abs(steerVelocity) * 2.5f), minDamper, maxForceValue);
+        LogitechGSDK.LogiPlayDamperForce(0, damper);
+
+        if(DebugManager.Instance.ShouldDebugFFB())
+        {
+            ffbDebugText = $"FFB Debug\nSpeed: {currentSpeedKmh:F1}  SpeedFactor: {speedFactor:F2}\n" +
+                           $"SteerAngle: {steerAngle:F2}  SteerVel: {steerVelocity:F2}\n\n" +
+                           $"Forward Slip L:{forwardsidewaysSlipLeft:F3} R:{forwardsidewaysSlipRight:F3} Avg:{avgForwardSlip:F3}\n" +
+                           $"Sideways Slip L:{sidewaysSlipLeft:F3} R:{sidewaysSlipRight:F3} Avg:{avgSidewaysSlip:F3}\n\n" +
+                           $"Damper: {damper}\n\n";
+        }
+
+        ApplyCentering(currentSpeedKmh, avgForwardSlip, avgSidewaysSlip);
+
+        LogitechGSDK.LogiPlaySoftstopForce(0, 40);
+
+        ApplyVibrations(avgSidewaysSlip, speedFactor, vibration, terrainVibrationIntensity, terrainVibrationFrequency);
+
+        if(DebugManager.Instance.ShouldDebugFFB())
+        {
+            ffbDebugText += $"Effects: Constant={LogitechGSDK.LogiIsPlaying(0, LogitechGSDK.LOGI_FORCE_CONSTANT)}\n" +
+                            $"Spring={LogitechGSDK.LogiIsPlaying(0, LogitechGSDK.LOGI_FORCE_SPRING)}\n" +
+                            $"Damper={LogitechGSDK.LogiIsPlaying(0, LogitechGSDK.LOGI_FORCE_DAMPER)}\n" +
+                            $"SoftStop={LogitechGSDK.LogiIsPlaying(0, LogitechGSDK.LOGI_FORCE_SOFTSTOP)}\n";
+        }
+    }
+
+    private void ApplyCentering(float currentSpeedKmh, float avgForwardSlip, float avgSidewaysSlip)
+    {
         float springSpeedFactor = Mathf.InverseLerp(minSpeedForSat, maxSpeedForSat, currentSpeedKmh);
 
         float stiffness = springSpeedFactor * maxStiffness;
@@ -118,7 +148,7 @@ public class ForceFeedbackController : NetworkBehaviour
             stiffness *= 0.1f; // Reduce stiffness by 90%
         }
 
-        float slipReduction = avgSlip * slipForceMultiplier;
+        float slipReduction = avgSidewaysSlip * slipForceMultiplier;
         stiffness = Mathf.Max(0, stiffness - slipReduction);
 
         stiffness *= centeringForceMultiplier;
@@ -127,12 +157,16 @@ public class ForceFeedbackController : NetworkBehaviour
 
         LogitechGSDK.LogiPlaySpringForce(0, 0, 100, coefficientPercentage);
 
-        int damper = Mathf.Clamp((int)(Mathf.Abs(steerVelocity) * 2.5f), minDamper, maxForceValue);
-        LogitechGSDK.LogiPlayDamperForce(0, damper);
+        if(DebugManager.Instance.ShouldDebugFFB())
+        {
+            ffbDebugText += $"Spring \"Stiffness?\": {stiffness}\n" +
+                            $"Coefficient Percentage: {coefficientPercentage}\n\n";
+        }
+    }
 
-        LogitechGSDK.LogiPlaySoftstopForce(0, 40);
-
-        float slipRumbleIntensity = Mathf.Clamp(avgSlip * slipForceMultiplier * 5f, 0f, maxForceValue);
+    private void ApplyVibrations(float avgSidewaysSlip, float speedFactor, bool vibration, float terrainVibrationIntensity, float terrainVibrationFrequency)
+    {
+        float slipRumbleIntensity = Mathf.Clamp(avgSidewaysSlip * slipForceMultiplier * 5f, 0f, maxForceValue);
         float slipRumbleFrequency = Mathf.Lerp(8f, 40f, speedFactor); // low at low speed, higher at high speed
 
         float slipVibrationValue = 0f;
@@ -162,18 +196,8 @@ public class ForceFeedbackController : NetworkBehaviour
 
         if(DebugManager.Instance.ShouldDebugFFB())
         {
-            ffbDebugText = $"FFB Debug\nSpeed: {currentSpeedKmh:F1}  SpeedFactor: {speedFactor:F2}\n" +
-                           $"SteerAngle: {steerAngle:F2}  SteerVel: {steerVelocity:F2}\n\n" +
-                           $"Spring \"Stiffness?\": {stiffness}\n" +
-                           $"Coefficient Percentage: {coefficientPercentage}\n\n" +
-                           $"Slip L:{slipLeft:F3} R:{slipRight:F3} Avg:{avgSlip:F3}\n" +
-                           $"SlipRumbleIntensity: {slipRumbleIntensity:F1} SlipFreq: {slipRumbleFrequency:F1}\n" +
-                           $"TerrainVib: {terrainVibrationIntensity:F2} TerrainFreq: {terrainVibrationFrequency:F2}\n\n" +
-                           $"Damper: {damper}\n" +
-                           $"Effects: Constant={LogitechGSDK.LogiIsPlaying(0, LogitechGSDK.LOGI_FORCE_CONSTANT)}\n" +
-                           $"Spring={LogitechGSDK.LogiIsPlaying(0, LogitechGSDK.LOGI_FORCE_SPRING)}\n" +
-                           $"Damper={LogitechGSDK.LogiIsPlaying(0, LogitechGSDK.LOGI_FORCE_DAMPER)}\n" +
-                           $"SoftStop={LogitechGSDK.LogiIsPlaying(0, LogitechGSDK.LOGI_FORCE_SOFTSTOP)}\n";
+            ffbDebugText += $"SlipRumbleIntensity: {slipRumbleIntensity:F1} SlipFreq: {slipRumbleFrequency:F1}\n" +
+                            $"TerrainVib: {terrainVibrationIntensity:F2} TerrainFreq: {terrainVibrationFrequency:F2}\n\n";
         }
     }
 
@@ -221,8 +245,7 @@ public class ForceFeedbackController : NetworkBehaviour
     private float GetWheelSidewaysSlip(WheelCollider wheel)
     {
         if (wheel == null) return 0f;
-        WheelHit hit;
-        if (wheel.isGrounded && wheel.GetGroundHit(out hit))
+        if (wheel.isGrounded && wheel.GetGroundHit(out WheelHit hit))
         {
             return Mathf.Abs(hit.sidewaysSlip);
         }
