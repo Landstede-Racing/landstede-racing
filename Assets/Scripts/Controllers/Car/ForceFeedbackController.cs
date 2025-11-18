@@ -79,14 +79,11 @@ public class ForceFeedbackController : NetworkBehaviour
         float terrainVibrationFrequency = 0f;
         float terrainVibrationIntensity = 0f;
 
-        WheelHit hit;
         TerrainInfo tiLeft = null, tiRight = null;
 
-        if(vehicleController.frontLeftWheel.WheelCollider.isGrounded &&
-            vehicleController.frontLeftWheel.WheelCollider.GetGroundHit(out hit))
+        if(GetWheelTerrainInfo(vehicleController.frontLeftWheel.WheelCollider, out tiLeft))
         {
-            tiLeft = hit.collider ? hit.collider.GetComponent<TerrainInfo>() : null;
-            if (tiLeft != null && tiLeft.vibration)
+            if(tiLeft.vibration)
             {
                 vibration = true;
                 terrainVibrationFrequency = Mathf.Max(terrainVibrationFrequency, tiLeft.vibrationFrequency);
@@ -94,11 +91,9 @@ public class ForceFeedbackController : NetworkBehaviour
             }
         }
 
-        if (vehicleController.frontRightWheel.WheelCollider.isGrounded &&
-            vehicleController.frontRightWheel.WheelCollider.GetGroundHit(out hit))
+        if(GetWheelTerrainInfo(vehicleController.frontRightWheel.WheelCollider, out tiRight))
         {
-            tiRight = hit.collider ? hit.collider.GetComponent<TerrainInfo>() : null;
-            if (tiRight != null && tiRight.vibration)
+            if(tiRight.vibration)
             {
                 vibration = true;
                 terrainVibrationFrequency = Mathf.Max(terrainVibrationFrequency, tiRight.vibrationFrequency);
@@ -188,6 +183,22 @@ public class ForceFeedbackController : NetworkBehaviour
         LogitechGSDK.LogiStopSpringForce(0);
         LogitechGSDK.LogiStopDamperForce(0);
         LogitechGSDK.LogiStopSoftstopForce(0);
+    }
+
+    private bool GetWheelTerrainInfo(WheelCollider wheel, out TerrainInfo terrainInfo)
+    {
+        if (wheel.isGrounded &&
+            wheel.GetGroundHit(out WheelHit hit))
+        {
+            TerrainInfo ti = hit.collider ? hit.collider.GetComponent<TerrainInfo>() : null;
+            if(ti != null)
+            {
+                terrainInfo = ti;
+                return true;
+            }
+        }
+        terrainInfo = null;
+        return false;
     }
 
     private float GetSteerAngleSafe()
