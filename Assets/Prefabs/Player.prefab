@@ -3866,7 +3866,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 295600312
+  GlobalObjectIdHash: 3933290242
   InScenePlacedSourceGlobalObjectIdHash: 2418212525
   DeferredDespawnTick: 0
   Ownership: 1
@@ -25655,7 +25655,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef8b96895a0ec4ba685178a052544251, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: Unity.VectorGraphics::Unity.VectorGraphics.SVGImage
 --- !u!1001 &169054995507735528
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25776,7 +25776,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef8b96895a0ec4ba685178a052544251, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: Unity.VectorGraphics::Unity.VectorGraphics.SVGImage
 --- !u!1001 &231620416939113189
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25893,7 +25893,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef8b96895a0ec4ba685178a052544251, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: Unity.VectorGraphics::Unity.VectorGraphics.SVGImage
 --- !u!1001 &287401418630981021
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26010,7 +26010,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef8b96895a0ec4ba685178a052544251, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: Unity.VectorGraphics::Unity.VectorGraphics.SVGImage
 --- !u!1001 &375160064242732649
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26252,7 +26252,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef8b96895a0ec4ba685178a052544251, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: Unity.VectorGraphics::Unity.VectorGraphics.SVGImage
 --- !u!1001 &588840933227668362
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26935,7 +26935,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef8b96895a0ec4ba685178a052544251, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: Unity.VectorGraphics::Unity.VectorGraphics.SVGImage
 --- !u!1001 &863677858156209192
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27874,7 +27874,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef8b96895a0ec4ba685178a052544251, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: Unity.VectorGraphics::Unity.VectorGraphics.SVGImage
 --- !u!1001 &1498538698948811525
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27991,7 +27991,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef8b96895a0ec4ba685178a052544251, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: Unity.VectorGraphics::Unity.VectorGraphics.SVGImage
 --- !u!1001 &1641001379791110082
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -28446,7 +28446,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef8b96895a0ec4ba685178a052544251, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: Unity.VectorGraphics::Unity.VectorGraphics.SVGImage
 --- !u!1001 &1952404777128671808
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -28567,7 +28567,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef8b96895a0ec4ba685178a052544251, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: Unity.VectorGraphics::Unity.VectorGraphics.SVGImage
 --- !u!1001 &1954004863692952490
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -28794,7 +28794,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef8b96895a0ec4ba685178a052544251, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: Unity.VectorGraphics::Unity.VectorGraphics.SVGImage
 --- !u!1001 &2277103561836558598
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -28911,7 +28911,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef8b96895a0ec4ba685178a052544251, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: Unity.VectorGraphics::Unity.VectorGraphics.SVGImage
 --- !u!1001 &2532507869277856468
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29028,7 +29028,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef8b96895a0ec4ba685178a052544251, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: Unity.VectorGraphics::Unity.VectorGraphics.SVGImage
 --- !u!1001 &2644024863118759206
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30531,7 +30531,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef8b96895a0ec4ba685178a052544251, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: Unity.VectorGraphics::Unity.VectorGraphics.SVGImage
 --- !u!1001 &4471005516360117974
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -31189,7 +31189,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef8b96895a0ec4ba685178a052544251, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: Unity.VectorGraphics::Unity.VectorGraphics.SVGImage
 --- !u!224 &4834695108808691426 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: -8524424544509167813, guid: a35d5334af556cf42914f805dc45c17f, type: 3}
@@ -31985,7 +31985,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef8b96895a0ec4ba685178a052544251, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: Unity.VectorGraphics::Unity.VectorGraphics.SVGImage
 --- !u!224 &6514589303225313123 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: -8524424544509167813, guid: 3be31549711a77649a26951bf3f6a2dc, type: 3}
@@ -32460,7 +32460,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef8b96895a0ec4ba685178a052544251, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: Unity.VectorGraphics::Unity.VectorGraphics.SVGImage
 --- !u!224 &5848365003653439880 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: -8524424544509167813, guid: a35d5334af556cf42914f805dc45c17f, type: 3}
@@ -32687,7 +32687,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef8b96895a0ec4ba685178a052544251, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: Unity.VectorGraphics::Unity.VectorGraphics.SVGImage
 --- !u!224 &7768107724368428530 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: -8524424544509167813, guid: f7e2766476c10244caf8d84cb1932ec4, type: 3}
@@ -33468,6 +33468,9 @@ PrefabInstance:
       addedObject: {fileID: 6989671008667537233}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 31073083d533471429332d6cc461014a, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 8520710015739843579}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 31073083d533471429332d6cc461014a, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 4530490021947837859}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 31073083d533471429332d6cc461014a, type: 3}
       insertIndex: -1
@@ -34222,8 +34225,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vehicleController: {fileID: 225673370821117070}
   mfdController: {fileID: 6888840466627086266}
-  centeringForceMultiplier: 50
-  slipForceMultiplier: 100
+--- !u!114 &8520710015739843579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7573112118827905201}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78e4633844a25e046b11acf25595fafb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ForceFeedbackController
+  vehicleController: {fileID: 225673370821117070}
+  centeringForceMultiplier: 1
+  slipReduction: 0.4
+  speedInfluence: 1
+  damperBase: 10
+  damperSteerVelocityMultiplier: 2
+  terrainIntensityScale: 40
+  terrainFrequencyScale: 1.5
+  slipRumbleIntensityScale: 30
+  slipRumbleFrequencyMin: 8
+  slipRumbleFrequencyMax: 40
 --- !u!114 &4530490021947837859
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34266,7 +34290,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   logitechSteering: {fileID: 6989671008667537233}
-  showDebug: 0
   steeringAngle: 0
   gas: 0
   brake: 0
@@ -34418,7 +34441,6 @@ MonoBehaviour:
   damageableParts: []
   changeTires: 0
   replaceWing: 0
-  IsControllable: 1
   m_IsEngineRunning:
     m_InternalValue: 0
 --- !u!114 &7878637517040535816
