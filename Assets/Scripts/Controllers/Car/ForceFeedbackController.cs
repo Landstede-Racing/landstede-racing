@@ -43,7 +43,7 @@ public class ForceFeedbackController : NetworkBehaviour
     void OnDisable()
     {
         if(!IsOwner) return;
-        
+
         StopAllForces();
     }
 
@@ -172,12 +172,14 @@ public class ForceFeedbackController : NetworkBehaviour
         float slipRumbleFrequency = Mathf.Lerp(8f, 40f, speedFactor); // low at low speed, higher at high speed
 
         float slipVibrationValue = 0f;
+        
         if (slipRumbleIntensity > 1f)
         {
             slipVibrationValue = Mathf.Sin(Time.time * slipRumbleFrequency * 2f * Mathf.PI) * slipRumbleIntensity;
         }
 
         float terrainVibrationValue = 0f;
+
         if (vibration)
         {
             float vibIntensity = terrainVibrationIntensity * terrainVibrationIntensityScale * speedFactor;
