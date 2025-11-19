@@ -35,6 +35,7 @@ public class ForceFeedbackController : NetworkBehaviour
     void OnEnable()
     {
         if(!IsOwner) return;
+
         lastSteerAngle = GetSteerAngleSafe();
         lastUpdateTime = Time.time;
     }
@@ -42,6 +43,7 @@ public class ForceFeedbackController : NetworkBehaviour
     void OnDisable()
     {
         if(!IsOwner) return;
+        
         StopAllForces();
     }
 
