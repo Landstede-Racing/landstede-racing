@@ -172,7 +172,7 @@ public class ForceFeedbackController : NetworkBehaviour
         float slipRumbleFrequency = Mathf.Lerp(8f, 40f, speedFactor); // low at low speed, higher at high speed
 
         float slipVibrationValue = 0f;
-        
+
         if (slipRumbleIntensity > 1f)
         {
             slipVibrationValue = Mathf.Sin(Time.time * slipRumbleFrequency * 2f * Mathf.PI) * slipRumbleIntensity;
@@ -215,8 +215,7 @@ public class ForceFeedbackController : NetworkBehaviour
 
     private bool GetWheelTerrainInfo(WheelCollider wheel, out TerrainInfo terrainInfo)
     {
-        if (wheel.isGrounded &&
-            wheel.GetGroundHit(out WheelHit hit))
+        if (wheel.isGrounded && wheel.GetGroundHit(out WheelHit hit))
         {
             TerrainInfo ti = hit.collider ? hit.collider.GetComponent<TerrainInfo>() : null;
             if(ti != null)
