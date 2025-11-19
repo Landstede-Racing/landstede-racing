@@ -238,20 +238,24 @@ public class ForceFeedbackController : NetworkBehaviour
     private float GetWheelForwardSlip(WheelCollider wheel)
     {
         if (wheel == null) return 0f;
+
         if (wheel.isGrounded && wheel.GetGroundHit(out WheelHit hit))
         {
             return Mathf.Abs(hit.forwardSlip);
         }
+        
         return 0f;
     }
 
     private float GetWheelSidewaysSlip(WheelCollider wheel)
     {
         if (wheel == null) return 0f;
+
         if (wheel.isGrounded && wheel.GetGroundHit(out WheelHit hit))
         {
             return Mathf.Abs(hit.sidewaysSlip);
         }
+
         return 0f;
     }
 }
