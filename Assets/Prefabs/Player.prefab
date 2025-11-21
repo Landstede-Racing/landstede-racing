@@ -3866,7 +3866,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 3933290242
+  GlobalObjectIdHash: 3511333484
   InScenePlacedSourceGlobalObjectIdHash: 2418212525
   DeferredDespawnTick: 0
   Ownership: 1
@@ -34237,17 +34237,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78e4633844a25e046b11acf25595fafb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ForceFeedbackController
+  ShowTopMostFoldoutHeaderGroup: 1
   vehicleController: {fileID: 225673370821117070}
+  minSpeedForSat: 80
+  maxSpeedForSat: 300
+  maxStiffness: 90
   centeringForceMultiplier: 1
-  slipReduction: 0.4
-  speedInfluence: 1
-  damperBase: 10
-  damperSteerVelocityMultiplier: 2
-  terrainIntensityScale: 40
-  terrainFrequencyScale: 1.5
-  slipRumbleIntensityScale: 30
-  slipRumbleFrequencyMin: 8
-  slipRumbleFrequencyMax: 40
+  slipForceMultiplier: 10
+  understeerSlipThreshold: 0.8
+  terrainVibrationIntensityScale: 40
+  terrainVibrationFrequencyScale: 1
+  minDamper: 10
+  maxForceValue: 100
 --- !u!114 &4530490021947837859
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34431,7 +34432,7 @@ MonoBehaviour:
   firstLightOn: 10000
   redLine: 12500
   idleRPM: 5000
-  weight: 558
+  weight: 798
   gearText: {fileID: 3782329082836458853}
   gearTextWheel: {fileID: 6338213144751350621}
   speedText: {fileID: 288283823444345704}
