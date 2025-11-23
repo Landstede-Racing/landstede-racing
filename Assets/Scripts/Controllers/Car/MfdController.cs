@@ -96,8 +96,8 @@ public class MfdController : MonoBehaviour
         }
         else
         {
-            MFDPageIndicator damagePageIndicator = pagesIndicator.transform.GetChild(0).GetComponent<MFDPageIndicator>();
-            MFDPageIndicator tempsPageIndicator = pagesIndicator.transform.GetChild(1).GetComponent<MFDPageIndicator>();
+            MFDPageIndicator damagePageIndicator = pagesIndicator.transform.GetChild(2).GetComponent<MFDPageIndicator>();
+            MFDPageIndicator tempsPageIndicator = pagesIndicator.transform.GetChild(3).GetComponent<MFDPageIndicator>();
 
             foreach (KeyValuePair<GameObject, DamageablePart> entry in mfdPartMapDamage)
             {
