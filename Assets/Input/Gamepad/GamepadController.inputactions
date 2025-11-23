@@ -1,4 +1,5 @@
 {
+    "version": 1,
     "name": "GamepadController",
     "maps": [
         {
@@ -90,6 +91,15 @@
                     "name": "Pit Limiter",
                     "type": "Button",
                     "id": "e6ece9af-92bc-4348-90fd-763abf9b3bcc",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Reset",
+                    "type": "Button",
+                    "id": "bd5bac01-e3a8-4d45-98cf-7389f70c8815",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -204,6 +214,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Pit Limiter",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fb3978ab-dc88-4f36-929e-7a6a67d1a474",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Reset",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

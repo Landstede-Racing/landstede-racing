@@ -1,4 +1,5 @@
 {
+    "version": 1,
     "name": "KeyboardController",
     "maps": [
         {
@@ -72,6 +73,15 @@
                     "name": "Pit Limiter",
                     "type": "Button",
                     "id": "ae0c8b41-be02-4a61-9a2a-0cd0743b4e5e",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Reset",
+                    "type": "Button",
+                    "id": "02ff0a66-93a0-4c77-b350-364d269d5dcf",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -186,6 +196,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Pit Limiter",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cb8dacb7-124e-458e-9f49-79a58d24599e",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Reset",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

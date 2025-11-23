@@ -9,6 +9,7 @@ public static class EventService
     public static event Action CountdownStarted;
     public static event Action RaceEnded;
     public static event Action RaceReady;
+    public static event Action RestartRace;
     public static event Action PlayerPlaced;
     public static event Action<ulong, string> PlayerPenalty;
     public static event Action<ulong, string> PlayerPenaltyGiven;
@@ -41,6 +42,12 @@ public static class EventService
     {
         EventCalled("RaceReady");
         RaceReady?.Invoke();
+    }
+    
+    public static void InvokeRestartRace()
+    {
+        EventCalled("RestartRace");
+        RestartRace?.Invoke();
     }
 
     public static void InvokePlayerPlaced()

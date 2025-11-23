@@ -163,6 +163,15 @@ public partial class @KeyboardController: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Reset"",
+                    ""type"": ""Button"",
+                    ""id"": ""02ff0a66-93a0-4c77-b350-364d269d5dcf"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -275,6 +284,17 @@ public partial class @KeyboardController: IInputActionCollection2, IDisposable
                     ""action"": ""Pit Limiter"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cb8dacb7-124e-458e-9f49-79a58d24599e"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Reset"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -291,6 +311,7 @@ public partial class @KeyboardController: IInputActionCollection2, IDisposable
         m_vehicleControls_GearDown = m_vehicleControls.FindAction("GearDown", throwIfNotFound: true);
         m_vehicleControls_DRS = m_vehicleControls.FindAction("DRS", throwIfNotFound: true);
         m_vehicleControls_PitLimiter = m_vehicleControls.FindAction("Pit Limiter", throwIfNotFound: true);
+        m_vehicleControls_Reset = m_vehicleControls.FindAction("Reset", throwIfNotFound: true);
     }
 
     ~@KeyboardController()
@@ -379,6 +400,7 @@ public partial class @KeyboardController: IInputActionCollection2, IDisposable
     private readonly InputAction m_vehicleControls_GearDown;
     private readonly InputAction m_vehicleControls_DRS;
     private readonly InputAction m_vehicleControls_PitLimiter;
+    private readonly InputAction m_vehicleControls_Reset;
     /// <summary>
     /// Provides access to input actions defined in input action map "vehicleControls".
     /// </summary>
@@ -422,6 +444,10 @@ public partial class @KeyboardController: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "vehicleControls/PitLimiter".
         /// </summary>
         public InputAction @PitLimiter => m_Wrapper.m_vehicleControls_PitLimiter;
+        /// <summary>
+        /// Provides access to the underlying input action "vehicleControls/Reset".
+        /// </summary>
+        public InputAction @Reset => m_Wrapper.m_vehicleControls_Reset;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -472,6 +498,9 @@ public partial class @KeyboardController: IInputActionCollection2, IDisposable
             @PitLimiter.started += instance.OnPitLimiter;
             @PitLimiter.performed += instance.OnPitLimiter;
             @PitLimiter.canceled += instance.OnPitLimiter;
+            @Reset.started += instance.OnReset;
+            @Reset.performed += instance.OnReset;
+            @Reset.canceled += instance.OnReset;
         }
 
         /// <summary>
@@ -507,6 +536,9 @@ public partial class @KeyboardController: IInputActionCollection2, IDisposable
             @PitLimiter.started -= instance.OnPitLimiter;
             @PitLimiter.performed -= instance.OnPitLimiter;
             @PitLimiter.canceled -= instance.OnPitLimiter;
+            @Reset.started -= instance.OnReset;
+            @Reset.performed -= instance.OnReset;
+            @Reset.canceled -= instance.OnReset;
         }
 
         /// <summary>
@@ -603,5 +635,12 @@ public partial class @KeyboardController: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnPitLimiter(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Reset" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnReset(InputAction.CallbackContext context);
     }
 }

@@ -3,6 +3,8 @@ using Unity.Netcode;
 using TMPro;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
+using Unity.Netcode.Transports.UTP;
 
 public class RaceManager : NetworkBehaviour
 {
@@ -29,6 +31,11 @@ public class RaceManager : NetworkBehaviour
             EventService.RaceReady += StartRaceRpc;
         }
 
+        if(IsHost)
+        {
+            EventService.RestartRace += RestartRaceCheck;
+        }
+
         if (!IsServer)
         {
             enabled = false;
@@ -45,6 +52,11 @@ public class RaceManager : NetworkBehaviour
             EventService.PlayerMoved -= PlayerMoved;
             EventService.PlayerPenalty -= PlayerPenaltyGiven;
             EventService.RaceReady -= StartRaceRpc;
+        }
+
+        if(IsHost)
+        {
+            EventService.RestartRace -= RestartRaceCheck;
         }
         base.OnNetworkDespawn();
     }
@@ -84,6 +96,32 @@ public class RaceManager : NetworkBehaviour
 
         leaderBoardPosition.StartRaceServerRpc();
         StartCoroutine(StartRaceCoroutine());
+    }
+
+    private void RestartRaceCheck()
+    {
+        if(DebugManager.Instance.ShouldDebugRace())
+            CustomLogger.Log("RestartRaceCheck called");
+        if(!IsHost) return;
+        if(DebugManager.Instance.ShouldDebugRace())
+            CustomLogger.Log("RestartRaceCheck called on host");
+
+        RestartRaceRpc();
+    }
+
+    [Rpc(SendTo.Server)]
+    private void RestartRaceRpc()
+    {
+        if(DebugManager.Instance.ShouldDebugRace())
+            CustomLogger.Log("RestartRaceRpc called");
+        if(!IsServer) return;
+        if(DebugManager.Instance.ShouldDebugRace())
+            CustomLogger.Log("RestartRaceRpc executed on server");
+
+        NetworkLaunchManager.Instance.SetShouldStartSingleplayer(true);
+
+        NetworkUtils.StopHost();
+        StartCoroutine(CustomSceneUtils.LoadScene(SceneManager.GetActiveScene().name));
     }
 
     private void OnCurrentLapChanged(int oldLap, int newLap)

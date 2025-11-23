@@ -172,6 +172,11 @@ public class InputController : NetworkBehaviour
             }
         }
 
+        if (keyboardControls.vehicleControls.Reset.triggered && GameManager.Instance.ResetButtonEnabled())
+        {
+            EventService.InvokeRestartRace();
+        }
+
         if (keyboardControls.vehicleControls.NextCam.triggered)
         {
             cameraController.NextCamera();

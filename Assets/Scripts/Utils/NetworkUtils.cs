@@ -16,6 +16,9 @@ public class NetworkUtils
 {
     public static async Task<string> StartMultiplayerHost()
     {
+        if(DebugManager.Instance.ShouldDebugNetwork())
+            CustomLogger.Log("Starting Multiplayer");
+
         await UnityServices.InitializeAsync();
         if (!AuthenticationService.Instance.IsSignedIn)
         {
@@ -33,6 +36,9 @@ public class NetworkUtils
 
     public static void StartSingleplayerHost()
     {
+        if(DebugManager.Instance.ShouldDebugNetwork())
+            CustomLogger.Log("Starting Singleplayer");
+
         NetworkManager.Singleton.GetComponent<UnityTransport>().SetConnectionData(NetworkEndpoint.Parse("127.0.0.1", 7777));
         NetworkManager.Singleton.StartHost();
     }
