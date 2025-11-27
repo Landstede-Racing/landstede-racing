@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Netcode;
 using Unity.VectorGraphics;
 using UnityEngine;
 
@@ -11,7 +12,7 @@ public enum Page
     Temps
 }
 
-public class MfdController : MonoBehaviour
+public class MfdController : NetworkBehaviour
 {
     public GameObject optionsMfd;
     public GameObject pitMfd;
@@ -27,13 +28,33 @@ public class MfdController : MonoBehaviour
     public GameObject pagesBackground;
     private Vector3 pagesBackgroundStartPosition;
 
-    private Dictionary<GameObject, DamageablePart> mfdPartMapDamage = new();
+    private Dictionary<GameObject, Location> mfdPartMapDamage = new();
     private Dictionary<GameObject, DamageablePart> mfdPartMapHeat = new();
     private bool wasReleased;
     private int selectedStepper = 0;
 
     private bool init;
     private bool initStarted;
+
+    public override void OnNetworkSpawn()
+    {
+        if(IsOwner)
+        {
+            EventService.PartDamaged += OnPartDamaged;
+        }
+
+        base.OnNetworkSpawn();
+    }
+
+    public override void OnNetworkDespawn()
+    {
+        if(IsOwner)
+        {
+            EventService.PartDamaged -= OnPartDamaged;
+        }
+
+        base.OnNetworkDespawn();
+    }
 
     IEnumerator Init()
     {
@@ -280,5 +301,15 @@ public class MfdController : MonoBehaviour
         if(currentPage > pages.Length) currentPage = 0;
 
         UpdateUI();
+    }
+
+    void OnPartDamaged(Location location, float maxDamage, float currentDamage)
+    {
+        if(DebugManager.Instance.ShouldDebugCar())
+            CustomLogger.Log($"OnPartDamaged called for {location}, with maxDamage {maxDamage} and currentDamage {currentDamage}");
+        
+        mfdPartMapDamage.Where((kv) => kv.Value == location);
+        
+        
     }
 }

@@ -4,7 +4,7 @@ using Unity.Netcode;
 using UnityEngine;
 
 [RequireComponent(typeof(MeshCollider))]
-public class DamageablePart : MonoBehaviour
+public class DamageablePart : NetworkBehaviour
 {
     public float maxDamage = 100;
     public float currentDamage;
@@ -34,6 +34,8 @@ public class DamageablePart : MonoBehaviour
         if (currentDamage < maxDamage)
         {
             currentDamage += (float)collision.impulse.magnitude * damageMultiplier;
+            EventService.InvokePartDamaged(part.location, maxDamage, currentDamage);
+
             if (subParts != null && subParts.Count > 0)
             {
                 float damagePercent = currentDamage / maxDamage;
