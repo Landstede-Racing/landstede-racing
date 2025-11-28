@@ -11,7 +11,7 @@ public enum UpgradeCategory {
 public class Upgrade
 {
     public static readonly Upgrade GearBoxLubrication = new() {
-        location = Location.Gearbox,
+        location = Locations.Gearbox,
         name = "Gear Box Lubrication",
         description = "Remind engineers to lubricate the gearbox before every race.",
         cost = 750,
@@ -22,7 +22,7 @@ public class Upgrade
     };
 
     public static readonly Upgrade TurboBoost = new() {
-        location = Location.TurboCharger,
+        location = Locations.TurboCharger,
         name = "Turbo Boost",
         description = "Install a turbo boost for those 'Fast and Furious' moments.",
         cost = 1500,
@@ -33,7 +33,7 @@ public class Upgrade
     };
 
     public static readonly Upgrade FeatherWeight = new() {
-        location = Location.Body,
+        location = Locations.Body,
         name = "Feather Weight",
         description = "Replace heavy parts with feathers. Just kidding, but it's really light!",
         cost = 1200,

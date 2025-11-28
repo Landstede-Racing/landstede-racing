@@ -20,6 +20,8 @@ public static class EventService
     public static event Action PitStopStart;
     public static event Action PitStopEnd;
 
+    public static event Action<Location, float, float> PartDamaged;
+
     public static void InvokeRaceStarted()
     {
         EventCalled("RaceStarted");
@@ -114,6 +116,12 @@ public static class EventService
     {
         EventCalled("PitStopEnd");
         PitStopEnd?.Invoke();
+    }
+
+    public static void InvokePartDamaged(Location location, float maxDamage, float currentDamage)
+    {
+        EventCalled("PartDamaged");
+        PartDamaged?.Invoke(location, maxDamage, currentDamage);
     }
 
     private static void EventCalled(string eventName)
