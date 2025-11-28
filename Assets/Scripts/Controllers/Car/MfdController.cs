@@ -28,7 +28,8 @@ public class MfdController : NetworkBehaviour
     public GameObject pagesBackground;
     private Vector3 pagesBackgroundStartPosition;
 
-    private Dictionary<GameObject, Location> mfdPartMapDamage = new();
+    private Dictionary<Location, float> locationDamageMap = new();
+    private Dictionary<MFDPart, Location> mfdPartMapDamage = new();
     private Dictionary<GameObject, DamageablePart> mfdPartMapHeat = new();
     private bool wasReleased;
     private int selectedStepper = 0;
@@ -67,17 +68,35 @@ public class MfdController : NetworkBehaviour
             for (int i = 0; i < damageMfd.transform.childCount; i++)
             {
                 GameObject mfdpart = damageMfd.transform.GetChild(i).gameObject;
-                DamageablePart damageablePart = Array.Find(damageableParts, dmgblePart => dmgblePart.part.name.Replace(" ", "") == mfdpart.name);
+                MFDPart part = mfdpart.GetComponent<MFDPart>();
+                
+                if(!part.ShouldUpdate()) continue;
 
-                if (damageablePart != null)
+                IEnumerable<Location> locations = Locations.Values.Where((l) => l.name == mfdpart.name);
+
+                if(locations.Count() <= 0)
                 {
-                    mfdPartMapDamage.Add(mfdpart, damageablePart);
+                    if(DebugManager.Instance.ShouldDebugCar())
+                        CustomLogger.Log("No Location found for " + mfdpart.name);
+                    continue;
+                }
+
+                if(DebugManager.Instance.ShouldDebugCar())
+                        CustomLogger.Log("Found Location for " + mfdpart.name);
+
+                Location location = locations.First();
+
+                if (location != null)
+                {
+                    mfdPartMapDamage.Add(part, location);
+                    // #54E341
+                    mfdpart.GetComponent<SVGImage>().color = new(84, 227, 65);
                 }
                 else
                 {
                     if(DebugManager.Instance.ShouldDebugCar())
-                        CustomLogger.Log("No DamageablePart found for " + mfdpart.name);
-                }
+                        CustomLogger.Log("No Location found for " + mfdpart.name);
+                }   
             }
 
             for (int i = 0; i < heatMfd.transform.childCount; i++)
@@ -120,12 +139,17 @@ public class MfdController : NetworkBehaviour
             MFDPageIndicator damagePageIndicator = pagesIndicator.transform.GetChild(2).GetComponent<MFDPageIndicator>();
             MFDPageIndicator tempsPageIndicator = pagesIndicator.transform.GetChild(3).GetComponent<MFDPageIndicator>();
 
-            foreach (KeyValuePair<GameObject, DamageablePart> entry in mfdPartMapDamage)
+            foreach (KeyValuePair<MFDPart, Location> entry in mfdPartMapDamage)
             {
-                GameObject mfdPart = entry.Key;
-                DamageablePart damageablePart = entry.Value;
+                GameObject mfdPart = entry.Key.gameObject;
+                Location location = entry.Value;
 
-                int damagePercentage = (int)((int)damageablePart.currentDamage / damageablePart.maxDamage * 100);
+                var percentages = locationDamageMap.Where((l) => l.Key == location);
+
+                var damagePercentage = 0f;
+
+                if(percentages.Count() > 0)
+                    damagePercentage = percentages.First().Value;
 
                 var gradient = new Gradient();
                 var colorKeys = new GradientColorKey[3];
@@ -306,10 +330,8 @@ public class MfdController : NetworkBehaviour
     void OnPartDamaged(Location location, float maxDamage, float currentDamage)
     {
         if(DebugManager.Instance.ShouldDebugCar())
-            CustomLogger.Log($"OnPartDamaged called for {location}, with maxDamage {maxDamage} and currentDamage {currentDamage}");
+            CustomLogger.Log($"OnPartDamaged called for {location.name}, with maxDamage {maxDamage} and currentDamage {currentDamage}");
         
-        mfdPartMapDamage.Where((kv) => kv.Value == location);
-        
-        
+        locationDamageMap[location] = (int)((int)currentDamage / maxDamage * 100);
     }
 }

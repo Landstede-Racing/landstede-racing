@@ -31,11 +31,11 @@ public class DamageablePart : NetworkBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
+        var newDamage = currentDamage + (float)collision.impulse.magnitude * damageMultiplier;
+        currentDamage = Math.Min(newDamage, maxDamage);
+        EventService.InvokePartDamaged(part.location, maxDamage, currentDamage);
         if (currentDamage < maxDamage)
         {
-            currentDamage += (float)collision.impulse.magnitude * damageMultiplier;
-            EventService.InvokePartDamaged(part.location, maxDamage, currentDamage);
-
             if (subParts != null && subParts.Count > 0)
             {
                 float damagePercent = currentDamage / maxDamage;
@@ -43,9 +43,9 @@ public class DamageablePart : NetworkBehaviour
 
                 for (int i = 0; i < subPartsToDestroy; i++)
                 {
-                    if (subParts[i] != null)
+                    if(i < subParts.Count)
                     {
-                        DestroySubPart(subParts[i], collision);
+                        DestroySubPart(subParts[i], collision);   
                     }
                 }
             }
