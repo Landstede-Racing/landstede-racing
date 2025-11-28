@@ -1512,10 +1512,9 @@ GameObject:
   - component: {fileID: 3333504909439399730}
   - component: {fileID: 3090647078468403245}
   - component: {fileID: 3433552107154145746}
-  - component: {fileID: 3143820332690382494}
   - component: {fileID: 862497523701226833}
   m_Layer: 7
-  m_Name: Back Right Wheel
+  m_Name: Rear Right Wheel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1554,6 +1553,9 @@ MonoBehaviour:
   damageablePart: {fileID: 3090647078468403245}
   track: {fileID: 0}
   WheelCollider: {fileID: 0}
+  currentTireWear: 0
+  maxTireWear: 250
+  wearMultiplier: 0.001
   steerable: 0
   motorized: 1
 --- !u!146 &2058797745578961923
@@ -1655,6 +1657,7 @@ MonoBehaviour:
   part: {fileID: 3333504909439399730}
   subParts: []
   flyingPartPrefab: {fileID: 0}
+  useDamage: 0
 --- !u!114 &3433552107154145746
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1669,30 +1672,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Rear Right Wheel
   description: Spinny boi
---- !u!114 &3143820332690382494
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 505271585001470449}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c07dd2d0fe5127649bd172d77a71e526, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowTopMostFoldoutHeaderGroup: 1
-  maxDamage: 250
-  currentDamage: 0
-  damageMultiplier: 1e-10
-  temperature: 0
-  optimalTemperature: 0
-  temperatureMultiplier: 0.001
-  coollingRate: 0.001
-  shouldDestroy: 0
-  part: {fileID: 3433552107154145746}
-  subParts: []
-  flyingPartPrefab: {fileID: 0}
 --- !u!114 &862497523701226833
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8527,7 +8506,6 @@ GameObject:
   - component: {fileID: 1172927495859786064}
   - component: {fileID: 633318558758251926}
   - component: {fileID: 290428182862698341}
-  - component: {fileID: 521080227407604952}
   - component: {fileID: 312618717055711937}
   m_Layer: 7
   m_Name: Front Left Wheel
@@ -8591,6 +8569,9 @@ MonoBehaviour:
   damageablePart: {fileID: 633318558758251926}
   track: {fileID: 0}
   WheelCollider: {fileID: 0}
+  currentTireWear: 0
+  maxTireWear: 250
+  wearMultiplier: 0.001
   steerable: 1
   motorized: 0
 --- !u!146 &3007971250514406428
@@ -8670,6 +8651,7 @@ MonoBehaviour:
   part: {fileID: 1172927495859786064}
   subParts: []
   flyingPartPrefab: {fileID: 0}
+  useDamage: 0
 --- !u!114 &290428182862698341
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8684,30 +8666,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Front Left Wheel
   description: Die wielen van de bus gaan rond en rond
---- !u!114 &521080227407604952
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3774295948036033494}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c07dd2d0fe5127649bd172d77a71e526, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowTopMostFoldoutHeaderGroup: 1
-  maxDamage: 250
-  currentDamage: 0
-  damageMultiplier: 1e-10
-  temperature: 0
-  optimalTemperature: 0
-  temperatureMultiplier: 0.001
-  coollingRate: 0.001
-  shouldDestroy: 0
-  part: {fileID: 290428182862698341}
-  subParts: []
-  flyingPartPrefab: {fileID: 0}
 --- !u!114 &312618717055711937
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10725,10 +10683,9 @@ GameObject:
   - component: {fileID: 3156098214931953653}
   - component: {fileID: 5153200353573358111}
   - component: {fileID: 9051763037474156063}
-  - component: {fileID: 7976341137830473594}
   - component: {fileID: 1206125125902092535}
   m_Layer: 7
-  m_Name: Back Left Wheel
+  m_Name: Rear Left Wheel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10767,6 +10724,9 @@ MonoBehaviour:
   damageablePart: {fileID: 5153200353573358111}
   track: {fileID: 0}
   WheelCollider: {fileID: 0}
+  currentTireWear: 0
+  maxTireWear: 250
+  wearMultiplier: 0.001
   steerable: 0
   motorized: 1
 --- !u!146 &219203317987580215
@@ -10868,6 +10828,7 @@ MonoBehaviour:
   part: {fileID: 3156098214931953653}
   subParts: []
   flyingPartPrefab: {fileID: 0}
+  useDamage: 0
 --- !u!114 &9051763037474156063
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10882,30 +10843,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Rear Left Wheel
   description: Spinny boi go brrr
---- !u!114 &7976341137830473594
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4298156269832733663}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c07dd2d0fe5127649bd172d77a71e526, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowTopMostFoldoutHeaderGroup: 1
-  maxDamage: 250
-  currentDamage: 0
-  damageMultiplier: 1e-10
-  temperature: 0
-  optimalTemperature: 0
-  temperatureMultiplier: 0.001
-  coollingRate: 0.001
-  shouldDestroy: 0
-  part: {fileID: 9051763037474156063}
-  subParts: []
-  flyingPartPrefab: {fileID: 0}
 --- !u!114 &1206125125902092535
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12453,6 +12390,9 @@ MonoBehaviour:
   damageablePart: {fileID: 151886119122660940}
   track: {fileID: 0}
   WheelCollider: {fileID: 0}
+  currentTireWear: 0
+  maxTireWear: 250
+  wearMultiplier: 0.001
   steerable: 1
   motorized: 0
 --- !u!146 &4550048599134935699
@@ -12532,6 +12472,7 @@ MonoBehaviour:
   part: {fileID: 7945674961635588500}
   subParts: []
   flyingPartPrefab: {fileID: 0}
+  useDamage: 0
 --- !u!114 &3151131699009175791
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27084,7 +27025,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dff9685ddfc3b894f9a9c87edf1da108, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MFDPart
-  shouldUpdate: 0
+  shouldUpdate: 1
 --- !u!1001 &878803986793914177
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -28473,7 +28414,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dff9685ddfc3b894f9a9c87edf1da108, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MFDPart
-  shouldUpdate: 0
+  shouldUpdate: 1
 --- !u!1001 &1913335616806838647
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30540,7 +30481,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dff9685ddfc3b894f9a9c87edf1da108, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MFDPart
-  shouldUpdate: 0
+  shouldUpdate: 1
 --- !u!1001 &4327736152841038259
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -33172,7 +33113,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dff9685ddfc3b894f9a9c87edf1da108, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MFDPart
-  shouldUpdate: 0
+  shouldUpdate: 1
 --- !u!224 &7679153021280183269 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: -8524424544509167813, guid: 6c65f0ec5c6931c4ea226531a3df79c0, type: 3}
@@ -34289,6 +34230,7 @@ MonoBehaviour:
   - {fileID: 4257140887435688539}
   - {fileID: 1341657287756720586}
   flyingPartPrefab: {fileID: 2487605772208181821, guid: ce995a7519d61cd44a0048cb7d5c5a2e, type: 3}
+  useDamage: 1
 --- !u!1 &5011492645640188315 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2329511692089818235, guid: 31073083d533471429332d6cc461014a, type: 3}
@@ -34436,6 +34378,7 @@ MonoBehaviour:
   - {fileID: 3860186737424978313}
   - {fileID: 7837670343188044121}
   flyingPartPrefab: {fileID: 2487605772208181821, guid: ce995a7519d61cd44a0048cb7d5c5a2e, type: 3}
+  useDamage: 1
 --- !u!1 &6824903070968683892 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4282533632258855060, guid: 31073083d533471429332d6cc461014a, type: 3}
@@ -34548,6 +34491,7 @@ MonoBehaviour:
   - {fileID: 2760919479334783316}
   - {fileID: 1546319898940931960}
   flyingPartPrefab: {fileID: 2487605772208181821, guid: ce995a7519d61cd44a0048cb7d5c5a2e, type: 3}
+  useDamage: 1
 --- !u!4 &7084947220264462859 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 31073083d533471429332d6cc461014a, type: 3}
