@@ -92,14 +92,10 @@ public class PitController : NetworkBehaviour
         yield return new WaitWhile(() => vehicleController.GetSpeed() > PIT_STOP_SPEED_THRESHOLD);
 
         EventService.InvokePitStopStart();
-        float minStop = 0;
-        float maxStop = 0;
+        float minStop = 3;
+        float maxStop = 5;
         TireCompound newCompound = vehicleController.nextCompound;
-        if (vehicleController.changeTires)
-        {
-            minStop += 3;
-            maxStop += 5;
-        }
+
         if (vehicleController.replaceWing)
         {
             minStop += 3;
@@ -109,8 +105,7 @@ public class PitController : NetworkBehaviour
         float stopLength = Random.Range(minStop, maxStop);
         yield return new WaitForSecondsRealtime(stopLength);
 
-        if (vehicleController.changeTires)
-            vehicleController.SetTires(newCompound);
+        vehicleController.SetTires(newCompound);
 
         if (vehicleController.replaceWing)
         {

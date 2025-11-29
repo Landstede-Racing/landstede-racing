@@ -94,7 +94,6 @@ public class VehicleController : NetworkBehaviour
 
     [Header("Pit")]
     public TireCompound nextCompound = TireCompounds.Medium;
-    public bool changeTires = false;
     public bool replaceWing = false;
 
     Animator animator;
