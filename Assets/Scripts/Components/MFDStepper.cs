@@ -153,7 +153,6 @@ public class MFDStepper : MonoBehaviour
                 break;
             case MFDStepperAction.NEXT_COMPOUND:
                 vehicleController.nextCompound = TireCompounds.Values[option];
-                vehicleController.changeTires = option != vehicleController.frontLeftWheel.tireCompound.index;
                 break;
             case MFDStepperAction.REPAIR_WING:
                 vehicleController.replaceWing = option == 1;

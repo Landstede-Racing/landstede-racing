@@ -20,6 +20,8 @@ public class DamageablePart : NetworkBehaviour
     public List<GameObject> subParts;
     public GameObject flyingPartPrefab;
 
+    [SerializeField] private bool useDamage = true;
+
     void Start()
     {
         // if (part.name == "Rear Left Wheel" || part.name == "Rear Right Wheel" || part.name == "Front Left Wheel" || part.name == "Front Right Wheel")
@@ -32,8 +34,8 @@ public class DamageablePart : NetworkBehaviour
     void OnCollisionEnter(Collision collision)
     {
         var newDamage = currentDamage + (float)collision.impulse.magnitude * damageMultiplier;
-        currentDamage = Math.Min(newDamage, maxDamage);
-        EventService.InvokePartDamaged(part.location, maxDamage, currentDamage);
+        SetDamage(newDamage);
+
         if (currentDamage < maxDamage)
         {
             if (subParts != null && subParts.Count > 0)
@@ -112,5 +114,11 @@ public class DamageablePart : NetworkBehaviour
         {
             part.SetActive(true);
         });
+    }
+
+    public void SetDamage(float newDamage)
+    {
+        currentDamage = Math.Min(newDamage, maxDamage);
+        EventService.InvokePartDamaged(part.location, maxDamage, currentDamage);
     }
 }

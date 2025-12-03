@@ -18,6 +18,11 @@ public class WheelControl : NetworkBehaviour
 
     [HideInInspector] public WheelCollider WheelCollider;
 
+    public float currentTireWear;
+    public float maxTireWear = 250;
+    [SerializeField] private float wearMultiplier = 0.001f;
+    [SerializeField] private float slipWearMultiplier = 0.01f;
+
     // Create properties for the CarControl script
     // (You should enable/disable these via the 
     // Editor Inspector window)
@@ -48,7 +53,7 @@ public class WheelControl : NetworkBehaviour
         wheelModel.transform.position = position;
         wheelModel.transform.rotation = rotation;
 
-        wheelModel.GetComponent<MeshRenderer>().materials[1].SetFloat("_Wear", damageablePart.currentDamage / damageablePart.maxDamage);
+        wheelModel.GetComponent<MeshRenderer>().materials[1].SetFloat("_Wear", currentTireWear / maxTireWear);
 
         // var matsCopy = wheelModel.GetComponent<MeshRenderer>().materials;
         // matsCopy[1].SetFloat("_Wear", damageablePart.currentDamage / damageablePart.maxDamage);
@@ -90,25 +95,24 @@ public class WheelControl : NetworkBehaviour
 
     public void HandleWheelDamage(WheelHit hit, TerrainInfo hitTerrain)
     {
-        if (damageablePart.currentDamage < damageablePart.maxDamage && hit.force > 1400)
+        if (hitTerrain != null && (hit.sidewaysSlip > 1 || hit.forwardSlip > 1) && hit.force > 1400)
         {
-            if (hit.collider.CompareTag("Wall"))
+            var newWear = currentTireWear;
+            if(hit.force > 1400)
             {
-                damageablePart.currentDamage += (hit.force - 1400) * damageablePart.damageMultiplier * 10;
-
-                if (damageablePart.currentDamage >= damageablePart.maxDamage)
-                {
-                    CustomLogger.Log("Here it will fly to the moon");
-                }
+                newWear += (hit.force - 1400) * wearMultiplier * hitTerrain.damageMultiplier * tireCompound.wearRate;   
             }
-            else if (hitTerrain != null)
-            {
-                damageablePart.currentDamage += (hit.force - 1400) * damageablePart.damageMultiplier * hitTerrain.damageMultiplier * tireCompound.wearRate;
+            newWear += Math.Max(hit.sidewaysSlip, hit.forwardSlip) * slipWearMultiplier * hitTerrain.damageMultiplier * tireCompound.wearRate;
+            SetWear(newWear);
+        }
 
-                if (damageablePart.currentDamage >= damageablePart.maxDamage)
-                {
-                    CustomLogger.Log("Here it will break in a less horrible way than the others");
-                }
+        if(hit.force > 3000)
+        {
+            damageablePart.currentDamage += (hit.force - 1400) * damageablePart.damageMultiplier * 10;
+
+            if (damageablePart.currentDamage >= damageablePart.maxDamage)
+            {
+                CustomLogger.Log("Here it will fly to the moon");
             }
         }
     }
@@ -118,10 +122,12 @@ public class WheelControl : NetworkBehaviour
         WheelFrictionCurve newForwardFriction = defaultForwardFriction;
         WheelFrictionCurve newSidewaysFriction = defaultSidewaysFriction;
 
+        var wear = 1 - currentTireWear / maxTireWear * 0.25f;
+
         newForwardFriction.stiffness *= hitTerrain.gripMultiplier;
-        newForwardFriction.stiffness *= tireCompound.grip;
+        newForwardFriction.stiffness *= tireCompound.grip * wear;
         newSidewaysFriction.stiffness *= hitTerrain.gripMultiplier;
-        newSidewaysFriction.stiffness *= tireCompound.grip;
+        newSidewaysFriction.stiffness *= tireCompound.grip * wear;
 
         if (weatherController != null && weatherController.isRaining)
         {
@@ -143,5 +149,16 @@ public class WheelControl : NetworkBehaviour
         wheelModel.GetComponent<MeshRenderer>().materials[0].SetColor("_Tire_Color", tireCompound.color);
         damageablePart.currentDamage = 0;
         damageablePart.temperature = 0; //TODO: Set to default temperature
+        SetWear(0);
+    }
+
+    private void SetWear(float newWear)
+    {
+        currentTireWear = Math.Min(newWear, maxTireWear);
+        
+        if(part.location != null)
+        {
+            EventService.InvokePartDamaged(part.location, maxTireWear, currentTireWear);
+        }
     }
 }
