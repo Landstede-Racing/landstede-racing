@@ -9,7 +9,6 @@ using Unity.Netcode.Transports.UTP;
 public class RaceManager : NetworkBehaviour
 {
     public int lap = 1;
-    public int maxLaps = 3;
     public bool raceStarted = false;
     [SerializeField] private TMP_Text raceLapText;
     [SerializeField] private LeaderBoardPosition leaderBoardPosition;
@@ -18,6 +17,11 @@ public class RaceManager : NetworkBehaviour
     [SerializeField] private Material lightOffMaterial;
     [SerializeField] private AudioSource lightBoopSound;
     [SerializeField] private GameObject startingPositions;
+    [SerializeField] private RaceType raceType;
+    [SerializeField] private int maxLaps;
+    
+    private List<ulong> finishedPlayers = new();
+
     private NetworkVariable<int> currentLap = new NetworkVariable<int>(1, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
     private Dictionary<ulong, List<string>> playerPenalties = new Dictionary<ulong, List<string>>();
     public override void OnNetworkSpawn()
@@ -27,8 +31,10 @@ public class RaceManager : NetworkBehaviour
         if (IsServer)
         {
             EventService.PlayerMoved += PlayerMoved;
+            EventService.PlayerFinishedLap += PlayerFinishedLap;
             EventService.PlayerPenalty += PlayerPenaltyGiven;
             EventService.RaceReady += StartRaceRpc;
+            EventService.SetupRace += SetupRace;
         }
 
         if(IsHost)
@@ -50,8 +56,10 @@ public class RaceManager : NetworkBehaviour
         if (IsServer)
         {
             EventService.PlayerMoved -= PlayerMoved;
+            EventService.PlayerFinishedLap -= PlayerFinishedLap;
             EventService.PlayerPenalty -= PlayerPenaltyGiven;
             EventService.RaceReady -= StartRaceRpc;
+            EventService.SetupRace -= SetupRace;
         }
 
         if(IsHost)
@@ -78,11 +86,42 @@ public class RaceManager : NetworkBehaviour
     {
         if (!IsServer) return;
         var newLap = lap = leaderBoardPosition._players.Count > 0 ? leaderBoardPosition._players[0].playerTimings[^1].Lap : 1;
+
         if (newLap > lap)
         {
             lap = newLap;
             currentLap.Value = lap;
         }
+    }
+
+    private void PlayerFinishedLap(ulong playerId, int lap)
+    {
+        if(!IsServer) return;
+
+        if(lap > maxLaps && !finishedPlayers.Contains(playerId))
+        {
+            finishedPlayers.Add(playerId);
+
+            if(finishedPlayers.Count >= NetworkManager.Singleton.ConnectedClientsIds.Count)
+            {
+                EndRace();
+            }
+
+            PlayerFinishedRpc(playerId, finishedPlayers.Count);
+        }
+
+        if(lap > this.lap)
+        {
+            this.lap = lap;
+            currentLap.Value = lap;
+        }
+    }
+
+    private void SetupRace()
+    {
+        raceType = NetworkLaunchManager.Instance.raceType;
+        maxLaps = NetworkLaunchManager.Instance.raceLaps;
+        NetworkLaunchManager.Instance.Reset();
     }
 
     [Rpc(SendTo.Server)]
@@ -96,6 +135,20 @@ public class RaceManager : NetworkBehaviour
 
         leaderBoardPosition.StartRaceServerRpc();
         StartCoroutine(StartRaceCoroutine());
+    }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    private void PlayerFinishedRpc(ulong playerId, int position)
+    {
+        EventService.InvokePlayerFinished(playerId, position);
+    }
+
+    private void EndRace()
+    {
+        // TODO: Implement
+        //  - Despawn cars
+        //  - Show "podium" (seperate scene or just ui?)
+        EventService.InvokeRaceEnded();
     }
 
     private void RestartRaceCheck()

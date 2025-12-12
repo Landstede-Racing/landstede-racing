@@ -60,9 +60,22 @@ public class PlayerStats : NetworkBehaviour, INetworkSerializeByMemcpy
         playerTimings.Add(playerTiming);
         time = stopwatch.ElapsedMilliseconds;
         totalDriveTime = totalDriveTime + stopwatch.ElapsedMilliseconds;
+
+        if(lapUp)
+        {
+            LapUpRpc(playerTiming.Lap);
+        }
+        
         stopwatch.Restart();
+        
         if(DebugManager.Instance.ShouldDebugRace())
             CustomLogger.Log(playerTimings[playerTimings.Count - 1].NetworkId + ", " + playerTimings[playerTimings.Count - 1].Timing);
+    }
+
+    [Rpc(SendTo.Server)]
+    private void LapUpRpc(int lap)
+    {
+        EventService.InvokePlayerFinishedLap(OwnerClientId, lap);
     }
 
     private static string RandomTire(int tireIndex)

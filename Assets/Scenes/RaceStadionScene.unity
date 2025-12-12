@@ -223,6 +223,8 @@ LineRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -244,6 +246,7 @@ LineRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
@@ -634,6 +637,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   penaltyGo: {fileID: 6854605485419423230, guid: 125c645f653104746be96490ab0eed8c, type: 3}
+  penaltyVisibleTime: 3
+  playerFinishedGo: {fileID: 5596475551274661620, guid: 3c2bbe703f1216144835a26a195ceccc, type: 3}
+  playerFinishedVisibleTime: 3
 --- !u!114 &166269086
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142355,6 +142361,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -142376,6 +142384,7 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
@@ -146080,9 +146089,13 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   wheelModel: {fileID: 0}
   part: {fileID: 0}
-  damagablePart: {fileID: 0}
+  damageablePart: {fileID: 0}
   track: {fileID: 0}
   WheelCollider: {fileID: 0}
+  currentTireWear: 0
+  maxTireWear: 250
+  wearMultiplier: 0.001
+  slipWearMultiplier: 0.01
   steerable: 0
   motorized: 1
 --- !u!1 &3130648273105477825
@@ -146241,9 +146254,13 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   wheelModel: {fileID: 0}
   part: {fileID: 0}
-  damagablePart: {fileID: 0}
+  damageablePart: {fileID: 0}
   track: {fileID: 0}
   WheelCollider: {fileID: 0}
+  currentTireWear: 0
+  maxTireWear: 250
+  wearMultiplier: 0.001
+  slipWearMultiplier: 0.01
   steerable: 1
   motorized: 0
 --- !u!114 &6269536319858267778
@@ -146261,9 +146278,13 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   wheelModel: {fileID: 0}
   part: {fileID: 0}
-  damagablePart: {fileID: 0}
+  damageablePart: {fileID: 0}
   track: {fileID: 0}
   WheelCollider: {fileID: 0}
+  currentTireWear: 0
+  maxTireWear: 250
+  wearMultiplier: 0.001
+  slipWearMultiplier: 0.01
   steerable: 1
   motorized: 0
 --- !u!114 &7393703215166540800
@@ -146281,9 +146302,13 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   wheelModel: {fileID: 0}
   part: {fileID: 0}
-  damagablePart: {fileID: 0}
+  damageablePart: {fileID: 0}
   track: {fileID: 0}
   WheelCollider: {fileID: 0}
+  currentTireWear: 0
+  maxTireWear: 250
+  wearMultiplier: 0.001
+  slipWearMultiplier: 0.01
   steerable: 0
   motorized: 1
 --- !u!64 &7580302742698396904

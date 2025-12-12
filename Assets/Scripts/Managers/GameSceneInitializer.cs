@@ -30,12 +30,10 @@ public class GameSceneInitializer : MonoBehaviour
             if (NetworkLaunchManager.Instance.ShouldStartHost)
             {
                 JoinCode = await NetworkUtils.StartMultiplayerHost();
-                NetworkLaunchManager.Instance.Reset();
             }
             else if (NetworkLaunchManager.Instance.ShouldStartSingleplayer)
             {
                 NetworkUtils.StartSingleplayerHost();
-                NetworkLaunchManager.Instance.Reset();
             }
         }
     }

@@ -7,6 +7,8 @@ public class NetworkLaunchManager : MonoBehaviour
 
     public bool ShouldStartHost { get; private set; }
     public bool ShouldStartSingleplayer { get; private set; }
+    public int raceLaps = 3;
+    public RaceType raceType;
 
     [SerializeField] private GameObject NetworkManagerGO;
 
@@ -36,6 +38,12 @@ public class NetworkLaunchManager : MonoBehaviour
     public void SetShouldStartSingleplayer(bool shouldStartSingleplayer)
     {
         ShouldStartSingleplayer = shouldStartSingleplayer;
+    }
+
+    public void SetRace(RaceType raceType, int maxLaps)
+    {
+        this.raceType = raceType;
+        raceLaps = maxLaps;
     }
 
     public void Reset()

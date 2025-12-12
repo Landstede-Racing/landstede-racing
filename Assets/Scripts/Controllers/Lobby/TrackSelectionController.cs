@@ -26,6 +26,8 @@ public class TrackSelectionController : MonoBehaviour
     private readonly Track[] tracks = new Track[1];
 
     public bool multiplayer = false;
+    public RaceType raceType;
+    public int laps = 0;
 
     void Start()
     {
