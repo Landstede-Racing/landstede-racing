@@ -60,7 +60,7 @@ public static class EventService
 
     public static void InvokePlayerMoved(ulong playerId)
     {
-        EventCalled("PlayerMoved");
+        EventCalled($"PlayerMoved, playerId: {playerId}");
         PlayerMoved?.Invoke(playerId);
     }
 
@@ -72,13 +72,13 @@ public static class EventService
 
     public static void InvokePlayerPenalty(ulong playerId, string penalty)
     {
-        EventCalled("PlayerPenalty");
+        EventCalled($"PlayerPenalty, playerId: {playerId}, penalty: {penalty}");
         PlayerPenalty?.Invoke(playerId, penalty);
     }
 
     public static void InvokePlayerPenaltyGiven(ulong playerId, string penalty)
     {
-        EventCalled("PlayerPenaltyGiven");
+        EventCalled($"PlayerPenaltyGiven, playerId: {playerId}, penalty: {penalty}");
         PlayerPenaltyGiven?.Invoke(playerId, penalty);
     }
 
@@ -90,19 +90,19 @@ public static class EventService
 
     public static void InvokeReceivedJoinCode(string code)
     {
-        EventCalled("ReceivedJoinCode");
+        EventCalled($"ReceivedJoinCode, code: {code}");
         ReceivedJoinCode?.Invoke(code);
     }
 
     public static void InvokeCarEnteredPit(ulong clientId)
     {
-        EventCalled("CarEnteredPit");
+        EventCalled($"CarEnteredPit, clientId: {clientId}");
         CarEnteredPit?.Invoke(clientId);
     }
 
     public static void InvokeCarExitedPit(ulong clientId)
     {
-        EventCalled("CarExitedPit");
+        EventCalled($"CarExitedPit, clientId: {clientId}");
         CarExitedPit?.Invoke(clientId);
     }
 
@@ -120,7 +120,7 @@ public static class EventService
 
     public static void InvokePartDamaged(Location location, float maxDamage, float currentDamage)
     {
-        EventCalled("PartDamaged");
+        EventCalled($"PartDamaged, location: {location.name}, maxDamage: {maxDamage}, currentDamage: {currentDamage}");
         PartDamaged?.Invoke(location, maxDamage, currentDamage);
     }
 
