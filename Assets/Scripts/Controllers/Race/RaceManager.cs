@@ -104,6 +104,8 @@ public class RaceManager : NetworkBehaviour
 
             if(finishedPlayers.Count >= NetworkManager.Singleton.ConnectedClientsIds.Count)
             {
+                if(DebugManager.Instance.ShouldDebugRace())
+                    CustomLogger.Log("All players finished");
                 EndRace();
             }
 
