@@ -51,6 +51,7 @@ public class PlayerStats : NetworkBehaviour, INetworkSerializeByMemcpy
     public void NewTiming(int sectorId, bool lapUp)
     {
         PlayerTiming playerTiming;
+        if(stopwatch.ElapsedMilliseconds < 5) return;
         if (lapUp)
             playerTiming = new PlayerTiming(NetworkObjectId, stopwatch.ElapsedMilliseconds, sectorId,
                 playerTimings[^1].Lap + 1);

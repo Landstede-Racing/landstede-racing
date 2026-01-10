@@ -142578,6 +142578,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1986592601}
     - target: {fileID: 6684428905438018898, guid: cf00d596df1a1444796690d36e8f534a, type: 3}
+      propertyPath: timeTrialEndedPrefab
+      value: 
+      objectReference: {fileID: 3899685046537799161, guid: 0208bb4c6f6b1bb4d9d3e9f8c06277b0, type: 3}
+    - target: {fileID: 6684428905438018898, guid: cf00d596df1a1444796690d36e8f534a, type: 3}
       propertyPath: 'startingLights.Array.data[0]'
       value: 
       objectReference: {fileID: 1984871257}

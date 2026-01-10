@@ -1556,6 +1556,7 @@ MonoBehaviour:
   currentTireWear: 0
   maxTireWear: 250
   wearMultiplier: 0.001
+  slipWearMultiplier: 0.01
   steerable: 0
   motorized: 1
 --- !u!146 &2058797745578961923
@@ -3845,7 +3846,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 3511333484
+  GlobalObjectIdHash: 3933290242
   InScenePlacedSourceGlobalObjectIdHash: 2418212525
   DeferredDespawnTick: 0
   Ownership: 1
@@ -8572,6 +8573,7 @@ MonoBehaviour:
   currentTireWear: 0
   maxTireWear: 250
   wearMultiplier: 0.001
+  slipWearMultiplier: 0.01
   steerable: 1
   motorized: 0
 --- !u!146 &3007971250514406428
@@ -10727,6 +10729,7 @@ MonoBehaviour:
   currentTireWear: 0
   maxTireWear: 250
   wearMultiplier: 0.001
+  slipWearMultiplier: 0.01
   steerable: 0
   motorized: 1
 --- !u!146 &219203317987580215
@@ -12393,6 +12396,7 @@ MonoBehaviour:
   currentTireWear: 0
   maxTireWear: 250
   wearMultiplier: 0.001
+  slipWearMultiplier: 0.01
   steerable: 1
   motorized: 0
 --- !u!146 &4550048599134935699
@@ -34763,7 +34767,6 @@ MonoBehaviour:
   rpmTextWheel: {fileID: 1664151160878603964}
   hud: {fileID: 7248758638893445674}
   damageableParts: []
-  changeTires: 0
   replaceWing: 0
   m_IsEngineRunning:
     m_InternalValue: 0

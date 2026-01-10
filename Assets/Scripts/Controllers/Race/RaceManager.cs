@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using Unity.Netcode.Transports.UTP;
+using System;
 
 public class RaceManager : NetworkBehaviour
 {
@@ -19,6 +20,9 @@ public class RaceManager : NetworkBehaviour
     [SerializeField] private GameObject startingPositions;
     [SerializeField] private RaceType raceType;
     [SerializeField] private int maxLaps;
+
+    [SerializeField] private GameObject timeTrialEndedPrefab;
+    [SerializeField] private GameObject raceEndedPrefab;
     
     private List<ulong> finishedPlayers = new();
 
@@ -98,18 +102,23 @@ public class RaceManager : NetworkBehaviour
     {
         if(!IsServer) return;
 
-        if(lap > maxLaps && !finishedPlayers.Contains(playerId))
+        if(lap > maxLaps)
         {
-            finishedPlayers.Add(playerId);
-
-            if(finishedPlayers.Count >= NetworkManager.Singleton.ConnectedClientsIds.Count)
+            if(!finishedPlayers.Contains(playerId))
             {
-                if(DebugManager.Instance.ShouldDebugRace())
-                    CustomLogger.Log("All players finished");
-                EndRace();
-            }
+                finishedPlayers.Add(playerId);
 
-            PlayerFinishedRpc(playerId, finishedPlayers.Count);
+                if(finishedPlayers.Count >= NetworkManager.Singleton.ConnectedClientsIds.Count)
+                {
+                    if(DebugManager.Instance.ShouldDebugRace())
+                        CustomLogger.Log("All players finished");
+                    EndRace();
+                }
+
+                PlayerFinishedRpc(playerId, finishedPlayers.Count);
+            }
+            
+            return;
         }
 
         if(lap > this.lap)
@@ -150,7 +159,20 @@ public class RaceManager : NetworkBehaviour
         // TODO: Implement
         //  - Despawn cars
         //  - Show "podium" (seperate scene or just ui?)
-        EventService.InvokeRaceEnded();
+        var _players = leaderBoardPosition._players;
+
+        Dictionary<int, PlayerInfo> playerInfoDictionary = new();
+        
+        for (int i = 0; i < finishedPlayers.Count; i++)
+        {
+            var player = finishedPlayers[i];
+
+            playerInfoDictionary[i] = PlayerInfoUtils.StatsToInfo(_players.Find((playerStat) => playerStat.OwnerClientId == player)); 
+        }
+
+        OnRaceEnded(raceType, playerInfoDictionary);
+
+        EventService.InvokeRaceEnded(raceType, playerInfoDictionary);
     }
 
     private void RestartRaceCheck()
@@ -242,6 +264,48 @@ public class RaceManager : NetworkBehaviour
         }
     }
 
+    private void OnRaceEnded(RaceType raceType, Dictionary<int, PlayerInfo> players)
+    {
+        switch (raceType)
+        {
+            case RaceType.Race:
+                ShowRaceEndedUI(players);
+                break;
+
+            case RaceType.TimeTrial:
+                ShowTimeTrialEndedUI(players);
+                break;
+
+            default:
+                ShowRaceEndedUI(players);
+                break;
+        }
+    }
+
+    private void ShowRaceEndedUI(Dictionary<int, PlayerInfo> players)
+    {
+        
+    }
+
+    private void ShowTimeTrialEndedUI(Dictionary<int, PlayerInfo> players)
+    {
+        if(!IsClient) return;
+        var timeTrialEndedGo = Instantiate(timeTrialEndedPrefab, gameObject.transform);
+
+        var texts = timeTrialEndedGo.GetComponentsInChildren<TMP_Text>();
+        foreach (var text in texts)
+        {
+            if (text.name == "LapTime")
+
+            {
+                var lapTime = TimeSpan.FromMilliseconds(players[0].lapTime).ToString(@"mm\:ss\.fff");
+                text.text = $"Lap Time: {lapTime}";
+            }
+        }
+    }
+
+
+
     [Rpc(SendTo.ClientsAndHost)]
     private void RaceCountdownStartedClientRpc()
     {
@@ -300,4 +364,7 @@ public class RaceManager : NetworkBehaviour
             CustomLogger.LogError($"Player object for client {clientId} not found.");
         }
     }
+
+
+
 }

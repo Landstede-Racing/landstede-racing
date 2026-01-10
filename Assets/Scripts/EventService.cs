@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public static class EventService
@@ -8,7 +9,7 @@ public static class EventService
     public static event Action<ulong, int> PlayerFinishedLap;
     public static event Action RaceStarted;
     public static event Action CountdownStarted;
-    public static event Action RaceEnded;
+    public static event Action<RaceType, Dictionary<int, PlayerInfo>> RaceEnded;
     public static event Action RaceReady;
     public static event Action RestartRace;
     public static event Action SetupRace;
@@ -36,10 +37,10 @@ public static class EventService
         CountdownStarted?.Invoke();
     }
 
-    public static void InvokeRaceEnded()
+    public static void InvokeRaceEnded(RaceType raceType, Dictionary<int, PlayerInfo> players)
     {
         EventCalled("RaceEnded");
-        RaceEnded?.Invoke();
+        RaceEnded?.Invoke(raceType, players);
     }
 
     public static void InvokeRaceReady()
