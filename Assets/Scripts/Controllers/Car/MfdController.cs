@@ -323,6 +323,7 @@ public class MfdController : NetworkBehaviour
     {
         currentPage++;
         if(currentPage > pages.Length) currentPage = 0;
+        selectedStepper = 0;
 
         UpdateUI();
     }
