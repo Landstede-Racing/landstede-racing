@@ -114,6 +114,7 @@ public class VehicleController : NetworkBehaviour
         if (IsOwner)
         {
             EventService.PlayerPlaced += FreezeRigidBody;
+            EventService.RaceEnded += OnRaceEnded;
 
             var raceManager = FindFirstObjectByType<RaceManager>();
             if (raceManager != null)
@@ -590,6 +591,14 @@ public class VehicleController : NetworkBehaviour
         else
         {
             StartCoroutine(SetColliderCoroutine());
+        }
+    }
+
+    private void OnRaceEnded(RaceType raceType, Dictionary<int, PlayerInfo> players)
+    {
+        if(IsOwner)
+        {
+            Destroy(gameObject);
         }
     }
 

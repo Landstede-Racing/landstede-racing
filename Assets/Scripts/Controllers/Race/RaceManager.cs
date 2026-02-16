@@ -20,9 +20,6 @@ public class RaceManager : NetworkBehaviour
     [SerializeField] private GameObject startingPositions;
     [SerializeField] private RaceType raceType;
     [SerializeField] private int maxLaps;
-
-    [SerializeField] private GameObject timeTrialEndedPrefab;
-    [SerializeField] private GameObject raceEndedPrefab;
     
     private List<ulong> finishedPlayers = new();
 
@@ -170,8 +167,6 @@ public class RaceManager : NetworkBehaviour
             playerInfoDictionary[i] = PlayerInfoUtils.StatsToInfo(_players.Find((playerStat) => playerStat.OwnerClientId == player)); 
         }
 
-        OnRaceEnded(raceType, playerInfoDictionary);
-
         EventService.InvokeRaceEnded(raceType, playerInfoDictionary);
     }
 
@@ -263,48 +258,6 @@ public class RaceManager : NetworkBehaviour
             PlayerPenaltyGivenClientRpc(playerId, penalty);
         }
     }
-
-    private void OnRaceEnded(RaceType raceType, Dictionary<int, PlayerInfo> players)
-    {
-        switch (raceType)
-        {
-            case RaceType.Race:
-                ShowRaceEndedUI(players);
-                break;
-
-            case RaceType.TimeTrial:
-                ShowTimeTrialEndedUI(players);
-                break;
-
-            default:
-                ShowRaceEndedUI(players);
-                break;
-        }
-    }
-
-    private void ShowRaceEndedUI(Dictionary<int, PlayerInfo> players)
-    {
-        
-    }
-
-    private void ShowTimeTrialEndedUI(Dictionary<int, PlayerInfo> players)
-    {
-        if(!IsClient) return;
-        var timeTrialEndedGo = Instantiate(timeTrialEndedPrefab, gameObject.transform);
-
-        var texts = timeTrialEndedGo.GetComponentsInChildren<TMP_Text>();
-        foreach (var text in texts)
-        {
-            if (text.name == "LapTime")
-
-            {
-                var lapTime = TimeSpan.FromMilliseconds(players[0].lapTime).ToString(@"mm\:ss\.fff");
-                text.text = $"Lap Time: {lapTime}";
-            }
-        }
-    }
-
-
 
     [Rpc(SendTo.ClientsAndHost)]
     private void RaceCountdownStartedClientRpc()
