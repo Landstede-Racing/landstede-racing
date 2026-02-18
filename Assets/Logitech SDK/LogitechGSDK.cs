@@ -495,7 +495,7 @@ public class LogitechGSDK
         }
         catch (ArgumentException)
         {
-            CustomLogger.Log("Exception catched");
+            Debug.Log("Exception catched");
         }
 
         return ret;
