@@ -145,6 +145,7 @@ public class VehicleController : NetworkBehaviour
         if (IsOwner)
         {
             EventService.PlayerPlaced -= FreezeRigidBody;
+            EventService.RaceEnded -= OnRaceEnded;
         }
         m_IsEngineRunning.OnValueChanged -= IsEngineRunningChanged;
         m_CurrentEngineRPM.OnValueChanged -= CurrentEngineRPMChanged;
@@ -197,6 +198,8 @@ public class VehicleController : NetworkBehaviour
 
         UpgradeController.ApplyUpgrades(this);
     }
+
+    
 
     public void FixedUpdate()
     {
@@ -598,8 +601,14 @@ public class VehicleController : NetworkBehaviour
     {
         if(IsOwner)
         {
-            Destroy(gameObject);
+            OnRaceEndedRpc();
         }
+    }
+
+    [Rpc(SendTo.Server)]
+    private void OnRaceEndedRpc()
+    {
+        Destroy(gameObject);
     }
 
     private IEnumerator SetColliderCoroutine()

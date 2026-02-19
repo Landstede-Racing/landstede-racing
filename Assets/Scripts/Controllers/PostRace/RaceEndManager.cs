@@ -8,11 +8,13 @@ public class RaceEndManager : NetworkBehaviour
 {
     [SerializeField] private GameObject timeTrialEndedPrefab;
     [SerializeField] private GameObject raceEndedPrefab;
+    [SerializeField] private GameObject finishCamera;
 
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
         EventService.RaceEnded += OnRaceEnded;
+        finishCamera.SetActive(false);
     }
 
     public override void OnNetworkDespawn()
@@ -37,6 +39,8 @@ public class RaceEndManager : NetworkBehaviour
                 ShowRaceEndedUI(players);
                 break;
         }
+
+        finishCamera.SetActive(true);
     }
 
     private void ShowRaceEndedUI(Dictionary<int, PlayerInfo> players)

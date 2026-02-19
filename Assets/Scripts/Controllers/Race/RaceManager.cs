@@ -164,7 +164,7 @@ public class RaceManager : NetworkBehaviour
         {
             var player = finishedPlayers[i];
 
-            playerInfoDictionary[i] = PlayerInfoUtils.StatsToInfo(_players.Find((playerStat) => playerStat.OwnerClientId == player)); 
+            playerInfoDictionary[i] = PlayerInfoUtils.StatsToInfo(_players.Find((playerStat) => playerStat.OwnerClientId == player));
         }
 
         EventService.InvokeRaceEnded(raceType, playerInfoDictionary);
