@@ -48,6 +48,8 @@ public class PlayerStats : NetworkBehaviour, INetworkSerializeByMemcpy
     //     // CustomLogger.Log(playerTimings[playerTimings.Count - 1].NetworkId + ", " + playerTimings[playerTimings.Count - 1].Timing);
     // }
 
+    // TODO: Fix finish sometimes triggering twice
+
     public void NewTiming(int sectorId, bool lapUp)
     {
         PlayerTiming playerTiming;
