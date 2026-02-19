@@ -47,9 +47,7 @@ public class PlayerStats : NetworkBehaviour, INetworkSerializeByMemcpy
     //     totalDriveTime = totalDriveTime + stopwatch.ElapsedMilliseconds;
     //     // CustomLogger.Log(playerTimings[playerTimings.Count - 1].NetworkId + ", " + playerTimings[playerTimings.Count - 1].Timing);
     // }
-
-    // TODO: Fix finish sometimes triggering twice
-
+    
     public void NewTiming(int sectorId, bool lapUp)
     {
         PlayerTiming playerTiming;
