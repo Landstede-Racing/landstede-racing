@@ -605,7 +605,7 @@ public class VehicleController : NetworkBehaviour
         }
     }
 
-    [Rpc(SendTo.Server)]
+    [Rpc(SendTo.Everyone)]
     private void OnRaceEndedRpc()
     {
         Destroy(gameObject);

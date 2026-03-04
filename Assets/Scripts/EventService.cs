@@ -69,7 +69,10 @@ public static class EventService
 
     public static void InvokePlayerMoved(ulong playerId)
     {
-        EventCalled($"PlayerMoved, playerId: {playerId}");
+        if(!DebugManager.Instance.ShouldIgnorePlayerMoveEvent())
+        {
+            EventCalled($"PlayerMoved, playerId: {playerId}");
+        }
         PlayerMoved?.Invoke(playerId);
     }
 

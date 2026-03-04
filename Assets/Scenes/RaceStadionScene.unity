@@ -143392,7 +143392,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RaceEndManager
   ShowTopMostFoldoutHeaderGroup: 1
   timeTrialEndedPrefab: {fileID: 3899685046537799161, guid: 0208bb4c6f6b1bb4d9d3e9f8c06277b0, type: 3}
-  raceEndedPrefab: {fileID: 0}
+  raceEndedPrefab: {fileID: 3676958162166120138, guid: 21c24b4504793b640bffa29ac608ae40, type: 3}
+  leaderboardEntryPrefab: {fileID: 384906435617500094, guid: 5043288e4a7ff4546a02117379f829b0, type: 3}
   finishCamera: {fileID: 1285485311}
 --- !u!4 &628207263 stripped
 Transform:

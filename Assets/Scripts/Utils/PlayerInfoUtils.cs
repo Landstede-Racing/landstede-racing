@@ -8,6 +8,6 @@ public class PlayerInfoUtils
         PlayerTiming lastTiming = player.playerTimings[^1];
         float currentLapTime = player.playerTimings.FindAll((t) => t.Lap == lastTiming.Lap).Sum((t) => t.Timing);
         
-        return new PlayerInfo(player.position, player.name, lastTiming.Timing, player.tire, lastTiming.Lap, currentLapTime);
+        return new PlayerInfo(player.position, player.name, lastTiming.Timing, player.tire, lastTiming.Lap, currentLapTime, player.totalDriveTime);
     }
 }

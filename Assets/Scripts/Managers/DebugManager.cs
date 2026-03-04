@@ -5,6 +5,7 @@ public class DebugManager : MonoBehaviour
     public static DebugManager Instance { get; private set; }
 
     [SerializeField] private bool DebugEvents = false;
+    [SerializeField] private bool IgnorePlayerMovedEvent = false;
     [SerializeField] private bool DebugAerodynamics = false;
     [SerializeField] private bool DebugRace = false;
     [SerializeField] private bool DebugNetwork = false;
@@ -27,6 +28,11 @@ public class DebugManager : MonoBehaviour
     public bool ShouldDebugEvents()
     {
         return DebugEvents;
+    }
+
+    public bool ShouldIgnorePlayerMoveEvent()
+    {
+        return IgnorePlayerMovedEvent;
     }
 
     public bool ShouldDebugAerodynamics()

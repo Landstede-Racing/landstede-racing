@@ -7910,9 +7910,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ffd87addfb27ad439a06f480f8ad77f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DebugManager
-  DebugEvents: 0
+  DebugEvents: 1
+  IgnorePlayerMovedEvent: 1
   DebugAerodynamics: 0
-  DebugRace: 0
+  DebugRace: 1
   DebugNetwork: 0
   DebugCar: 0
   DebugInput: 0

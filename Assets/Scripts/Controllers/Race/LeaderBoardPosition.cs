@@ -72,7 +72,7 @@ public class LeaderBoardPosition : NetworkBehaviour
         PlayerTiming lastTiming = player.playerTimings[^1];
         float currentLapTime = player.playerTimings.FindAll((t) => t.Lap == lastTiming.Lap).Sum((t) => t.Timing);
         newPlayerData.GetComponent<PlayerPositionUI>()
-            .UpdateUI(new PlayerInfo(player.position, player.name, player.time, player.tire, lastTiming.Lap, currentLapTime));
+            .UpdateUI(new PlayerInfo(player.position, player.name, player.time, player.tire, lastTiming.Lap, currentLapTime, player.totalDriveTime));
     }
 
     public void AddPlayer(PlayerStats player, int position)
@@ -84,7 +84,7 @@ public class LeaderBoardPosition : NetworkBehaviour
         PlayerTiming lastTiming = player.playerTimings[^1];
         float currentLapTime = player.playerTimings.FindAll((t) => t.Lap == lastTiming.Lap).Sum((t) => t.Timing);
         newPlayerData.GetComponent<PlayerPositionUI>()
-            .UpdateUI(new PlayerInfo(player.position, player.name, player.time, player.tire, lastTiming.Lap, currentLapTime));
+            .UpdateUI(new PlayerInfo(player.position, player.name, player.time, player.tire, lastTiming.Lap, currentLapTime, player.totalDriveTime));
     }
 
     [Rpc(SendTo.Server)]
