@@ -24,7 +24,7 @@ public class PlayerStats : NetworkBehaviour, INetworkSerializeByMemcpy
 
     private void Start()
     {
-        playerTimings.Add(new PlayerTiming(NetworkObjectId, 0, 0, 0));
+        playerTimings.Add(new PlayerTiming(NetworkObjectId, 0, -1, 0));
         shortName = Random.Range(0, 999).ToString();
         // time = Random.Range(0f, 3f);
         time = 0;
@@ -48,13 +48,14 @@ public class PlayerStats : NetworkBehaviour, INetworkSerializeByMemcpy
     //     // CustomLogger.Log(playerTimings[playerTimings.Count - 1].NetworkId + ", " + playerTimings[playerTimings.Count - 1].Timing);
     // }
     
-    public void NewTiming(int sectorId, bool lapUp)
+    public void NewTiming(int sectorId, bool lapUp, bool ignoreStopwatch)
     {
         PlayerTiming playerTiming;
-        if(stopwatch.ElapsedMilliseconds < 5) return;
+        if(stopwatch.ElapsedMilliseconds < 5 && !ignoreStopwatch) return;
         if (lapUp)
             playerTiming = new PlayerTiming(NetworkObjectId, stopwatch.ElapsedMilliseconds, sectorId,
                 playerTimings[^1].Lap + 1);
+        
         else
             playerTiming = new PlayerTiming(NetworkObjectId, stopwatch.ElapsedMilliseconds, sectorId,
                 playerTimings[^1].Lap);
@@ -96,11 +97,18 @@ public class PlayerStats : NetworkBehaviour, INetworkSerializeByMemcpy
         if (sectorController == null || !IsServer) return;
 
         if (stopwatch.ElapsedMilliseconds > 0 && playerTimings[^1].SectorId < sectorController.sectorId)
-            NewTiming(sectorController.sectorId, false);
+        {
+            NewTiming(sectorController.sectorId, false, false);
+        }
         else if (playerTimings[^1].SectorId < sectorController.sectorId)
+        {
             stopwatch.Start();
+            NewTiming(sectorController.sectorId, true, true);
+        }
         else if (stopwatch.ElapsedMilliseconds > 0 && sectorController.sectorType == SectorTypeEnum.Finish)
-            NewTiming(sectorController.sectorId, true);
+        {
+            NewTiming(sectorController.sectorId, true, false);
+        }
 
         switch (sectorController.sectorType)
         {
