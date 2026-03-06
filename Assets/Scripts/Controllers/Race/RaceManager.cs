@@ -153,9 +153,6 @@ public class RaceManager : NetworkBehaviour
 
     private void EndRace()
     {
-        // TODO: Implement
-        //  - Despawn cars
-        //  - Show "podium" (seperate scene or just ui?)
         var _players = leaderBoardPosition._players;
 
         Dictionary<int, PlayerInfo> playerInfoDictionary = new();
