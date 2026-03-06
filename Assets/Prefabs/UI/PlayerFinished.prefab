@@ -68,7 +68,7 @@ MonoBehaviour:
   m_text: Player Name
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 655a1c4ae6b0498da726982b1506e776, type: 2}
-  m_sharedMaterial: {fileID: 7357070549531636891, guid: 655a1c4ae6b0498da726982b1506e776, type: 2}
+  m_sharedMaterial: {fileID: -4908517189616620473, guid: 655a1c4ae6b0498da726982b1506e776, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -92,7 +92,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 22.8
+  m_fontSize: 22.65
   m_fontSizeBase: 21
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -103,6 +103,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -296,7 +297,7 @@ MonoBehaviour:
   m_text: 10
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 655a1c4ae6b0498da726982b1506e776, type: 2}
-  m_sharedMaterial: {fileID: 7357070549531636891, guid: 655a1c4ae6b0498da726982b1506e776, type: 2}
+  m_sharedMaterial: {fileID: -4908517189616620473, guid: 655a1c4ae6b0498da726982b1506e776, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -331,6 +332,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -455,6 +457,10 @@ PrefabInstance:
     - target: {fileID: -2304375700400688866, guid: 06b53a4e361c634418506ae09cadf430, type: 3}
       propertyPath: m_Color.a
       value: 0.5019608
+      objectReference: {fileID: 0}
+    - target: {fileID: -2304375700400688866, guid: 06b53a4e361c634418506ae09cadf430, type: 3}
+      propertyPath: m_Material
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 5567868813287497981, guid: 06b53a4e361c634418506ae09cadf430, type: 3}
       propertyPath: m_Name

@@ -55,9 +55,12 @@ public class UiManager : NetworkBehaviour
     private void OnPlayerFinished(ulong playerId, int position)
     {
         if (!IsClient) return;
-        CustomLogger.Log("OnPlayerFinished called on client");
+        if (DebugManager.Instance.ShouldDebugEvents())
+            CustomLogger.Log("OnPlayerFinished called on client");
+
         var finishedGGo = Instantiate(playerFinishedGo, gameObject.transform);
-        CustomLogger.Log($"PlayerFinished UI instantiated for player {playerId} with position {position}");
+        if (DebugManager.Instance.ShouldDebugEvents())
+            CustomLogger.Log($"PlayerFinished UI instantiated for player {playerId} with position {position}");
 
         var texts = finishedGGo.GetComponentsInChildren<TMP_Text>();
         foreach (var text in texts)
