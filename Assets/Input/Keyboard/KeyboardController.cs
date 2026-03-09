@@ -163,15 +163,6 @@ public partial class @KeyboardController: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Reset"",
-                    ""type"": ""Button"",
-                    ""id"": ""02ff0a66-93a0-4c77-b350-364d269d5dcf"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -284,10 +275,47 @@ public partial class @KeyboardController: IInputActionCollection2, IDisposable
                     ""action"": ""Pit Limiter"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""systemControls"",
+            ""id"": ""10cfc893-633e-4969-aaa9-3458136167a1"",
+            ""actions"": [
+                {
+                    ""name"": ""Console"",
+                    ""type"": ""Button"",
+                    ""id"": ""7f597723-9a4f-4909-b365-bf9d80ed3448"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Reset"",
+                    ""type"": ""Button"",
+                    ""id"": ""56370de0-f998-4e2b-94d5-b75528304cf7"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""daefdcf9-e067-4885-a98e-03f5359c826e"",
+                    ""path"": ""<Keyboard>/backquote"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Console"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""cb8dacb7-124e-458e-9f49-79a58d24599e"",
+                    ""id"": ""4bb67816-b7ee-4e69-89bf-037b5284629e"",
                     ""path"": ""<Keyboard>/r"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -311,12 +339,16 @@ public partial class @KeyboardController: IInputActionCollection2, IDisposable
         m_vehicleControls_GearDown = m_vehicleControls.FindAction("GearDown", throwIfNotFound: true);
         m_vehicleControls_DRS = m_vehicleControls.FindAction("DRS", throwIfNotFound: true);
         m_vehicleControls_PitLimiter = m_vehicleControls.FindAction("Pit Limiter", throwIfNotFound: true);
-        m_vehicleControls_Reset = m_vehicleControls.FindAction("Reset", throwIfNotFound: true);
+        // systemControls
+        m_systemControls = asset.FindActionMap("systemControls", throwIfNotFound: true);
+        m_systemControls_Console = m_systemControls.FindAction("Console", throwIfNotFound: true);
+        m_systemControls_Reset = m_systemControls.FindAction("Reset", throwIfNotFound: true);
     }
 
     ~@KeyboardController()
     {
         UnityEngine.Debug.Assert(!m_vehicleControls.enabled, "This will cause a leak and performance issues, KeyboardController.vehicleControls.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_systemControls.enabled, "This will cause a leak and performance issues, KeyboardController.systemControls.Disable() has not been called.");
     }
 
     /// <summary>
@@ -400,7 +432,6 @@ public partial class @KeyboardController: IInputActionCollection2, IDisposable
     private readonly InputAction m_vehicleControls_GearDown;
     private readonly InputAction m_vehicleControls_DRS;
     private readonly InputAction m_vehicleControls_PitLimiter;
-    private readonly InputAction m_vehicleControls_Reset;
     /// <summary>
     /// Provides access to input actions defined in input action map "vehicleControls".
     /// </summary>
@@ -444,10 +475,6 @@ public partial class @KeyboardController: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "vehicleControls/PitLimiter".
         /// </summary>
         public InputAction @PitLimiter => m_Wrapper.m_vehicleControls_PitLimiter;
-        /// <summary>
-        /// Provides access to the underlying input action "vehicleControls/Reset".
-        /// </summary>
-        public InputAction @Reset => m_Wrapper.m_vehicleControls_Reset;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -498,9 +525,6 @@ public partial class @KeyboardController: IInputActionCollection2, IDisposable
             @PitLimiter.started += instance.OnPitLimiter;
             @PitLimiter.performed += instance.OnPitLimiter;
             @PitLimiter.canceled += instance.OnPitLimiter;
-            @Reset.started += instance.OnReset;
-            @Reset.performed += instance.OnReset;
-            @Reset.canceled += instance.OnReset;
         }
 
         /// <summary>
@@ -536,9 +560,6 @@ public partial class @KeyboardController: IInputActionCollection2, IDisposable
             @PitLimiter.started -= instance.OnPitLimiter;
             @PitLimiter.performed -= instance.OnPitLimiter;
             @PitLimiter.canceled -= instance.OnPitLimiter;
-            @Reset.started -= instance.OnReset;
-            @Reset.performed -= instance.OnReset;
-            @Reset.canceled -= instance.OnReset;
         }
 
         /// <summary>
@@ -572,6 +593,113 @@ public partial class @KeyboardController: IInputActionCollection2, IDisposable
     /// Provides a new <see cref="VehicleControlsActions" /> instance referencing this action map.
     /// </summary>
     public VehicleControlsActions @vehicleControls => new VehicleControlsActions(this);
+
+    // systemControls
+    private readonly InputActionMap m_systemControls;
+    private List<ISystemControlsActions> m_SystemControlsActionsCallbackInterfaces = new List<ISystemControlsActions>();
+    private readonly InputAction m_systemControls_Console;
+    private readonly InputAction m_systemControls_Reset;
+    /// <summary>
+    /// Provides access to input actions defined in input action map "systemControls".
+    /// </summary>
+    public struct SystemControlsActions
+    {
+        private @KeyboardController m_Wrapper;
+
+        /// <summary>
+        /// Construct a new instance of the input action map wrapper class.
+        /// </summary>
+        public SystemControlsActions(@KeyboardController wrapper) { m_Wrapper = wrapper; }
+        /// <summary>
+        /// Provides access to the underlying input action "systemControls/Console".
+        /// </summary>
+        public InputAction @Console => m_Wrapper.m_systemControls_Console;
+        /// <summary>
+        /// Provides access to the underlying input action "systemControls/Reset".
+        /// </summary>
+        public InputAction @Reset => m_Wrapper.m_systemControls_Reset;
+        /// <summary>
+        /// Provides access to the underlying input action map instance.
+        /// </summary>
+        public InputActionMap Get() { return m_Wrapper.m_systemControls; }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
+        public void Enable() { Get().Enable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
+        public void Disable() { Get().Disable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
+        public bool enabled => Get().enabled;
+        /// <summary>
+        /// Implicitly converts an <see ref="SystemControlsActions" /> to an <see ref="InputActionMap" /> instance.
+        /// </summary>
+        public static implicit operator InputActionMap(SystemControlsActions set) { return set.Get(); }
+        /// <summary>
+        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <param name="instance">Callback instance.</param>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
+        /// </remarks>
+        /// <seealso cref="SystemControlsActions" />
+        public void AddCallbacks(ISystemControlsActions instance)
+        {
+            if (instance == null || m_Wrapper.m_SystemControlsActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_SystemControlsActionsCallbackInterfaces.Add(instance);
+            @Console.started += instance.OnConsole;
+            @Console.performed += instance.OnConsole;
+            @Console.canceled += instance.OnConsole;
+            @Reset.started += instance.OnReset;
+            @Reset.performed += instance.OnReset;
+            @Reset.canceled += instance.OnReset;
+        }
+
+        /// <summary>
+        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <remarks>
+        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
+        /// </remarks>
+        /// <seealso cref="SystemControlsActions" />
+        private void UnregisterCallbacks(ISystemControlsActions instance)
+        {
+            @Console.started -= instance.OnConsole;
+            @Console.performed -= instance.OnConsole;
+            @Console.canceled -= instance.OnConsole;
+            @Reset.started -= instance.OnReset;
+            @Reset.performed -= instance.OnReset;
+            @Reset.canceled -= instance.OnReset;
+        }
+
+        /// <summary>
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="SystemControlsActions.UnregisterCallbacks(ISystemControlsActions)" />.
+        /// </summary>
+        /// <seealso cref="SystemControlsActions.UnregisterCallbacks(ISystemControlsActions)" />
+        public void RemoveCallbacks(ISystemControlsActions instance)
+        {
+            if (m_Wrapper.m_SystemControlsActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        /// <summary>
+        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
+        /// </summary>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
+        /// </remarks>
+        /// <seealso cref="SystemControlsActions.AddCallbacks(ISystemControlsActions)" />
+        /// <seealso cref="SystemControlsActions.RemoveCallbacks(ISystemControlsActions)" />
+        /// <seealso cref="SystemControlsActions.UnregisterCallbacks(ISystemControlsActions)" />
+        public void SetCallbacks(ISystemControlsActions instance)
+        {
+            foreach (var item in m_Wrapper.m_SystemControlsActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_SystemControlsActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    /// <summary>
+    /// Provides a new <see cref="SystemControlsActions" /> instance referencing this action map.
+    /// </summary>
+    public SystemControlsActions @systemControls => new SystemControlsActions(this);
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "vehicleControls" which allows adding and removing callbacks.
     /// </summary>
@@ -635,6 +763,21 @@ public partial class @KeyboardController: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnPitLimiter(InputAction.CallbackContext context);
+    }
+    /// <summary>
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "systemControls" which allows adding and removing callbacks.
+    /// </summary>
+    /// <seealso cref="SystemControlsActions.AddCallbacks(ISystemControlsActions)" />
+    /// <seealso cref="SystemControlsActions.RemoveCallbacks(ISystemControlsActions)" />
+    public interface ISystemControlsActions
+    {
+        /// <summary>
+        /// Method invoked when associated input action "Console" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnConsole(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "Reset" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>

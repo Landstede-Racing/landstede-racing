@@ -1,6 +1,7 @@
 using UnityEngine.InputSystem;
 using UnityEngine;
 using Unity.Netcode;
+using System;
 
 
 public class InputController : NetworkBehaviour
@@ -134,6 +135,13 @@ public class InputController : NetworkBehaviour
 
     private void ProcessKeyboardInputs()
     {
+        if(keyboardControls.systemControls.Console.triggered)
+        {
+            ConsoleManager.Instance.ToggleConsole();
+        }
+
+        if(ConsoleManager.Instance.IsOpened()) return;
+
         if (vehicleController.IsControllable)
         {
             // Accelerate
@@ -172,7 +180,7 @@ public class InputController : NetworkBehaviour
             }
         }
 
-        if (keyboardControls.vehicleControls.Reset.triggered && GameManager.Instance.ResetButtonEnabled())
+        if (keyboardControls.systemControls.Reset.triggered && GameManager.Instance.ResetButtonEnabled())
         {
             EventService.InvokeRestartRace();
         }

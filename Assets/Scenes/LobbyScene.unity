@@ -7222,6 +7222,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 354676755}
   m_CullTransparentMesh: 1
+--- !u!1 &362741160
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 362741162}
+  - component: {fileID: 362741161}
+  m_Layer: 0
+  m_Name: ConsoleManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &362741161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 362741160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3653c1834843194b865a110fcb3ce92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-Game::ConsoleManager
+  isOpened: 0
+  consolePrefab: {fileID: 4320601005573068157, guid: e0617452b8807fd40a8025ff0d7f36a1, type: 3}
+  consoleObject: {fileID: 0}
+--- !u!4 &362741162
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 362741160}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.94001, y: 3.96, z: 3.6}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &366056059
 GameObject:
   m_ObjectHideFlags: 0
@@ -54874,3 +54921,4 @@ SceneRoots:
   - {fileID: 461076704}
   - {fileID: 1918238319}
   - {fileID: 868984513}
+  - {fileID: 362741162}
