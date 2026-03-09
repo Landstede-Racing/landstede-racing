@@ -18,6 +18,11 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    public void SetResetButtonEnabled(bool resetButtonEnabled)
+    {
+        EnableResetButton = resetButtonEnabled;
+    }
+
     public bool ResetButtonEnabled()
     {
         return EnableResetButton;

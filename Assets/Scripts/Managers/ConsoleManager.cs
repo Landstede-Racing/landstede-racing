@@ -15,6 +15,8 @@ public class ConsoleManager : MonoBehaviour
     private void Awake()
     {
         commands.Add("test", new TestCommand());
+        commands.Add("enableReset", new EnableResetCommand());
+
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
