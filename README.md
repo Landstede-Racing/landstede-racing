@@ -14,7 +14,7 @@
     ```
 2. **Open in Unity:**
     - Use Unity Hub to add the project folder.
-    - Open with Unity 6000.2.10f1
+    - Open with Unity 6000.3.8f1
 
 ## How to Build
 

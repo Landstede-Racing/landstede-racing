@@ -1,3 +1,5 @@
 ﻿<Solution>
+  <Project Path="Assembly-Game.csproj" />
+  <Project Path="Assembly-LogitechGSDK.csproj" />
   <Project Path="Assembly-CSharp.csproj" />
 </Solution>
