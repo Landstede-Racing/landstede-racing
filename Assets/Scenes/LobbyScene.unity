@@ -4394,8 +4394,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 249514548}
         m_TargetAssemblyTypeName: LobbyMenuController, Assembly-CSharp
-        m_MethodName: StartTrackSelection
-        m_Mode: 6
+        m_MethodName: StartRaceTrackSelection
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -7863,6 +7863,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c76fd1dba8ed2a04792c64d26a10888a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  raceLaps: 3
+  raceType: 0
   NetworkManagerGO: {fileID: 5731997848241004683, guid: fe6b298195810fd488abc04353f4810f, type: 3}
 --- !u!4 &458028631
 Transform:
@@ -7908,9 +7910,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ffd87addfb27ad439a06f480f8ad77f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DebugManager
-  DebugEvents: 0
+  DebugEvents: 1
+  IgnorePlayerMovedEvent: 1
   DebugAerodynamics: 0
-  DebugRace: 0
+  DebugRace: 1
   DebugNetwork: 0
   DebugCar: 0
   DebugInput: 0
@@ -20611,6 +20614,8 @@ MonoBehaviour:
   trackScenes:
   - RaceStadionScene
   multiplayer: 0
+  raceType: 0
+  laps: 0
 --- !u!4 &1128295258 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8557002723003063263, guid: a15645dee2e04c24998762cbab5bcd83, type: 3}
@@ -23979,8 +23984,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 249514548}
         m_TargetAssemblyTypeName: LobbyMenuController, Assembly-CSharp
-        m_MethodName: StartTrackSelection
-        m_Mode: 6
+        m_MethodName: StartTimeTrialTrackSelection
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

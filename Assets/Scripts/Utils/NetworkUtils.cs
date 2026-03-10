@@ -31,6 +31,7 @@ public class NetworkUtils
         string joinCode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
         CustomLogger.Log("Joincode: " + joinCode);
         NetworkManager.Singleton.StartHost();
+        SetupRace();
         return joinCode;
     }
 
@@ -41,6 +42,18 @@ public class NetworkUtils
 
         NetworkManager.Singleton.GetComponent<UnityTransport>().SetConnectionData(NetworkEndpoint.Parse("127.0.0.1", 7777));
         NetworkManager.Singleton.StartHost();
+        SetupRace();
+    }
+
+    private static void SetupRace()
+    {
+        SetupRaceRpc();
+    }
+
+    [Rpc(SendTo.Server)]
+    private static void SetupRaceRpc()
+    {
+        EventService.InvokeSetupRace();
     }
 
     public static async void StopHost()

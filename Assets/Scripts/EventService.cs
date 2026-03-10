@@ -1,15 +1,18 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public static class EventService
 {
     public static event Action<ulong> PlayerMoved;
-    public static event Action<ulong> PlayerFinished;
+    public static event Action<ulong, int> PlayerFinished;
+    public static event Action<ulong, int> PlayerFinishedLap;
     public static event Action RaceStarted;
     public static event Action CountdownStarted;
-    public static event Action RaceEnded;
+    public static event Action<RaceType, Dictionary<int, PlayerInfo>> RaceEnded;
     public static event Action RaceReady;
     public static event Action RestartRace;
+    public static event Action SetupRace;
     public static event Action PlayerPlaced;
     public static event Action<ulong, string> PlayerPenalty;
     public static event Action<ulong, string> PlayerPenaltyGiven;
@@ -34,10 +37,10 @@ public static class EventService
         CountdownStarted?.Invoke();
     }
 
-    public static void InvokeRaceEnded()
+    public static void InvokeRaceEnded(RaceType raceType, Dictionary<int, PlayerInfo> players)
     {
         EventCalled("RaceEnded");
-        RaceEnded?.Invoke();
+        RaceEnded?.Invoke(raceType, players);
     }
 
     public static void InvokeRaceReady()
@@ -52,6 +55,12 @@ public static class EventService
         RestartRace?.Invoke();
     }
 
+    public static void InvokeSetupRace()
+    {
+        EventCalled("SetupRace");
+        SetupRace?.Invoke();
+    }
+
     public static void InvokePlayerPlaced()
     {
         EventCalled("PlayerPlaced");
@@ -60,14 +69,23 @@ public static class EventService
 
     public static void InvokePlayerMoved(ulong playerId)
     {
-        EventCalled($"PlayerMoved, playerId: {playerId}");
+        if(!DebugManager.Instance.ShouldIgnorePlayerMoveEvent())
+        {
+            EventCalled($"PlayerMoved, playerId: {playerId}");
+        }
         PlayerMoved?.Invoke(playerId);
     }
 
-    public static void InvokePlayerFinished(ulong playerId)
+    public static void InvokePlayerFinishedLap(ulong playerId, int lap)
     {
-        EventCalled("PlayerFinished");
-        PlayerFinished?.Invoke(playerId);
+        EventCalled($"PlayerFinishedLap, playerId: {playerId}, lap: {lap}");
+        PlayerFinishedLap?.Invoke(playerId, lap);
+    }
+
+    public static void InvokePlayerFinished(ulong playerId, int position)
+    {
+        EventCalled($"PlayerFinished, playerId: {playerId}, position: {position}");
+        PlayerFinished?.Invoke(playerId, position);
     }
 
     public static void InvokePlayerPenalty(ulong playerId, string penalty)

@@ -1,0 +1,60 @@
+<svg width="500" height="500" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_189_8)">
+<rect width="500" height="500" fill="black"/>
+<rect width="50" height="50" fill="white"/>
+<rect x="50" y="50" width="50" height="50" fill="white"/>
+<rect y="100" width="50" height="50" fill="white"/>
+<rect x="50" y="150" width="50" height="50" fill="white"/>
+<rect x="100" width="50" height="50" fill="white"/>
+<rect x="150" y="50" width="50" height="50" fill="white"/>
+<rect x="100" y="100" width="50" height="50" fill="white"/>
+<rect x="150" y="150" width="50" height="50" fill="white"/>
+<rect y="200" width="50" height="50" fill="white"/>
+<rect x="50" y="250" width="50" height="50" fill="white"/>
+<rect y="300" width="50" height="50" fill="white"/>
+<rect x="50" y="350" width="50" height="50" fill="white"/>
+<rect x="100" y="200" width="50" height="50" fill="white"/>
+<rect x="150" y="250" width="50" height="50" fill="white"/>
+<rect x="100" y="300" width="50" height="50" fill="white"/>
+<rect x="150" y="350" width="50" height="50" fill="white"/>
+<rect x="200" width="50" height="50" fill="white"/>
+<rect x="250" y="50" width="50" height="50" fill="white"/>
+<rect x="200" y="100" width="50" height="50" fill="white"/>
+<rect x="250" y="150" width="50" height="50" fill="white"/>
+<rect x="300" width="50" height="50" fill="white"/>
+<rect x="350" y="50" width="50" height="50" fill="white"/>
+<rect x="300" y="100" width="50" height="50" fill="white"/>
+<rect x="350" y="150" width="50" height="50" fill="white"/>
+<rect x="200" y="200" width="50" height="50" fill="white"/>
+<rect x="250" y="250" width="50" height="50" fill="white"/>
+<rect x="200" y="300" width="50" height="50" fill="white"/>
+<rect x="250" y="350" width="50" height="50" fill="white"/>
+<rect x="300" y="200" width="50" height="50" fill="white"/>
+<rect x="350" y="250" width="50" height="50" fill="white"/>
+<rect x="300" y="300" width="50" height="50" fill="white"/>
+<rect x="350" y="350" width="50" height="50" fill="white"/>
+<rect x="399.52" y="-0.385254" width="50" height="50" fill="white"/>
+<rect x="449.52" y="49.6147" width="50" height="50" fill="white"/>
+<rect x="399.52" y="99.6147" width="50" height="50" fill="white"/>
+<rect x="449.52" y="149.615" width="50" height="50" fill="white"/>
+<rect x="399.52" y="199.615" width="50" height="50" fill="white"/>
+<rect x="449.52" y="249.615" width="50" height="50" fill="white"/>
+<rect x="399.52" y="299.615" width="50" height="50" fill="white"/>
+<rect x="449.52" y="349.615" width="50" height="50" fill="white"/>
+<rect x="-0.480103" y="400" width="50" height="50" fill="white"/>
+<rect x="49.5199" y="450" width="50" height="50" fill="white"/>
+<rect x="99.5199" y="400" width="50" height="50" fill="white"/>
+<rect x="149.52" y="450" width="50" height="50" fill="white"/>
+<rect x="199.52" y="400" width="50" height="50" fill="white"/>
+<rect x="249.52" y="450" width="50" height="50" fill="white"/>
+<rect x="299.52" y="400" width="50" height="50" fill="white"/>
+<rect x="349.52" y="450" width="50" height="50" fill="white"/>
+<rect x="399.04" y="399.615" width="50" height="50" fill="white"/>
+<rect x="449.04" y="449.615" width="50" height="50" fill="white"/>
+</g>
+<defs>
+<clipPath id="clip0_189_8">
+<rect width="500" height="500" fill="white"/>
+</clipPath>
+</defs>
+</svg>

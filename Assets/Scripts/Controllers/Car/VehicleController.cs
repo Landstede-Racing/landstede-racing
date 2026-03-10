@@ -114,6 +114,7 @@ public class VehicleController : NetworkBehaviour
         if (IsOwner)
         {
             EventService.PlayerPlaced += FreezeRigidBody;
+            EventService.RaceEnded += OnRaceEnded;
 
             var raceManager = FindFirstObjectByType<RaceManager>();
             if (raceManager != null)
@@ -144,6 +145,7 @@ public class VehicleController : NetworkBehaviour
         if (IsOwner)
         {
             EventService.PlayerPlaced -= FreezeRigidBody;
+            EventService.RaceEnded -= OnRaceEnded;
         }
         m_IsEngineRunning.OnValueChanged -= IsEngineRunningChanged;
         m_CurrentEngineRPM.OnValueChanged -= CurrentEngineRPMChanged;
@@ -196,6 +198,8 @@ public class VehicleController : NetworkBehaviour
 
         UpgradeController.ApplyUpgrades(this);
     }
+
+    
 
     public void FixedUpdate()
     {
@@ -591,6 +595,20 @@ public class VehicleController : NetworkBehaviour
         {
             StartCoroutine(SetColliderCoroutine());
         }
+    }
+
+    private void OnRaceEnded(RaceType raceType, Dictionary<int, PlayerInfo> players)
+    {
+        if(IsOwner)
+        {
+            OnRaceEndedRpc();
+        }
+    }
+
+    [Rpc(SendTo.Everyone)]
+    private void OnRaceEndedRpc()
+    {
+        Destroy(gameObject);
     }
 
     private IEnumerator SetColliderCoroutine()

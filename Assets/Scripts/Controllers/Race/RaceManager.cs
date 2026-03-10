@@ -5,11 +5,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using Unity.Netcode.Transports.UTP;
+using System;
 
 public class RaceManager : NetworkBehaviour
 {
     public int lap = 1;
-    public int maxLaps = 3;
     public bool raceStarted = false;
     [SerializeField] private TMP_Text raceLapText;
     [SerializeField] private LeaderBoardPosition leaderBoardPosition;
@@ -18,6 +18,11 @@ public class RaceManager : NetworkBehaviour
     [SerializeField] private Material lightOffMaterial;
     [SerializeField] private AudioSource lightBoopSound;
     [SerializeField] private GameObject startingPositions;
+    [SerializeField] private RaceType raceType;
+    [SerializeField] private int maxLaps;
+    
+    private List<ulong> finishedPlayers = new();
+
     private NetworkVariable<int> currentLap = new NetworkVariable<int>(1, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
     private Dictionary<ulong, List<string>> playerPenalties = new Dictionary<ulong, List<string>>();
     public override void OnNetworkSpawn()
@@ -27,8 +32,10 @@ public class RaceManager : NetworkBehaviour
         if (IsServer)
         {
             EventService.PlayerMoved += PlayerMoved;
+            EventService.PlayerFinishedLap += PlayerFinishedLap;
             EventService.PlayerPenalty += PlayerPenaltyGiven;
             EventService.RaceReady += StartRaceRpc;
+            EventService.SetupRace += SetupRace;
         }
 
         if(IsHost)
@@ -50,8 +57,10 @@ public class RaceManager : NetworkBehaviour
         if (IsServer)
         {
             EventService.PlayerMoved -= PlayerMoved;
+            EventService.PlayerFinishedLap -= PlayerFinishedLap;
             EventService.PlayerPenalty -= PlayerPenaltyGiven;
             EventService.RaceReady -= StartRaceRpc;
+            EventService.SetupRace -= SetupRace;
         }
 
         if(IsHost)
@@ -78,11 +87,49 @@ public class RaceManager : NetworkBehaviour
     {
         if (!IsServer) return;
         var newLap = lap = leaderBoardPosition._players.Count > 0 ? leaderBoardPosition._players[0].playerTimings[^1].Lap : 1;
+
         if (newLap > lap)
         {
             lap = newLap;
             currentLap.Value = lap;
         }
+    }
+
+    private void PlayerFinishedLap(ulong playerId, int lap)
+    {
+        if(!IsServer) return;
+
+        if(lap > maxLaps)
+        {
+            if(!finishedPlayers.Contains(playerId))
+            {
+                finishedPlayers.Add(playerId);
+
+                if(finishedPlayers.Count >= NetworkManager.Singleton.ConnectedClientsIds.Count)
+                {
+                    if(DebugManager.Instance.ShouldDebugRace())
+                        CustomLogger.Log("All players finished");
+                    EndRace();
+                }
+
+                PlayerFinishedRpc(playerId, finishedPlayers.Count);
+            }
+            
+            return;
+        }
+
+        if(lap > this.lap)
+        {
+            this.lap = lap;
+            currentLap.Value = lap;
+        }
+    }
+
+    private void SetupRace()
+    {
+        raceType = NetworkLaunchManager.Instance.raceType;
+        maxLaps = NetworkLaunchManager.Instance.raceLaps;
+        NetworkLaunchManager.Instance.Reset();
     }
 
     [Rpc(SendTo.Server)]
@@ -96,6 +143,28 @@ public class RaceManager : NetworkBehaviour
 
         leaderBoardPosition.StartRaceServerRpc();
         StartCoroutine(StartRaceCoroutine());
+    }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    private void PlayerFinishedRpc(ulong playerId, int position)
+    {
+        EventService.InvokePlayerFinished(playerId, position);
+    }
+
+    private void EndRace()
+    {
+        var _players = leaderBoardPosition._players;
+
+        Dictionary<int, PlayerInfo> playerInfoDictionary = new();
+        
+        for (int i = 0; i < finishedPlayers.Count; i++)
+        {
+            var player = finishedPlayers[i];
+
+            playerInfoDictionary[i] = PlayerInfoUtils.StatsToInfo(_players.Find((playerStat) => playerStat.OwnerClientId == player));
+        }
+
+        EventService.InvokeRaceEnded(raceType, playerInfoDictionary);
     }
 
     private void RestartRaceCheck()
@@ -245,4 +314,7 @@ public class RaceManager : NetworkBehaviour
             CustomLogger.LogError($"Player object for client {clientId} not found.");
         }
     }
+
+
+
 }

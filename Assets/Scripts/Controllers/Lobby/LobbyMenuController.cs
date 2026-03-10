@@ -75,6 +75,18 @@ public class LobbyMenuController : NetworkBehaviour
         SetMainMenu();
     }
 
+    public void StartTimeTrialTrackSelection()
+    {
+        NetworkLaunchManager.Instance.SetRace(RaceType.TimeTrial, 1);
+        StartTrackSelection(false);
+    }
+
+    public void StartRaceTrackSelection()
+    {
+        NetworkLaunchManager.Instance.SetRace(RaceType.Race, 5);
+        StartTrackSelection(true);
+    }
+
     public void StartTrackSelection(bool multiplayer)
     {
         NetworkLaunchManager.Instance.SetShouldStartHost(multiplayer);

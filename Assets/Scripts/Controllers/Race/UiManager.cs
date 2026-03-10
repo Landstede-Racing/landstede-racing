@@ -1,22 +1,28 @@
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using Unity.Netcode;
+using Unity.Services.Lobbies.Models;
 using UnityEngine;
 
 public class UiManager : NetworkBehaviour
 {
     [SerializeField] private GameObject penaltyGo;
     [SerializeField] private float penaltyVisibleTime = 3;
+    [SerializeField] private GameObject playerFinishedGo;
+    [SerializeField] private float playerFinishedVisibleTime = 3;
 
     public override void OnNetworkSpawn()
     {
         EventService.PlayerPenaltyGiven += OnPlayerPenaltyGiven;
+        EventService.PlayerFinished += OnPlayerFinished;
         base.OnNetworkSpawn();
     }
 
     public override void OnNetworkDespawn()
     {
         EventService.PlayerPenaltyGiven -= OnPlayerPenaltyGiven;
+        EventService.PlayerFinished -= OnPlayerFinished;
         base.OnNetworkSpawn();
     }
 
@@ -43,13 +49,39 @@ public class UiManager : NetworkBehaviour
             }
         }
 
-        StartCoroutine(PenaltyUICreated(penaltyGGo));
+        StartCoroutine(UICreated(penaltyGGo, penaltyVisibleTime));
+    }
+
+    private void OnPlayerFinished(ulong playerId, int position)
+    {
+        if (!IsClient) return;
+        if (DebugManager.Instance.ShouldDebugEvents())
+            CustomLogger.Log("OnPlayerFinished called on client");
+
+        var finishedGGo = Instantiate(playerFinishedGo, gameObject.transform);
+        if (DebugManager.Instance.ShouldDebugEvents())
+            CustomLogger.Log($"PlayerFinished UI instantiated for player {playerId} with position {position}");
+
+        var texts = finishedGGo.GetComponentsInChildren<TMP_Text>();
+        foreach (var text in texts)
+        {
+            if (text.name == "playerName")
+            {
+                text.text = $"Player {playerId}";
+            }
+            else if (text.name == "position")
+            {
+                text.text = $"{position}";
+            }
+        }
+
+        StartCoroutine(UICreated(finishedGGo, penaltyVisibleTime));
     }
     
-    private IEnumerator PenaltyUICreated(GameObject penaltyGGo)
+    private IEnumerator UICreated(GameObject go, float waitTime)
     {
-        yield return new WaitForSecondsRealtime(penaltyVisibleTime);
+        yield return new WaitForSecondsRealtime(waitTime);
 
-        Destroy(penaltyGGo);
+        Destroy(go);
     }
 }
