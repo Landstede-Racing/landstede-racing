@@ -77,15 +77,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "Reset",
-                    "type": "Button",
-                    "id": "02ff0a66-93a0-4c77-b350-364d269d5dcf",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -198,10 +189,47 @@
                     "action": "Pit Limiter",
                     "isComposite": false,
                     "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "systemControls",
+            "id": "10cfc893-633e-4969-aaa9-3458136167a1",
+            "actions": [
+                {
+                    "name": "Console",
+                    "type": "Button",
+                    "id": "7f597723-9a4f-4909-b365-bf9d80ed3448",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Reset",
+                    "type": "Button",
+                    "id": "56370de0-f998-4e2b-94d5-b75528304cf7",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "daefdcf9-e067-4885-a98e-03f5359c826e",
+                    "path": "<Keyboard>/backquote",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Console",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "cb8dacb7-124e-458e-9f49-79a58d24599e",
+                    "id": "4bb67816-b7ee-4e69-89bf-037b5284629e",
                     "path": "<Keyboard>/r",
                     "interactions": "",
                     "processors": "",
