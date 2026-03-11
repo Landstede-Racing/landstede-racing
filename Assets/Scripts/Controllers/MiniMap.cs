@@ -1,0 +1,43 @@
+using UnityEngine;
+
+public class MiniMap : MonoBehaviour
+{
+    public LineRenderer lineRenderer;
+    private GameObject TrackPath;
+
+    private void Start()
+    {
+        TrackPath = gameObject;
+
+        var path_num = TrackPath.transform.childCount;
+        if (path_num > 0)
+        {
+            lineRenderer.positionCount = path_num;
+
+            for (var i = 0; i < path_num; i++)
+            {
+                var childPosition = TrackPath.transform.GetChild(i).transform.position;
+                lineRenderer.SetPosition(i, new Vector3(childPosition.x, 50, childPosition.z));
+            }
+
+            lineRenderer.SetPosition(path_num - 1, lineRenderer.GetPosition(0));
+        }
+        else
+        {
+            CustomLogger.LogWarning("TrackPath has no children.");
+        }
+    }
+
+    public void SetSize(float startWidth, float endWidth)
+    {
+        if (lineRenderer != null)
+        {
+            lineRenderer.startWidth = startWidth;
+            lineRenderer.endWidth = endWidth;
+        }
+        else
+        {
+            CustomLogger.LogError("LineRenderer is not assigned.");
+        }
+    }
+}

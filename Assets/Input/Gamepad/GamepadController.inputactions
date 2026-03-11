@@ -1,4 +1,5 @@
 {
+    "version": 1,
     "name": "GamepadController",
     "maps": [
         {
@@ -72,6 +73,33 @@
                     "name": "NextCam",
                     "type": "Button",
                     "id": "89a8ac37-85fe-40af-8c81-3cd57cd3d813",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "MFD",
+                    "type": "Button",
+                    "id": "be89cfe1-e406-4586-965b-488c3b7c9ed4",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Pit Limiter",
+                    "type": "Button",
+                    "id": "e6ece9af-92bc-4348-90fd-763abf9b3bcc",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Reset",
+                    "type": "Button",
+                    "id": "bd5bac01-e3a8-4d45-98cf-7389f70c8815",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -164,6 +192,39 @@
                     "processors": "",
                     "groups": "",
                     "action": "NextCam",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3233dd2f-eb30-43c0-a0b6-dda8fc8ac4b3",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MFD",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b2f6c3e5-a5bd-4390-9ffb-785bd04e5af1",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pit Limiter",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fb3978ab-dc88-4f36-929e-7a6a67d1a474",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Reset",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

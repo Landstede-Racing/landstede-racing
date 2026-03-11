@@ -6,6 +6,7 @@ using System;
 public class LogitechSteeringWheel : MonoBehaviour
 {
     public VehicleController vehicleController;
+    public MfdController mfdController;
     private CameraController cameraController;
     LogitechGSDK.LogiControllerPropertiesData properties;
     private string actualState;
@@ -19,19 +20,16 @@ public class LogitechSteeringWheel : MonoBehaviour
     private float brake;
     string[] activeForceAndEffect;
 
-    [Header("Force Feedback")]
-    private float vibrationTimer = 0f;
-    private bool vibrationState = false;
-    public float centeringForceMultiplier = 50f; // Strength of centering force
-    public float slipForceMultiplier = 100f;    // Strength of slip feedback
-
     // Use this for initialization
     void Start()
     {
         // Find all child GameObjects that have the WheelControl script attached
         cameraController = GetComponent<CameraController>();
 
-        Debug.Log($"[LogitechSteeringWheel] Device Name: {SettingsController.DeviceController}");
+        if (DebugManager.Instance.ShouldDebugInput())
+        {
+            CustomLogger.Log($"[LogitechSteeringWheel] Device Name: {SettingsController.DeviceController}");
+        }
 
         activeForces = "";
         propertiesEdit = "";
@@ -52,32 +50,36 @@ public class LogitechSteeringWheel : MonoBehaviour
         forcesLabel += "Set example controller properties : PageUp\n";
         forcesLabel += "Play Leds : P\n";
         activeForceAndEffect = new string[9];
-        Debug.Log("SteeringInit:" + LogitechGSDK.LogiSteeringInitialize(false));
+        if(SettingsController.DeviceController == 2 && DebugManager.Instance.ShouldDebugInput()) {
+            CustomLogger.Log("SteeringInit:" + LogitechGSDK.LogiSteeringInitialize(false));
+        }
     }
 
     void OnApplicationQuit()
     {
-        Debug.Log("SteeringShutdown:" + LogitechGSDK.LogiSteeringShutdown());
+        LogitechGSDK.LogiStopSoftstopForce(0);
+        LogitechGSDK.LogiStopConstantForce(0);
+        LogitechGSDK.LogiStopDamperForce(0);
+        LogitechGSDK.LogiStopSpringForce(0);
+        CustomLogger.Log("SteeringShutdown:" + LogitechGSDK.LogiSteeringShutdown());
     }
 
-    void OnGUI()
-    {
-        activeForces = GUI.TextArea(new Rect(10, 10, 180, 200), activeForces, 400);
-        propertiesEdit = GUI.TextArea(new Rect(200, 10, 200, 200), propertiesEdit, 400);
-        actualState = GUI.TextArea(new Rect(410, 10, 300, 200), actualState, 1000);
-        buttonStatus = GUI.TextArea(new Rect(720, 10, 300, 200), buttonStatus, 1000);
-        GUI.Label(new Rect(10, 400, 800, 400), forcesLabel);
-    }
+    // void OnGUI()
+    // {
+    //     activeForces = GUI.TextArea(new Rect(10, 10, 180, 200), activeForces, 400);
+    //     propertiesEdit = GUI.TextArea(new Rect(200, 10, 200, 200), propertiesEdit, 400);
+    //     actualState = GUI.TextArea(new Rect(410, 10, 300, 200), actualState, 1000);
+    //     buttonStatus = GUI.TextArea(new Rect(720, 10, 300, 200), buttonStatus, 1000);
+    //     GUI.Label(new Rect(10, 400, 800, 400), forcesLabel);
+    // }
 
     // Update is called once per frame
     void Update()
     {
-        if (SettingsController.DeviceController == "steeringWheel") //Check for what controller the user wants to use. For now hardcoded in SettingsController.cs
+        if (SettingsController.DeviceController == 2) //Check for what controller the user wants to use. For now hardcoded in SettingsController.cs
         {
             if (LogitechGSDK.LogiUpdate() && LogitechGSDK.LogiIsConnected(0))
             {
-                ApplyForceFeedback();
-
                 LogitechGSDK.DIJOYSTATE2ENGINES rec;
                 rec = LogitechGSDK.LogiGetStateUnity(0);
                 // Get steer and pedal states
@@ -86,47 +88,58 @@ public class LogitechSteeringWheel : MonoBehaviour
                 // lRz: Brake pedal (32767 to -32766)
 
 
-                // Calculate steering angle with a max of 180 degrees, mapped to a value from -1 to 1
-                steeringAngle = Mathf.InverseLerp(-32768f / 2.5f, 32767f / 2.5f, rec.lX) * 2 - 1;
-                vehicleController.SetSteeringAngle(steeringAngle);
-
-                // Calculate gas amount mapped to a value from 0 to 1
-                gas = Mathf.InverseLerp(32767, -32768, rec.lY);
-                vehicleController.SetGas(gas);
-
-                // Calculate brake amount mapped to a value from 0 to 1
-                brake = Mathf.InverseLerp(32767, -32766, rec.lRz);
-                vehicleController.SetBrake(brake);
-
-
-                if (LogitechGSDK.LogiButtonTriggered(0, 4))
+                if (vehicleController.IsControllable)
                 {
-                    StartCoroutine(vehicleController.ChangeGear(1));
+                    // Calculate steering angle with a max of 180 degrees, mapped to a value from -1 to 1
+                    steeringAngle = Mathf.InverseLerp(-32768f / 2.5f, 32767f / 2.5f, rec.lX) * 2 - 1;
+                    vehicleController.SetSteeringAngle(steeringAngle);
+
+                    // Calculate gas amount mapped to a value from 0 to 1
+                    gas = Mathf.InverseLerp(32767, -32768, rec.lY);
+                    vehicleController.SetGas(gas);
+
+                    // Calculate brake amount mapped to a value from 0 to 1
+                    brake = Mathf.InverseLerp(32767, -32766, rec.lRz);
+                    vehicleController.SetBrake(brake);
+
+                    if (LogitechGSDK.LogiButtonTriggered(0, Controls.NextGearButton.button))
+                        StartCoroutine(vehicleController.ChangeGear(1));
+
+                    if (LogitechGSDK.LogiButtonTriggered(0, Controls.PreviousGearButton.button))
+                        StartCoroutine(vehicleController.ChangeGear(-1));
+
+                    if (LogitechGSDK.LogiButtonTriggered(0, Controls.DrsButton.button))
+                        vehicleController.ToggleDRS();
+
+                    if (LogitechGSDK.LogiButtonTriggered(0, Controls.PitLimiterButton.button))
+                        vehicleController.TogglePitLimiter();
+
+                    if (LogitechGSDK.LogiButtonReleased(0, Controls.NextErsModeButton.button))
+                        vehicleController.NextERSMode();
+                        
+                    if (LogitechGSDK.LogiButtonReleased(0, Controls.PreviousErsModeButton.button))
+                        vehicleController.PreviousERSMode();
                 }
-                if (LogitechGSDK.LogiButtonTriggered(0, 5))
-                {
-                    StartCoroutine(vehicleController.ChangeGear(-1));
+
+                if(LogitechGSDK.LogiButtonTriggered(0, Controls.MfdButton.button)) {
+                    mfdController.NextPage();
                 }
-                if (LogitechGSDK.LogiButtonTriggered(0, 7))
-                {
-                    vehicleController.ToggleDRS();
-                }
-                if (LogitechGSDK.LogiButtonTriggered(0, 10))
+                if (LogitechGSDK.LogiButtonTriggered(0, Controls.NextCamButton.button))
                 {
                     cameraController.NextCamera();
                 }
-                if (LogitechGSDK.LogiButtonTriggered(0, 6))
+                if (LogitechGSDK.LogiButtonTriggered(0, Controls.ReverseCamButton.button))
                 {
                     cameraController.SetReverseCam(true);
                 }
-                if (LogitechGSDK.LogiButtonReleased(0, 6))
+                if (LogitechGSDK.LogiButtonReleased(0, Controls.ReverseCamButton.button))
                 {
                     cameraController.SetReverseCam(false);
                 }
 
-                if (LogitechGSDK.LogiButtonTriggered(0, 23))
+                if (LogitechGSDK.LogiButtonTriggered(0, 23) && GameManager.Instance.ResetButtonEnabled())
                 {
-                    SceneManager.LoadScene(0);
+                    EventService.InvokeRestartRace();
                 }
 
 
@@ -229,167 +242,170 @@ public class LogitechSteeringWheel : MonoBehaviour
                 // FORCES AND EFFECTS 
                 activeForces = "Active forces and effects :\n";
 
-                //Spring Force -> S
-                if (Input.GetKeyUp(KeyCode.S))
+                if(DebugManager.Instance.ShouldDebugInput())
                 {
-                    if (LogitechGSDK.LogiIsPlaying(0, LogitechGSDK.LOGI_FORCE_SPRING))
+                    //Spring Force -> S
+                    if (Input.GetKeyUp(KeyCode.S))
                     {
-                        LogitechGSDK.LogiStopSpringForce(0);
-                        activeForceAndEffect[0] = "";
+                        if (LogitechGSDK.LogiIsPlaying(0, LogitechGSDK.LOGI_FORCE_SPRING))
+                        {
+                            LogitechGSDK.LogiStopSpringForce(0);
+                            activeForceAndEffect[0] = "";
+                        }
+                        else
+                        {
+                            LogitechGSDK.LogiPlaySpringForce(0, 0, 50, 50);
+                            activeForceAndEffect[0] = "Spring Force\n ";
+                        }
+                    }
+
+                    //Constant Force -> C
+                    if (Input.GetKeyUp(KeyCode.C))
+                    {
+                        if (LogitechGSDK.LogiIsPlaying(0, LogitechGSDK.LOGI_FORCE_CONSTANT))
+                        {
+                            LogitechGSDK.LogiStopConstantForce(0);
+                            activeForceAndEffect[1] = "";
+                        }
+                        else
+                        {
+                            LogitechGSDK.LogiPlayConstantForce(0, 50);
+                            activeForceAndEffect[1] = "Constant Force\n ";
+                        }
+                    }
+
+                    //Damper Force -> D
+                    if (Input.GetKeyUp(KeyCode.D))
+                    {
+                        if (LogitechGSDK.LogiIsPlaying(0, LogitechGSDK.LOGI_FORCE_DAMPER))
+                        {
+                            LogitechGSDK.LogiStopDamperForce(0);
+                            activeForceAndEffect[2] = "";
+                        }
+                        else
+                        {
+                            LogitechGSDK.LogiPlayDamperForce(0, 50);
+                            activeForceAndEffect[2] = "Damper Force\n ";
+                        }
+                    }
+
+                    //Side Collision Force -> left or right arrow
+                    if (Input.GetKeyUp(KeyCode.LeftArrow))
+                    {
+                        LogitechGSDK.LogiPlaySideCollisionForce(0, 100);
+                    }
+                    if (Input.GetKey(KeyCode.RightArrow))
+                    {
+                        LogitechGSDK.LogiPlaySideCollisionForce(0, -100);
+                    }
+
+                    //Front Collision Force -> up arrow
+                    if (Input.GetKeyUp(KeyCode.UpArrow))
+                    {
+                        LogitechGSDK.LogiPlayFrontalCollisionForce(0, 100);
+                    }
+
+                    //Dirt Road Effect-> I
+                    if (Input.GetKeyUp(KeyCode.I))
+                    {
+                        ToggleDirtRoadEffect();
+                    }
+
+                    //Bumpy Road Effect-> B
+                    if (Input.GetKeyUp(KeyCode.B))
+                    {
+                        ToggleBumpyRoadEffect();
+                    }
+
+                    //Slippery Road Effect-> L
+                    if (Input.GetKeyUp(KeyCode.L))
+                    {
+                        ToggleSlipperyRoadEffect();
+                    }
+
+                    //Surface Effect-> U
+                    if (Input.GetKeyUp(KeyCode.U))
+                    {
+                        ToggleSurfaceEffect();
+                    }
+
+                    //Car Airborne -> A
+                    if (Input.GetKeyUp(KeyCode.A))
+                    {
+                        ToggleAirborneEffect();
+                    }
+
+                    //Soft Stop Force -> O
+                    if (Input.GetKeyUp(KeyCode.O))
+                    {
+                        ToggleSoftStopEffect();
+                    }
+
+                    //Set preferred controller properties -> PageUp
+                    if (Input.GetKeyUp(KeyCode.J))
+                    {
+                        //Setting example values
+                        // public bool forceEnable;
+                        // public int overallGain;
+                        // public int springGain;
+                        // public int damperGain;
+                        // public bool defaultSpringEnabled;
+                        // public int defaultSpringGain;
+                        // public bool combinePedals;
+                        // public int wheelRange;
+                        // public bool gameSettingsEnabled;
+                        // public bool allowGameSettings;
+                        properties.forceEnable = true;
+                        properties.overallGain = 80;
+                        properties.springGain = 80;
+                        properties.damperGain = 80;
+                        properties.defaultSpringEnabled = true;
+                        properties.defaultSpringGain = 80;
+                        properties.combinePedals = false;
+                        properties.wheelRange = 90;
+                        properties.gameSettingsEnabled = true;
+                        properties.allowGameSettings = true;
+                        // LogitechGSDK.LogiControllerPropertiesData existingProperties = new();
+                        // LogitechGSDK.LogiGetCurrentControllerProperties(0, ref existingProperties);
+
+                        // CustomLogger.Log(existingProperties.defaultSpringEnabled);
+
+                        // existingProperties.defaultSpringEnabled = true;
+                        // existingProperties.defaultSpringGain = 80;
+                        // existingProperties.allowGameSettings = true;
+                        // existingProperties.gameSettingsEnabled = false;
+                        // // LogitechGSDK.LogiSet
+                        // if (LogitechGSDK.LogiSetPreferredControllerProperties(existingProperties))
+                        // {
+                        //     CustomLogger.Log("Properties set");
+                        // }
+                        // else
+                        // {
+                        //     CustomLogger.Log("DO NOT REDEEM. DO NOT REDEEM THE CARD.");
+                        // }
+
+                    }
+
+                    //Play leds -> P
+                    if (Input.GetKeyUp(KeyCode.P))
+                    {
+                        LogitechGSDK.LogiPlayLeds(0, 20, 20, 20);
+                    }
+
+                    for (int i = 0; i < 9; i++)
+                    {
+                        activeForces += activeForceAndEffect[i];
+                    }
+
+                    if (changeLights >= 5)
+                    {
+                        LogitechGSDK.LogiPlayLeds(0, vehicleController.currentEngineRPM, vehicleController.firstLightOn, vehicleController.redLine);
+                        changeLights = 0;
                     }
                     else
                     {
-                        LogitechGSDK.LogiPlaySpringForce(0, 0, 50, 50);
-                        activeForceAndEffect[0] = "Spring Force\n ";
+                        changeLights++;
                     }
-                }
-
-                //Constant Force -> C
-                if (Input.GetKeyUp(KeyCode.C))
-                {
-                    if (LogitechGSDK.LogiIsPlaying(0, LogitechGSDK.LOGI_FORCE_CONSTANT))
-                    {
-                        LogitechGSDK.LogiStopConstantForce(0);
-                        activeForceAndEffect[1] = "";
-                    }
-                    else
-                    {
-                        LogitechGSDK.LogiPlayConstantForce(0, 50);
-                        activeForceAndEffect[1] = "Constant Force\n ";
-                    }
-                }
-
-                //Damper Force -> D
-                if (Input.GetKeyUp(KeyCode.D))
-                {
-                    if (LogitechGSDK.LogiIsPlaying(0, LogitechGSDK.LOGI_FORCE_DAMPER))
-                    {
-                        LogitechGSDK.LogiStopDamperForce(0);
-                        activeForceAndEffect[2] = "";
-                    }
-                    else
-                    {
-                        LogitechGSDK.LogiPlayDamperForce(0, 50);
-                        activeForceAndEffect[2] = "Damper Force\n ";
-                    }
-                }
-
-                //Side Collision Force -> left or right arrow
-                if (Input.GetKeyUp(KeyCode.LeftArrow))
-                {
-                    LogitechGSDK.LogiPlaySideCollisionForce(0, 100);
-                }
-                if (Input.GetKey(KeyCode.RightArrow))
-                {
-                    LogitechGSDK.LogiPlaySideCollisionForce(0, -100);
-                }
-
-                //Front Collision Force -> up arrow
-                if (Input.GetKeyUp(KeyCode.UpArrow))
-                {
-                    LogitechGSDK.LogiPlayFrontalCollisionForce(0, 100);
-                }
-
-                //Dirt Road Effect-> I
-                if (Input.GetKeyUp(KeyCode.I))
-                {
-                    ToggleDirtRoadEffect();
-                }
-
-                //Bumpy Road Effect-> B
-                if (Input.GetKeyUp(KeyCode.B))
-                {
-                    ToggleBumpyRoadEffect();
-                }
-
-                //Slippery Road Effect-> L
-                if (Input.GetKeyUp(KeyCode.L))
-                {
-                    ToggleSlipperyRoadEffect();
-                }
-
-                //Surface Effect-> U
-                if (Input.GetKeyUp(KeyCode.U))
-                {
-                    ToggleSurfaceEffect();
-                }
-
-                //Car Airborne -> A
-                if (Input.GetKeyUp(KeyCode.A))
-                {
-                    ToggleAirborneEffect();
-                }
-
-                //Soft Stop Force -> O
-                if (Input.GetKeyUp(KeyCode.O))
-                {
-                    ToggleSoftStopEffect();
-                }
-
-                //Set preferred controller properties -> PageUp
-                if (Input.GetKeyUp(KeyCode.J))
-                {
-                    //Setting example values
-                    // public bool forceEnable;
-                    // public int overallGain;
-                    // public int springGain;
-                    // public int damperGain;
-                    // public bool defaultSpringEnabled;
-                    // public int defaultSpringGain;
-                    // public bool combinePedals;
-                    // public int wheelRange;
-                    // public bool gameSettingsEnabled;
-                    // public bool allowGameSettings;
-                    properties.forceEnable = true;
-                    properties.overallGain = 80;
-                    properties.springGain = 80;
-                    properties.damperGain = 80;
-                    properties.defaultSpringEnabled = true;
-                    properties.defaultSpringGain = 80;
-                    properties.combinePedals = false;
-                    properties.wheelRange = 90;
-                    properties.gameSettingsEnabled = true;
-                    properties.allowGameSettings = true;
-                    // LogitechGSDK.LogiControllerPropertiesData existingProperties = new();
-                    // LogitechGSDK.LogiGetCurrentControllerProperties(0, ref existingProperties);
-
-                    // Debug.Log(existingProperties.defaultSpringEnabled);
-
-                    // existingProperties.defaultSpringEnabled = true;
-                    // existingProperties.defaultSpringGain = 80;
-                    // existingProperties.allowGameSettings = true;
-                    // existingProperties.gameSettingsEnabled = false;
-                    // // LogitechGSDK.LogiSet
-                    // if (LogitechGSDK.LogiSetPreferredControllerProperties(existingProperties))
-                    // {
-                    //     Debug.Log("Properties set");
-                    // }
-                    // else
-                    // {
-                    //     Debug.Log("DO NOT REDEEM. DO NOT REDEEM THE CARD.");
-                    // }
-
-                }
-
-                //Play leds -> P
-                if (Input.GetKeyUp(KeyCode.P))
-                {
-                    LogitechGSDK.LogiPlayLeds(0, 20, 20, 20);
-                }
-
-                for (int i = 0; i < 9; i++)
-                {
-                    activeForces += activeForceAndEffect[i];
-                }
-
-                if (changeLights >= 5)
-                {
-                    LogitechGSDK.LogiPlayLeds(0, vehicleController.currentEngineRPM, vehicleController.firstLightOn, vehicleController.redLine);
-                    changeLights = 0;
-                }
-                else
-                {
-                    changeLights++;
                 }
 
             }
@@ -402,110 +418,6 @@ public class LogitechSteeringWheel : MonoBehaviour
                 actualState = "THIS WINDOW NEEDS TO BE IN FOREGROUND IN ORDER FOR THE SDK TO WORK PROPERLY";
             }
         }
-    }
-
-    private void ApplyForceFeedback()
-    {
-        WheelHit hit1;
-        WheelHit hit2;
-        vehicleController.frontLeftWheel.WheelCollider.GetGroundHit(out hit1);
-        vehicleController.frontRightWheel.WheelCollider.GetGroundHit(out hit2);
-        TerrainInfo terrainInfo1 = null;
-        TerrainInfo terrainInfo2 = null;
-        if (vehicleController.frontLeftWheel.WheelCollider.isGrounded)
-        {
-            terrainInfo1 = hit1.collider.GetComponent<TerrainInfo>();
-        }
-        if (vehicleController.frontRightWheel.WheelCollider.isGrounded)
-        {
-            terrainInfo2 = hit2.collider.GetComponent<TerrainInfo>();
-        }
-
-        bool vibration = false;
-        float vibrationFrequency = 0f;
-        float vibrationIntensity = 0f;
-
-        if (terrainInfo1 != null)
-        {
-            vibration = terrainInfo1.vibration;
-            vibrationFrequency = terrainInfo1.vibrationFrequency;
-            vibrationIntensity = terrainInfo1.vibrationIntensity;
-        }
-        if (terrainInfo2 != null)
-        {
-            if (terrainInfo2.vibration)
-            {
-                vibration = terrainInfo2.vibration;
-                if (terrainInfo2.vibrationFrequency > vibrationFrequency) vibrationFrequency = terrainInfo2.vibrationFrequency;
-                if(terrainInfo2.vibrationIntensity > vibrationIntensity) vibrationIntensity = terrainInfo2.vibrationIntensity;
-            }
-        }
-
-        if (vibration)
-        {
-            int intensity = Mathf.Clamp((int)(vehicleController.GetSpeed() * vibrationIntensity), 0, 40); // Scale intensity with speed
-            float frequency = Mathf.Clamp(vehicleController.GetSpeed() / 5f * vibrationFrequency, 1f, 50f);  // Scale frequency with speed
-
-            SimulateVibration(intensity, frequency);
-        }
-        else
-        {
-            StopVibration();
-        }
-
-
-        // Apply centering force
-        float slipForce = CalculateSlipForce();
-        float centeringForce = centeringForceMultiplier * (vehicleController.GetSpeed() / vehicleController.maxSpeed) * 2.5f / Math.Max(slipForce / 3, 1);
-        LogitechGSDK.LogiPlaySpringForce(0, 0, Mathf.Clamp(Mathf.Abs((int)centeringForce), 20, 100), 100);
-
-        LogitechGSDK.LogiPlayDamperForce(0, (int)slipForce);
-    }
-
-    private void SimulateVibration(int intensity, float frequency)
-    {
-        // Calculate the interval between force toggles
-        float interval = 1f / (frequency * 2f); // Half-period for toggling force
-
-        // Update the timer
-        vibrationTimer += Time.deltaTime;
-
-        if (vibrationTimer >= interval)
-        {
-            vibrationTimer = 0f; // Reset timer
-            vibrationState = !vibrationState; // Toggle vibration state
-
-            // Apply force in alternating directions
-            int forceMagnitude = vibrationState ? intensity : -intensity;
-            LogitechGSDK.LogiPlayConstantForce(0, forceMagnitude);
-        }
-    }
-
-    private void StopVibration()
-    {
-        LogitechGSDK.LogiStopConstantForce(0);
-    }
-
-    private float CalculateSlipForce()
-    {
-        float totalSlip = 0f;
-
-        // Calculate slip from each wheel
-        totalSlip += GetWheelSlip(vehicleController.frontLeftWheel.WheelCollider);
-        totalSlip += GetWheelSlip(vehicleController.frontRightWheel.WheelCollider);
-
-        // Average slip and apply multiplier
-        return (totalSlip / 2f) * slipForceMultiplier;
-    }
-
-    private float GetWheelSlip(WheelCollider wheel)
-    {
-        WheelHit hit;
-        if (wheel.isGrounded && wheel.GetGroundHit(out hit))
-        {
-            return Mathf.Abs(hit.sidewaysSlip);
-        }
-        return 0f;
     }
 
     public bool IsConnected()

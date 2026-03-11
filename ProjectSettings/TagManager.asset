@@ -7,6 +7,15 @@ TagManager:
   - Ground
   - Wall
   - Curb
+  - Car
+  - Line
+  - Leaderboard
+  - PlayerBarName
+  - PlayerBarPosition
+  - PlayerBarTime
+  - PlayerBarTire
+  - Manager
+  - MiniMap
   layers:
   - Default
   - TransparentFX
@@ -15,9 +24,9 @@ TagManager:
   - Water
   - UI
   - Minimap
-  - Car
-  - 
-  - 
+  - OwnCar
+  - OtherCar
+  - Sectors
   - 
   - 
   - 
@@ -41,6 +50,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: UI
+    uniqueID: 2387145245
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
