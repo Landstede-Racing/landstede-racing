@@ -45,14 +45,22 @@ public class ConsoleManager : MonoBehaviour
         entries.Add(new(ConsoleEntryType.USER, input));
         string[] inputParts = input.Split("");
         
-        ConsoleCommand command = commands[inputParts[0]];
-        if(command == null)
+        try
         {
-            entries.Add(new(ConsoleEntryType.SYSTEM, $"Command {command} not found"));
-            return;
-        }
+            ConsoleCommand command = commands[inputParts[0]];
+            if(command == null)
+            {
+                AddConsoleEntry(new(ConsoleEntryType.SYSTEM, $"Command {inputParts[0]} was not found"));
+                return;
+            }
 
-        command.Execute(inputParts.Skip(1).ToArray());
+            command.Execute(inputParts.Skip(1).ToArray());
+        }
+        catch (KeyNotFoundException err)
+        {
+            AddConsoleEntry(new(ConsoleEntryType.SYSTEM, $"Command {inputParts[0]} was not found"));
+            CustomLogger.LogError(err.Message);
+        }
     }
 
     public void AddConsoleEntry(ConsoleEntry entry)
