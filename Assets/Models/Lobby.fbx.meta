@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: a15645dee2e04c24998762cbab5bcd83
 ModelImporter:
-  serializedVersion: 22200
+  serializedVersion: 24200
   internalIDToNameTable: []
   externalObjects:
   - first:
@@ -29,6 +29,11 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: Material.003
     second: {fileID: 2100000, guid: 83926d317e6faa84f8380d5d0754d4f9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Screen
+    second: {fileID: 2100000, guid: 52925ddb170023a44be39ebd057d5b0c, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -81,6 +86,9 @@ ModelImporter:
     maxBonesPerVertex: 4
     minBoneWeight: 0.001
     optimizeBones: 1
+    generateMeshLods: 0
+    meshLodGenerationFlags: 0
+    maximumMeshLod: -1
     meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
