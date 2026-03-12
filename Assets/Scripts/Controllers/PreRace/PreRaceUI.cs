@@ -1,6 +1,5 @@
 using TMPro;
 using Unity.Netcode;
-using Unity.Networking.Transport.Error;
 using UnityEngine;
 
 public class PreRaceUI : NetworkBehaviour

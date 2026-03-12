@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using LandstedeRacing.Types;
 using TMPro;
 using UnityEngine;
 

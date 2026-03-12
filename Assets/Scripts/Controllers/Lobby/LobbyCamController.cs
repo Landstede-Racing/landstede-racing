@@ -1,7 +1,4 @@
-using System;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.Windows;
 
 public class LobbyCamController : MonoBehaviour
 {

@@ -1,7 +1,5 @@
 using UnityEngine;
 using System.Text;
-using UnityEngine.SceneManagement;
-using System;
 
 public class LogitechSteeringWheel : MonoBehaviour
 {

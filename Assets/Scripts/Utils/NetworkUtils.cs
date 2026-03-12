@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
@@ -10,7 +7,6 @@ using Unity.Services.Core;
 using Unity.Services.Relay;
 using Unity.Services.Relay.Models;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class NetworkUtils
 {
@@ -56,12 +52,11 @@ public class NetworkUtils
         EventService.InvokeSetupRace();
     }
 
-    public static async void StopHost()
+    public static void StopHost()
     {
         if (NetworkManager.Singleton == null)
             return;
 
-        var raceScene = SceneManager.GetActiveScene();
         NetworkManager.Singleton.Shutdown();
 
         foreach (var obj in Object.FindObjectsByType<NetworkObject>(FindObjectsSortMode.None))

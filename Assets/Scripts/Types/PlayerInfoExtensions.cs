@@ -1,5 +1,3 @@
-using Unity.Netcode;
-
 namespace LandstedeRacing.Types
 {
     public static class PlayerInfoExtensions

@@ -4,8 +4,6 @@ using TMPro;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
-using Unity.Netcode.Transports.UTP;
-using System;
 
 public class RaceManager : NetworkBehaviour
 {

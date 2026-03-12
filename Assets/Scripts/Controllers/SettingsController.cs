@@ -1,9 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using TMPro;
-using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.Rendering;
