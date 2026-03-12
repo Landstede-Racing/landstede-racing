@@ -12,7 +12,7 @@ public class ConsoleController : MonoBehaviour
     void Awake()
     {
         inputField.onSubmit.AddListener((value) => HandleInput(value));
-        inputField.ActivateInputField();
+        // TODO: Automatically focus input field
     }
 
     public void UpdateEntries()
