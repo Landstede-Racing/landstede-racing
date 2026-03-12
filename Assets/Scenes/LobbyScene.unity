@@ -7253,7 +7253,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-Game::ConsoleManager
   isOpened: 0
   consolePrefab: {fileID: 4320601005573068157, guid: e0617452b8807fd40a8025ff0d7f36a1, type: 3}
-  consoleObject: {fileID: 0}
 --- !u!4 &362741162
 Transform:
   m_ObjectHideFlags: 0
