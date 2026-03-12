@@ -1,7 +1,5 @@
-using UnityEngine.InputSystem;
 using UnityEngine;
 using Unity.Netcode;
-using System;
 
 
 public class InputController : NetworkBehaviour
