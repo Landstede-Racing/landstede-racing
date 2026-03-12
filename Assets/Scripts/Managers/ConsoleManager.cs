@@ -8,9 +8,9 @@ public class ConsoleManager : MonoBehaviour
 
     private List<ConsoleEntry> entries = new();
     private Dictionary<string, ConsoleCommand> commands = new();
+    private GameObject consoleObject;
     [SerializeField] private bool isOpened = false;
     [SerializeField] private GameObject consolePrefab;
-    [SerializeField] private GameObject consoleObject;
 
     private void Awake()
     {
